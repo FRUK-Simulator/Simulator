@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { Blockly } from "./BlocklyInterface/Blockly";
 import { RobotSimulator } from "./RobotSimulator/RobotSimulator";
 import { NotFoundView } from "./ErrorViews/NotFoundView";
