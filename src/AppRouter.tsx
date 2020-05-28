@@ -2,7 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Blockly } from "./BlocklyInterface/Blockly";
 import { RobotSimulator } from "./RobotSimulator/RobotSimulator";
+import { NotFoundView } from "./ErrorViews/NotFoundView";
 
+/**
+ * This component provides clientside routing. Top level routes should be defined here.
+ */
 export const AppRouter = () => {
   return (
     <Router>
@@ -13,8 +17,7 @@ export const AppRouter = () => {
           <RobotSimulator />
         </Route>
         <Route>
-          {/* TODO: Break into a 404 component */}
-          <div>404 - Page Not Found</div>
+          <NotFoundView />
         </Route>
       </Switch>
     </Router>
