@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "format": "prettier --write src",
+    "checkFormat": "prettier --check src",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
