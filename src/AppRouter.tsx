@@ -8,15 +8,13 @@ export const AppRouter = () => {
     <Router>
       <Switch>
         <Route path="/" exact>
-            {/* TODO: Break into a view component*/}
+          {/* TODO: Break into a view component*/}
           <Blockly />
           <RobotSimulator />
         </Route>
         <Route>
-            {/* TODO: Break into a 404 component */}
-            <div>
-                404 - Page Not Found
-            </div>
+          {/* TODO: Break into a 404 component */}
+          <div>404 - Page Not Found</div>
         </Route>
       </Switch>
     </Router>
