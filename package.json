@@ -23,6 +23,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.6",
     "prettier": "2.0.5"
   },
   "scripts": {
@@ -49,5 +50,15 @@
   },
   "hooks": {
     "pre-commit": "npm run format"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   }
 }
