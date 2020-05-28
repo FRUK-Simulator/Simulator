@@ -9,17 +9,15 @@ import { NotFoundView } from "./ErrorViews/NotFoundView";
  */
 export const AppRouter = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          {/* TODO: Break into a view component*/}
-          <Blockly />
-          <RobotSimulator />
-        </Route>
-        <Route>
-          <NotFoundView />
-        </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path="/" exact>
+        {/* TODO: Break into a view component*/}
+        <Blockly />
+        <RobotSimulator />
+      </Route>
+      <Route>
+        <NotFoundView />
+      </Route>
+    </Switch>
   );
 };
