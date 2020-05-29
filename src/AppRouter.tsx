@@ -11,9 +11,14 @@ export const AppRouter = () => {
   return (
     <Switch>
       <Route path="/" exact>
-        {/* TODO: Break into a view component*/}
-        <Blockly />
-        <RobotSimulator />
+        <div className="grid-container">
+          <div className="menu-bar"></div>
+          {/* TODO: Break into a view component*/}
+          <Blockly />
+          <RobotSimulator />
+          <div className="control-panel"></div>
+          <div className="footer"></div>
+        </div>
       </Route>
       <Route>
         <NotFoundView />
