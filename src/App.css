@@ -1,36 +1,20 @@
 html,
 body,
 #root,
-.App,
-.grid-container {
+.app-container {
   height: 100%;
   margin: 0;
 }
 
-.grid-container {
+.app-container {
   display: grid;
-  grid-template-columns: 30px 1fr 1fr 30px;
-  grid-template-rows: 50px 30vw 1fr 30px;
+  grid-template-columns: 30px 1fr 30px;
+  grid-template-rows: 50px 1fr 30px;
   gap: 1px 1px;
   grid-template-areas:
-    "Menu-Bar Menu-Bar Menu-Bar       Menu-Bar"
-    ".        Blockly  Simulator      ."
-    ".        Blockly  Control-Panel  ."
-    "Footer   Footer   Footer         Footer";
-}
-
-.blockly-ui {
-  grid-area: Blockly;
-  background-color: #e8f5e9;
-}
-
-.robot-simulator {
-  grid-area: Simulator;
-  background-color: #c8e6c9;
-}
-
-.control-panel {
-  grid-area: Control-Panel;
+    "Menu-Bar Menu-Bar Menu-Bar"
+    ".        Content  ."
+    "Footer   Footer   Footer";
 }
 
 .menu-bar {
