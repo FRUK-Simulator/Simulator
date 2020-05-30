@@ -38,7 +38,8 @@ jobs:
         path: build/**/*
         
     - name: Checkout Github Pages Branch
-      run: git checkout gh-pages
+      run: |
+        git checkout refs/remotes/origin/gh-pages@{0}
     
     - name: Clear contents
       run: rm -rf *
