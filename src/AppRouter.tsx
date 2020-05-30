@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { NotFoundView } from "./ErrorViews/NotFoundView";
-import { SimulatorView } from "./SimulatorView/SimulatorView";
+import { SimulatorView } from "./Views/SimulatorView";
 
 /**
  * This component provides clientside routing. Top level routes should be defined here.
