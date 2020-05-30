@@ -1,0 +1,28 @@
+html,
+body,
+#root,
+.app-container {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 30px 1fr 30px;
+  grid-template-rows: 50px 1fr 30px;
+  gap: 1px 1px;
+  grid-template-areas:
+    "Menu-Bar Menu-Bar Menu-Bar"
+    ".        Content  ."
+    "Footer   Footer   Footer";
+}
+
+.menu-bar {
+  grid-area: Menu-Bar;
+  background-color: #4caf50;
+}
+
+.footer {
+  grid-area: Footer;
+  background-color: #4caf50;
+}
