@@ -37,12 +37,15 @@ jobs:
         # A file, directory or wildcard pattern that describes what to upload
         path: build/**/*
         
-    - name: Checkout Github Pages Branch
-      run: |
-        git checkout refs/remotes/origin/gh-pages@{0}
+    # Checkout the gh-pages branch
+    - uses: actions/checkout@v2
+      with:
+        ref: gh-pages
     
-    - name: Clear contents
-      run: rm -rf *
+    - name: Clear Contents
+      run: |
+        ls -la 
+        rm -rf *
       
     - name: Download The Build Output
       uses: actions/download-artifact@v2
