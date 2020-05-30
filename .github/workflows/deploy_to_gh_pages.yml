@@ -43,9 +43,7 @@ jobs:
         ref: gh-pages
     
     - name: Clear Contents
-      run: |
-        ls -la 
-        rm -rf *
+      run: rm -rf *
       
     - name: Download The Build Output
       uses: actions/download-artifact@v2
@@ -55,8 +53,14 @@ jobs:
         # Destination path
         path: .
         
-    - name: Echo Output
+    - name: Status & Files
       run: |
         ls -la
         git status
+        
+    - name: Commit and Push
+      run: |
+        git add -A
+        git commit -m "Deploy to GH pages"
+        git push
          
