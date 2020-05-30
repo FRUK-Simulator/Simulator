@@ -58,9 +58,10 @@ jobs:
         ls -la
         git status
         
+    # TODO: What email to use as contributor?
     - name: Commit and Push
       run: |
-        git add -A
-        git commit -m "Deploy to GH pages"
+        git -c user.name='FRUK' -c user.email='ginojnotto@gmail.com' add -A
+        git -c user.name='FRUK' -c user.email='ginojnotto@gmail.com' commit -m "Deploy to GH pages"
         git push
          
