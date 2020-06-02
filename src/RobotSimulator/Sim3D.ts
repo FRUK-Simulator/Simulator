@@ -10,6 +10,8 @@ export class Sim3D {
   private camera: THREE.PerspectiveCamera;
   private cameraControls: OrbitControls;
 
+  private isRendering = false;
+
   constructor(private canvas: HTMLCanvasElement) {
     // Scene
     let scene = (this.scene = new THREE.Scene());
@@ -61,5 +63,23 @@ export class Sim3D {
   render() {
     this.cameraControls.update();
     this.renderer.render(this.scene, this.camera);
+  }
+
+  beginRendering() {
+    let r = () => {
+      if (!this.isRendering) {
+        return;
+      }
+
+      window.requestAnimationFrame(r);
+      this.render();
+    };
+
+    this.isRendering = true;
+    r();
+  }
+
+  stopRendering() {
+    this.isRendering = false;
   }
 }

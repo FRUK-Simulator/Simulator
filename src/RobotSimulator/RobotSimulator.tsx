@@ -1,68 +1,59 @@
-import React, { Component } from "react";
+import React, { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
 import { Sim3D } from "./Sim3D";
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.
-export class RobotSimulator extends Component {
-  private canvasRef = React.createRef<HTMLCanvasElement>();
-  private canvasParentRef = React.createRef<HTMLDivElement>();
+export const RobotSimulator: FunctionComponent = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasParentRef = useRef<HTMLDivElement>(null);
 
-  private onresizeCb = this.onresize.bind(this);
+  const sim = useRef<Sim3D | null>(null);
 
-  private sim: Sim3D | null = null;
-  private isRendering = false;
-
-  componentDidMount() {
-    this.onresize();
-
-    window.addEventListener("resize", this.onresizeCb);
-    const canvasEl = this.canvasRef.current!;
-
-    this.sim = new Sim3D(canvasEl);
-
-    this.isRendering = true;
-    this.triggerRender();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.onresizeCb);
-
-    this.isRendering = false;
-    this.sim = null;
-  }
-
-  onresize() {
-    const canvasEl = this.canvasRef.current!;
-    const canvasParentEl = this.canvasParentRef.current!;
-
-    canvasEl.width = canvasParentEl.clientWidth;
-    canvasEl.height = canvasParentEl.clientHeight;
-
-    if (this.sim) {
-      this.sim.onresize();
-    }
-  }
-
-  triggerRender() {
-    if (!this.isRendering) {
+  // Sets the canvas width and height properties to match the parent
+  function updateCanvasSize() {
+    if (!canvasRef.current || !canvasParentRef.current) {
       return;
     }
 
-    requestAnimationFrame(this.triggerRender.bind(this));
-
-    if (this.sim) {
-      this.sim.render();
-    }
+    canvasRef.current.width = canvasParentRef.current.clientWidth;
+    canvasRef.current.height = canvasParentRef.current.clientHeight;
   }
 
-  render() {
-    return (
-      <div className="robot-simulator" ref={this.canvasParentRef}>
-        <canvas className="simulator" ref={this.canvasRef}>
-          Canvas is not supported in your browser, try another
-        </canvas>
-      </div>
-    );
-  }
-}
+  // effect to initialize the simulator on first mount
+  useEffect(() => {
+    updateCanvasSize();
+
+    sim.current = new Sim3D(canvasRef.current!);
+    sim.current?.beginRendering();
+
+    return () => {
+      // remove the simulator
+      sim.current?.stopRendering();
+      sim.current = null;
+    };
+  });
+
+  // effect to resize on resize events
+  useEffect(() => {
+    const onResize = () => {
+      updateCanvasSize();
+      sim.current?.onresize();
+    };
+
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      // clean up
+      window.removeEventListener("resize", onResize);
+    };
+  });
+
+  return (
+    <div className="robot-simulator" ref={canvasParentRef}>
+      <canvas className="simulator" ref={canvasRef}>
+        Canvas is not supported in your browser, try another
+      </canvas>
+    </div>
+  );
+};
