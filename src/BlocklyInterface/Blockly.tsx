@@ -1,15 +1,17 @@
-import React, { FunctionComponent, useRef } from "react";
-import "./Blockly.css";
+import React, { FunctionComponent, createRef, RefObject } from "react";
+import { Toolbox } from "./Toolbox";
+import { BlocklyEditor } from "./BlocklyEditor";
 
 /**
- * Component that wraps the blockly interface.
+ * Component that wraps the blockly structure together, including toolbox.
  */
 export const Blockly: FunctionComponent = () => {
-  const blocklyRef = useRef<HTMLCanvasElement>(null);
+  const toolbox: RefObject<HTMLElement> = createRef();
 
   return (
-    <div className="blockly-ui">
-      <div ref={blocklyRef} />
+    <div>
+      <Toolbox ref={toolbox} />
+      <BlocklyEditor toolbox={toolbox} />
     </div>
   );
 };
