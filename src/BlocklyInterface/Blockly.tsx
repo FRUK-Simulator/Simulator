@@ -1,9 +1,15 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useRef } from "react";
 import "./Blockly.css";
 
 /**
  * Component that wraps the blockly interface.
  */
 export const Blockly: FunctionComponent = () => {
-  return <div className="blockly-ui">Blockly</div>;
+  const blocklyRef = useRef<HTMLCanvasElement>(null);
+
+  return (
+    <div className="blockly-ui">
+      <div ref={blocklyRef} />
+    </div>
+  );
 };
