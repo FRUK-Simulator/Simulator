@@ -12,8 +12,10 @@ import "./App.css";
  */
 export const App: FunctionComponent = () => {
   return (
-    <div className="App">
+    <div className="app-container">
+      <div className="menu-bar"></div>
       <AppRouter />
+      <div className="footer"></div>
     </div>
   );
 };

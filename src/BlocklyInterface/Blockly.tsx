@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import "./Blockly.css";
 
 /**
  * Component that wraps the blockly interface.
