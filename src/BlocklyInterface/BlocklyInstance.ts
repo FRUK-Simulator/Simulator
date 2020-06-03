@@ -3,8 +3,8 @@ import "blockly/javascript";
 
 declare interface BlocklyJavaScript {
   STATEMENT_PREFIX: string;
-  addReservedWords: any;
-  workspaceToCode: any;
+  addReservedWords(prefix: string): void;
+  workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
 }
 
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
@@ -22,10 +22,8 @@ class BlocklyInstance {
   }
 
   setupInterpretation() {
-    const generator = (Blockly as any).JavaScript as BlocklyJavaScript;
-
-    generator.STATEMENT_PREFIX = `${BLOCKLY_HIGHLIGHT_PREFIX}(%1);\n`;
-    generator.addReservedWords(BLOCKLY_HIGHLIGHT_PREFIX);
+    this.generator.STATEMENT_PREFIX = `${BLOCKLY_HIGHLIGHT_PREFIX}(%1);\n`;
+    this.generator.addReservedWords(BLOCKLY_HIGHLIGHT_PREFIX);
   }
 
   resizeBlockly() {
@@ -34,13 +32,15 @@ class BlocklyInstance {
   }
 
   getCode() {
-    const generator = (Blockly as any).JavaScript as BlocklyJavaScript;
-
-    return generator.workspaceToCode(this.workspace);
+    return this.generator.workspaceToCode(this.workspace);
   }
 
   highlightBlock(id: string) {
     return this.workspace.highlightBlock(id);
+  }
+
+  get generator() {
+    return (Blockly as any).JavaScript as BlocklyJavaScript;
   }
 }
 
