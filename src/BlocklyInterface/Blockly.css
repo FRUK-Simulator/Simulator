@@ -1,4 +1,5 @@
-.blockly-ui {
+.blockly-wrapper {
   grid-area: Blockly;
   background-color: #e8f5e9;
+  height: 100%;
 }
