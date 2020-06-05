@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userSlice } from "./User/userSlice";
 import { robotSimulatorSlice } from "./RobotSimulator/robotSimulatorSlice";
 import { blocklySlice } from "./BlocklyInterface/blocklySlice";
-import { vmSlice } from "./JavascriptVM/vmReducer";
+import { vmSlice } from "./JavascriptVM/vmSlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript
 const rootReducer = combineReducers({
