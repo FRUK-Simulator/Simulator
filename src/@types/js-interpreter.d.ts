@@ -65,9 +65,10 @@ declare module "js-interpreter" {
     appendCode(code: string): void;
 
     /**
-     * Executes the next single line of code.
+     * Executes the next single line of code. Returns true if there is
+     * more code to execute.
      */
-    step(): void;
+    step(): boolean;
 
     /**
      * Runs the code in its entirety. In cases where the code encounters asynchronous API calls,
