@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef, useEffect, RefObject } from "react";
 import { BlocklyInstance, BlocklyEvent } from "./BlocklyInstance";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
-import { blocklyReducer } from "./blocklyReducer";
+import { blocklySlice } from "./blocklySlice";
 
 /**
  * Component that wraps the blockly interface.
@@ -27,7 +27,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
     }
 
     dispatch(
-      blocklyReducer.actions.setCode({ code: blocklyRef.current.getCode() })
+      blocklySlice.actions.setCode({ code: blocklyRef.current.getCode() })
     );
   }
 

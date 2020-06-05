@@ -1,16 +1,16 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { userReducer } from "./User/userReducer";
-import { robotSimulatorReducer } from "./RobotSimulator/robotSimulatorReducer";
-import { blocklyReducer } from "./BlocklyInterface/blocklyReducer";
+import { userSlice } from "./User/userSlice";
+import { robotSimulatorSlice } from "./RobotSimulator/robotSimulatorSlice";
+import { blocklySlice } from "./BlocklyInterface/blocklySlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript
 const rootReducer = combineReducers({
-  user: userReducer.reducer,
-  simulator: robotSimulatorReducer.reducer,
-  blockly: blocklyReducer.reducer,
+  user: userSlice.reducer,
+  simulator: robotSimulatorSlice.reducer,
+  blockly: blocklySlice.reducer,
 });
 
-export type RootState = typeof rootReducer;
+export type RootState = ReturnType<typeof rootReducer>;
 
 export const store = configureStore({
   reducer: rootReducer,
