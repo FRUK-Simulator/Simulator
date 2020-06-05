@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useRef, useEffect, RefObject } from "react";
-import { BlocklyInstance, BlocklyEvent } from "./BlocklyInstance";
+import { Events } from "blockly";
+import React, { FunctionComponent, RefObject, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { vmSlice } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../store";
-import { blocklySlice } from "./blocklySlice";
+import { BlocklyEvent, BlocklyInstance } from "./BlocklyInstance";
 
 /**
  * Component that wraps the blockly interface.
@@ -26,9 +27,11 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
       return;
     }
 
-    dispatch(
-      blocklySlice.actions.setCode({ code: blocklyRef.current.getCode() })
-    );
+    console.log(event);
+
+    if (event instanceof Events.BlockMove) {
+      dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
+    }
   }
 
   function resizeBlocklyRegion() {
