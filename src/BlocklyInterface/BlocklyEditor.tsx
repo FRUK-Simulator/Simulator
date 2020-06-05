@@ -1,9 +1,10 @@
 import { Events } from "blockly";
 import React, { FunctionComponent, RefObject, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyEvent, BlocklyInstance } from "./BlocklyInstance";
+import { getHighlightedBlockId } from "./blocklySlice";
 
 /**
  * Component that wraps the blockly interface.
@@ -19,20 +20,9 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
   const workspaceAreaRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
+  const highlightedBlock = useSelector(getHighlightedBlockId);
 
   const blocklyRef = useRef<BlocklyInstance | null>(null);
-
-  function handleBlocklyChange(event: BlocklyEvent) {
-    if (!blocklyRef.current) {
-      return;
-    }
-
-    console.log(event);
-
-    if (event instanceof Events.BlockMove) {
-      dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
-    }
-  }
 
   function resizeBlocklyRegion() {
     // Compute the absolute coordinates and dimensions of wrapping area.
@@ -61,14 +51,33 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
 
   // Initialize blockly and return destruction callback
   useEffect(() => {
+    function handleBlocklyChange(event: BlocklyEvent) {
+      if (!blocklyRef.current) {
+        return;
+      }
+
+      console.log(event);
+
+      if (
+        event instanceof Events.BlockMove ||
+        event instanceof Events.BlockChange
+      ) {
+        dispatch(
+          vmSlice.actions.setCode({ code: blocklyRef.current.getCode() })
+        );
+      }
+    }
+
     resizeBlocklyRegion();
 
-    blocklyRef.current = new BlocklyInstance(
-      workspaceAreaRef.current!,
-      toolbox.current!
-    );
+    if (!blocklyRef.current) {
+      blocklyRef.current = new BlocklyInstance(
+        workspaceAreaRef.current!,
+        toolbox.current!
+      );
 
-    blocklyRef.current.addChangeListener(handleBlocklyChange);
+      blocklyRef.current.addChangeListener(handleBlocklyChange);
+    }
   });
 
   // Listen on window resizes and redraw blockly
@@ -83,6 +92,12 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
 
     return window.removeEventListener.bind(window, "resize", onResizeHandler);
   });
+
+  useEffect(() => {
+    if (blocklyRef.current && highlightedBlock) {
+      blocklyRef.current.highlightBlock(highlightedBlock);
+    }
+  }, [highlightedBlock]);
 
   return (
     <div ref={wrapperRef} className="blockly-workspace">
