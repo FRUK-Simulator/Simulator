@@ -9,12 +9,10 @@ export const getIntepreter = (code: string, dispatch: AppDispatch) => {
   ) {
     const highlightBlock = intepreter.createNativeFunction((id: string) => {
       dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
-      // step past this action
-      intepreter.step();
     });
 
     const alert = intepreter.createNativeFunction((text: string) => {
-      window.alert(text);
+      console.log("VM > " + text);
     });
 
     intepreter.setProperty(globalObject, "alert", alert);
