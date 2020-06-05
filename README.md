@@ -1,4 +1,9 @@
 ## Helpful Tools
+### React DevTools
+To help debug React code, please download this plugin for chrome: https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en. The official React debugger has useful tools to view the state and props of React components and navigate the tree a lot like the HTML elements debugger.
+
+
+### Redux DevTools
 To help debug redux and get the most value out of it, make sure to download this tool: https://github.com/reduxjs/redux-devtools! It will help you to debug the flow of actions in the app, as well as replay them, pause them, etc.
 
 ## Available Scripts
