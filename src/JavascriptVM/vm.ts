@@ -1,23 +1,39 @@
-import Interpreter, { GlobalObject } from "js-interpreter";
-import { AppDispatch } from "../store";
-import { blocklySlice } from "../BlocklyInterface/blocklySlice";
+import Interpreter from "js-interpreter";
 
-export const getIntepreter = (code: string, dispatch: AppDispatch) => {
-  function initInterpreter(
-    intepreter: Interpreter,
-    globalObject: GlobalObject
+export class BlocklyInterpreter {
+  private interpreter: Interpreter;
+  private pause: boolean;
+
+  constructor(
+    code: string,
+    callbacks: {
+      onHighlight: (id: string) => void;
+    }
   ) {
-    const highlightBlock = intepreter.createNativeFunction((id: string) => {
-      dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
-    });
+    this.pause = false;
 
-    const alert = intepreter.createNativeFunction((text: string) => {
-      console.log("VM > " + text);
-    });
+    this.interpreter = new Interpreter(code, (interpreter, globals) => {
+      const highlightBlock = interpreter.createNativeFunction((id: string) => {
+        this.pause = true;
+        callbacks.onHighlight(id);
+      });
 
-    intepreter.setProperty(globalObject, "alert", alert);
-    intepreter.setProperty(globalObject, "highlightBlock", highlightBlock);
+      const alert = interpreter.createNativeFunction((text: string) => {
+        console.log("VM > " + text);
+      });
+
+      interpreter.setProperty(globals, "alert", alert);
+      interpreter.setProperty(globals, "highlightBlock", highlightBlock);
+    });
   }
 
-  return new Interpreter(code, initInterpreter);
-};
+  step(): void {
+    while (this.interpreter.step() && !this.pause);
+
+    this.pause = false;
+  }
+
+  run(): boolean {
+    return this.interpreter.run();
+  }
+}
