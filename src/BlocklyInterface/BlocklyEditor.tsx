@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useRef, useEffect, RefObject } from "react";
-import { BlocklyInstance } from "./BlocklyInstance";
-import "./Blockly.css";
+import { BlocklyInstance, BlocklyEvent } from "./BlocklyInstance";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
+import { blocklyReducer } from "./blocklyReducer";
 
 /**
  * Component that wraps the blockly interface.
@@ -15,8 +17,19 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
 }) => {
   const workspaceAreaRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch<AppDispatch>();
 
   const blocklyRef = useRef<BlocklyInstance | null>(null);
+
+  function handleBlocklyChange(event: BlocklyEvent) {
+    if (!blocklyRef.current) {
+      return;
+    }
+
+    dispatch(
+      blocklyReducer.actions.setCode({ code: blocklyRef.current.getCode() })
+    );
+  }
 
   function resizeBlocklyRegion() {
     // Compute the absolute coordinates and dimensions of wrapping area.
@@ -51,6 +64,8 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
       workspaceAreaRef.current!,
       toolbox.current!
     );
+
+    blocklyRef.current.addChangeListener(handleBlocklyChange);
   });
 
   // Listen on window resizes and redraw blockly
@@ -67,7 +82,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
   });
 
   return (
-    <div className="blockly-wrapper" ref={wrapperRef}>
+    <div ref={wrapperRef} className="blockly-workspace">
       <div className="blockly-workspace-area" ref={workspaceAreaRef} />
     </div>
   );
