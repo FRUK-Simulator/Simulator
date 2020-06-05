@@ -1,16 +1,17 @@
 import Interpreter from "js-interpreter";
 
+export type BlocklyInterpreterCallbacks = {
+  onHighlight: (id: string) => void;
+};
+
 export class BlocklyInterpreter {
   private interpreter: Interpreter;
   private pause: boolean;
+  private callbacks: BlocklyInterpreterCallbacks;
 
-  constructor(
-    code: string,
-    callbacks: {
-      onHighlight: (id: string) => void;
-    }
-  ) {
+  constructor(code: string, callbacks: BlocklyInterpreterCallbacks) {
     this.pause = false;
+    this.callbacks = callbacks;
 
     this.interpreter = new Interpreter(code, (interpreter, globals) => {
       const highlightBlock = interpreter.createNativeFunction((id: string) => {
@@ -27,13 +28,32 @@ export class BlocklyInterpreter {
     });
   }
 
-  step(): void {
-    while (this.interpreter.step() && !this.pause);
+  private onFinish() {
+    this.callbacks.onHighlight("null");
+  }
+
+  step(): boolean {
+    let finished = false;
+    while (!this.pause && !finished) {
+      finished = !this.interpreter.step();
+    }
+
+    // clean up
+    if (finished) {
+      this.onFinish();
+    }
 
     this.pause = false;
+
+    return finished;
   }
 
   run(): boolean {
-    return this.interpreter.run();
+    const rcode = this.interpreter.run();
+
+    // clean up
+    this.onFinish();
+
+    return rcode;
   }
 }

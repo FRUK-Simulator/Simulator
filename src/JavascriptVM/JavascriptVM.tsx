@@ -51,7 +51,12 @@ export const JavascriptVM: FunctionComponent = () => {
   const stepButton = (
     <button
       onClick={() => {
-        interpreter?.step();
+        const finished = interpreter?.step();
+
+        if (finished) {
+          dispatch(vmSlice.actions.stopExecution());
+          setInterpreter(null);
+        }
       }}
     >
       Step
@@ -62,6 +67,8 @@ export const JavascriptVM: FunctionComponent = () => {
     <button
       onClick={() => {
         interpreter?.run();
+        dispatch(vmSlice.actions.stopExecution());
+        setInterpreter(null);
       }}
     >
       Run
