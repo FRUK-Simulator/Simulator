@@ -4,7 +4,7 @@ import React from "react";
 import "./JavascriptVM.css";
 import { useSelector, useDispatch } from "react-redux";
 import { isExecuting, vmSlice } from "./vmSlice";
-import { getCode } from "../BlocklyInterface/blocklySlice";
+import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import { getIntepreter } from "./vm";
 import Interpreter from "js-interpreter";
