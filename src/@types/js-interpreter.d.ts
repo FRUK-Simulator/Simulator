@@ -1,5 +1,5 @@
 declare module "js-interpreter" {
-  type GlobalObject = object;
+  export type GlobalObject = object;
 
   /**
    * The Interpreter class is responsible for loading and executing sandboxed javascript code. See https://neil.fraser.name/software/JS-Interpreter/docs.html
@@ -24,6 +24,10 @@ declare module "js-interpreter" {
      * Sets a variable accessible by the sandboxed JS. Provides a way for the sandboxed code to call out
      * to the host code.
      *
+     * Note: Only primitives (numbers, strings, booleans, null and undefined) may be passed in and out of the interpreter during execution.
+     * Objects and functions are not compatible between native and interpreted code. See the JSON demo for an example of exchanging JSON between
+     * the browser and the interpreter: https://neil.fraser.name/software/JS-Interpreter/demos/json.html
+     *
      * @param globalObject the GlobalObject from the initFunction
      * @param key the variable name of the value
      * @param value the value of the variable
@@ -42,7 +46,7 @@ declare module "js-interpreter" {
      * var myInterpreter = new Interpreter(myCode, initFunc);
      * ```
      */
-    setProperty(globalObject: GlobalObject, key: string, value: any);
+    setProperty(globalObject: GlobalObject, key: string, value: any): void;
 
     /**
      * Creates a function that can be inserted into the sandbox and be called from it.
@@ -58,12 +62,12 @@ declare module "js-interpreter" {
      *
      * @param code new code to be added to the interpreter
      */
-    appendCode(code: string);
+    appendCode(code: string): void;
 
     /**
      * Executes the next single line of code.
      */
-    step();
+    step(): void;
 
     /**
      * Runs the code in its entirety. In cases where the code encounters asynchronous API calls,
