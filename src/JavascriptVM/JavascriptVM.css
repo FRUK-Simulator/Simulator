@@ -1,0 +1,5 @@
+.javascript-vm {
+  grid-area: JSVM;
+  background-color: #ccc;
+  min-height: 256px;
+}
