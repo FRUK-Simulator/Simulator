@@ -6,11 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { isExecuting, vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
-import { getIntepreter } from "./vm";
-import Interpreter from "js-interpreter";
+import { BlocklyInterpreter } from "./vm";
+import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 export const JavascriptVM: FunctionComponent = () => {
-  const [interpreter, setInterpreter] = useState<Interpreter | null>(null);
+  const [interpreter, setInterpreter] = useState<BlocklyInterpreter | null>(
+    null
+  );
   const executing = useSelector(isExecuting);
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
@@ -23,7 +25,12 @@ export const JavascriptVM: FunctionComponent = () => {
           return;
         }
         dispatch(vmSlice.actions.startExecution());
-        setInterpreter(getIntepreter(code, dispatch));
+        setInterpreter(
+          new BlocklyInterpreter(code, {
+            onHighlight: (id) =>
+              dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+          })
+        );
       }}
     >
       Start
