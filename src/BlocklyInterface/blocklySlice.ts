@@ -17,10 +17,6 @@ export const blocklySlice = createSlice({
       state.highlightedBlock = action.payload.blockId;
       return state;
     },
-    setCode(state, action: PayloadAction<{ code: string }>) {
-      state.code = action.payload.code;
-      return state;
-    },
   },
 });
 
