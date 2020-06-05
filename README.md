@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Helpful Tools
+To help debug redux and get the most value out of it, make sure to download this tool: https://github.com/reduxjs/redux-devtools! It will help you to debug the flow of actions in the app, as well as replay them, pause them, etc.
 
 ## Available Scripts
 
@@ -42,3 +43,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
