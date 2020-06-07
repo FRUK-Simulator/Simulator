@@ -56,8 +56,6 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
         return;
       }
 
-      console.log(event);
-
       if (
         event instanceof Events.BlockMove ||
         event instanceof Events.BlockChange
