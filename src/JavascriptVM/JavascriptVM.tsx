@@ -1,14 +1,19 @@
 import { FunctionComponent, useState } from "react";
 import React from "react";
-
-import "./JavascriptVM.css";
 import { useSelector, useDispatch } from "react-redux";
 import { isExecuting, vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyInterpreter } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
+import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 
+import "./JavascriptVM.css";
+
+/**
+ * Renders a component that is responsible for controlling the VM according to the state
+ * of the application. Provides controls to conditionally start, stop, step, and run the VM.
+ */
 export const JavascriptVM: FunctionComponent = () => {
   const [interpreter, setInterpreter] = useState<BlocklyInterpreter | null>(
     null
@@ -17,73 +22,83 @@ export const JavascriptVM: FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
-  const startButton = (
-    <button
-      disabled={!code}
-      onClick={() => {
-        if (!code) {
-          return;
-        }
-        dispatch(vmSlice.actions.startExecution());
-        setInterpreter(
-          new BlocklyInterpreter(code, {
-            onHighlight: (id) =>
-              dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
-          })
-        );
-      }}
-    >
-      Start
-    </button>
-  );
+  const startButton: ICommandBarItemProps = {
+    onClick() {
+      if (!code) {
+        return;
+      }
+      dispatch(vmSlice.actions.startExecution());
+      setInterpreter(
+        new BlocklyInterpreter(code, {
+          onHighlight: (id) =>
+            dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+        })
+      );
+    },
+    key: "start",
+    text: "Start",
+    iconProps: {
+      iconName: "Play",
+    },
+  };
 
-  const stopButton = (
-    <button
-      onClick={() => {
+  const stepButton: ICommandBarItemProps = {
+    onClick() {
+      const finished = interpreter?.step();
+
+      if (finished) {
         dispatch(vmSlice.actions.stopExecution());
         setInterpreter(null);
-      }}
-    >
-      Stop
-    </button>
-  );
+      }
+    },
+    key: "next",
+    text: "Next",
+    iconProps: {
+      iconName: "Next",
+    },
+  };
 
-  const stepButton = (
-    <button
-      onClick={() => {
-        const finished = interpreter?.step();
+  const runButton: ICommandBarItemProps = {
+    onClick() {
+      interpreter?.run();
+      dispatch(vmSlice.actions.stopExecution());
+      setInterpreter(null);
+    },
+    key: "run",
+    text: "Run",
+    iconProps: {
+      iconName: "FastForward",
+    },
+  };
 
-        if (finished) {
-          dispatch(vmSlice.actions.stopExecution());
-          setInterpreter(null);
-        }
-      }}
-    >
-      Step
-    </button>
-  );
+  const stopButton: ICommandBarItemProps = {
+    onClick() {
+      dispatch(vmSlice.actions.stopExecution());
+      setInterpreter(null);
+    },
+    key: "stop",
+    text: "Stop",
+    iconProps: {
+      iconName: "Stop",
+    },
+  };
 
-  const runButton = (
-    <button
-      onClick={() => {
-        interpreter?.run();
-        dispatch(vmSlice.actions.stopExecution());
-        setInterpreter(null);
-      }}
-    >
-      Run
-    </button>
-  );
-
-  const runButtons = [runButton, stepButton];
+  const commandBarRunningItems: ICommandBarItemProps[] = [
+    runButton,
+    stepButton,
+    stopButton,
+  ];
+  const commandBarStoppedItems: ICommandBarItemProps[] = [
+    startButton,
+    { ...stepButton, disabled: true },
+    { ...stopButton, disabled: true },
+  ];
 
   return (
-    <div className="javascript-vm">
-      <div>
-        {executing ? runButtons : startButton}
-        {executing && stopButton}
-      </div>
-      <pre>{code}</pre>
+    <div className="javascript-vm-controls">
+      <CommandBar
+        items={executing ? commandBarRunningItems : commandBarStoppedItems}
+      />
     </div>
   );
 };
