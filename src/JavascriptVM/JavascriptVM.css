@@ -3,3 +3,23 @@
   background-color: #ccc;
   justify-self: flex-end;
 }
+
+.javascript-vm-controls {
+  min-width: 256px;
+}
+
+.javascript-vm-controls--stop-button,
+.javascript-vm-controls--stop-button:hover {
+  color: #dc3545;
+}
+
+.javascript-vm-controls--run-button,
+.javascript-vm-controls--run-button:hover,
+.javascript-vm-controls--start-button,
+.javascript-vm-controls--start-button:hover {
+  color: #28a745;
+}
+
+.javascript-vm-controls--step-button {
+  color: #007bff;
+}

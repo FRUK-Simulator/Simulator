@@ -39,6 +39,7 @@ export const JavascriptVM: FunctionComponent = () => {
     text: "Start",
     iconProps: {
       iconName: "Play",
+      className: "javascript-vm-controls--start-button",
     },
   };
 
@@ -55,6 +56,7 @@ export const JavascriptVM: FunctionComponent = () => {
     text: "Next",
     iconProps: {
       iconName: "Next",
+      className: "javascript-vm-controls--step-button",
     },
   };
 
@@ -68,6 +70,7 @@ export const JavascriptVM: FunctionComponent = () => {
     text: "Run",
     iconProps: {
       iconName: "FastForward",
+      className: "javascript-vm-controls--run-button",
     },
   };
 
@@ -80,18 +83,19 @@ export const JavascriptVM: FunctionComponent = () => {
     text: "Stop",
     iconProps: {
       iconName: "Stop",
+      className: "javascript-vm-controls--stop-button",
     },
   };
 
   const commandBarRunningItems: ICommandBarItemProps[] = [
-    runButton,
-    stepButton,
     stopButton,
+    stepButton,
+    runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
     startButton,
     { ...stepButton, disabled: true },
-    { ...stopButton, disabled: true },
+    { ...runButton, disabled: true },
   ];
 
   return (
