@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fruk/simulator-core": "git+https://github.com/FRUK-Simulator/SimulatorCore.git",
+    "@fruk/simulator-core": "git+https://github.com/FRUK-Simulator/SimulatorCore.git", 
     "@reduxjs/toolkit": "^1.3.6",
     "blockly": "^3.20200402.1",
     "react": "^16.13.1",
