@@ -7,8 +7,8 @@ import { vmSlice } from "../JavascriptVM/vmSlice";
  */
 export const blocklySlice = createSlice({
   initialState: {
-    /** The id of the block to highlight */
-    highlightedBlock: "" as string | null,
+    /** The id of the block to highlight - empty string means no block is highlighted */
+    highlightedBlock: "",
   },
   name: "blockly",
   reducers: {
@@ -19,7 +19,10 @@ export const blocklySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(vmSlice.actions.stopExecution, (state) => {
-      state.highlightedBlock = null;
+      // Passing a fake block id guarantees to unhighlight all blocks
+      state.highlightedBlock = "UNHIGHLIGHT_BLOCKS";
+
+      return state;
     });
   },
 });
