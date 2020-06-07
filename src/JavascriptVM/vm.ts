@@ -28,19 +28,10 @@ export class BlocklyInterpreter {
     });
   }
 
-  private onFinish() {
-    this.callbacks.onHighlight("null");
-  }
-
   step(): boolean {
     let finished = false;
     while (!this.pause && !finished) {
       finished = !this.interpreter.step();
-    }
-
-    // clean up
-    if (finished) {
-      this.onFinish();
     }
 
     this.pause = false;
@@ -49,11 +40,6 @@ export class BlocklyInterpreter {
   }
 
   run(): boolean {
-    const rcode = this.interpreter.run();
-
-    // clean up
-    this.onFinish();
-
-    return rcode;
+    return this.interpreter.run();
   }
 }

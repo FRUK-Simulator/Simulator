@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { vmSlice } from "../JavascriptVM/vmSlice";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -15,6 +16,11 @@ export const blocklySlice = createSlice({
       state.highlightedBlock = action.payload.blockId;
       return state;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(vmSlice.actions.stopExecution, (state) => {
+      state.highlightedBlock = null;
+    });
   },
 });
 
