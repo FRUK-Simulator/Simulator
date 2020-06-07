@@ -9,7 +9,6 @@ export const SimulatorView: FunctionComponent = () => {
   return (
     <div className="content">
       <Blockly />
-      <JavascriptVM />
       <RobotSimulator />
       <ControlPanel />
     </div>
