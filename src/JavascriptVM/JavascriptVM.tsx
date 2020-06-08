@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, createContext } from "react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isExecuting, vmSlice } from "./vmSlice";
@@ -6,15 +6,36 @@ import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyInterpreter } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 
 import "./JavascriptVM.css";
 
 /**
- * Renders a component that is responsible for controlling the VM according to the state
- * of the application. Provides controls to conditionally start, stop, step, and run the VM.
+ * Interface to control the VM
  */
-export const JavascriptVM: FunctionComponent = () => {
+export interface IVirtualMachine {
+  run: () => void;
+  step: () => void;
+  stop: () => void;
+  start: () => void;
+}
+
+/**
+ * Global interface to control the JS Virtual Machine.
+ */
+export const VMContext = createContext<IVirtualMachine | null>(null);
+
+/**
+ * Inserts an interface that manages the JS VM into the React context tree. Manages
+ * the VM and fires redux actions to expose the state of the VM. Can be accessed
+ * via the `useContext` hook.
+ *
+ * Renders the children underneath a context provider.
+ *
+ * @example
+ * const vmControls = useContext(VMContext);
+ * vmControls.start();
+ */
+export const VMProvider: FunctionComponent = ({ children }) => {
   const [interpreter, setInterpreter] = useState<BlocklyInterpreter | null>(
     null
   );
@@ -22,87 +43,57 @@ export const JavascriptVM: FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
-  const startButton: ICommandBarItemProps = {
-    onClick() {
-      if (!code) {
-        return;
-      }
-      dispatch(vmSlice.actions.startExecution());
-      setInterpreter(
-        new BlocklyInterpreter(code, {
-          onHighlight: (id) =>
-            dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
-        })
-      );
-    },
-    key: "start",
-    text: "Start",
-    iconProps: {
-      iconName: "Play",
-      className: "javascript-vm-controls--start-button",
-    },
-  };
-
-  const stepButton: ICommandBarItemProps = {
-    onClick() {
-      const finished = interpreter?.step();
-
-      if (finished) {
-        dispatch(vmSlice.actions.stopExecution());
-        setInterpreter(null);
-      }
-    },
-    key: "next",
-    text: "Next",
-    iconProps: {
-      iconName: "Next",
-      className: "javascript-vm-controls--step-button",
-    },
-  };
-
-  const runButton: ICommandBarItemProps = {
-    onClick() {
-      interpreter?.run();
-      dispatch(vmSlice.actions.stopExecution());
-      setInterpreter(null);
-    },
-    key: "run",
-    text: "Run",
-    iconProps: {
-      iconName: "FastForward",
-      className: "javascript-vm-controls--run-button",
-    },
-  };
-
-  const stopButton: ICommandBarItemProps = {
-    onClick() {
-      dispatch(vmSlice.actions.stopExecution());
-      setInterpreter(null);
-    },
-    key: "stop",
-    text: "Stop",
-    iconProps: {
-      iconName: "Stop",
-      className: "javascript-vm-controls--stop-button",
-    },
-  };
-
-  const commandBarRunningItems: ICommandBarItemProps[] = [
-    stopButton,
-    stepButton,
-    runButton,
-  ];
-  const commandBarStoppedItems: ICommandBarItemProps[] = [
-    startButton,
-    { ...stepButton, disabled: true },
-    { ...runButton, disabled: true },
-  ];
-
   return (
-    <div className="javascript-vm-controls">
-      <CommandBar
-        items={executing ? commandBarRunningItems : commandBarStoppedItems}
-      />
-    </div>
+    <VMContext.Provider
+      value={{
+        run() {
+          if (!interpreter) {
+            console.warn("vm is not started");
+            return;
+          }
+
+          interpreter?.run();
+          dispatch(vmSlice.actions.stopExecution());
+          setInterpreter(null);
+        },
+        step() {
+          if (!interpreter) {
+            console.warn("vm is not started");
+            return;
+          }
+
+          const finished = interpreter?.step();
+
+          if (finished) {
+            dispatch(vmSlice.actions.stopExecution());
+            setInterpreter(null);
+          }
+        },
+        stop() {
+          dispatch(vmSlice.actions.stopExecution());
+          setInterpreter(null);
+        },
+        start() {
+          if (!code) {
+            return;
+          }
+
+          if (executing) {
+            console.warn("already executing");
+            return;
+          }
+
+          dispatch(vmSlice.actions.startExecution());
+          setInterpreter(
+            new BlocklyInterpreter(code, {
+              onHighlight: (id) =>
+                dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+            })
+          );
+        },
+      }}
+    >
+      {children}
+    </VMContext.Provider>
   );
 };
