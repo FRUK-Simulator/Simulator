@@ -1,0 +1,6 @@
+.menu-bar {
+  grid-area: Menu-Bar;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

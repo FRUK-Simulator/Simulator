@@ -1,4 +1,4 @@
-import Blockly from "blockly";
+import Blockly, { Events } from "blockly";
 import "blockly/javascript";
 
 declare interface BlocklyJavaScript {
@@ -6,6 +6,8 @@ declare interface BlocklyJavaScript {
   addReservedWords(prefix: string): void;
   workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
 }
+
+export type BlocklyEvent = Events.BlockChange | Events.BlockMove | Events.Ui;
 
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 
@@ -37,6 +39,10 @@ class BlocklyInstance {
 
   highlightBlock(id: string) {
     return this.workspace.highlightBlock(id);
+  }
+
+  addChangeListener(fn: (event: BlocklyEvent) => void) {
+    this.workspace.addChangeListener(fn);
   }
 
   get generator() {

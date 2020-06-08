@@ -3,3 +3,7 @@
   background-color: #e8f5e9;
   height: 100%;
 }
+
+.blockly-workspace {
+  height: 100%;
+}

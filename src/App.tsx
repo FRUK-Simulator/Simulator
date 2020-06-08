@@ -5,6 +5,7 @@ import { AppRouter } from "./AppRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
+import { MenuBar } from "./Views/MenuBar/MenuBar";
 
 /**
  * This is exported seperately so that tests can provide their own providers. This
@@ -13,7 +14,7 @@ import "./App.css";
 export const App: FunctionComponent = () => {
   return (
     <div className="app-container">
-      <div className="menu-bar"></div>
+      <MenuBar />
       <AppRouter />
       <div className="footer"></div>
     </div>
