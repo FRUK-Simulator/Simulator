@@ -11,9 +11,7 @@ import "jest-canvas-mock";
 import { initializeIcons } from "@uifabric/icons";
 initializeIcons();
 
-/**
- * Simulator does not render and is outside of the scope of unit / integration tests.
- */
+// Simulator does not render and is outside of the scope of unit / integration tests.
 jest.mock("@fruk/simulator-core", () => {
   return {
     Sim3D: jest.fn(() => ({
@@ -24,7 +22,8 @@ jest.mock("@fruk/simulator-core", () => {
   };
 });
 
-// Blockly issues warnings about not being able to
+// Blockly issues warnings about not being able to find i18n messages and spews
+// in the console blocking testing output - this filters those out.
 const logFn = console.log.bind(console);
 console.log = (msg: any, ...rest: any[]) => {
   if (
