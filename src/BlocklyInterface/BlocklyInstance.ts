@@ -1,5 +1,6 @@
 import Blockly, { Events } from "blockly";
 import "blockly/javascript";
+import { getToolbox } from "./toolbox";
 
 declare interface BlocklyJavaScript {
   STATEMENT_PREFIX: string;
@@ -16,8 +17,10 @@ const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 class BlocklyInstance {
   private workspace: Blockly.WorkspaceSvg;
 
-  constructor(workspaceArea: HTMLDivElement, toolbox: HTMLElement) {
-    this.workspace = Blockly.inject(workspaceArea, { toolbox });
+  constructor(workspaceArea: HTMLDivElement) {
+    this.workspace = Blockly.inject(workspaceArea, {
+      toolbox: getToolbox(),
+    });
 
     this.setupInterpretation();
     this.resizeBlockly();

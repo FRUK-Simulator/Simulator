@@ -1,22 +1,17 @@
 import { Events } from "blockly";
-import React, { FunctionComponent, RefObject, useEffect, useRef } from "react";
+import React, { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyEvent, BlocklyInstance } from "./BlocklyInstance";
 import { getHighlightedBlockId } from "./blocklySlice";
 
+import "./Blockly.css";
+
 /**
  * Component that wraps the blockly interface.
  */
-
-interface BlocklyEditorProps {
-  toolbox: RefObject<HTMLElement>;
-}
-
-export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
-  toolbox,
-}) => {
+export const BlocklyEditor: FunctionComponent = () => {
   const workspaceAreaRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
@@ -69,10 +64,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
     resizeBlocklyRegion();
 
     if (!blocklyRef.current) {
-      blocklyRef.current = new BlocklyInstance(
-        workspaceAreaRef.current!,
-        toolbox.current!
-      );
+      blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
 
       blocklyRef.current.addChangeListener(handleBlocklyChange);
     }

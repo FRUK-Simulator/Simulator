@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
-import { JavascriptVM } from "../../JavascriptVM/JavascriptVM";
 import "./MenuBar.css";
+import { VMControls } from "../../JavascriptVM/VMControls";
 
 export const MenuBar: FunctionComponent = () => {
   return (
     <div className="menu-bar">
-      <JavascriptVM />
+      <VMControls />
     </div>
   );
 };
