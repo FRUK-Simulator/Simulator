@@ -1,9 +1,4 @@
-.blockly-wrapper {
-  grid-area: Blockly;
-  background-color: #e8f5e9;
-  height: 100%;
-}
-
 .blockly-workspace {
   height: 100%;
+  grid-area: Blockly;
 }

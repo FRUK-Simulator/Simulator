@@ -6,6 +6,8 @@ import { AppDispatch } from "../store";
 import { BlocklyEvent, BlocklyInstance } from "./BlocklyInstance";
 import { getHighlightedBlockId } from "./blocklySlice";
 
+import "./Blockly.css";
+
 /**
  * Component that wraps the blockly interface.
  */
