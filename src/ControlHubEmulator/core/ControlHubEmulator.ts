@@ -1,5 +1,5 @@
-import { DcMotorWithEncoder } from "./DcMotorWithEncoder";
-import { ControlHubListener } from "./ControlHubListener";
+import { DcMotorWithEncoder } from "./DcMotorWithEncoder.js";
+import { ControlHubListener } from "./ControlHubListener.js";
 
 const NUMBER_OF_DC_MOTORS_WITH_ENCODER = 4;
 
@@ -7,8 +7,8 @@ const NUMBER_OF_DC_MOTORS_WITH_ENCODER = 4;
  * This class emulates the inputs and outputs of the physical ControlHub
  */
 class ControlHubEmulator {
-    dcMotorWithEncoder: Array<DcMotorWithEncoder> = [];
-    controlHubListeners: Array<ControlHubListener> = [];
+    private dcMotorWithEncoder: Array<DcMotorWithEncoder> = [];
+    private controlHubListeners: Array<ControlHubListener> = [];
 
     constructor() {
         this.createDcMotorsWithEncoder(NUMBER_OF_DC_MOTORS_WITH_ENCODER);
@@ -46,3 +46,5 @@ class ControlHubEmulator {
         }
     }
 }
+
+export { ControlHubEmulator }

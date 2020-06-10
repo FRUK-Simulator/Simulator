@@ -1,4 +1,4 @@
-import { DcMotorWithEncoder } from "./DcMotorWithEncoder";
+import { DcMotorWithEncoder } from "./DcMotorWithEncoder.js";
 
 interface ControlHubListener {
 	onSetDcMotorDirection(dcMotorPort: number, forward: boolean): void;
