@@ -1,4 +1,4 @@
-.blockly-ui {
+.blockly-workspace {
+  height: 100%;
   grid-area: Blockly;
-  background-color: #e8f5e9;
 }

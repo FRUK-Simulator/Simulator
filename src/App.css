@@ -17,11 +17,6 @@ body,
     "Footer   Footer   Footer";
 }
 
-.menu-bar {
-  grid-area: Menu-Bar;
-  background-color: #4caf50;
-}
-
 .footer {
   grid-area: Footer;
   background-color: #4caf50;
