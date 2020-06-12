@@ -90,15 +90,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               onHighlight: (id) =>
                 dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
 
-              onSetDcMotorPower: (
-                port: number,
-                forward: boolean,
-                power: number
-              ) =>
+              onSetDcMotorPower: (port: number, power: number) =>
                 dispatch(
                   controlHubEmulatorSlice.actions.setDcMotorPower({
                     port,
-                    forward,
                     power,
                   })
                 ),

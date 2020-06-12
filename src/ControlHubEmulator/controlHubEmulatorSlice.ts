@@ -12,10 +12,9 @@ export const controlHubEmulatorSlice = createSlice({
   reducers: {
     setDcMotorPower(
       state,
-      action: PayloadAction<{ port: number; forward: boolean; power: number }>
+      action: PayloadAction<{ port: number; power: number }>
     ) {
-      state.dcMotorPower[action.payload.port] =
-        action.payload.power * (action.payload.forward ? 1 : -1);
+      state.dcMotorPower[action.payload.port] = action.payload.power;
       return state;
     },
   },

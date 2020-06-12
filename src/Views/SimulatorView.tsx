@@ -4,6 +4,7 @@ import { ControlPanel } from "../ControlPanel/ControlPanel";
 import "./SimulatorView.css";
 import { BlocklyEditor } from "../BlocklyInterface/BlocklyEditor";
 import { ControlHubEmulatorComp } from "../ControlHubEmulator/ControlHubEmulator";
+import { ControlHubLogComp } from "../ControlHubLog/ControlHubLog";
 
 export const SimulatorView: FunctionComponent = () => {
   return (
@@ -12,6 +13,7 @@ export const SimulatorView: FunctionComponent = () => {
       <RobotSimulator />
       <ControlPanel />
       <ControlHubEmulatorComp />
+      <ControlHubLogComp />
     </div>
   );
 };

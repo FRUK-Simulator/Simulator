@@ -2,7 +2,7 @@ import Interpreter from "js-interpreter";
 
 export type BlocklyInterpreterCallbacks = {
   onHighlight: (id: string) => void;
-  onSetDcMotorPower: (port: number, forward: boolean, power: number) => void;
+  onSetDcMotorPower: (port: number, power: number) => void;
 };
 
 export class BlocklyInterpreter {
@@ -25,9 +25,9 @@ export class BlocklyInterpreter {
       });
 
       const setDcMotorPower = interpreter.createNativeFunction(
-        (port: number, forward: boolean, power: number) => {
+        (port: number, power: number) => {
           this.pause = true;
-          callbacks.onSetDcMotorPower(port, forward, power);
+          callbacks.onSetDcMotorPower(port, power);
         }
       );
 

@@ -64,7 +64,7 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
     if (controlHubEmulatorView.current && dcMotor0Power) {
       controlHubEmulatorView.current
         .getControlHubEmulator()
-        .setDcMotorPower(0, true, dcMotor0Power);
+        .setDcMotorPower(0, dcMotor0Power);
     }
   }, [dcMotor0Power]);
 
@@ -72,7 +72,7 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
     if (controlHubEmulatorView.current && dcMotor1Power) {
       controlHubEmulatorView.current
         .getControlHubEmulator()
-        .setDcMotorPower(1, true, dcMotor1Power);
+        .setDcMotorPower(1, dcMotor1Power);
     }
   }, [dcMotor1Power]);
 
@@ -80,7 +80,7 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
     if (controlHubEmulatorView.current && dcMotor2Power) {
       controlHubEmulatorView.current
         .getControlHubEmulator()
-        .setDcMotorPower(2, true, dcMotor2Power);
+        .setDcMotorPower(2, dcMotor2Power);
     }
   }, [dcMotor2Power]);
 
@@ -88,7 +88,7 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
     if (controlHubEmulatorView.current && dcMotor3Power) {
       controlHubEmulatorView.current
         .getControlHubEmulator()
-        .setDcMotorPower(3, true, dcMotor3Power);
+        .setDcMotorPower(3, dcMotor3Power);
     }
   }, [dcMotor3Power]);
 

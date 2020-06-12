@@ -19,7 +19,7 @@ Blockly.defineBlocksWithJsonArray([
         name: "direction",
         options: [
           ["forward", "FORWARD"],
-          ["bakcward", "BACKWARD"],
+          ["backward", "BACKWARD"],
         ],
       },
       {
@@ -49,14 +49,9 @@ Blockly.JavaScript["dc_motor"] = function (block) {
     Blockly.JavaScript.ORDER_ATOMIC
   );
 
+  // convert direction to power sign +/-
   var isForward = dropdown_direction === "FORWARD";
-  var code =
-    "setDcMotorPower(" +
-    number_port +
-    ", " +
-    isForward +
-    ", " +
-    value_power +
-    ");\n";
+  value_power *= isForward ? 1 : -1;
+  var code = "setDcMotorPower(" + number_port + ", " + value_power + ");\n";
   return code;
 };
