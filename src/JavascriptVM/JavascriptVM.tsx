@@ -6,6 +6,7 @@ import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyInterpreter } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
+import { controlHubEmulatorSlice } from "../ControlHubEmulator/controlHubEmulatorSlice";
 
 import "./JavascriptVM.css";
 
@@ -88,6 +89,19 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             new BlocklyInterpreter(code, {
               onHighlight: (id) =>
                 dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+
+              onSetDcMotorPower: (
+                port: number,
+                forward: boolean,
+                power: number
+              ) =>
+                dispatch(
+                  controlHubEmulatorSlice.actions.setDcMotorPower({
+                    port,
+                    forward,
+                    power,
+                  })
+                ),
             })
           );
         },

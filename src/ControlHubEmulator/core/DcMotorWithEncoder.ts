@@ -1,5 +1,0 @@
-class DcMotorWithEncoder {
-
-}
-
-export { DcMotorWithEncoder }

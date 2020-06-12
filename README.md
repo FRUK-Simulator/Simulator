@@ -10,6 +10,10 @@ To help debug redux and get the most value out of it, make sure to download this
 
 In the project directory, you can run:
 
+### `npm install`
+
+Installs all depencies defined by the project.
+
 ### `npm start`
 
 Runs the app in the development mode.<br />

@@ -3,6 +3,7 @@ import { userSlice } from "./User/userSlice";
 import { robotSimulatorSlice } from "./RobotSimulator/robotSimulatorSlice";
 import { blocklySlice } from "./BlocklyInterface/blocklySlice";
 import { vmSlice } from "./JavascriptVM/vmSlice";
+import { controlHubEmulatorSlice } from "./ControlHubEmulator/controlHubEmulatorSlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   simulator: robotSimulatorSlice.reducer,
   blockly: blocklySlice.reducer,
   vm: vmSlice.reducer,
+  controlHubEmulator: controlHubEmulatorSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

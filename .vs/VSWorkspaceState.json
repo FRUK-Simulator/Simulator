@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\BlocklyInterface",
+    "\\src\\BlocklyInterface\\scripts",
+    "\\src\\ControlHubEmulator",
+    "\\src\\ControlHubEmulator\\core",
+    "\\src\\ControlPanel",
+    "\\src\\JavascriptVM",
+    "\\src\\RobotSimulator",
+    "\\src\\Views"
+  ],
+  "SelectedNode": "\\src\\JavascriptVM\\JavascriptVM.css",
+  "PreviewInSolutionExplorer": false
+}
