@@ -6,7 +6,7 @@ import { RootState } from "../store";
  */
 export const controlHubEmulatorSlice = createSlice({
   initialState: {
-    dcMotor1Power: 0,
+    dcMotor0Power: 0,
   },
   name: "controlHubEmulator",
   reducers: {
@@ -14,11 +14,11 @@ export const controlHubEmulatorSlice = createSlice({
       state,
       action: PayloadAction<{ port: number; forward: boolean; power: number }>
     ) {
-      state.dcMotor1Power = action.payload.power;
+      state.dcMotor0Power = action.payload.power;
       return state;
     },
   },
 });
 
-export const getDcMotor1Power = (state: RootState) =>
-  state.controlHubEmulator.dcMotor1Power;
+export const getDcMotor0Power = (state: RootState) =>
+  state.controlHubEmulator.dcMotor0Power;

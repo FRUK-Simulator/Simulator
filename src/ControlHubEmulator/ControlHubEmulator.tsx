@@ -2,14 +2,14 @@ import React, { FunctionComponent, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./ControlHubEmulator.css";
 import { ControlHubEmulatorView } from "@fruk/control-hub-emulator-core";
-import { getDcMotor1Power } from "./controlHubEmulatorSlice";
+import { getDcMotor0Power } from "./controlHubEmulatorSlice";
 
 // This component coordinates between react html and the canvas. It uses the ControlHubEmulatorView class to handle the UI and
 // proxies all required events from the browsers into the ControlHubEmulatorView. All react redux integration is done at this level.
 export const ControlHubEmulatorComp: FunctionComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasParentRef = useRef<HTMLDivElement>(null);
-  const dcMotor1Power = useSelector(getDcMotor1Power);
+  const dcMotor0Power = useSelector(getDcMotor0Power);
 
   const controlHubEmulatorView = useRef<ControlHubEmulatorView | null>(null);
 
@@ -55,12 +55,12 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
   });
 
   useEffect(() => {
-    if (controlHubEmulatorView.current && dcMotor1Power) {
+    if (controlHubEmulatorView.current && dcMotor0Power) {
       controlHubEmulatorView.current
         .getControlHubEmulator()
-        .setDcMotorPower(1, true, dcMotor1Power);
+        .setDcMotorPower(0, true, dcMotor0Power);
     }
-  }, [dcMotor1Power]);
+  }, [dcMotor0Power]);
 
   return (
     <div className="control-hub-emulator-comp" ref={canvasParentRef}>

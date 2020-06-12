@@ -32,6 +32,8 @@ Blockly.defineBlocksWithJsonArray([
         align: "RIGHT",
       },
     ],
+    previousStatement: null,
+    nextStatement: null,
     colour: 230,
     tooltip: "",
     helpUrl: "",
@@ -47,8 +49,14 @@ Blockly.JavaScript["dc_motor"] = function (block) {
     Blockly.JavaScript.ORDER_ATOMIC
   );
 
-  let isForward = dropdown_direction == "FORWARD";
+  var isForward = dropdown_direction === "FORWARD";
   var code =
-    "setDcMotorPower(" + number_port + ", isForward, " + value_power + ");\n";
+    "setDcMotorPower(" +
+    number_port +
+    ", " +
+    isForward +
+    ", " +
+    value_power +
+    ");\n";
   return code;
 };
