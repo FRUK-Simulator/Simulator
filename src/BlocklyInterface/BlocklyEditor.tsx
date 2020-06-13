@@ -1,10 +1,18 @@
 import { Events } from "blockly";
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { vmSlice } from "../JavascriptVM/vmSlice";
+import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../store";
-import { BlocklyEvent, BlocklyInstance } from "./BlocklyInstance";
-import { getHighlightedBlockId } from "./blocklySlice";
+import {
+  BlocklyEvent,
+  BlocklyEventName,
+  BlocklyInstance,
+} from "./BlocklyInstance";
+import {
+  getHighlightedBlockId,
+  getCurrentBlockSelection,
+  blocklySlice,
+} from "./blocklySlice";
 
 import "./Blockly.css";
 
@@ -15,7 +23,11 @@ export const BlocklyEditor: FunctionComponent = () => {
   const workspaceAreaRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
+
   const highlightedBlock = useSelector(getHighlightedBlockId);
+  const currentBlockSelection = useSelector(getCurrentBlockSelection);
+
+  const executing = useSelector(isExecuting);
 
   const blocklyRef = useRef<BlocklyInstance | null>(null);
 
@@ -51,12 +63,20 @@ export const BlocklyEditor: FunctionComponent = () => {
         return;
       }
 
-      if (
-        event instanceof Events.BlockMove ||
-        event instanceof Events.BlockChange
-      ) {
+      dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
+    }
+
+    //function handleBlocklyUiEvent(event: Events.Ui) {
+    function handleBlocklyUiEvent(event: any) {
+      if (!blocklyRef.current) {
+        return;
+      }
+
+      if (event.element === "selected") {
         dispatch(
-          vmSlice.actions.setCode({ code: blocklyRef.current.getCode() })
+          blocklySlice.actions.selectedBlock({
+            blockId: blocklyRef.current.selected || "",
+          })
         );
       }
     }
@@ -66,7 +86,19 @@ export const BlocklyEditor: FunctionComponent = () => {
     if (!blocklyRef.current) {
       blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
 
-      blocklyRef.current.addChangeListener(handleBlocklyChange);
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.BlockMove,
+        handleBlocklyChange
+      );
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.BlockChange,
+        handleBlocklyChange
+      );
+
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.Ui,
+        handleBlocklyUiEvent
+      );
     }
   });
 
@@ -84,14 +116,30 @@ export const BlocklyEditor: FunctionComponent = () => {
   });
 
   useEffect(() => {
-    if (blocklyRef.current && highlightedBlock) {
-      blocklyRef.current.highlightBlock(highlightedBlock);
+    if (blocklyRef.current) {
+      if (highlightedBlock) {
+        blocklyRef.current.highlightBlock(highlightedBlock);
+      }
+
+      blocklyRef.current.selected = currentBlockSelection;
     }
-  }, [highlightedBlock]);
+  }, [highlightedBlock, currentBlockSelection, executing]);
 
   return (
-    <div ref={wrapperRef} className="blockly-workspace">
-      <div className="blockly-workspace-area" ref={workspaceAreaRef} />
+    <div
+      ref={wrapperRef}
+      className="blockly-workspace"
+      style={{
+        cursor: executing ? "not-allowed" : "auto",
+      }}
+    >
+      <div
+        className="blockly-workspace-area"
+        ref={workspaceAreaRef}
+        style={{
+          pointerEvents: executing ? "none" : "auto",
+        }}
+      />
     </div>
   );
 };
