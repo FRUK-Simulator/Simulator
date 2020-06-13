@@ -1,12 +1,20 @@
 import React, { FunctionComponent, useRef, useEffect } from "react";
 import "./ControlHubLog.css";
 import { ControlHubLogView } from "@fruk/control-hub-emulator-core";
+import { ControlHubEmulator } from "@fruk/control-hub-emulator-core/dist/engine/ControlHubEmulator";
+
+type ControlHubEmulatorProps = {
+  controlHubEmulator: ControlHubEmulator;
+};
 
 // This component coordinates between react html and the canvas. It uses the ControlHubEmulatorView class to handle the UI and
 // proxies all required events from the browsers into the ControlHubEmulatorView. All react redux integration is done at this level.
-export const ControlHubLogComp: FunctionComponent = () => {
+export const ControlHubLogComp: FunctionComponent<ControlHubEmulatorProps> = (
+  props: ControlHubEmulatorProps
+) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasParentRef = useRef<HTMLDivElement>(null);
+  //const controlHubEmulator = useSelector(getControlHubEmulator);
 
   const controlHubLogView = useRef<ControlHubLogView | null>(null);
 
@@ -24,7 +32,10 @@ export const ControlHubLogComp: FunctionComponent = () => {
   useEffect(() => {
     updateCanvasSize();
 
-    controlHubLogView.current = new ControlHubLogView(canvasRef.current!);
+    controlHubLogView.current = new ControlHubLogView(
+      canvasRef.current!,
+      props.controlHubEmulator
+    );
     controlHubLogView.current?.beginRendering();
 
     return () => {

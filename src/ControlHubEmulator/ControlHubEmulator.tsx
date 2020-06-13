@@ -1,15 +1,22 @@
 import React, { FunctionComponent, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./ControlHubEmulator.css";
-import { ControlHubEmulatorView } from "@fruk/control-hub-emulator-core";
 import { getDcMotor0Power } from "./controlHubEmulatorSlice";
 import { getDcMotor1Power } from "./controlHubEmulatorSlice";
 import { getDcMotor2Power } from "./controlHubEmulatorSlice";
 import { getDcMotor3Power } from "./controlHubEmulatorSlice";
+import { ControlHubEmulator } from "@fruk/control-hub-emulator-core/dist/engine/ControlHubEmulator";
+import { ControlHubEmulatorView } from "@fruk/control-hub-emulator-core";
+
+type ControlHubEmulatorProps = {
+  controlHubEmulator: ControlHubEmulator;
+};
 
 // This component coordinates between react html and the canvas. It uses the ControlHubEmulatorView class to handle the UI and
 // proxies all required events from the browsers into the ControlHubEmulatorView. All react redux integration is done at this level.
-export const ControlHubEmulatorComp: FunctionComponent = () => {
+export const ControlHubEmulatorComp: FunctionComponent<ControlHubEmulatorProps> = (
+  props: ControlHubEmulatorProps
+) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasParentRef = useRef<HTMLDivElement>(null);
   const dcMotor0Power = useSelector(getDcMotor0Power);
@@ -34,7 +41,8 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
     updateCanvasSize();
 
     controlHubEmulatorView.current = new ControlHubEmulatorView(
-      canvasRef.current!
+      canvasRef.current!,
+      props.controlHubEmulator
     );
     controlHubEmulatorView.current?.beginRendering();
 
@@ -62,35 +70,27 @@ export const ControlHubEmulatorComp: FunctionComponent = () => {
 
   useEffect(() => {
     if (controlHubEmulatorView.current && dcMotor0Power) {
-      controlHubEmulatorView.current
-        .getControlHubEmulator()
-        .setDcMotorPower(0, dcMotor0Power);
+      props.controlHubEmulator.setDcMotorPower(0, dcMotor0Power);
     }
-  }, [dcMotor0Power]);
+  }, [dcMotor0Power, props]);
 
   useEffect(() => {
     if (controlHubEmulatorView.current && dcMotor1Power) {
-      controlHubEmulatorView.current
-        .getControlHubEmulator()
-        .setDcMotorPower(1, dcMotor1Power);
+      props.controlHubEmulator.setDcMotorPower(1, dcMotor1Power);
     }
-  }, [dcMotor1Power]);
+  }, [dcMotor1Power, props]);
 
   useEffect(() => {
     if (controlHubEmulatorView.current && dcMotor2Power) {
-      controlHubEmulatorView.current
-        .getControlHubEmulator()
-        .setDcMotorPower(2, dcMotor2Power);
+      props.controlHubEmulator.setDcMotorPower(2, dcMotor2Power);
     }
-  }, [dcMotor2Power]);
+  }, [dcMotor2Power, props]);
 
   useEffect(() => {
     if (controlHubEmulatorView.current && dcMotor3Power) {
-      controlHubEmulatorView.current
-        .getControlHubEmulator()
-        .setDcMotorPower(3, dcMotor3Power);
+      props.controlHubEmulator.setDcMotorPower(3, dcMotor3Power);
     }
-  }, [dcMotor3Power]);
+  }, [dcMotor3Power, props]);
 
   return (
     <div className="control-hub-emulator-comp" ref={canvasParentRef}>
