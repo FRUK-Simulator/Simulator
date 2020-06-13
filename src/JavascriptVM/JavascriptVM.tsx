@@ -91,6 +91,9 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
               onSetDcMotorPower: (port: number, power: number) =>
                 controlHubEmulator.setDcMotorPower(port, power),
+
+              onIsSensorTouchPushed: (port: number) =>
+                controlHubEmulator.isDigitalInHigh(port),
             })
           );
         },

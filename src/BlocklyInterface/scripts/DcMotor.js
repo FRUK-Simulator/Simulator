@@ -52,6 +52,6 @@ Blockly.JavaScript["dc_motor"] = function (block) {
   // convert direction to power sign +/-
   var isForward = dropdown_direction === "FORWARD";
   value_power *= isForward ? 1 : -1;
-  var code = "setDcMotorPower(" + number_port + ", " + value_power + ");\n";
+  var code = "setDcMotorPower(" + number_port + ", " + value_power + ")";
   return code;
 };

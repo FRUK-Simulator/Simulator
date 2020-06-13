@@ -3,6 +3,7 @@ import Interpreter from "js-interpreter";
 export type BlocklyInterpreterCallbacks = {
   onHighlight: (id: string) => void;
   onSetDcMotorPower: (port: number, power: number) => void;
+  onIsSensorTouchPushed: (port: number) => boolean;
 };
 
 export class BlocklyInterpreter {
@@ -31,9 +32,21 @@ export class BlocklyInterpreter {
         }
       );
 
+      const isSensorTouchPushed = interpreter.createNativeFunction(
+        (port: number, power: number) => {
+          this.pause = true;
+          return callbacks.onIsSensorTouchPushed(port);
+        }
+      );
+
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setDcMotorPower", setDcMotorPower);
+      interpreter.setProperty(
+        globals,
+        "isSensorTouchPushed",
+        isSensorTouchPushed
+      );
     });
   }
 
