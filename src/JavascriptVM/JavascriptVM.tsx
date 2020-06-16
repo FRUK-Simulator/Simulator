@@ -81,12 +81,9 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          const finished = interpreter?.step();
+          interpreter?.step();
 
-          if (finished) {
-            syncExecutionState();
-            setInterpreter(null);
-          }
+          syncExecutionState();
         },
         stop() {
           if (!interpreter) {

@@ -73,7 +73,9 @@ export const VMControls: FunctionComponent = () => {
   };
   const commandBarRunningItems: ICommandBarItemProps[] = [
     stopButton,
-    stepButton,
+    executionStatus === ExecutionState.RUNNING
+      ? { ...stepButton, disabled: true }
+      : stepButton,
     executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [

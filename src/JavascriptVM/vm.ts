@@ -14,8 +14,6 @@ export type BlocklyInterpreterCallbacks = {
 export enum ExecutionState {
   /** Represents when the VM has not been created yet */
   NONE = "none",
-  /** Represents when the VM has been loaded with code */
-  STARTED = "started",
   /** Represents when the VM has begun running on an interval */
   RUNNING = "running",
   /** Represents when the VM has been stopped and the state has been cleared */
@@ -24,7 +22,7 @@ export enum ExecutionState {
   PAUSED = "paused",
 }
 
-const BLOCKS_PER_FRAME = 1;
+const BLOCKS_PER_SECOND = 1;
 
 export class BlocklyInterpreter {
   private interpreter: Interpreter;
@@ -33,7 +31,7 @@ export class BlocklyInterpreter {
   private callbacks: BlocklyInterpreterCallbacks;
 
   constructor(code: string, callbacks: BlocklyInterpreterCallbacks) {
-    this.executionState = ExecutionState.STARTED;
+    this.executionState = ExecutionState.PAUSED;
     this.callbacks = callbacks;
     this.blockHighlighted = false;
 
@@ -50,6 +48,9 @@ export class BlocklyInterpreter {
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
     });
+
+    // Start running in a paused state - ie, spawn a "thread"
+    this._run();
   }
 
   /**
@@ -108,32 +109,16 @@ export class BlocklyInterpreter {
         return this._run();
       }
 
-      for (
-        let cnt = 0;
-        cnt < BLOCKS_PER_FRAME &&
-        this.executionState !== ExecutionState.STOPPED;
-        cnt++
-      ) {
-        // Execute a block of work. This ensures when the user pause a block is highlighted and execution starts from that block.
-        this._step();
-      }
+      this._step();
 
       // schedule the next run
-      return this.run();
-    }, 500);
+      return this._run();
+    }, 1000 / BLOCKS_PER_SECOND);
   }
 
   run() {
-    // as a convenience, unpause an already running program if paused
+    // unpause the execution
     this.unpause();
-
-    // run can only be called once so that the vm is executed more than once by accident
-    if (this.executionState !== ExecutionState.STARTED) {
-      return;
-    }
-
-    // begin executing
-    this._run();
   }
 
   /**
@@ -150,7 +135,7 @@ export class BlocklyInterpreter {
    */
   unpause() {
     if (this.executionState === ExecutionState.PAUSED) {
-      this.executionState = ExecutionState.PAUSED;
+      this.executionState = ExecutionState.RUNNING;
     }
   }
 

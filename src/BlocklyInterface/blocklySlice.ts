@@ -30,7 +30,6 @@ export const blocklySlice = createSlice({
     builder.addCase(vmSlice.actions.setExecutionState, (state, action) => {
       if (
         action.payload.executionState === ExecutionState.STOPPED ||
-        action.payload.executionState === ExecutionState.STARTED ||
         action.payload.executionState === ExecutionState.NONE
       ) {
         // Passing a fake block id guarantees to unhighlight all blocks
