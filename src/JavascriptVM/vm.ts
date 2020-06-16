@@ -1,15 +1,30 @@
 import Interpreter from "js-interpreter";
 
 export type BlocklyInterpreterCallbacks = {
-  onHighlight: (id: string) => void;
+  /**
+   * Called when the vm encounter a "higlightBlock" function call
+   */
+  onHighlight?: (id: string) => void;
+  /**
+   * Called when there is nothing left to execute or the vm has been stopped
+   */
+  onFinish?: () => void;
 };
 
-const BLOCKS_PER_FRAME = 1;
-enum ExecutionState {
-  run = "running",
-  paused = "paused",
-  stopped = "stopped",
+export enum ExecutionState {
+  /** Represents when the VM has not been created yet */
+  NONE = "none",
+  /** Represents when the VM has been loaded with code */
+  STARTED = "started",
+  /** Represents when the VM has begun running on an interval */
+  RUNNING = "running",
+  /** Represents when the VM has been stopped and the state has been cleared */
+  STOPPED = "stopped",
+  /** Execution is paused but the state is saved and code is still loaded */
+  PAUSED = "paused",
 }
+
+const BLOCKS_PER_FRAME = 1;
 
 export class BlocklyInterpreter {
   private interpreter: Interpreter;
@@ -18,14 +33,14 @@ export class BlocklyInterpreter {
   private callbacks: BlocklyInterpreterCallbacks;
 
   constructor(code: string, callbacks: BlocklyInterpreterCallbacks) {
-    this.executionState = ExecutionState.run;
+    this.executionState = ExecutionState.STARTED;
     this.callbacks = callbacks;
     this.blockHighlighted = false;
 
     this.interpreter = new Interpreter(code, (interpreter, globals) => {
       const highlightBlock = interpreter.createNativeFunction((id: string) => {
         this.blockHighlighted = true;
-        callbacks.onHighlight(id);
+        callbacks.onHighlight && callbacks.onHighlight(id);
       });
 
       const alert = interpreter.createNativeFunction((text: string) => {
@@ -37,7 +52,12 @@ export class BlocklyInterpreter {
     });
   }
 
-  step(): boolean {
+  /**
+   * Executes a "block" of work. If there is no more work to be executed, stops execution and
+   * fires the "onFinished" callback if present. This is the main function that should be called
+   * to execute code on the VM.
+   */
+  private _step(): boolean {
     let finished = false;
     this.blockHighlighted = false;
     while (!this.blockHighlighted && !finished) {
@@ -45,58 +65,108 @@ export class BlocklyInterpreter {
     }
     this.blockHighlighted = false;
 
+    if (finished) {
+      // put the VM into a "stopped" state
+      this.stop();
+
+      // alert the client of the VM that execution is finished if there is a cb registered
+      this.callbacks.onFinish && this.callbacks.onFinish();
+    }
+
     return finished;
   }
 
-  run(): Promise<void> {
-    // do not schedule any more work if stopped
-    if (this.executionState === ExecutionState.stopped) {
-      return Promise.resolve();
+  /**
+   * Steps execution by one block if there is code left to execute. Returns true if there is more to execute, false otherwise.
+   */
+  step(): boolean {
+    // do not step an already running program
+    if (this.executionState === ExecutionState.RUNNING) {
+      return true;
     }
 
-    return new Promise((res) => {
-      setTimeout(() => {
-        // if paused - schedule the next frame
-        if (this.executionState === ExecutionState.paused) {
-          return res(this.run());
-        }
+    // if stopped, do nothing.
+    if (this.executionState === ExecutionState.STOPPED) {
+      return false;
+    }
 
-        for (let cnt = 0; cnt < BLOCKS_PER_FRAME; cnt++) {
-          const finished = this.step();
-
-          // execution has finished - do not schedule more work
-          if (finished) {
-            // prevent future runs
-            this.stop();
-
-            return res();
-          }
-        }
-
-        // more to execute - schedule the next task
-        return res(this.run());
-      }, 500);
-    });
+    return this._step();
   }
 
   /**
-   * Pauses execution after calling "run".
+   * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
+   */
+  private _run() {
+    // do not schedule any more work if stopped
+    if (this.executionState === ExecutionState.STOPPED) {
+      return;
+    }
+
+    setTimeout(() => {
+      // if paused - schedule the next frame
+      if (this.executionState === ExecutionState.PAUSED) {
+        return this._run();
+      }
+
+      for (
+        let cnt = 0;
+        cnt < BLOCKS_PER_FRAME &&
+        this.executionState !== ExecutionState.STOPPED;
+        cnt++
+      ) {
+        // Execute a block of work. This ensures when the user pause a block is highlighted and execution starts from that block.
+        this._step();
+      }
+
+      // schedule the next run
+      return this.run();
+    }, 500);
+  }
+
+  run() {
+    // as a convenience, unpause an already running program if paused
+    this.unpause();
+
+    // run can only be called once so that the vm is executed more than once by accident
+    if (this.executionState !== ExecutionState.STARTED) {
+      return;
+    }
+
+    // begin executing
+    this._run();
+  }
+
+  /**
+   * Pauses execution if the vm is running.
    */
   pause() {
-    this.executionState = ExecutionState.paused;
+    if (this.executionState === ExecutionState.RUNNING) {
+      this.executionState = ExecutionState.PAUSED;
+    }
   }
 
   /**
-   * Unpauses execution after calling "run".
+   * Unpauses execution if the vm is paused
    */
   unpause() {
-    this.executionState = ExecutionState.run;
+    if (this.executionState === ExecutionState.PAUSED) {
+      this.executionState = ExecutionState.PAUSED;
+    }
   }
 
   /**
-   * Permanently stop the execution
+   * Permanently stops the execution. Triggers the "onFinished" callback.
    */
   stop() {
-    this.executionState = ExecutionState.stopped;
+    this.executionState = ExecutionState.STOPPED;
+  }
+
+  /**
+   * Returns the state of the VM.
+   *
+   * @see ExecutionState
+   */
+  getExecutionState() {
+    return this.executionState;
   }
 }

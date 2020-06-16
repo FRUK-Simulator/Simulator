@@ -1,15 +1,10 @@
 import { FunctionComponent, useState, createContext } from "react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  isExecuting,
-  vmSlice,
-  getExecutionStatus,
-  ExecutionStatus,
-} from "./vmSlice";
+import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
-import { BlocklyInterpreter } from "./vm";
+import { BlocklyInterpreter, ExecutionState } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
@@ -45,10 +40,19 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   const [interpreter, setInterpreter] = useState<BlocklyInterpreter | null>(
     null
   );
-  const executing = useSelector(isExecuting);
-  const executionStatus = useSelector(getExecutionStatus);
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
+
+  /**
+   * Syncs the redux state with the interpreter state.
+   */
+  function syncExecutionState() {
+    dispatch(
+      vmSlice.actions.setExecutionState({
+        executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
+      })
+    );
+  }
 
   return (
     <VMContext.Provider
@@ -59,16 +63,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          if (executionStatus === ExecutionStatus.PAUSED) {
-            interpreter.unpause();
-            dispatch(vmSlice.actions.run());
-          } else {
-            dispatch(vmSlice.actions.run());
-            interpreter.run().then(() => {
-              dispatch(vmSlice.actions.stopExecution());
-              setInterpreter(null);
-            });
-          }
+          interpreter.run();
+          syncExecutionState();
         },
         pause() {
           if (!interpreter) {
@@ -77,7 +73,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.pause();
-          dispatch(vmSlice.actions.pause());
+          syncExecutionState();
         },
         step() {
           if (!interpreter) {
@@ -88,7 +84,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           const finished = interpreter?.step();
 
           if (finished) {
-            dispatch(vmSlice.actions.stopExecution());
+            syncExecutionState();
             setInterpreter(null);
           }
         },
@@ -99,7 +95,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.stop();
-          dispatch(vmSlice.actions.stopExecution());
+          syncExecutionState();
           setInterpreter(null);
         },
         start() {
@@ -107,18 +103,24 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          if (executing) {
-            console.warn("already executing");
-            return;
-          }
+          const interpreter = new BlocklyInterpreter(code, {
+            onHighlight: (id) =>
+              dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+            onFinish: () => {
+              syncExecutionState();
+              setInterpreter(null);
+            },
+          });
 
-          dispatch(vmSlice.actions.startExecution());
-          setInterpreter(
-            new BlocklyInterpreter(code, {
-              onHighlight: (id) =>
-                dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+          // sync execution state requires the state to be updated - manually update here
+          // as setting state is asynchronous
+          dispatch(
+            vmSlice.actions.setExecutionState({
+              executionState: interpreter.getExecutionState(),
             })
           );
+
+          setInterpreter(interpreter);
         },
       }}
     >

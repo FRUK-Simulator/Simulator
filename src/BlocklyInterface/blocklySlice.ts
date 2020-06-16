@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { vmSlice } from "../JavascriptVM/vmSlice";
+import { ExecutionState } from "../JavascriptVM/vm";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -26,18 +27,17 @@ export const blocklySlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(vmSlice.actions.stopExecution, (state) => {
-      // Passing a fake block id guarantees to unhighlight all blocks
-      state.highlightedBlock = "UNHIGHLIGHT_BLOCKS";
+    builder.addCase(vmSlice.actions.setExecutionState, (state, action) => {
+      if (
+        action.payload.executionState === ExecutionState.STOPPED ||
+        action.payload.executionState === ExecutionState.STARTED ||
+        action.payload.executionState === ExecutionState.NONE
+      ) {
+        // Passing a fake block id guarantees to unhighlight all blocks
+        state.highlightedBlock = "UNHIGHLIGHT_BLOCKS";
+      }
 
       // Clear block selection once VM execution fterminated
-      state.selectedBlock = "";
-
-      return state;
-    });
-
-    builder.addCase(vmSlice.actions.startExecution, (state) => {
-      // Clear block selection when starting execution
       state.selectedBlock = "";
 
       return state;

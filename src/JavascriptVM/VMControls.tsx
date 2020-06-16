@@ -1,17 +1,18 @@
 import { FunctionComponent, useContext } from "react";
 import React from "react";
 import { useSelector } from "react-redux";
-import { isExecuting, getExecutionStatus, ExecutionStatus } from "./vmSlice";
+import { isExecuting, getExecutionState } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { VMContext, IVirtualMachine } from "./JavascriptVM";
+import { ExecutionState } from "./vm";
 /**
  * Renders a component that is responsible for controlling the VM according to the state
  * of the application. Provides controls to conditionally start, stop, step, and run the VM.
  */
 export const VMControls: FunctionComponent = () => {
   const executing = useSelector(isExecuting);
-  const executionStatus = useSelector(getExecutionStatus);
+  const executionStatus = useSelector(getExecutionState);
   const controls = useContext(VMContext) as IVirtualMachine;
   const code = useSelector(getCode);
 
@@ -73,7 +74,7 @@ export const VMControls: FunctionComponent = () => {
   const commandBarRunningItems: ICommandBarItemProps[] = [
     stopButton,
     stepButton,
-    executionStatus === ExecutionStatus.RUNNING ? pauseButton : runButton,
+    executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
     { ...startButton, disabled: !code },
