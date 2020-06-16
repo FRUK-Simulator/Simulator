@@ -1,7 +1,7 @@
 import { FunctionComponent, useContext } from "react";
 import React from "react";
 import { useSelector } from "react-redux";
-import { isExecuting } from "./vmSlice";
+import { isExecuting, getExecutionStatus, ExecutionStatus } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { VMContext, IVirtualMachine } from "./JavascriptVM";
@@ -11,6 +11,7 @@ import { VMContext, IVirtualMachine } from "./JavascriptVM";
  */
 export const VMControls: FunctionComponent = () => {
   const executing = useSelector(isExecuting);
+  const executionStatus = useSelector(getExecutionStatus);
   const controls = useContext(VMContext) as IVirtualMachine;
   const code = useSelector(getCode);
 
@@ -47,6 +48,17 @@ export const VMControls: FunctionComponent = () => {
       className: "javascript-vm-controls--run-button",
     },
   };
+  const pauseButton: ICommandBarItemProps = {
+    onClick() {
+      controls.pause();
+    },
+    key: "pause",
+    text: "Pause",
+    iconProps: {
+      iconName: "Pause",
+      className: "javascript-vm-controls--pause-button",
+    },
+  };
   const stopButton: ICommandBarItemProps = {
     onClick() {
       controls.stop();
@@ -61,7 +73,7 @@ export const VMControls: FunctionComponent = () => {
   const commandBarRunningItems: ICommandBarItemProps[] = [
     stopButton,
     stepButton,
-    runButton,
+    executionStatus === ExecutionStatus.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
     { ...startButton, disabled: !code },

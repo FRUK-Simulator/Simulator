@@ -2,8 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export enum ExecutionStatus {
+  /** Represents when the VM has been loaded with code */
+  STARTED,
+  /** Represents when the VM has begun running on an interval */
   RUNNING,
+  /** Represents when the VM has been stopped and the state has been cleared */
   STOPPED,
+  /** Execution is paused but the state is saved and code is still loaded */
   PAUSED,
 }
 
@@ -19,8 +24,18 @@ export const vmSlice = createSlice({
   reducers: {
     startExecution(state) {
       if (state.code) {
-        state.status = ExecutionStatus.RUNNING;
+        state.status = ExecutionStatus.STARTED;
       }
+
+      return state;
+    },
+    run(state) {
+      state.status = ExecutionStatus.RUNNING;
+
+      return state;
+    },
+    pause(state) {
+      state.status = ExecutionStatus.PAUSED;
 
       return state;
     },

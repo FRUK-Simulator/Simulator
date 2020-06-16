@@ -1,7 +1,12 @@
 import { FunctionComponent, useState, createContext } from "react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isExecuting, vmSlice } from "./vmSlice";
+import {
+  isExecuting,
+  vmSlice,
+  getExecutionStatus,
+  ExecutionStatus,
+} from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyInterpreter } from "./vm";
@@ -17,6 +22,7 @@ export interface IVirtualMachine {
   step: () => void;
   stop: () => void;
   start: () => void;
+  pause: () => void;
 }
 
 /**
@@ -40,6 +46,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
     null
   );
   const executing = useSelector(isExecuting);
+  const executionStatus = useSelector(getExecutionStatus);
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
@@ -52,9 +59,25 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          interpreter?.run();
-          dispatch(vmSlice.actions.stopExecution());
-          setInterpreter(null);
+          if (executionStatus === ExecutionStatus.PAUSED) {
+            interpreter.unpause();
+            dispatch(vmSlice.actions.run());
+          } else {
+            dispatch(vmSlice.actions.run());
+            interpreter.run().then(() => {
+              dispatch(vmSlice.actions.stopExecution());
+              setInterpreter(null);
+            });
+          }
+        },
+        pause() {
+          if (!interpreter) {
+            console.warn("vm is not started");
+            return;
+          }
+
+          interpreter.pause();
+          dispatch(vmSlice.actions.pause());
         },
         step() {
           if (!interpreter) {
@@ -70,6 +93,12 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
         },
         stop() {
+          if (!interpreter) {
+            console.warn("vm is not started");
+            return;
+          }
+
+          interpreter.stop();
           dispatch(vmSlice.actions.stopExecution());
           setInterpreter(null);
         },
