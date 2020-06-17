@@ -1,6 +1,10 @@
-import Blockly, { Events } from "blockly";
+import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
 import { getToolbox } from "./toolbox";
+
+export class BlocklyUiEvent extends Events.Ui {
+  public element: string | undefined;
+}
 
 declare interface BlocklyJavaScript {
   STATEMENT_PREFIX: string;
@@ -8,7 +12,16 @@ declare interface BlocklyJavaScript {
   workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
 }
 
-export type BlocklyEvent = Events.BlockChange | Events.BlockMove | Events.Ui;
+export type BlocklyEvent =
+  | Events.BlockChange
+  | Events.BlockMove
+  | BlocklyUiEvent;
+
+export enum BlocklyEventName {
+  BlockChange = "BlockChange",
+  BlockMove = "BlockMove",
+  Ui = "Ui",
+}
 
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 
@@ -44,12 +57,39 @@ class BlocklyInstance {
     return this.workspace.highlightBlock(id);
   }
 
-  addChangeListener(fn: (event: BlocklyEvent) => void) {
-    this.workspace.addChangeListener(fn);
+  addChangeListener(
+    eventName: BlocklyEventName,
+    fn: (event: BlocklyEvent) => void
+  ) {
+    this.workspace.addChangeListener((event: BlocklyEvent) => {
+      if (event instanceof Events[eventName]) {
+        fn(event);
+      }
+    });
   }
 
   get generator() {
     return (Blockly as any).JavaScript as BlocklyJavaScript;
+  }
+
+  get selected() {
+    return Blockly.selected?.id || "";
+  }
+
+  set selected(id) {
+    if (id) {
+      const block = this.workspace.getBlockById(id) as BlockSvg;
+
+      if (block) {
+        block.select();
+      }
+    } else {
+      const block = Blockly.selected as BlockSvg;
+
+      if (block) {
+        block.unselect();
+      }
+    }
   }
 }
 
