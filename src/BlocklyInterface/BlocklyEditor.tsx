@@ -1,4 +1,3 @@
-import { Events } from "blockly";
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
@@ -66,7 +65,6 @@ export const BlocklyEditor: FunctionComponent = () => {
       dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
     }
 
-    //function handleBlocklyUiEvent(event: Events.Ui) {
     function handleBlocklyUiEvent(event: any) {
       if (!blocklyRef.current) {
         return;
