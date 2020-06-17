@@ -4,6 +4,7 @@ import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../store";
 import {
   BlocklyEvent,
+  BlocklyUiEvent,
   BlocklyEventName,
   BlocklyInstance,
 } from "./BlocklyInstance";
@@ -65,17 +66,19 @@ export const BlocklyEditor: FunctionComponent = () => {
       dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
     }
 
-    function handleBlocklyUiEvent(event: any) {
-      if (!blocklyRef.current) {
-        return;
-      }
+    function handleBlocklyUiEvent(event: BlocklyEvent) {
+      if (event instanceof BlocklyUiEvent) {
+        if (!blocklyRef.current) {
+          return;
+        }
 
-      if (event.element === "selected") {
-        dispatch(
-          blocklySlice.actions.selectedBlock({
-            blockId: blocklyRef.current.selected || "",
-          })
-        );
+        if (event.element === "selected") {
+          dispatch(
+            blocklySlice.actions.selectedBlock({
+              blockId: blocklyRef.current.selected || "",
+            })
+          );
+        }
       }
     }
 

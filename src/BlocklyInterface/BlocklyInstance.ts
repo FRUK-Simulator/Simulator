@@ -2,13 +2,20 @@ import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
 import { getToolbox } from "./toolbox";
 
+export class BlocklyUiEvent extends Events.Ui {
+  public element: string | undefined;
+}
+
 declare interface BlocklyJavaScript {
   STATEMENT_PREFIX: string;
   addReservedWords(prefix: string): void;
   workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
 }
 
-export type BlocklyEvent = Events.BlockChange | Events.BlockMove | Events.Ui;
+export type BlocklyEvent =
+  | Events.BlockChange
+  | Events.BlockMove
+  | BlocklyUiEvent;
 
 export enum BlocklyEventName {
   BlockChange = "BlockChange",
