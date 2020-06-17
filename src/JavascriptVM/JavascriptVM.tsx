@@ -109,11 +109,20 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             },
           });
 
-          // sync execution state requires the state to be updated - manually update here
-          // as setting state is asynchronous
-          dispatch(
-            vmSlice.actions.setExecutionState({
-              executionState: interpreter.getExecutionState(),
+          syncExecutionState();
+
+          setInterpreter(
+            new BlocklyInterpreter(code, {
+              onHighlight: (id) =>
+                dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+
+              // dummy implementations
+              onSetDcMotorPower: (port: number, power: number) =>
+                console.log(
+                  "onSetDcMotorPower port " + port + " power " + power
+                ),
+
+              onIsSensorTouchPushed: (port: number): boolean => true,
             })
           );
 

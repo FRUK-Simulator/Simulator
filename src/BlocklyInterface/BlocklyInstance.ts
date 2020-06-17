@@ -1,6 +1,8 @@
 import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
 import { getToolbox } from "./toolbox";
+import { addDcMotorBlock } from "./robotblocks/DcMotor";
+import { addSensorTouchBlock } from "./robotblocks/SensorTouch";
 
 export class BlocklyUiEvent extends Events.Ui {
   public element: string | undefined;
@@ -24,6 +26,11 @@ export enum BlocklyEventName {
 }
 
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
+
+export function initBlockly(): void {
+  addDcMotorBlock();
+  addSensorTouchBlock();
+}
 
 // Class wrapping blockly providing methods to directly access it. React/redux
 // interaction is handled above this.

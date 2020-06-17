@@ -11,5 +11,7 @@ export function getToolbox() {
     <block type="math_arithmetic"></block>
     <block type="text"></block>
     <block type="text_print"></block>
+    <block type="dc_motor"></block>
+    <block type="sensor_touch"></block>
 </xml>`;
 }

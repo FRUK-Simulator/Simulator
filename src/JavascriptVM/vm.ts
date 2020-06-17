@@ -9,6 +9,9 @@ export type BlocklyInterpreterCallbacks = {
    * Called when there is nothing left to execute or the vm has been stopped
    */
   onFinish?: () => void;
+
+  onSetDcMotorPower?: (port: number, power: number) => void;
+  onIsSensorTouchPushed?: (port: number) => boolean;
 };
 
 export enum ExecutionState {
@@ -58,8 +61,30 @@ export class BlocklyInterpreter {
         console.log("VM > " + text);
       });
 
+      const setDcMotorPower = interpreter.createNativeFunction(
+        (port: number, power: number) => {
+          if (callbacks.onSetDcMotorPower) {
+            callbacks.onSetDcMotorPower(port, power);
+          }
+        }
+      );
+
+      const isSensorTouchPushed = interpreter.createNativeFunction(
+        (port: number, power: number) => {
+          if (callbacks.onIsSensorTouchPushed) {
+            return callbacks.onIsSensorTouchPushed(port);
+          }
+        }
+      );
+
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
+      interpreter.setProperty(globals, "setDcMotorPower", setDcMotorPower);
+      interpreter.setProperty(
+        globals,
+        "isSensorTouchPushed",
+        isSensorTouchPushed
+      );
     });
 
     // Start running in a paused state - ie, spawn a "thread"
