@@ -88,6 +88,14 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             new BlocklyInterpreter(code, {
               onHighlight: (id) =>
                 dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+
+              // dummy implementations
+              onSetDcMotorPower: (port: number, power: number) =>
+                console.log(
+                  "onSetDcMotorPower port " + port + " power " + power
+                ),
+
+              onIsSensorTouchPushed: (port: number): boolean => true,
             })
           );
         },

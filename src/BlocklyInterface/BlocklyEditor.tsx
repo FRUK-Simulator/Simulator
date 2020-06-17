@@ -5,7 +5,8 @@ import { vmSlice } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../store";
 import { BlocklyEvent, BlocklyInstance } from "./BlocklyInstance";
 import { getHighlightedBlockId } from "./blocklySlice";
-
+import "./scripts/DcMotor.js";
+import "./scripts/SensorTouch.js";
 import "./Blockly.css";
 
 /**
