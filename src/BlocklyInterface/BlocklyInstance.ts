@@ -1,11 +1,14 @@
-import Blockly from "blockly";
+import Blockly, { Events } from "blockly";
 import "blockly/javascript";
+import { getToolbox } from "./toolbox";
 
 declare interface BlocklyJavaScript {
   STATEMENT_PREFIX: string;
   addReservedWords(prefix: string): void;
   workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
 }
+
+export type BlocklyEvent = Events.BlockChange | Events.BlockMove | Events.Ui;
 
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 
@@ -14,8 +17,10 @@ const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 class BlocklyInstance {
   private workspace: Blockly.WorkspaceSvg;
 
-  constructor(workspaceArea: HTMLDivElement, toolbox: HTMLElement) {
-    this.workspace = Blockly.inject(workspaceArea, { toolbox });
+  constructor(workspaceArea: HTMLDivElement) {
+    this.workspace = Blockly.inject(workspaceArea, {
+      toolbox: getToolbox(),
+    });
 
     this.setupInterpretation();
     this.resizeBlockly();
@@ -37,6 +42,10 @@ class BlocklyInstance {
 
   highlightBlock(id: string) {
     return this.workspace.highlightBlock(id);
+  }
+
+  addChangeListener(fn: (event: BlocklyEvent) => void) {
+    this.workspace.addChangeListener(fn);
   }
 
   get generator() {
