@@ -98,12 +98,12 @@ export class BlocklyInterpreter {
    * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
    */
   private _run() {
-    // do not schedule any more work if stopped
-    if (this.executionState === ExecutionState.STOPPED) {
-      return;
-    }
-
     setTimeout(() => {
+      // do not schedule any more work if stopped
+      if (this.executionState === ExecutionState.STOPPED) {
+        return;
+      }
+
       // if paused - schedule the next frame
       if (this.executionState === ExecutionState.PAUSED) {
         return this._run();
