@@ -1,4 +1,5 @@
-import { BlocklyInterpreter } from "./vm";
+import { BlocklyInterpreter, ExecutionState } from "./vm";
+import { version } from "process";
 
 jest.useFakeTimers();
 
@@ -260,5 +261,50 @@ describe("javascript vm", () => {
     jest.runOnlyPendingTimers();
 
     expect(onFinishedFn).toBeCalled();
+  });
+
+  test("the executionState is returned correct", () => {
+    const code = `
+      highlightBlock("a");
+    `;
+    const vm = new BlocklyInterpreter(code, {});
+
+    expect(vm.getExecutionState()).toBe(ExecutionState.PAUSED);
+
+    // step to a
+    vm.step();
+
+    expect(vm.getExecutionState()).toBe(ExecutionState.PAUSED);
+
+    vm.run();
+    expect(vm.getExecutionState()).toBe(ExecutionState.RUNNING);
+
+    vm.pause();
+    expect(vm.getExecutionState()).toBe(ExecutionState.PAUSED);
+
+    vm.pause();
+    expect(vm.getExecutionState()).toBe(ExecutionState.PAUSED);
+
+    vm.run();
+    expect(vm.getExecutionState()).toBe(ExecutionState.RUNNING);
+
+    vm.step();
+    expect(vm.getExecutionState()).toBe(ExecutionState.RUNNING);
+
+    // finish the program
+    jest.runOnlyPendingTimers();
+    expect(vm.getExecutionState()).toBe(ExecutionState.STOPPED);
+
+    vm.pause();
+    expect(vm.getExecutionState()).toBe(ExecutionState.STOPPED);
+
+    vm.run();
+    expect(vm.getExecutionState()).toBe(ExecutionState.STOPPED);
+
+    vm.step();
+    expect(vm.getExecutionState()).toBe(ExecutionState.STOPPED);
+
+    vm.unpause();
+    expect(vm.getExecutionState()).toBe(ExecutionState.STOPPED);
   });
 });
