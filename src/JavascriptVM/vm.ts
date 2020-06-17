@@ -22,7 +22,20 @@ export enum ExecutionState {
   PAUSED = "paused",
 }
 
-const BLOCKS_PER_SECOND = 1;
+// This is the tunable. How many steps on the vm do we want to execute per second.
+const STEPS_FREQUENCY = 5; // Hz
+
+// Calling 'setTimeout' more than say '10' times per second is ill advisable, so we need to adjust the frequency
+const MIN_EXECUTION_INTERVAL = 10; // minimum milliseconds between execution
+const EXECUTION_INTERVAL = Math.max(
+  MIN_EXECUTION_INTERVAL,
+  1000 * (1 / STEPS_FREQUENCY)
+); // milliseconds between execution
+const EXECUTION_FREQUENCY = 1000 / EXECUTION_INTERVAL;
+
+// Now we must re compute the number of steps we need per each 'setTimeout' call.
+// N.b. this may eventually be fractional, if say we have a max execution interval or a fractional number of steps per second.
+const STEPS_PER_EXECUTION = STEPS_FREQUENCY / EXECUTION_FREQUENCY;
 
 export class BlocklyInterpreter {
   private interpreter: Interpreter;
@@ -50,7 +63,7 @@ export class BlocklyInterpreter {
     });
 
     // Start running in a paused state - ie, spawn a "thread"
-    this._run();
+    this._run(0);
   }
 
   /**
@@ -97,7 +110,7 @@ export class BlocklyInterpreter {
   /**
    * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
    */
-  private _run() {
+  private _run(steps: number) {
     setTimeout(() => {
       // do not schedule any more work if stopped
       if (this.executionState === ExecutionState.STOPPED) {
@@ -106,14 +119,22 @@ export class BlocklyInterpreter {
 
       // if paused - schedule the next frame
       if (this.executionState === ExecutionState.PAUSED) {
-        return this._run();
+        return this._run(steps);
       }
 
-      this._step();
+      // Add however many (maybe fractional) steps we are instructed to complete
+      steps += STEPS_PER_EXECUTION;
+
+      for (let i = 0; i < steps; i++) {
+        this._step();
+      }
+
+      // Figure out how many (fractional) steps we didn't complete
+      let remainder = steps % 1;
 
       // schedule the next run
-      return this._run();
-    }, 1000 / BLOCKS_PER_SECOND);
+      return this._run(remainder);
+    }, EXECUTION_INTERVAL);
   }
 
   run() {
