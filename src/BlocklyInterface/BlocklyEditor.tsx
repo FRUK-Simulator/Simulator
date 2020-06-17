@@ -126,23 +126,12 @@ export const BlocklyEditor: FunctionComponent = () => {
   return (
     <div
       ref={wrapperRef}
-      className="blockly-workspace"
+      className={"blockly-workspace" + (executing ? " executing" : "")}
       title={
-        executing
-          ? "Your program cannot changed until program execution is halted."
-          : ""
+        executing ? "Your program cannot changed until you click stop." : ""
       }
-      style={{
-        cursor: executing ? "not-allowed" : "auto",
-      }}
     >
-      <div
-        className="blockly-workspace-area"
-        ref={workspaceAreaRef}
-        style={{
-          pointerEvents: executing ? "none" : "auto",
-        }}
-      />
+      <div className="blockly-workspace-area" ref={workspaceAreaRef} />
     </div>
   );
 };
