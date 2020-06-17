@@ -129,6 +129,11 @@ export const BlocklyEditor: FunctionComponent = () => {
     <div
       ref={wrapperRef}
       className="blockly-workspace"
+      title={
+        executing
+          ? "Your program cannot changed until program execution is halted."
+          : ""
+      }
       style={{
         cursor: executing ? "not-allowed" : "auto",
       }}

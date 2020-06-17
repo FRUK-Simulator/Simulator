@@ -11,8 +11,6 @@ export const blocklySlice = createSlice({
     highlightedBlock: "",
     /** The id of the current block selection - an empty string designates no selection */
     selectedBlock: "",
-    /** The id of the previously selected block - an empty string designates no selection */
-    previousBlock: "",
   },
   name: "blockly",
   reducers: {
@@ -22,36 +20,27 @@ export const blocklySlice = createSlice({
       return state;
     },
     selectedBlock(state, action: PayloadAction<{ blockId: string }>) {
-      const changed = action.payload.blockId !== state.selectedBlock;
+      state.selectedBlock = action.payload.blockId;
 
-      const newState = {
-        selectedBlock: action.payload.blockId,
-        previousBlock: changed ? state.selectedBlock : state.previousBlock,
-      };
-
-      return Object.assign({}, state, newState);
+      return state;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(vmSlice.actions.stopExecution, (state) => {
-      const newState = {
-        // Passing a fake block id guarantees to unhighlight all blocks
-        highlightedBlock: "UNHIGHLIGHT_BLOCKS",
-        // Set block selection based on previous selection
-        selectedBlock: state.previousBlock,
-      };
+      // Passing a fake block id guarantees to unhighlight all blocks
+      state.highlightedBlock = "UNHIGHLIGHT_BLOCKS";
 
-      return Object.assign({}, state, newState);
+      // Clear block selection once VM execution fterminated
+      state.selectedBlock = "";
+
+      return state;
     });
 
     builder.addCase(vmSlice.actions.startExecution, (state) => {
-      const newState = {
-        // Clear block selection when starting execution
-        previousBlock: state.selectedBlock,
-        selectedBlock: "",
-      };
+      // Clear block selection when starting execution
+      state.selectedBlock = "";
 
-      return Object.assign({}, state, newState);
+      return state;
     });
   },
 });
@@ -75,13 +64,3 @@ export const getHighlightedBlockId = (state: RootState) =>
  */
 export const getCurrentBlockSelection = (state: RootState) =>
   state.blockly.selectedBlock;
-
-/**
- * Retrieves the previously selected blockly block's ID.
- *
- * @param state the root state of the application
- *
- * @returns the previously selected blockly block's ID
- */
-export const getPreviousBlockSelection = (state: RootState) =>
-  state.blockly.previousBlock;
