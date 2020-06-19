@@ -1,7 +1,7 @@
 import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
 import { getToolbox } from "./toolbox";
-import { addDcMotorBlock } from "./robotblocks/DcMotor";
+import { addMotorBlock } from "./robotblocks/Motor";
 import { addSensorTouchBlock } from "./robotblocks/SensorTouch";
 
 export class BlocklyUiEvent extends Events.Ui {
@@ -28,7 +28,7 @@ export enum BlocklyEventName {
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 
 export function initBlockly(): void {
-  addDcMotorBlock();
+  addMotorBlock();
   addSensorTouchBlock();
 }
 
