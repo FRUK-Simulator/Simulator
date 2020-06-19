@@ -1,5 +1,12 @@
-import Blockly from "blockly";
+import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
+import { getToolbox } from "./toolbox";
+import { addDcMotorBlock } from "./robotblocks/DcMotor";
+import { addSensorTouchBlock } from "./robotblocks/SensorTouch";
+
+export class BlocklyUiEvent extends Events.Ui {
+  public element: string | undefined;
+}
 
 declare interface BlocklyJavaScript {
   STATEMENT_PREFIX: string;
@@ -7,15 +14,33 @@ declare interface BlocklyJavaScript {
   workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
 }
 
+export type BlocklyEvent =
+  | Events.BlockChange
+  | Events.BlockMove
+  | BlocklyUiEvent;
+
+export enum BlocklyEventName {
+  BlockChange = "BlockChange",
+  BlockMove = "BlockMove",
+  Ui = "Ui",
+}
+
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
+
+export function initBlockly(): void {
+  addDcMotorBlock();
+  addSensorTouchBlock();
+}
 
 // Class wrapping blockly providing methods to directly access it. React/redux
 // interaction is handled above this.
 class BlocklyInstance {
   private workspace: Blockly.WorkspaceSvg;
 
-  constructor(workspaceArea: HTMLDivElement, toolbox: HTMLElement) {
-    this.workspace = Blockly.inject(workspaceArea, { toolbox });
+  constructor(workspaceArea: HTMLDivElement) {
+    this.workspace = Blockly.inject(workspaceArea, {
+      toolbox: getToolbox(),
+    });
 
     this.setupInterpretation();
     this.resizeBlockly();
@@ -39,8 +64,39 @@ class BlocklyInstance {
     return this.workspace.highlightBlock(id);
   }
 
+  addChangeListener(
+    eventName: BlocklyEventName,
+    fn: (event: BlocklyEvent) => void
+  ) {
+    this.workspace.addChangeListener((event: BlocklyEvent) => {
+      if (event instanceof Events[eventName]) {
+        fn(event);
+      }
+    });
+  }
+
   get generator() {
     return (Blockly as any).JavaScript as BlocklyJavaScript;
+  }
+
+  get selected() {
+    return Blockly.selected?.id || "";
+  }
+
+  set selected(id) {
+    if (id) {
+      const block = this.workspace.getBlockById(id) as BlockSvg;
+
+      if (block) {
+        block.select();
+      }
+    } else {
+      const block = Blockly.selected as BlockSvg;
+
+      if (block) {
+        block.unselect();
+      }
+    }
   }
 }
 

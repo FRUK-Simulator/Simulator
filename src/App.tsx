@@ -5,6 +5,8 @@ import { AppRouter } from "./AppRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
+import { MenuBar } from "./Views/MenuBar/MenuBar";
+import { VMProvider } from "./JavascriptVM/JavascriptVM";
 
 /**
  * This is exported seperately so that tests can provide their own providers. This
@@ -13,7 +15,7 @@ import "./App.css";
 export const App: FunctionComponent = () => {
   return (
     <div className="app-container">
-      <div className="menu-bar"></div>
+      <MenuBar />
       <AppRouter />
       <div className="footer"></div>
     </div>
@@ -24,7 +26,9 @@ const AppWithProviders: FunctionComponent = () => {
   return (
     <Router>
       <Provider store={store}>
-        <App />
+        <VMProvider>
+          <App />
+        </VMProvider>
       </Provider>
     </Router>
   );

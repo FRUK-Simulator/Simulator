@@ -1,5 +1,20 @@
-.blockly-wrapper {
-  grid-area: Blockly;
-  background-color: #e8f5e9;
+.blockly-workspace {
   height: 100%;
+  grid-area: Blockly;
+  position: relative;
+}
+
+.blockly-workspace.executing {
+  cursor: not-allowed;
+}
+
+.blockly-workspace.executing:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #d8ff002e;
+  z-index: 1;
 }

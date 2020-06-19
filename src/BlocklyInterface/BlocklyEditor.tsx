@@ -1,20 +1,33 @@
-import React, { FunctionComponent, useRef, useEffect, RefObject } from "react";
-import { BlocklyInstance } from "./BlocklyInstance";
+import React, { FunctionComponent, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
+import { AppDispatch } from "../store";
+import {
+  BlocklyEvent,
+  BlocklyUiEvent,
+  BlocklyEventName,
+  BlocklyInstance,
+} from "./BlocklyInstance";
+import {
+  getHighlightedBlockId,
+  getCurrentBlockSelection,
+  blocklySlice,
+} from "./blocklySlice";
+
 import "./Blockly.css";
 
 /**
  * Component that wraps the blockly interface.
  */
-
-interface BlocklyEditorProps {
-  toolbox: RefObject<HTMLElement>;
-}
-
-export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
-  toolbox,
-}) => {
+export const BlocklyEditor: FunctionComponent = () => {
   const workspaceAreaRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const highlightedBlock = useSelector(getHighlightedBlockId);
+  const currentBlockSelection = useSelector(getCurrentBlockSelection);
+
+  const executing = useSelector(isExecuting);
 
   const blocklyRef = useRef<BlocklyInstance | null>(null);
 
@@ -45,12 +58,49 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
 
   // Initialize blockly and return destruction callback
   useEffect(() => {
+    function handleBlocklyChange(event: BlocklyEvent) {
+      if (!blocklyRef.current) {
+        return;
+      }
+
+      dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
+    }
+
+    function handleBlocklyUiEvent(event: BlocklyEvent) {
+      if (event instanceof BlocklyUiEvent) {
+        if (!blocklyRef.current) {
+          return;
+        }
+
+        if (event.element === "selected") {
+          dispatch(
+            blocklySlice.actions.selectedBlock({
+              blockId: blocklyRef.current.selected || "",
+            })
+          );
+        }
+      }
+    }
+
     resizeBlocklyRegion();
 
-    blocklyRef.current = new BlocklyInstance(
-      workspaceAreaRef.current!,
-      toolbox.current!
-    );
+    if (!blocklyRef.current) {
+      blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
+
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.BlockMove,
+        handleBlocklyChange
+      );
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.BlockChange,
+        handleBlocklyChange
+      );
+
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.Ui,
+        handleBlocklyUiEvent
+      );
+    }
   });
 
   // Listen on window resizes and redraw blockly
@@ -66,8 +116,24 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
     return window.removeEventListener.bind(window, "resize", onResizeHandler);
   });
 
+  useEffect(() => {
+    if (blocklyRef.current) {
+      if (highlightedBlock) {
+        blocklyRef.current.highlightBlock(highlightedBlock);
+      }
+
+      blocklyRef.current.selected = currentBlockSelection;
+    }
+  }, [highlightedBlock, currentBlockSelection, executing]);
+
   return (
-    <div className="blockly-wrapper" ref={wrapperRef}>
+    <div
+      ref={wrapperRef}
+      className={"blockly-workspace" + (executing ? " executing" : "")}
+      title={
+        executing ? "Your program cannot changed until you click stop." : ""
+      }
+    >
       <div className="blockly-workspace-area" ref={workspaceAreaRef} />
     </div>
   );

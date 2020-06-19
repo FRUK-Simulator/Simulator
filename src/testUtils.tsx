@@ -2,12 +2,13 @@
  * This file provides useful utilities and functions to ease testing. See https://testing-library.com/docs/react-testing-library/setup for
  * more info.
  */
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { render } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { createMemoryHistory, History } from "history";
+import { VMProvider } from "./JavascriptVM/JavascriptVM";
 
 const AppProviders = (history: History) => ({
   children,
@@ -16,7 +17,9 @@ const AppProviders = (history: History) => ({
 }) => {
   return (
     <Provider store={store}>
-      <Router history={history}>{children}</Router>
+      <VMProvider>
+        <Router history={history}>{children}</Router>
+      </VMProvider>
     </Provider>
   );
 };
