@@ -1,4 +1,4 @@
-import { addCustomBlock, JavaScript } from "./AddBlockUtil";
+import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 export function addDcMotorBlock() {
   addCustomBlock(
