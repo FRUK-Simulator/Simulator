@@ -1,11 +1,11 @@
-import { addDcMotorBlock } from "./DcMotor";
+import { addMotorBlock } from "./Motor";
 
 export default (() => {
-  addDcMotorBlock();
+  addMotorBlock();
 
   return `
 <category name="Actuators">
-    <block type="dc_motor"></block>
+    <block type="motor"></block>
 </category>
 `;
 })();

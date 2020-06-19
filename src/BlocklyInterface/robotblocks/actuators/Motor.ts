@@ -1,12 +1,12 @@
 import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
-export function addDcMotorBlock() {
+export function addMotorBlock() {
   addCustomBlock(
-    "dc_motor",
+    "motor",
     [
       {
-        type: "dc_motor",
-        message0: "DC motor port %1 %2 direction %3 %4 set power to %% %5",
+        type: "motor",
+        message0: "Motor port %1 %2 direction %3 %4 set power to %% %5",
         args0: [
           {
             type: "field_number",
@@ -54,7 +54,7 @@ export function addDcMotorBlock() {
       // convert direction to power sign +/-
       const isForward = dropdownDirection === "FORWARD";
       const sign = isForward ? "1" : "-1";
-      return `setDcMotorPower(${numberPort}, ${sign} * (${valuePower}));\n`;
+      return `setMotorPower(${numberPort}, ${sign} * (${valuePower}));\n`;
     }
   );
 }
