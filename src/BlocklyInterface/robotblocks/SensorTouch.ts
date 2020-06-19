@@ -22,9 +22,10 @@ export function addSensorTouchBlock() {
       },
     ],
     (block) => {
-      var number_port = block.getFieldValue("port");
+      const numberPort = block.getFieldValue("port");
 
-      var code = `isSensorTouchPushed(${number_port})`;
+      const code = `isSensorTouchPushed(${numberPort})`;
+
       return [code, JavaScript.ORDER_ADDITION];
     }
   );

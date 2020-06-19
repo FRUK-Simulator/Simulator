@@ -43,19 +43,18 @@ export function addDcMotorBlock() {
       },
     ],
     (block) => {
-      var number_port = block.getFieldValue("port");
-      var dropdown_direction = block.getFieldValue("direction");
-      var value_power = JavaScript.valueToCode(
+      const numberPort = block.getFieldValue("port");
+      const dropdownDirection = block.getFieldValue("direction");
+      const valuePower = JavaScript.valueToCode(
         block,
         "power",
         JavaScript.ORDER_ATOMIC
       );
 
       // convert direction to power sign +/-
-      var isForward = dropdown_direction === "FORWARD";
-      let sign = isForward ? "1" : "-1";
-      var code = `setDcMotorPower(${number_port}, ${sign} * (${value_power}));\n`;
-      return code;
+      const isForward = dropdownDirection === "FORWARD";
+      const sign = isForward ? "1" : "-1";
+      return `setDcMotorPower(${numberPort}, ${sign} * (${valuePower}));\n`;
     }
   );
 }

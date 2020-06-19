@@ -1,7 +1,13 @@
+import { addDcMotorBlock } from "./robotblocks/DcMotor";
+import { addSensorTouchBlock } from "./robotblocks/SensorTouch";
+
 /**
  * Returns the XML for the Toolbox.
  */
 export function getToolbox() {
+  addDcMotorBlock();
+  addSensorTouchBlock();
+
   return `
 <xml>
     <block type="controls_if"></block>
