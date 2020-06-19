@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
 import { Sim3D } from "@fruk/simulator-core";
+import { StdWorldBuilder } from "./StdWorldBuilder";
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.
@@ -26,6 +27,7 @@ export const RobotSimulator: FunctionComponent = () => {
 
     sim.current = new Sim3D(canvasRef.current!);
     sim.current?.beginRendering();
+    /*const robot = */ new StdWorldBuilder(sim.current).build();
 
     return () => {
       // remove the simulator
