@@ -3,4 +3,5 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  box-shadow: 0 0 2px 1px #ccc;
 }
