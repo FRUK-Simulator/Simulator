@@ -9,6 +9,8 @@ import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
+import { messageSlice } from "../ErrorViews/messagesSlice";
+import { MessageBarType } from "@fluentui/react";
 
 /**
  * Interface to control the VM
@@ -103,8 +105,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           syncExecutionState();
 
-          setInterpreter(
-            new BlocklyInterpreter(code, {
+          try {
+            const interpreter = new BlocklyInterpreter(code, {
               onHighlight: (id) => {
                 dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
               },
@@ -115,11 +117,29 @@ export const VMProvider: FunctionComponent = ({ children }) => {
                 );
               },
 
+              onFinish: () => {
+                dispatch(
+                  messageSlice.actions.addMessage({
+                    type: MessageBarType.success,
+                    msg: "Program finished!",
+                  })
+                );
+              },
+
               onIsSensorTouchPushed: (channel: number): boolean => {
                 return true;
               },
-            })
-          );
+            });
+
+            setInterpreter(interpreter);
+          } catch (err) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageBarType.error,
+                msg: "Code cannot be executed.",
+              })
+            );
+          }
         },
       }}
     >
