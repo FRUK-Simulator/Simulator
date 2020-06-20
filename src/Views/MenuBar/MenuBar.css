@@ -10,5 +10,6 @@
 }
 
 .menu-bar--brand {
-  height: 2em;
+  /* 30px */
+  height: 1.875em;
 }
