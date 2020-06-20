@@ -19,7 +19,6 @@ const MotorControl: FunctionComponent<{
       min={-1}
       max={1}
       step={0.25}
-      defaultValue={0}
       value={power}
       onChange={onChange}
       showValue
