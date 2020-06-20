@@ -47,7 +47,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   /**
    * Syncs the redux state with the interpreter state.
    */
-  function syncExecutionState() {
+  function syncExecutionState(interpreter?: BlocklyInterpreter) {
     dispatch(
       vmSlice.actions.setExecutionState({
         executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
@@ -65,7 +65,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.run();
-          syncExecutionState();
+          syncExecutionState(interpreter);
         },
         pause() {
           if (!interpreter) {
@@ -74,7 +74,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.pause();
-          syncExecutionState();
+          syncExecutionState(interpreter);
         },
         step() {
           if (!interpreter) {
@@ -83,8 +83,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter?.step();
-
-          syncExecutionState();
+          syncExecutionState(interpreter);
         },
         stop() {
           if (!interpreter) {
@@ -93,7 +92,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.stop();
-          syncExecutionState();
+          syncExecutionState(interpreter);
           setInterpreter(null);
         },
         start() {
@@ -101,25 +100,29 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          syncExecutionState();
+          const interpreter = new BlocklyInterpreter(code, {
+            onHighlight: (id) => {
+              dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
+            },
 
-          setInterpreter(
-            new BlocklyInterpreter(code, {
-              onHighlight: (id) => {
-                dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
-              },
+            onSetMotorPower: (channel: number, power: number) => {
+              dispatch(
+                robotSimulatorSlice.actions.setPower({ channel, power })
+              );
+            },
 
-              onSetMotorPower: (channel: number, power: number) => {
-                dispatch(
-                  robotSimulatorSlice.actions.setPower({ channel, power })
-                );
-              },
+            onIsSensorTouchPushed: (channel: number): boolean => {
+              return true;
+            },
 
-              onIsSensorTouchPushed: (channel: number): boolean => {
-                return true;
-              },
-            })
-          );
+            onFinish: () => {
+              syncExecutionState(interpreter);
+              setInterpreter(null);
+            },
+          });
+
+          syncExecutionState(interpreter);
+          setInterpreter(interpreter);
         },
       }}
     >
