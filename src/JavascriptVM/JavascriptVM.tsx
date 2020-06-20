@@ -53,7 +53,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   /**
    * Syncs the redux state with the interpreter state.
    */
-  function syncExecutionState(interpreter?: BlocklyInterpreter) {
+  function syncExecutionState(interpreter: BlocklyInterpreter | null) {
     dispatch(
       vmSlice.actions.setExecutionState({
         executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
@@ -102,6 +102,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           setInterpreter(null);
         },
         start() {
+          console.log(code);
           if (!code) {
             return;
           }
@@ -118,9 +119,9 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             },
 
             onFinish: () => {
+              syncExecutionState(interpreter);
+              setInterpreter(null);
               dispatch(
-                syncExecutionState(interpreter);
-                setInterpreter(null);
                 messageSlice.actions.addMessage({
                   type: MessageBarType.success,
                   msg: "Program finished!",
@@ -135,8 +136,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           try {
             const interpreter = new BlocklyInterpreter(code, callbacks);
-
             setInterpreter(interpreter);
+            syncExecutionState(interpreter);
           } catch (err) {
             dispatch(
               messageSlice.actions.addMessage({
