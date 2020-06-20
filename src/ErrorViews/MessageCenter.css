@@ -1,0 +1,10 @@
+.message-center {
+  position: absolute;
+  width: 50vw;
+  margin-left: 25vw;
+  margin-right: 25vw;
+  top: 2.5em;
+  z-index: 100;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 2px 0px #ccc;
+}
