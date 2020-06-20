@@ -1,8 +1,8 @@
 .message-center {
   position: absolute;
-  width: 40vw;
-  margin-left: 30vw;
-  margin-right: 30vw;
+  width: 50vw;
+  margin-left: 25vw;
+  margin-right: 25vw;
   top: 2.5em;
   z-index: 100;
   border: 1px solid #ccc;
