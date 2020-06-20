@@ -1,3 +1,15 @@
 .control-panel {
   grid-area: Control-Panel;
 }
+
+.motor-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.25em;
+  background-color: #f5f5f5;
+}
+
+.motor-group--sliders {
+  width: 100%;
+}
