@@ -2,6 +2,13 @@
   grid-area: Menu-Bar;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   box-shadow: 0 0 2px 1px #ccc;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.menu-bar--brand {
+  height: 2em;
 }
