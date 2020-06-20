@@ -4,7 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
-import { BlocklyInterpreter, ExecutionState } from "./vm";
+import {
+  BlocklyInterpreter,
+  ExecutionState,
+  BlocklyInterpreterCallbacks,
+} from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
@@ -105,31 +109,33 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           syncExecutionState();
 
+          const callbacks: BlocklyInterpreterCallbacks = {
+            onHighlight: (id) => {
+              dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
+            },
+
+            onSetMotorPower: (channel: number, power: number) => {
+              dispatch(
+                robotSimulatorSlice.actions.setPower({ channel, power })
+              );
+            },
+
+            onFinish: () => {
+              dispatch(
+                messageSlice.actions.addMessage({
+                  type: MessageBarType.success,
+                  msg: "Program finished!",
+                })
+              );
+            },
+
+            onIsSensorTouchPushed: (channel: number): boolean => {
+              return true;
+            },
+          };
+
           try {
-            const interpreter = new BlocklyInterpreter(code, {
-              onHighlight: (id) => {
-                dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
-              },
-
-              onSetMotorPower: (channel: number, power: number) => {
-                dispatch(
-                  robotSimulatorSlice.actions.setPower({ channel, power })
-                );
-              },
-
-              onFinish: () => {
-                dispatch(
-                  messageSlice.actions.addMessage({
-                    type: MessageBarType.success,
-                    msg: "Program finished!",
-                  })
-                );
-              },
-
-              onIsSensorTouchPushed: (channel: number): boolean => {
-                return true;
-              },
-            });
+            const interpreter = new BlocklyInterpreter(code, callbacks);
 
             setInterpreter(interpreter);
           } catch (err) {
