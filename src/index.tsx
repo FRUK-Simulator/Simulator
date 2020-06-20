@@ -4,11 +4,8 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { initializeIcons } from "@uifabric/icons";
-import { initBlockly } from "./BlocklyInterface/BlocklyInstance";
 
 initializeIcons();
-
-initBlockly();
 
 ReactDOM.render(
   <React.StrictMode>

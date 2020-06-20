@@ -1,4 +1,4 @@
-import { addCustomBlock, JavaScript } from "./AddBlockUtil";
+import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 export function addMotorBlock() {
   addCustomBlock(
@@ -43,19 +43,18 @@ export function addMotorBlock() {
       },
     ],
     (block) => {
-      var number_port = block.getFieldValue("port");
-      var dropdown_direction = block.getFieldValue("direction");
-      var value_power = JavaScript.valueToCode(
+      const numberPort = block.getFieldValue("port");
+      const dropdownDirection = block.getFieldValue("direction");
+      const valuePower = JavaScript.valueToCode(
         block,
         "power",
         JavaScript.ORDER_ATOMIC
       );
 
       // convert direction to power sign +/-
-      var isForward = dropdown_direction === "FORWARD";
-      let sign = isForward ? "1" : "-1";
-      var code = `setMotorPower(${number_port}, ${sign} * (${value_power}));\n`;
-      return code;
+      const isForward = dropdownDirection === "FORWARD";
+      const sign = isForward ? "1" : "-1";
+      return `setMotorPower(${numberPort}, ${sign} * (${valuePower}));\n`;
     }
   );
 }

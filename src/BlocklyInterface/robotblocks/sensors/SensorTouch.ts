@@ -1,4 +1,4 @@
-import { addCustomBlock, JavaScript } from "./AddBlockUtil";
+import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 export function addSensorTouchBlock() {
   addCustomBlock(
@@ -22,9 +22,10 @@ export function addSensorTouchBlock() {
       },
     ],
     (block) => {
-      var number_port = block.getFieldValue("port");
+      const numberPort = block.getFieldValue("port");
 
-      var code = `isSensorTouchPushed(${number_port})`;
+      const code = `isSensorTouchPushed(${numberPort})`;
+
       return [code, JavaScript.ORDER_ADDITION];
     }
   );

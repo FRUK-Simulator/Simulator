@@ -131,7 +131,7 @@ export const BlocklyEditor: FunctionComponent = () => {
       ref={wrapperRef}
       className={"blockly-workspace" + (executing ? " executing" : "")}
       title={
-        executing ? "Your program cannot changed until you click stop." : ""
+        executing ? "Your program cannot be changed until you stop it" : ""
       }
     >
       <div className="blockly-workspace-area" ref={workspaceAreaRef} />

@@ -1,18 +1,13 @@
+import { JavaScriptGenerator } from "../@types/blockly-javascript";
 import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
 import { getToolbox } from "./toolbox";
-import { addMotorBlock } from "./robotblocks/Motor";
-import { addSensorTouchBlock } from "./robotblocks/SensorTouch";
 
 export class BlocklyUiEvent extends Events.Ui {
   public element: string | undefined;
 }
 
-declare interface BlocklyJavaScript {
-  STATEMENT_PREFIX: string;
-  addReservedWords(prefix: string): void;
-  workspaceToCode(workspace: Blockly.WorkspaceSvg): string;
-}
+declare interface BlocklyJavaScript {}
 
 export type BlocklyEvent =
   | Events.BlockChange
@@ -26,11 +21,6 @@ export enum BlocklyEventName {
 }
 
 const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
-
-export function initBlockly(): void {
-  addMotorBlock();
-  addSensorTouchBlock();
-}
 
 // Class wrapping blockly providing methods to directly access it. React/redux
 // interaction is handled above this.
@@ -76,7 +66,7 @@ class BlocklyInstance {
   }
 
   get generator() {
-    return (Blockly as any).JavaScript as BlocklyJavaScript;
+    return (Blockly as any).JavaScript as JavaScriptGenerator;
   }
 
   get selected() {
