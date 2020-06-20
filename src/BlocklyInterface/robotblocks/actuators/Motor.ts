@@ -1,12 +1,12 @@
-import { addCustomBlock, JavaScript } from "./AddBlockUtil";
+import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
-export function addDcMotorBlock() {
+export function addMotorBlock() {
   addCustomBlock(
-    "dc_motor",
+    "motor",
     [
       {
-        type: "dc_motor",
-        message0: "DC motor port %1 %2 direction %3 %4 set power to %% %5",
+        type: "motor",
+        message0: "Motor port %1 %2 direction %3 %4 set power to %% %5",
         args0: [
           {
             type: "field_number",
@@ -43,19 +43,18 @@ export function addDcMotorBlock() {
       },
     ],
     (block) => {
-      var number_port = block.getFieldValue("port");
-      var dropdown_direction = block.getFieldValue("direction");
-      var value_power = JavaScript.valueToCode(
+      const numberPort = block.getFieldValue("port");
+      const dropdownDirection = block.getFieldValue("direction");
+      const valuePower = JavaScript.valueToCode(
         block,
         "power",
         JavaScript.ORDER_ATOMIC
       );
 
       // convert direction to power sign +/-
-      var isForward = dropdown_direction === "FORWARD";
-      let sign = isForward ? "1" : "-1";
-      var code = `setDcMotorPower(${number_port}, ${sign} * (${value_power}));\n`;
-      return code;
+      const isForward = dropdownDirection === "FORWARD";
+      const sign = isForward ? "1" : "-1";
+      return `setMotorPower(${numberPort}, ${sign} * (${valuePower}));\n`;
     }
   );
 }

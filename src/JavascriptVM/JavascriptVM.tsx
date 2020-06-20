@@ -8,6 +8,7 @@ import { BlocklyInterpreter, ExecutionState } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
+import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
 
 /**
  * Interface to control the VM
@@ -100,33 +101,25 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          const interpreter = new BlocklyInterpreter(code, {
-            onHighlight: (id) =>
-              dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
-            onFinish: () => {
-              syncExecutionState();
-              setInterpreter(null);
-            },
-          });
-
           syncExecutionState();
 
           setInterpreter(
             new BlocklyInterpreter(code, {
-              onHighlight: (id) =>
-                dispatch(blocklySlice.actions.highlightBlock({ blockId: id })),
+              onHighlight: (id) => {
+                dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
+              },
 
-              // dummy implementations
-              onSetDcMotorPower: (port: number, power: number) =>
-                console.log(
-                  "onSetDcMotorPower port " + port + " power " + power
-                ),
+              onSetMotorPower: (channel: number, power: number) => {
+                dispatch(
+                  robotSimulatorSlice.actions.setPower({ channel, power })
+                );
+              },
 
-              onIsSensorTouchPushed: (port: number): boolean => true,
+              onIsSensorTouchPushed: (channel: number): boolean => {
+                return true;
+              },
             })
           );
-
-          setInterpreter(interpreter);
         },
       }}
     >

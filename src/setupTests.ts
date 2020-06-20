@@ -11,9 +11,6 @@ import "jest-canvas-mock";
 import { initializeIcons } from "@uifabric/icons";
 initializeIcons();
 
-import { initBlockly } from "./BlocklyInterface/BlocklyInstance";
-initBlockly();
-
 // Simulator does not render and is outside of the scope of unit / integration tests.
 jest.mock("@fruk/simulator-core", () => {
   return {

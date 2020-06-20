@@ -5,12 +5,17 @@ export type BlocklyInterpreterCallbacks = {
    * Called when the vm encounter a "higlightBlock" function call
    */
   onHighlight?: (id: string) => void;
+
+  /**
+   * Sets the output power
+   */
+  onSetMotorPower?: (channel: number, power: number) => void;
+
   /**
    * Called when there is nothing left to execute or the vm has been stopped
    */
   onFinish?: () => void;
 
-  onSetDcMotorPower?: (port: number, power: number) => void;
   onIsSensorTouchPushed?: (port: number) => boolean;
 };
 
@@ -61,16 +66,16 @@ export class BlocklyInterpreter {
         console.log("VM > " + text);
       });
 
-      const setDcMotorPower = interpreter.createNativeFunction(
+      const setMotorPower = interpreter.createNativeFunction(
         (port: number, power: number) => {
-          if (callbacks.onSetDcMotorPower) {
-            callbacks.onSetDcMotorPower(port, power);
+          if (callbacks.onSetMotorPower) {
+            callbacks.onSetMotorPower(port, power);
           }
         }
       );
 
       const isSensorTouchPushed = interpreter.createNativeFunction(
-        (port: number, power: number) => {
+        (port: number) => {
           if (callbacks.onIsSensorTouchPushed) {
             return callbacks.onIsSensorTouchPushed(port);
           }
@@ -79,7 +84,7 @@ export class BlocklyInterpreter {
 
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
-      interpreter.setProperty(globals, "setDcMotorPower", setDcMotorPower);
+      interpreter.setProperty(globals, "setMotorPower", setMotorPower);
       interpreter.setProperty(
         globals,
         "isSensorTouchPushed",
