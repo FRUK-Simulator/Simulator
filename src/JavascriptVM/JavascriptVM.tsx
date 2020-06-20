@@ -4,11 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
-import { BlocklyInterpreter, ExecutionState } from "./vm";
+import {
+  BlocklyInterpreter,
+  ExecutionState,
+  BlocklyInterpreterCallbacks,
+} from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
+import { messageSlice } from "../ErrorViews/messagesSlice";
+import { MessageBarType } from "@fluentui/react";
 
 /**
  * Interface to control the VM
@@ -103,23 +109,43 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           syncExecutionState();
 
-          setInterpreter(
-            new BlocklyInterpreter(code, {
-              onHighlight: (id) => {
-                dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
-              },
+          const callbacks: BlocklyInterpreterCallbacks = {
+            onHighlight: (id) => {
+              dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
+            },
 
-              onSetMotorPower: (channel: number, power: number) => {
-                dispatch(
-                  robotSimulatorSlice.actions.setPower({ channel, power })
-                );
-              },
+            onSetMotorPower: (channel: number, power: number) => {
+              dispatch(
+                robotSimulatorSlice.actions.setPower({ channel, power })
+              );
+            },
 
-              onIsSensorTouchPushed: (channel: number): boolean => {
-                return true;
-              },
-            })
-          );
+            onFinish: () => {
+              dispatch(
+                messageSlice.actions.addMessage({
+                  type: MessageBarType.success,
+                  msg: "Program finished!",
+                })
+              );
+            },
+
+            onIsSensorTouchPushed: (channel: number): boolean => {
+              return true;
+            },
+          };
+
+          try {
+            const interpreter = new BlocklyInterpreter(code, callbacks);
+
+            setInterpreter(interpreter);
+          } catch (err) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageBarType.error,
+                msg: "Code cannot be executed.",
+              })
+            );
+          }
         },
       }}
     >
