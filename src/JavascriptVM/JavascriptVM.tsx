@@ -4,11 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
-import { BlocklyInterpreter, ExecutionState } from "./vm";
+import {
+  BlocklyInterpreter,
+  ExecutionState,
+  BlocklyInterpreterCallbacks,
+} from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
+import { messageSlice } from "../ErrorViews/messagesSlice";
+import { MessageBarType } from "@fluentui/react";
 
 /**
  * Interface to control the VM
@@ -100,7 +106,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
-          const interpreter = new BlocklyInterpreter(code, {
+          const callbacks: BlocklyInterpreterCallbacks = {
             onHighlight: (id) => {
               dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
             },
@@ -111,18 +117,34 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               );
             },
 
+            onFinish: () => {
+              dispatch(
+                syncExecutionState(interpreter);
+                setInterpreter(null);
+                messageSlice.actions.addMessage({
+                  type: MessageBarType.success,
+                  msg: "Program finished!",
+                })
+              );
+            },
+
             onIsSensorTouchPushed: (channel: number): boolean => {
               return true;
             },
+          };
 
-            onFinish: () => {
-              syncExecutionState(interpreter);
-              setInterpreter(null);
-            },
-          });
+          try {
+            const interpreter = new BlocklyInterpreter(code, callbacks);
 
-          syncExecutionState(interpreter);
-          setInterpreter(interpreter);
+            setInterpreter(interpreter);
+          } catch (err) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageBarType.error,
+                msg: "Code cannot be executed.",
+              })
+            );
+          }
         },
       }}
     >

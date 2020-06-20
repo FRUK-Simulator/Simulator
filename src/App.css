@@ -13,7 +13,7 @@ body,
   gap: 1px 1px;
   grid-template-areas:
     "Menu-Bar Menu-Bar Menu-Bar"
-    ".        Content  ."
+    "Content  Content  Content"
     "Footer   Footer   Footer";
 }
 

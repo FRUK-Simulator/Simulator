@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
-import { Sim3D, RobotSpecs } from "@fruk/simulator-core";
+import { Sim3D } from "@fruk/simulator-core";
+import { StdWorldBuilder } from "./StdWorldBuilder";
 import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
 import { useSelector } from "react-redux";
 import { getMotorPower } from "./robotSimulatorSlice";
@@ -31,77 +32,11 @@ export const RobotSimulator: FunctionComponent = () => {
     updateCanvasSize();
 
     sim.current = new Sim3D(canvasRef.current!);
+    const robot = new StdWorldBuilder(sim.current).build();
     sim.current.beginRendering();
-
-    const robotSpec: RobotSpecs.IRobotSpec = {
-      type: "robot",
-      dimensions: { x: 2, y: 1, z: 3 },
-      drivetrain: {
-        motorGroups: [
-          {
-            wheelGroup: "left-drive",
-            motors: [{ channel: 0, maxForce: 5 }],
-          },
-          {
-            wheelGroup: "right-drive",
-            motors: [{ channel: 1, maxForce: 5 }],
-          },
-        ],
-        wheelGroups: [
-          {
-            id: "left-drive",
-            wheels: [
-              {
-                wheel: {
-                  type: "robot-wheel",
-                  radius: 0.5,
-                  thickness: 0.15,
-                },
-                mountPoint: RobotSpecs.WheelMountingPoint.LEFT_FRONT,
-                offset: { x: -0.075, y: -0.25, z: 0.5 },
-              },
-              {
-                wheel: {
-                  type: "robot-wheel",
-                  radius: 0.5,
-                  thickness: 0.15,
-                },
-                mountPoint: RobotSpecs.WheelMountingPoint.LEFT_REAR,
-                offset: { x: -0.075, y: -0.25, z: -0.5 },
-              },
-            ],
-          },
-          {
-            id: "right-drive",
-            wheels: [
-              {
-                wheel: {
-                  type: "robot-wheel",
-                  radius: 0.5,
-                  thickness: 0.15,
-                },
-                mountPoint: RobotSpecs.WheelMountingPoint.RIGHT_FRONT,
-                offset: { x: 0.075, y: -0.25, z: 0.5 },
-              },
-              {
-                wheel: {
-                  type: "robot-wheel",
-                  radius: 0.5,
-                  thickness: 0.15,
-                },
-                mountPoint: RobotSpecs.WheelMountingPoint.RIGHT_REAR,
-                offset: { x: 0.075, y: -0.25, z: -0.5 },
-              },
-            ],
-          },
-        ],
-      },
-    };
-    const robot = sim.current.addRobot(robotSpec);
     robotRef.current = robot!;
 
     return () => {
-      console.log("removing");
       // remove the simulator
       sim.current?.stopRendering();
       sim.current = null;
