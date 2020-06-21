@@ -4,11 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
-import { BlocklyInterpreter, ExecutionState } from "./vm";
+import {
+  BlocklyInterpreter,
+  ExecutionState,
+  BlocklyInterpreterCallbacks,
+} from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
+import { messageSlice } from "../ErrorViews/messagesSlice";
+import { MessageBarType } from "@fluentui/react";
 
 /**
  * Interface to control the VM
@@ -47,7 +53,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   /**
    * Syncs the redux state with the interpreter state.
    */
-  function syncExecutionState() {
+  function syncExecutionState(interpreter: BlocklyInterpreter | null) {
     dispatch(
       vmSlice.actions.setExecutionState({
         executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
@@ -65,7 +71,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.run();
-          syncExecutionState();
+          syncExecutionState(interpreter);
         },
         pause() {
           if (!interpreter) {
@@ -74,7 +80,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.pause();
-          syncExecutionState();
+          syncExecutionState(interpreter);
         },
         step() {
           if (!interpreter) {
@@ -83,8 +89,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter?.step();
-
-          syncExecutionState();
+          syncExecutionState(interpreter);
         },
         stop() {
           if (!interpreter) {
@@ -93,33 +98,54 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
 
           interpreter.stop();
-          syncExecutionState();
+          syncExecutionState(interpreter);
           setInterpreter(null);
         },
         start() {
+          console.log(code);
           if (!code) {
             return;
           }
 
-          syncExecutionState();
+          const callbacks: BlocklyInterpreterCallbacks = {
+            onHighlight: (id) => {
+              dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
+            },
 
-          setInterpreter(
-            new BlocklyInterpreter(code, {
-              onHighlight: (id) => {
-                dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
-              },
+            onSetMotorPower: (channel: number, power: number) => {
+              dispatch(
+                robotSimulatorSlice.actions.setPower({ channel, power })
+              );
+            },
 
-              onSetMotorPower: (channel: number, power: number) => {
-                dispatch(
-                  robotSimulatorSlice.actions.setPower({ channel, power })
-                );
-              },
+            onFinish: () => {
+              syncExecutionState(interpreter);
+              setInterpreter(null);
+              dispatch(
+                messageSlice.actions.addMessage({
+                  type: MessageBarType.success,
+                  msg: "Program finished!",
+                })
+              );
+            },
 
-              onIsSensorTouchPushed: (channel: number): boolean => {
-                return true;
-              },
-            })
-          );
+            onIsSensorTouchPushed: (channel: number): boolean => {
+              return true;
+            },
+          };
+
+          try {
+            const interpreter = new BlocklyInterpreter(code, callbacks);
+            setInterpreter(interpreter);
+            syncExecutionState(interpreter);
+          } catch (err) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageBarType.error,
+                msg: "Code cannot be executed.",
+              })
+            );
+          }
         },
       }}
     >
