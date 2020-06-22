@@ -53,4 +53,4 @@ export const simulatorLogSlice = createSlice({
       }),
 });
 
-export const getCurrentExecution = () => (state: RootState) => state.logs;
+export const getCurrentExecutionLogs = () => (state: RootState) => state.logs;
