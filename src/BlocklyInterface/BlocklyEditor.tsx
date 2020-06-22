@@ -15,6 +15,9 @@ import {
 } from "./blocklySlice";
 
 import "./Blockly.css";
+import "./StdProgramBuilder";
+import { StdProgramBuilder } from "./StdProgramBuilder";
+import Blockly from "blockly";
 
 /**
  * Component that wraps the blockly interface.
@@ -86,6 +89,8 @@ export const BlocklyEditor: FunctionComponent = () => {
 
     if (!blocklyRef.current) {
       blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
+
+      new StdProgramBuilder(Blockly.getMainWorkspace()).build();
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
