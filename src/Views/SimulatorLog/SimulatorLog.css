@@ -1,8 +1,10 @@
-.simulator-log {
-  grid-area: SimulatorLog;
-  background-color: #c8e6c9;
-  /* making the overflow hidden allows us to properly handle both shrinking, and expanding
-     the height of the <canvas> element. See RobotSimulator::onresize();
-   */
-  overflow: hidden;
+thead {
+  display: table;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  height: 100px;
+  overflow-y: scroll;
 }

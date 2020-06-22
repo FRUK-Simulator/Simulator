@@ -4,19 +4,21 @@ import { vmSlice } from "../../JavascriptVM/vmSlice";
 import { ExecutionState } from "../../JavascriptVM/vm";
 import { robotSimulatorSlice } from "../../RobotSimulator/robotSimulatorSlice";
 
-function createLogEntry(port: number, power: number): ILogEntry {
+function createLogEntry(id: string, port: number, power: number): ILogEntry {
   return {
+    id: id,
     timestamp: new Date().toISOString(),
     command: "set DC Motor on port " + port + " to " + power + "%",
   };
 }
 
-export interface ILogEntry {
-  timestamp: String;
-  command: String;
+interface ILogEntry {
+  id: string;
+  timestamp: string;
+  command: string;
 }
 
-export interface IExecutionLogState {
+interface IExecutionLogState {
   logs: ILogEntry[];
 }
 
@@ -34,6 +36,7 @@ export const simulatorLogSlice = createSlice({
     builder
       .addCase(robotSimulatorSlice.actions.setPower, (state, action) => {
         const logEntry = createLogEntry(
+          state.logs.length.toString(),
           action.payload.channel,
           action.payload.power
         );
