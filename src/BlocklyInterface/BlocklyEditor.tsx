@@ -15,8 +15,7 @@ import {
 } from "./blocklySlice";
 
 import "./Blockly.css";
-import "./StdProgramBuilder";
-import { StdProgramBuilder } from "./StdProgramBuilder";
+import { loadPredefinedDemo } from "./BlocklyProgramLoader";
 import Blockly from "blockly";
 
 /**
@@ -90,7 +89,7 @@ export const BlocklyEditor: FunctionComponent = () => {
     if (!blocklyRef.current) {
       blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
 
-      new StdProgramBuilder(Blockly.getMainWorkspace()).build();
+      loadPredefinedDemo(0, Blockly.getMainWorkspace());
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
