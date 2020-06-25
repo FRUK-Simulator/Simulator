@@ -71,7 +71,19 @@ export const VMControls: FunctionComponent = () => {
       className: "javascript-vm-controls--stop-button",
     },
   };
+  const resetButton: ICommandBarItemProps = {
+    onClick() {
+      controls.resetSimulator();
+    },
+    key: "reset",
+    text: "Reset",
+    iconProps: {
+      iconName: "Rewind",
+      className: "javascript-vm-controls--reset-button",
+    },
+  };
   const commandBarRunningItems: ICommandBarItemProps[] = [
+    resetButton,
     stopButton,
     executionStatus === ExecutionState.RUNNING
       ? { ...stepButton, disabled: true }
@@ -79,6 +91,7 @@ export const VMControls: FunctionComponent = () => {
     executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
+    resetButton,
     { ...startButton, disabled: !code },
     { ...stepButton, disabled: true },
     { ...runButton, disabled: true },

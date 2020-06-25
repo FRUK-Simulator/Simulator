@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, createContext } from "react";
+import { FunctionComponent, useState, createContext, useRef } from "react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { vmSlice } from "./vmSlice";
@@ -26,6 +26,8 @@ export interface IVirtualMachine {
   stop: () => void;
   start: () => void;
   pause: () => void;
+  linkReset(reset: () => void): void;
+  resetSimulator: () => void;
 }
 
 /**
@@ -50,6 +52,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
+  const resetLink = useRef<() => void | undefined>();
 
   /**
    * Syncs the redux state with the interpreter state.
@@ -150,6 +153,14 @@ export const VMProvider: FunctionComponent = ({ children }) => {
                 msg: "Code cannot be executed.",
               })
             );
+          }
+        },
+        linkReset(reset: () => void): void {
+          resetLink.current = reset;
+        },
+        resetSimulator(): void {
+          if (resetLink.current) {
+            resetLink.current();
           }
         },
       }}

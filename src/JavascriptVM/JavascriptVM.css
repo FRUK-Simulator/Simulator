@@ -5,11 +5,16 @@
 }
 
 .javascript-vm-controls {
-  min-width: 256px;
+  min-width: 330px;
 }
 
 .javascript-vm-controls--stop-button,
 .javascript-vm-controls--stop-button:hover {
+  color: #dc3545;
+}
+
+.javascript-vm-controls--reset-button,
+.javascript-vm-controls--reset-button:hover {
   color: #dc3545;
 }
 

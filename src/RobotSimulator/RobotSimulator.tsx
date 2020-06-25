@@ -1,10 +1,11 @@
-import React, { FunctionComponent, useRef, useEffect } from "react";
+import React, { FunctionComponent, useRef, useEffect, useContext } from "react";
 import "./RobotSimulator.css";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "./StdWorldBuilder";
 import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
 import { useSelector } from "react-redux";
 import { getMotorPower } from "./robotSimulatorSlice";
+import { IVirtualMachine, VMContext } from "../JavascriptVM/JavascriptVM";
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.
@@ -13,6 +14,7 @@ export const RobotSimulator: FunctionComponent = () => {
   const canvasParentRef = useRef<HTMLDivElement>(null);
   const sim = useRef<Sim3D | null>(null);
   const robotRef = useRef<RobotHandle | null>(null);
+  const controls = useContext(VMContext) as IVirtualMachine;
 
   const leftMotorPower = useSelector(getMotorPower(0));
   const rightMotorPower = useSelector(getMotorPower(1));
@@ -31,17 +33,24 @@ export const RobotSimulator: FunctionComponent = () => {
   useEffect(() => {
     updateCanvasSize();
 
+    const reset = () => {
+      sim.current?.resetSimulator();
+      const robot = new StdWorldBuilder(sim.current!).build();
+      robotRef.current = robot!;
+    };
+
     sim.current = new Sim3D(canvasRef.current!);
-    const robot = new StdWorldBuilder(sim.current).build();
     sim.current.beginRendering();
-    robotRef.current = robot!;
+    controls.linkReset(reset);
+
+    reset();
 
     return () => {
       // remove the simulator
       sim.current?.stopRendering();
       sim.current = null;
     };
-  }, []);
+  }, [controls]);
 
   // effect to resize on resize events
   useEffect(() => {
