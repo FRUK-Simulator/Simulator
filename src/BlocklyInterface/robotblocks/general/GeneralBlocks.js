@@ -152,8 +152,9 @@ Blockly.Blocks["misc_atan2"] = {
         case "Y":
         case "X":
           return "double";
+        default:
+          return "";
       }
-      return "";
     };
     this.getJavaScriptOutputType = function () {
       return "double";
@@ -215,8 +216,9 @@ Blockly.Blocks["misc_formatNumber"] = {
           return "double";
         case "PRECISION":
           return "int";
+        default:
+          return "";
       }
-      return "";
     };
   },
 };
@@ -283,8 +285,9 @@ Blockly.Blocks["misc_roundDecimal"] = {
           return "double";
         case "PRECISION":
           return "int";
+        default:
+          return "";
       }
-      return "";
     };
   },
 };
