@@ -40,7 +40,7 @@ export const simulatorLogSlice = createSlice({
           action.payload.channel,
           action.payload.power
         );
-        state.logs.push(logEntry);
+        state.logs.unshift(logEntry);
         return state;
       })
       // listen on vm events
