@@ -30,9 +30,10 @@ export const GameController: FunctionComponent = () => {
   }
 
   return (
+    // svg image is from https://www.svgrepo.com/svg/95376/game-controller LICENSE: CC0 License
     <svg
       version="1.1"
-      id="Capa_1"
+      id="GameController"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       x="0px"
