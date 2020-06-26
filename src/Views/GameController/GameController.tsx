@@ -1,20 +1,32 @@
 import React, { FunctionComponent } from "react";
+import { robotSimulatorSlice } from "../../RobotSimulator/robotSimulatorSlice";
+import { useDispatch } from "react-redux";
 
 /**
  * Component for the game controller
  */
 export const GameController: FunctionComponent = () => {
-  function onGreenButtonClicked(event: React.MouseEvent) {
-    console.log(event.clientX);
-  }
+  const dispatch = useDispatch();
+  // TODO instead of buttons use the buttons from the control-cross but this path has to be split first.
   function onBlueButtonClicked(event: React.MouseEvent) {
-    console.log(event.clientX);
-  }
-  function onRedButtonClicked(event: React.MouseEvent) {
-    console.log(event.clientX);
+    // forward
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: 0.5 }));
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: 0.5 }));
   }
   function onYellowButtonClicked(event: React.MouseEvent) {
-    console.log(event.clientX);
+    // backward
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: -0.5 }));
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: -0.5 }));
+  }
+  function onGreenButtonClicked(event: React.MouseEvent) {
+    // left
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: -0.5 }));
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: 0.5 }));
+  }
+  function onRedButtonClicked(event: React.MouseEvent) {
+    // right
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: 0.5 }));
+    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: -0.5 }));
   }
 
   return (
@@ -48,28 +60,28 @@ export const GameController: FunctionComponent = () => {
         y2="31.528"
       />
       <circle
-        onClick={onGreenButtonClicked}
+        onClick={onRedButtonClicked}
         fill="#43B05C"
         cx="36"
         cy="41.528"
         r="3"
       />
       <circle
-        onClick={onBlueButtonClicked}
+        onClick={onGreenButtonClicked}
         fill="#DD352E"
         cx="50"
         cy="41.528"
         r="3"
       />
       <circle
-        onClick={onRedButtonClicked}
+        onClick={onYellowButtonClicked}
         fill="#EBBA16"
         cx="43"
         cy="48.528"
         r="3"
       />
       <circle
-        onClick={onYellowButtonClicked}
+        onClick={onBlueButtonClicked}
         fill="#366DB6"
         cx="43"
         cy="34.528"
