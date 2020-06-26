@@ -7,27 +7,33 @@ import { useDispatch } from "react-redux";
  */
 export const GameController: FunctionComponent = () => {
   const dispatch = useDispatch();
+
   // TODO instead of buttons use the buttons from the control-cross but this path has to be split first.
-  function onBlueButtonClicked(event: React.MouseEvent) {
+  const onBlueButtonClicked = (event: React.MouseEvent) => {
     // forward
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: 0.5 }));
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: 0.5 }));
-  }
-  function onYellowButtonClicked(event: React.MouseEvent) {
+    handleMotorChange(0.5, 0.5);
+  };
+  const onYellowButtonClicked = (event: React.MouseEvent) => {
     // backward
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: -0.5 }));
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: -0.5 }));
-  }
-  function onGreenButtonClicked(event: React.MouseEvent) {
+    handleMotorChange(-0.5, -0.5);
+  };
+  const onGreenButtonClicked = (event: React.MouseEvent) => {
     // left
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: -0.5 }));
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: 0.5 }));
-  }
-  function onRedButtonClicked(event: React.MouseEvent) {
+    handleMotorChange(-0.5, 0.5);
+  };
+  const onRedButtonClicked = (event: React.MouseEvent) => {
     // right
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 0, power: 0.5 }));
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: 1, power: -0.5 }));
-  }
+    handleMotorChange(0.5, -0.5);
+  };
+
+  const handleMotorChange = (leftPower: number, rightPower: number) => {
+    dispatch(
+      robotSimulatorSlice.actions.setPower({ channel: 0, power: leftPower })
+    );
+    dispatch(
+      robotSimulatorSlice.actions.setPower({ channel: 1, power: rightPower })
+    );
+  };
 
   return (
     // svg image is from https://www.svgrepo.com/svg/95376/game-controller LICENSE: CC0 License
