@@ -15,6 +15,7 @@ import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
 import { messageSlice } from "../ErrorViews/messagesSlice";
 import { MessageBarType } from "@fluentui/react";
+import Blockly from "blockly";
 
 /**
  * Interface to control the VM
@@ -135,6 +136,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           };
 
           try {
+            // Log the Blockly workspace into the web-console. Could be used to copy/past demo programs.
+            const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
+            console.log(Blockly.Xml.domToText(xml));
+
             const interpreter = new BlocklyInterpreter(code, callbacks);
             setInterpreter(interpreter);
             syncExecutionState(interpreter);
