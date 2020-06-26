@@ -5,10 +5,12 @@ import { ExecutionState } from "../../JavascriptVM/vm";
 import { robotSimulatorSlice } from "../../RobotSimulator/robotSimulatorSlice";
 
 function createLogEntry(id: string, port: number, power: number): ILogEntry {
+  // re-normalize power from range -1 to 1 to percentage
   return {
     id: id,
     timestamp: new Date().toISOString(),
-    command: "set DC Motor on port " + port + " to " + power + "%",
+    command:
+      "set DC Motor on port " + port + " to " + Math.floor(power * 100) + "%",
   };
 }
 

@@ -69,7 +69,8 @@ export class BlocklyInterpreter {
       const setMotorPower = interpreter.createNativeFunction(
         (port: number, power: number) => {
           if (callbacks.onSetMotorPower) {
-            callbacks.onSetMotorPower(port, power);
+            // normalize power from percentage to range -1 to 1
+            callbacks.onSetMotorPower(port, power / 100);
           }
         }
       );
