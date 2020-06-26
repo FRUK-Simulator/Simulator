@@ -8,35 +8,62 @@ import { useDispatch } from "react-redux";
 export const GameController: FunctionComponent = () => {
   const dispatch = useDispatch();
 
-  // TODO instead of buttons use the buttons from the control-cross but this path has to be split first.
-  const onBlueButtonClicked = (event: React.MouseEvent) => {
-    // forward
-    handleMotorChange(0.5, 0.5);
+  const onCrossButtonMiddleClicked = (event: React.MouseEvent) => {
+    // stop
+    handleMotorChange(0, 0);
   };
-  const onYellowButtonClicked = (event: React.MouseEvent) => {
+
+  const onCrossButtonDownClicked = (event: React.MouseEvent) => {
     // backward
     handleMotorChange(-0.5, -0.5);
   };
-  const onGreenButtonClicked = (event: React.MouseEvent) => {
+
+  const onCrossButtonLeftClicked = (event: React.MouseEvent) => {
     // left
     handleMotorChange(-0.5, 0.5);
   };
-  const onRedButtonClicked = (event: React.MouseEvent) => {
+
+  const onCrossButtonRightClicked = (event: React.MouseEvent) => {
     // right
     handleMotorChange(0.5, -0.5);
   };
 
+  const onCrossButtonUpClicked = (event: React.MouseEvent) => {
+    // forward
+    handleMotorChange(0.5, 0.5);
+  };
+
+  const onBlueButtonClicked = (event: React.MouseEvent) => {
+    // forward
+    handleMotorChange(1, 1);
+  };
+
+  const onYellowButtonClicked = (event: React.MouseEvent) => {
+    // backward
+    handleMotorChange(-1, -1);
+  };
+
+  const onGreenButtonClicked = (event: React.MouseEvent) => {
+    // left
+    handleMotorChange(-1, 1);
+  };
+
+  const onRedButtonClicked = (event: React.MouseEvent) => {
+    // right
+    handleMotorChange(1, -1);
+  };
+
   const handleMotorChange = (leftPower: number, rightPower: number) => {
     dispatch(
-      robotSimulatorSlice.actions.setPower({ channel: 0, power: leftPower })
+      robotSimulatorSlice.actions.setPower({ channel: 0, power: rightPower })
     );
     dispatch(
-      robotSimulatorSlice.actions.setPower({ channel: 1, power: rightPower })
+      robotSimulatorSlice.actions.setPower({ channel: 1, power: leftPower })
     );
   };
 
   return (
-    // svg image is from https://www.svgrepo.com/svg/95376/game-controller LICENSE: CC0 License
+    // original svg image is from https://www.svgrepo.com/svg/95376/game-controller LICENSE: CC0 License
     <svg
       version="1.1"
       id="GameController"
@@ -67,14 +94,14 @@ export const GameController: FunctionComponent = () => {
         y2="31.528"
       />
       <circle
-        onClick={onRedButtonClicked}
+        onClick={onGreenButtonClicked}
         fill="#43B05C"
         cx="36"
         cy="41.528"
         r="3"
       />
       <circle
-        onClick={onGreenButtonClicked}
+        onClick={onRedButtonClicked}
         fill="#DD352E"
         cx="50"
         cy="41.528"
@@ -94,9 +121,31 @@ export const GameController: FunctionComponent = () => {
         cy="34.528"
         r="3"
       />
+
       <polygon
+        onClick={onCrossButtonMiddleClicked}
         fill="#38454F"
-        points="22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528 "
+        points="22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528"
+      />
+      <polygon
+        onClick={onCrossButtonRightClicked}
+        fill="#38454F"
+        points="22,38.528 18,38.528 18,44.528 22,44.528"
+      />
+      <polygon
+        onClick={onCrossButtonUpClicked}
+        fill="#38454F"
+        points="18,38.528 18,34.528 12,34.528 12,38.528"
+      />
+      <polygon
+        onClick={onCrossButtonLeftClicked}
+        fill="#38454F"
+        points="12,38.528 8,38.528 8,44.528 12,44.528"
+      />
+      <polygon
+        onClick={onCrossButtonDownClicked}
+        fill="#38454F"
+        points="12,44.528 12,48.528 18,48.528 18,44.528"
       />
     </svg>
   );
