@@ -15,6 +15,8 @@ import {
 } from "./blocklySlice";
 
 import "./Blockly.css";
+import { loadPredefinedDemo } from "./BlocklyProgramLoader";
+import Blockly from "blockly";
 
 /**
  * Component that wraps the blockly interface.
@@ -86,6 +88,8 @@ export const BlocklyEditor: FunctionComponent = () => {
 
     if (!blocklyRef.current) {
       blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
+
+      loadPredefinedDemo(0, Blockly.getMainWorkspace());
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
