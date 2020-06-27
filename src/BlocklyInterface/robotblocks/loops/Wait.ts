@@ -1,5 +1,7 @@
 import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
+// code for wait block and VM-logic adopted from official blockly examples
+// on https://groups.google.com/forum/#!topic/blockly/5xbDQ8FQzbI
 export function addWaitBlock() {
   addCustomBlock(
     "wait",
