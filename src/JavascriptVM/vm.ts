@@ -50,11 +50,13 @@ export class BlocklyInterpreter {
   private executionState: ExecutionState;
   private blockHighlighted: boolean;
   private callbacks: BlocklyInterpreterCallbacks;
+  private nextStepDelay: number;
 
   constructor(code: string, callbacks: BlocklyInterpreterCallbacks) {
     this.executionState = ExecutionState.PAUSED;
     this.callbacks = callbacks;
     this.blockHighlighted = false;
+    this.nextStepDelay = 0;
 
     this.interpreter = new Interpreter(code, (interpreter, globals) => {
       const highlightBlock = interpreter.createNativeFunction((id: string) => {
@@ -82,6 +84,12 @@ export class BlocklyInterpreter {
         }
       );
 
+      const waitWrapper = interpreter.createNativeFunction(
+        (milliseconds: number) => {
+          this.nextStepDelay = milliseconds;
+        }
+      );
+
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
@@ -90,6 +98,7 @@ export class BlocklyInterpreter {
         "isSensorTouchPushed",
         isSensorTouchPushed
       );
+      interpreter.setProperty(globals, "wait", waitWrapper);
     });
 
     // Start running in a paused state - ie, spawn a "thread"
@@ -141,6 +150,9 @@ export class BlocklyInterpreter {
    * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
    */
   private _run(steps: number) {
+    var tmpNextStepDelay = Math.max(EXECUTION_INTERVAL, this.nextStepDelay);
+    this.nextStepDelay = 0;
+
     setTimeout(() => {
       // do not schedule any more work if stopped
       if (this.executionState === ExecutionState.STOPPED) {
@@ -164,7 +176,7 @@ export class BlocklyInterpreter {
 
       // schedule the next run
       return this._run(remainder);
-    }, EXECUTION_INTERVAL);
+    }, tmpNextStepDelay);
   }
 
   run() {
