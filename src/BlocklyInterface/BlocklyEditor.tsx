@@ -162,6 +162,7 @@ export const BlocklyEditor: FunctionComponent = () => {
     >
       <img
         src={require("./ToolboxButton.png")}
+        alt="Toolbox"
         onClick={onToolboxButtonClick}
       />
       <div className="blockly-workspace-area" ref={workspaceAreaRef} />
