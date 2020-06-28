@@ -19,3 +19,13 @@ export function getToolbox() {
     ${LoopSection}
 </xml>`;
 }
+
+/**
+ * Returns an empty toolbox (at least one category is needed)
+ */
+export function getEmptyToolbox() {
+  return `
+<xml>
+  <category />
+</xml>`;
+}

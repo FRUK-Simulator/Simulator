@@ -18,7 +18,7 @@ import {
 import "./Blockly.css";
 import { loadPredefinedDemo } from "./BlocklyProgramLoader";
 import Blockly, { WorkspaceSvg } from "blockly";
-import { getToolbox } from "./toolbox";
+import { getToolbox, getEmptyToolbox } from "./toolbox";
 
 /**
  * Component that wraps the blockly interface.
@@ -138,9 +138,7 @@ export const BlocklyEditor: FunctionComponent = () => {
   useEffect(() => {
     if (blocklyRef.current) {
       const workspace = Blockly.getMainWorkspace() as WorkspaceSvg;
-      // for an empty toolbox at least one category is needed
-      const emptyToolboxXml = "<xml><category /></xml>";
-      const blocklyXml = showToolbox ? getToolbox() : emptyToolboxXml;
+      const blocklyXml = showToolbox ? getToolbox() : getEmptyToolbox();
       workspace.updateToolbox(blocklyXml);
       // extra call to refresh the workspace. Otherwise the workspace will not be
       // frefreshed based on the new width of the toolbox
