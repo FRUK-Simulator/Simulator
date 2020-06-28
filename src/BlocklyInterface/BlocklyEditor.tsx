@@ -11,12 +11,14 @@ import {
 import {
   getHighlightedBlockId,
   getCurrentBlockSelection,
+  isShowToolbox,
   blocklySlice,
 } from "./blocklySlice";
 
 import "./Blockly.css";
 import { loadPredefinedDemo } from "./BlocklyProgramLoader";
-import Blockly from "blockly";
+import Blockly, { WorkspaceSvg } from "blockly";
+import { getToolbox } from "./toolbox";
 
 /**
  * Component that wraps the blockly interface.
@@ -28,6 +30,7 @@ export const BlocklyEditor: FunctionComponent = () => {
 
   const highlightedBlock = useSelector(getHighlightedBlockId);
   const currentBlockSelection = useSelector(getCurrentBlockSelection);
+  const showToolbox = useSelector(isShowToolbox);
 
   const executing = useSelector(isExecuting);
 
@@ -130,6 +133,27 @@ export const BlocklyEditor: FunctionComponent = () => {
     }
   }, [highlightedBlock, currentBlockSelection, executing]);
 
+  // show/minimize the toolbox. Blockly does not allow the manipulation of the toolbox
+  // in any way except updating the xml definition of it.
+  useEffect(() => {
+    if (blocklyRef.current) {
+      const workspace = Blockly.getMainWorkspace() as WorkspaceSvg;
+      // for an empty toolbox at least one category is needed
+      const emptyToolboxXml = "<xml><category /></xml>";
+      const blocklyXml = showToolbox ? getToolbox() : emptyToolboxXml;
+      workspace.updateToolbox(blocklyXml);
+      // extra call to refresh the workspace. Otherwise the workspace will not be
+      // frefreshed based on the new width of the toolbox
+      workspace.resize();
+    }
+  }, [showToolbox]);
+
+  const onToolboxButtonClick = () =>
+    dispatch(
+      blocklySlice.actions.showToolbox({
+        visible: !showToolbox,
+      })
+    );
   return (
     <div
       ref={wrapperRef}
@@ -138,6 +162,10 @@ export const BlocklyEditor: FunctionComponent = () => {
         executing ? "Your program cannot be changed until you stop it" : ""
       }
     >
+      <img
+        src={require("./ToolboxButton.png")}
+        onClick={onToolboxButtonClick}
+      />
       <div className="blockly-workspace-area" ref={workspaceAreaRef} />
     </div>
   );

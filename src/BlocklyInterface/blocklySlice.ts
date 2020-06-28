@@ -12,6 +12,8 @@ export const blocklySlice = createSlice({
     highlightedBlock: "",
     /** The id of the current block selection - an empty string designates no selection */
     selectedBlock: "",
+    /** Flag which indicates if the toolbox is visible or not */
+    showToolbox: true,
   },
   name: "blockly",
   reducers: {
@@ -22,6 +24,11 @@ export const blocklySlice = createSlice({
     },
     selectedBlock(state, action: PayloadAction<{ blockId: string }>) {
       state.selectedBlock = action.payload.blockId;
+
+      return state;
+    },
+    showToolbox(state, action: PayloadAction<{ visible: boolean }>) {
+      state.showToolbox = action.payload.visible;
 
       return state;
     },
@@ -63,3 +70,12 @@ export const getHighlightedBlockId = (state: RootState) =>
  */
 export const getCurrentBlockSelection = (state: RootState) =>
   state.blockly.selectedBlock;
+
+/**
+ * Retrieves the flag which indicates if the toolbox is visible or not.
+ *
+ * @param state the root state of the application
+ *
+ * @returns the toolbox' visibility flag
+ */
+export const isShowToolbox = (state: RootState) => state.blockly.showToolbox;
