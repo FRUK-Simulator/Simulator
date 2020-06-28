@@ -3,10 +3,10 @@
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 30vw 1fr;
+  grid-template-rows: 60vh 1fr;
   gap: 1px 1px;
   grid-template-areas:
-    "Blockly Simulator"
-    "Blockly Control-Panel"
+    "Editor Simulator"
+    "Editor Control-Panel"
     "JSVM    JSVM";
 }
