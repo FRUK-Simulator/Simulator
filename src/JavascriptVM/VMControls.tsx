@@ -16,6 +16,28 @@ export const VMControls: FunctionComponent = () => {
   const controls = useContext(VMContext) as IVirtualMachine;
   const code = useSelector(getCode);
 
+  const arenaSelection: ICommandBarItemProps = {
+    key: "arenaSelection",
+    text: "Arena",
+    subMenuProps: {
+      items: [
+        {
+          key: "arena1",
+          name: "Arena 1",
+          onClick: () => {
+            controls.setArena(1);
+          },
+        },
+        {
+          key: "arena2",
+          name: "Arena 2",
+          onClick: () => {
+            controls.setArena(2);
+          },
+        },
+      ],
+    },
+  };
   const startButton: ICommandBarItemProps = {
     onClick() {
       controls.start();
@@ -72,6 +94,7 @@ export const VMControls: FunctionComponent = () => {
     },
   };
   const commandBarRunningItems: ICommandBarItemProps[] = [
+    { ...arenaSelection, disabled: true },
     stopButton,
     executionStatus === ExecutionState.RUNNING
       ? { ...stepButton, disabled: true }
@@ -79,6 +102,7 @@ export const VMControls: FunctionComponent = () => {
     executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
+    { ...arenaSelection, disabled: false },
     { ...startButton, disabled: !code },
     { ...stepButton, disabled: true },
     { ...runButton, disabled: true },
