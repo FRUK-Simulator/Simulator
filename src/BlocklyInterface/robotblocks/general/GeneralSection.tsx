@@ -349,30 +349,6 @@ export default (() => {
         <block type="comment">
             <field name="COMMENT">Enter your comment here!</field>
         </block>
-        <block type="misc_roundDecimal">
-            <value name="NUMBER">
-                <shadow type="math_number">
-                    <field name="NUM">3.14159265</field>
-                </shadow>
-            </value>
-            <value name="PRECISION">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="misc_formatNumber">
-            <value name="NUMBER">
-                <shadow type="math_number">
-                    <field name="NUM">3.14159265</field>
-                </shadow>
-            </value>
-            <value name="PRECISION">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
-            </value>
-        </block>
         <block type="misc_null"></block>
         <block type="misc_isNull"></block>
         <block type="misc_isNotNull"></block>
