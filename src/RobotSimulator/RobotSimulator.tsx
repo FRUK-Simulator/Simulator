@@ -3,9 +3,20 @@ import "./RobotSimulator.css";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "./StdWorldBuilder";
 import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
+import { WorldConfig } from "@fruk/simulator-core/dist/engine/SimulatorConfig";
+import {
+  IBallSpec,
+  IBoxSpec,
+} from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 import { useSelector } from "react-redux";
 import { getMotorPower } from "./robotSimulatorSlice";
 import { IVirtualMachine, VMContext } from "../JavascriptVM/JavascriptVM";
+
+interface ArenaConfig {
+  worldConfig: WorldConfig;
+  ballSpecs?: IBallSpec[];
+  boxSpecs?: IBoxSpec[];
+}
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.
@@ -27,6 +38,66 @@ export const RobotSimulator: FunctionComponent = () => {
 
     canvasRef.current.width = canvasParentRef.current.clientWidth;
     canvasRef.current.height = canvasParentRef.current.clientHeight;
+  }
+
+  function setupArena(arenaConfig: ArenaConfig) {
+    sim.current?.configureWorld(arenaConfig.worldConfig);
+    const robot = new StdWorldBuilder(sim.current!).build();
+    robotRef.current = robot!;
+    arenaConfig.ballSpecs?.forEach(function (ballSpec, index) {
+      sim.current?.addBall(ballSpec);
+    });
+    arenaConfig.boxSpecs?.forEach(function (boxSpec, index) {
+      sim.current?.addBox(boxSpec);
+    });
+  }
+
+  function setupArena1() {
+    const arenaConfig: ArenaConfig = {
+      worldConfig: {
+        zLength: 20,
+        xLength: 20,
+        walls: [],
+        camera: {
+          position: {
+            x: 0,
+            y: 8,
+            z: 10,
+          },
+        },
+      },
+      ballSpecs: [
+        { type: "ball", radius: 0.5, initialPosition: { x: 4, y: 4 } },
+        { type: "ball", radius: 0.3 },
+      ],
+      boxSpecs: [
+        { type: "box", dimensions: { x: 1, y: 2, z: 3 } },
+        { type: "box", dimensions: { x: 1, y: 2, z: 3 } },
+      ],
+    };
+    setupArena(arenaConfig);
+  }
+
+  function setupArena2() {
+    const arenaConfig: ArenaConfig = {
+      worldConfig: {
+        zLength: 10,
+        xLength: 10,
+        walls: [],
+        camera: {
+          position: {
+            x: 0,
+            y: 4,
+            z: 5,
+          },
+        },
+      },
+      ballSpecs: [
+        { type: "ball", radius: 0.5 },
+        { type: "ball", radius: 0.3 },
+      ],
+    };
+    setupArena(arenaConfig);
   }
 
   // effect to initialize the simulator on first mount
@@ -63,16 +134,18 @@ export const RobotSimulator: FunctionComponent = () => {
   // effect to set the arena
   useEffect(() => {
     const setArena = (id: number) => {
-      sim.current?.resetSimulator();
-      const robot = new StdWorldBuilder(sim.current!).build();
-      robotRef.current = robot!;
       console.log("setArena id ", id);
-      if (id == 1) {
-        sim.current?.addBall({ type: "ball", radius: 0.5 });
-        sim.current?.addBall({ type: "ball", radius: 0.3 });
-      }
-      if (id == 2) {
-        sim.current?.addBox({ type: "box", dimensions: { x: 1, y: 2, z: 3 } });
+      switch (id) {
+        case 1:
+          setupArena1();
+          break;
+        case 2:
+          setupArena2();
+          break;
+        default:
+          sim.current?.resetSimulator();
+          const robot = new StdWorldBuilder(sim.current!).build();
+          robotRef.current = robot!;
       }
     };
 
