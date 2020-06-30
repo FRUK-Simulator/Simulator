@@ -12,13 +12,14 @@ import {
   getHighlightedBlockId,
   getCurrentBlockSelection,
   isShowToolbox,
+  getToolboxXml,
   blocklySlice,
 } from "./blocklySlice";
 
 import "./Blockly.css";
 import { loadPredefinedDemo } from "./BlocklyProgramLoader";
 import Blockly, { WorkspaceSvg } from "blockly";
-import { getToolbox, getEmptyToolbox } from "./toolbox";
+import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
 
 /**
  * Component that wraps the blockly interface.
@@ -31,6 +32,7 @@ export const BlocklyEditor: FunctionComponent = () => {
   const highlightedBlock = useSelector(getHighlightedBlockId);
   const currentBlockSelection = useSelector(getCurrentBlockSelection);
   const showToolbox = useSelector(isShowToolbox);
+  const toolboxXml = useSelector(getToolboxXml);
 
   const executing = useSelector(isExecuting);
 
@@ -90,7 +92,10 @@ export const BlocklyEditor: FunctionComponent = () => {
     resizeBlocklyRegion();
 
     if (!blocklyRef.current) {
-      blocklyRef.current = new BlocklyInstance(workspaceAreaRef.current!);
+      blocklyRef.current = new BlocklyInstance(
+        workspaceAreaRef.current!,
+        toolboxXml
+      );
 
       loadPredefinedDemo(0, Blockly.getMainWorkspace());
 
@@ -137,14 +142,28 @@ export const BlocklyEditor: FunctionComponent = () => {
   // in any way except updating the xml definition of it.
   useEffect(() => {
     if (blocklyRef.current) {
+      dispatch(
+        blocklySlice.actions.setToolboxXml({
+          toolboxXml: showToolbox ? toolboxXml : getEmptyToolbox(),
+        })
+      );
+    }
+  }, [showToolbox, dispatch, toolboxXml]);
+
+  // update the toolbox UI based on the toolboxXml definition in the slice
+  useEffect(() => {
+    if (blocklyRef.current) {
       const workspace = Blockly.getMainWorkspace() as WorkspaceSvg;
-      const blocklyXml = showToolbox ? getToolbox() : getEmptyToolbox();
+      // close any blockly popup/flyout when we're switching the toolbox
+      Blockly.hideChaff(false);
+      // get new xml definition for toolbox
+      const blocklyXml = showToolbox ? getDefaultToolbox() : getEmptyToolbox();
       workspace.updateToolbox(blocklyXml);
       // extra call to refresh the workspace. Otherwise the workspace will not be
-      // frefreshed based on the new width of the toolbox
+      // refreshed based on the new width of the toolbox
       workspace.resize();
     }
-  }, [showToolbox]);
+  }, [toolboxXml, showToolbox]);
 
   const onToolboxButtonClick = () =>
     dispatch(

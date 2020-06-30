@@ -8,7 +8,7 @@ import LoopSection from "./robotblocks/loops/LoopSection";
 /**
  * Returns the XML for the Toolbox.
  */
-export function getToolbox() {
+export function getDefaultToolbox() {
   return `
 <xml>
     ${ActuatorSection}

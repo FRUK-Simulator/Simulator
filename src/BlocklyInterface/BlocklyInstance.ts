@@ -1,7 +1,6 @@
 import { JavaScriptGenerator } from "../@types/blockly-javascript";
 import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
-import { getToolbox } from "./toolbox";
 
 export class BlocklyUiEvent extends Events.Ui {
   public element: string | undefined;
@@ -27,9 +26,9 @@ const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 class BlocklyInstance {
   private workspace: Blockly.WorkspaceSvg;
 
-  constructor(workspaceArea: HTMLDivElement) {
+  constructor(workspaceArea: HTMLDivElement, toolboxXml: string) {
     this.workspace = Blockly.inject(workspaceArea, {
-      toolbox: getToolbox(),
+      toolbox: toolboxXml,
     });
 
     this.setupInterpretation();
