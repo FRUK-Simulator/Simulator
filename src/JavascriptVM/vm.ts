@@ -150,8 +150,12 @@ export class BlocklyInterpreter {
    * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
    */
   private _run(steps: number) {
-    var tmpNextStepDelay = Math.max(EXECUTION_INTERVAL, this.nextStepDelay);
-    this.nextStepDelay = 0;
+    let timeout = EXECUTION_INTERVAL;
+    
+    if (this.nextStepDelay > EXECUTION_INTERVAL) {
+      timeout = this.nextStepDelay;
+      this.nextStepDelay = 0;
+    }
 
     setTimeout(() => {
       // do not schedule any more work if stopped
@@ -176,7 +180,7 @@ export class BlocklyInterpreter {
 
       // schedule the next run
       return this._run(remainder);
-    }, tmpNextStepDelay);
+    }, timeout);
   }
 
   run() {
