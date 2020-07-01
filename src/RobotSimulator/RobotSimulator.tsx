@@ -7,6 +7,7 @@ import { WorldConfig } from "@fruk/simulator-core/dist/engine/SimulatorConfig";
 import {
   IBallSpec,
   IBoxSpec,
+  IConeSpec,
 } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 import { useSelector } from "react-redux";
 import { getMotorPower } from "./robotSimulatorSlice";
@@ -16,6 +17,7 @@ interface ArenaConfig {
   worldConfig: WorldConfig;
   ballSpecs?: IBallSpec[];
   boxSpecs?: IBoxSpec[];
+  coneSpecs?: IConeSpec[];
 }
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
@@ -50,9 +52,12 @@ export const RobotSimulator: FunctionComponent = () => {
     arenaConfig.boxSpecs?.forEach(function (boxSpec, index) {
       sim.current?.addBox(boxSpec);
     });
+    arenaConfig.coneSpecs?.forEach(function (coneSpec, index) {
+      sim.current?.addCone(coneSpec);
+    });
   }
 
-  function setupArena1() {
+  function setupPlainArena() {
     const arenaConfig: ArenaConfig = {
       worldConfig: {
         zLength: 20,
@@ -66,35 +71,211 @@ export const RobotSimulator: FunctionComponent = () => {
           },
         },
       },
-      ballSpecs: [
-        { type: "ball", radius: 0.5, initialPosition: { x: 4, y: 4 } },
-        { type: "ball", radius: 0.3 },
-      ],
+    };
+    setupArena(arenaConfig);
+  }
+
+  function setupParkingLotArena() {
+    const height: number = 1;
+    const thickness: number = 0.3;
+    const length: number = 4;
+    const width: number = 3;
+    const arenaConfig: ArenaConfig = {
+      worldConfig: {
+        zLength: 30,
+        xLength: 20,
+        walls: [],
+        camera: {
+          position: {
+            x: 0,
+            y: 8,
+            z: 10,
+          },
+        },
+      },
       boxSpecs: [
-        { type: "box", dimensions: { x: 1, y: 2, z: 3 } },
-        { type: "box", dimensions: { x: 1, y: 2, z: 3 } },
+        {
+          type: "box",
+          dimensions: { x: thickness, y: height, z: length },
+          initialPosition: { x: 9, y: -13 },
+        },
+        {
+          type: "box",
+          dimensions: { x: thickness, y: height, z: length },
+          initialPosition: { x: 5, y: -13 },
+        },
+        {
+          type: "box",
+          dimensions: { x: width, y: height, z: thickness },
+          initialPosition: { x: -8.5, y: -12 },
+        },
+        {
+          type: "box",
+          dimensions: { x: width, y: height, z: thickness },
+          initialPosition: { x: -8.5, y: -8 },
+        },
       ],
     };
     setupArena(arenaConfig);
   }
 
-  function setupArena2() {
+  function setupZigZagArena() {
     const arenaConfig: ArenaConfig = {
       worldConfig: {
-        zLength: 10,
-        xLength: 10,
+        zLength: 40,
+        xLength: 20,
         walls: [],
         camera: {
           position: {
             x: 0,
-            y: 4,
-            z: 5,
+            y: 8,
+            z: 10,
+          },
+        },
+      },
+      coneSpecs: [
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 0, y: -15 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 2, y: -10 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: -2, y: -5 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 2, y: 0 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: -2, y: 5 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 2, y: 10 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 0, y: 15 },
+        },
+      ],
+    };
+    setupArena(arenaConfig);
+  }
+
+  function setupBowlingArena() {
+    const arenaConfig: ArenaConfig = {
+      worldConfig: {
+        zLength: 60,
+        xLength: 20,
+        walls: [],
+        camera: {
+          position: {
+            x: 0,
+            y: 10,
+            z: 10,
           },
         },
       },
       ballSpecs: [
-        { type: "ball", radius: 0.5 },
-        { type: "ball", radius: 0.3 },
+        { type: "ball", radius: 1, initialPosition: { x: 0, y: -5 } },
+      ],
+      coneSpecs: [
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 1.5, y: -25 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: -1.5, y: -25 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 4.5, y: -25 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: -4.5, y: -25 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 0, y: -22 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 3, y: -22 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: -3, y: -22 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 1.5, y: -19 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: -1.5, y: -19 },
+        },
+        {
+          type: "cone",
+          baseColor: 0x980000,
+          height: 5,
+          radius: 0.5,
+          initialPosition: { x: 0, y: -16 },
+        },
       ],
     };
     setupArena(arenaConfig);
@@ -133,19 +314,21 @@ export const RobotSimulator: FunctionComponent = () => {
 
   // effect to set the arena
   useEffect(() => {
+    setupPlainArena();
     const setArena = (id: number) => {
       console.log("setArena id ", id);
       switch (id) {
         case 1:
-          setupArena1();
+          setupParkingLotArena();
           break;
         case 2:
-          setupArena2();
+          setupZigZagArena();
+          break;
+        case 3:
+          setupBowlingArena();
           break;
         default:
-          sim.current?.resetSimulator();
-          const robot = new StdWorldBuilder(sim.current!).build();
-          robotRef.current = robot!;
+          setupPlainArena();
       }
     };
 

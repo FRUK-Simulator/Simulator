@@ -32,18 +32,26 @@ export const VMControls: FunctionComponent = () => {
         },
         {
           key: "arena1",
-          name: "Super Arena",
+          name: "Parking Lot Arena",
           onClick: () => {
             controls.setArena(1);
-            setArena("Super Arena");
+            setArena("Parking Lot Arena");
           },
         },
         {
           key: "arena2",
-          name: "Awesome Arena",
+          name: "ZigZag Arena",
           onClick: () => {
             controls.setArena(2);
-            setArena("Awesome Arena");
+            setArena("ZigZag Arena");
+          },
+        },
+        {
+          key: "arena3",
+          name: "Bowling Arena",
+          onClick: () => {
+            controls.setArena(3);
+            setArena("Bowling Arena");
           },
         },
       ],
