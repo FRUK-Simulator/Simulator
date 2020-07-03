@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { ExecutionState } from "../JavascriptVM/vm";
+import { getDefaultToolbox } from "./toolbox";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -12,6 +13,11 @@ export const blocklySlice = createSlice({
     highlightedBlock: "",
     /** The id of the current block selection - an empty string designates no selection */
     selectedBlock: "",
+    /** Flag which indicates if the toolbox is visible or not */
+    showToolbox: true,
+    /** current definition of the toolbox. Blockly only supports one toolbox so we have
+     *  update this one to simulate multiple toolboxes */
+    toolboxXml: getDefaultToolbox(),
   },
   name: "blockly",
   reducers: {
@@ -22,6 +28,16 @@ export const blocklySlice = createSlice({
     },
     selectedBlock(state, action: PayloadAction<{ blockId: string }>) {
       state.selectedBlock = action.payload.blockId;
+
+      return state;
+    },
+    showToolbox(state, action: PayloadAction<{ visible: boolean }>) {
+      state.showToolbox = action.payload.visible;
+
+      return state;
+    },
+    setToolboxXml(state, action: PayloadAction<{ toolboxXml: string }>) {
+      state.toolboxXml = action.payload.toolboxXml;
 
       return state;
     },
@@ -63,3 +79,21 @@ export const getHighlightedBlockId = (state: RootState) =>
  */
 export const getCurrentBlockSelection = (state: RootState) =>
   state.blockly.selectedBlock;
+
+/**
+ * Retrieves the flag which indicates if the toolbox is visible or not.
+ *
+ * @param state the root state of the application
+ *
+ * @returns the toolbox' visibility flag
+ */
+export const isShowToolbox = (state: RootState) => state.blockly.showToolbox;
+
+/**
+ * Retrieves the current definition of the toolbox
+ *
+ * @param state the root state of the application
+ *
+ * @returns the definition of the toolbox
+ */
+export const getToolboxXml = (state: RootState) => state.blockly.toolboxXml;
