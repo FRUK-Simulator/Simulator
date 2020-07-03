@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from "react";
+import { EditorView } from "../Editor/EditorView";
 import { RobotSimulator } from "../RobotSimulator/RobotSimulator";
 import { ControlPanel } from "../ControlPanel/ControlPanel";
-import "./SimulatorView.css";
-import { BlocklyEditor } from "../BlocklyInterface/BlocklyEditor";
 import { GameController } from "../Views/GameController/GameController";
+import "./SimulatorView.css";
 
 export const SimulatorView: FunctionComponent = () => {
   return (
     <div className="content">
-      <BlocklyEditor />
+      <EditorView />
       <RobotSimulator />
       <ControlPanel />
       <GameController />

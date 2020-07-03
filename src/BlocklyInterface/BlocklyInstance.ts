@@ -36,6 +36,7 @@ class BlocklyInstance {
   }
 
   setupInterpretation() {
+    this.generator.INDENT = "  ";
     this.generator.STATEMENT_PREFIX = `${BLOCKLY_HIGHLIGHT_PREFIX}(%1);\n`;
     this.generator.addReservedWords(BLOCKLY_HIGHLIGHT_PREFIX);
   }
