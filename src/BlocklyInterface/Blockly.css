@@ -1,7 +1,5 @@
 .blockly-workspace {
   height: 100%;
-  grid-area: Blockly;
-  position: relative;
 }
 
 .blockly-workspace.executing {
