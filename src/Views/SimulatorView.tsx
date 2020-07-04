@@ -3,6 +3,7 @@ import { EditorView } from "../Editor/EditorView";
 import { RobotSimulator } from "../RobotSimulator/RobotSimulator";
 import { ControlPanel } from "../ControlPanel/ControlPanel";
 import { GameController } from "../Views/GameController/GameController";
+import { SimulatorLog } from "./SimulatorLog/SimulatorLog";
 import "./SimulatorView.css";
 
 export const SimulatorView: FunctionComponent = () => {
@@ -11,6 +12,7 @@ export const SimulatorView: FunctionComponent = () => {
       <EditorView />
       <RobotSimulator />
       <ControlPanel />
+      <SimulatorLog />
       <GameController />
     </div>
   );
