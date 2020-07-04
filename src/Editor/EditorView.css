@@ -1,0 +1,23 @@
+.editor-view-workspace {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 50px;
+  gap: 1px 1px;
+  grid-template-areas:
+    "Editor"
+    "EditorControls";
+  height: 100%;
+  position: relative;
+  grid-area: Editor;
+}
+
+.editor-panel {
+  grid-area: Editor;
+}
+
+.editor-view-controls {
+  display: flex;
+  justify-content: flex-end;
+  grid-area: EditorControls;
+  background-color: #f5f5f5;
+}
