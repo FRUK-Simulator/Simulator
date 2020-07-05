@@ -5,6 +5,13 @@ import {
   IConeSpec,
 } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 
+var arenaConfigs: any = {
+  "Plain Arena": setupPlainArena(),
+  "Parking Lot Arena": setupParkingLotArena(),
+  "ZigZag Arena": setupZigZagArena(),
+  "Bowling Arena": setupBowlingArena(),
+};
+
 export interface ArenaConfig {
   worldConfig: WorldConfig;
   ballSpecs?: IBallSpec[];
@@ -12,7 +19,22 @@ export interface ArenaConfig {
   coneSpecs?: IConeSpec[];
 }
 
-export function setupPlainArena(): ArenaConfig {
+export function getArenaNames(): Array<string> {
+  return Object.keys(arenaConfigs);
+}
+
+export function getArenaConfig(name: string): ArenaConfig {
+  for (var property in arenaConfigs) {
+    if (arenaConfigs.hasOwnProperty(property) && property === name) {
+      return arenaConfigs[property];
+    }
+  }
+
+  // return default if 'name' not found
+  return arenaConfigs["Plain Arena"];
+}
+
+function setupPlainArena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
     worldConfig: {
       zLength: 20,
@@ -31,7 +53,7 @@ export function setupPlainArena(): ArenaConfig {
   return arenaConfig;
 }
 
-export function setupParkingLotArena(): ArenaConfig {
+function setupParkingLotArena(): ArenaConfig {
   const height: number = 1;
   const thickness: number = 0.3;
   const length: number = 4;
@@ -76,7 +98,7 @@ export function setupParkingLotArena(): ArenaConfig {
   return arenaConfig;
 }
 
-export function setupZigZagArena(): ArenaConfig {
+function setupZigZagArena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
     worldConfig: {
       zLength: 40,
@@ -146,7 +168,7 @@ export function setupZigZagArena(): ArenaConfig {
   return arenaConfig;
 }
 
-export function setupBowlingArena(): ArenaConfig {
+function setupBowlingArena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
     worldConfig: {
       zLength: 60,

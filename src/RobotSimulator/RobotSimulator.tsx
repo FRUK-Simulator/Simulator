@@ -8,10 +8,8 @@ import { getMotorPower } from "./robotSimulatorSlice";
 import { IVirtualMachine, VMContext } from "../JavascriptVM/JavascriptVM";
 import {
   ArenaConfig,
-  setupPlainArena,
-  setupParkingLotArena,
-  setupZigZagArena,
-  setupBowlingArena,
+  getArenaNames,
+  getArenaConfig,
 } from "./ArenaConfigBuilder";
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
@@ -69,7 +67,8 @@ export const RobotSimulator: FunctionComponent = () => {
 
   // effect to set the arena
   useEffect(() => {
-    function setupArena(arenaConfig: ArenaConfig) {
+    function setArena(name: string) {
+      let arenaConfig: ArenaConfig = getArenaConfig(name);
       sim.current?.configureWorld(arenaConfig.worldConfig);
       const robot = new StdWorldBuilder(sim.current!).build();
       robotRef.current = robot!;
@@ -84,26 +83,8 @@ export const RobotSimulator: FunctionComponent = () => {
       });
     }
 
-    const setArena = (id: number) => {
-      console.log("setArena id ", id);
-      let arenaConfig: ArenaConfig;
-      switch (id) {
-        case 1:
-          arenaConfig = setupParkingLotArena();
-          break;
-        case 2:
-          arenaConfig = setupZigZagArena();
-          break;
-        case 3:
-          arenaConfig = setupBowlingArena();
-          break;
-        default:
-          arenaConfig = setupPlainArena();
-      }
-      setupArena(arenaConfig);
-    };
     controls.linkSetArena(setArena);
-    setArena(0);
+    setArena(getArenaNames()[0]);
   }, [controls]);
 
   useEffect(() => {

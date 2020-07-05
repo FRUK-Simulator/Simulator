@@ -6,6 +6,8 @@ import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { VMContext, IVirtualMachine } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
+import { getArenaNames } from "../RobotSimulator/ArenaConfigBuilder";
+
 /**
  * Renders a component that is responsible for controlling the VM according to the state
  * of the application. Provides controls to conditionally start, stop, step, and run the VM.
@@ -15,46 +17,32 @@ export const VMControls: FunctionComponent = () => {
   const executionStatus = useSelector(getExecutionState);
   const controls = useContext(VMContext) as IVirtualMachine;
   const code = useSelector(getCode);
-  const [arena, setArena] = useState("Plain Arena");
+  const [arena, setArena] = useState(getArenaNames()[0]);
+
+  function getArenaMenuItems() {
+    let items: Array<any> = [];
+    let names = getArenaNames();
+    names.forEach((name: string) => {
+      let item = {
+        key: name,
+        name: name,
+        onClick: () => {
+          controls.setArena(name);
+          setArena(name);
+        },
+      };
+
+      items.push(item);
+    });
+
+    return items;
+  }
 
   const arenaSelection: ICommandBarItemProps = {
-    key: "arena0",
+    key: arena,
     text: arena,
     subMenuProps: {
-      items: [
-        {
-          key: "arena0",
-          name: "Plain Arena",
-          onClick: () => {
-            controls.setArena(0);
-            setArena("Plain Arena");
-          },
-        },
-        {
-          key: "arena1",
-          name: "Parking Lot Arena",
-          onClick: () => {
-            controls.setArena(1);
-            setArena("Parking Lot Arena");
-          },
-        },
-        {
-          key: "arena2",
-          name: "ZigZag Arena",
-          onClick: () => {
-            controls.setArena(2);
-            setArena("ZigZag Arena");
-          },
-        },
-        {
-          key: "arena3",
-          name: "Bowling Arena",
-          onClick: () => {
-            controls.setArena(3);
-            setArena("Bowling Arena");
-          },
-        },
-      ],
+      items: getArenaMenuItems(),
     },
   };
   const startButton: ICommandBarItemProps = {

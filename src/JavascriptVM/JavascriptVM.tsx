@@ -26,8 +26,8 @@ export interface IVirtualMachine {
   stop: () => void;
   start: () => void;
   pause: () => void;
-  linkSetArena(setArena: (id: number) => void): void;
-  setArena: (id: number) => void;
+  linkSetArena(setArena: (name: string) => void): void;
+  setArena: (name: string) => void;
 }
 
 /**
@@ -52,7 +52,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
-  const setArenaLink = useRef<(id: number) => void | undefined>();
+  const setArenaLink = useRef<(name: string) => void | undefined>();
 
   /**
    * Syncs the redux state with the interpreter state.
@@ -155,12 +155,12 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             );
           }
         },
-        linkSetArena(setArena: (id: number) => void): void {
+        linkSetArena(setArena: (name: string) => void): void {
           setArenaLink.current = setArena;
         },
-        setArena(id: number): void {
+        setArena(name: string): void {
           if (setArenaLink.current) {
-            setArenaLink.current(id);
+            setArenaLink.current(name);
           }
         },
       }}
