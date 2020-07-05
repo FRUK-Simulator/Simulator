@@ -7,7 +7,7 @@ import { getCurrentExecutionLogs } from "./simulatorLogSlice";
  * Component for logging the commands of the simulator.
  */
 export const SimulatorLog: FunctionComponent = () => {
-  const currentExecutionLogs = useSelector(getCurrentExecutionLogs());
+  const currentExecutionLogs = useSelector(getCurrentExecutionLogs);
 
   return (
     <table>
