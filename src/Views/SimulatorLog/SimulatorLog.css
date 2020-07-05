@@ -1,0 +1,10 @@
+thead {
+  display: table;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  height: 100px;
+  overflow-y: scroll;
+}
