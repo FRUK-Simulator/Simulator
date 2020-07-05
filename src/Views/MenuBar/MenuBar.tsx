@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import "./MenuBar.css";
 import { VMControls } from "../../JavascriptVM/VMControls";
-import { SignIn } from "./SignIn";
+import { UserControls } from "./UserControls/UserControls";
 import FIRSTLogo from "./FIRST_Horz_RGB.png";
 
 const BrandIcon = () => {
@@ -16,7 +16,7 @@ export const MenuBar: FunctionComponent = () => {
       <BrandIcon />
       <div className="buttons-container">
         <VMControls />
-        <SignIn />
+        <UserControls />
       </div>
     </div>
   );
