@@ -10,7 +10,7 @@ import {
   ArenaConfig,
   getArenaNames,
   getArenaConfig,
-} from "./ArenaConfigBuilder";
+} from "./ArenaConfigLoader";
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.

@@ -6,7 +6,7 @@ import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { VMContext, IVirtualMachine } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
-import { getArenaNames } from "../RobotSimulator/ArenaConfigBuilder";
+import { getArenaNames } from "../RobotSimulator/ArenaConfigLoader";
 
 /**
  * Renders a component that is responsible for controlling the VM according to the state
