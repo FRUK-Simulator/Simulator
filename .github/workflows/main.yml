@@ -1,4 +1,4 @@
-name: Build Master Artifact
+name: Release Master
 
 on:
   push:
@@ -23,14 +23,18 @@ jobs:
             CI: true
         - run: zip -r -j artifact.zip build
 
+        - name: Declare some variables
+          id: vars
+          run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
         - name: Create Release
           id: create_release
           uses: actions/create-release@v1
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            tag_name: ${{ github.ref }}
-            release_name: Release ${{ github.ref }}
+            tag_name: ${{ steps.vars.outputs.sha_short }}
+            release_name: Release ${{ steps.vars.outputs.sha_short }}
             draft: false
             prerelease: false
             
