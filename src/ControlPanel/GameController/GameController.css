@@ -1,0 +1,43 @@
+.gamepad-btn--dpad {
+  fill: #38454f;
+}
+
+.gamepad-btn--dpad:hover {
+  fill: #5c6b77;
+}
+
+.gamepad-btn--dpad:active {
+  fill: #707e8a;
+}
+
+.gamepad-btn--top {
+  fill: #366db6;
+}
+
+.gamepad-btn--top:hover {
+  fill: #4882ce;
+}
+
+.gamepad-btn--left {
+  fill: #43b05c;
+}
+
+.gamepad-btn--left:hover {
+  fill: #56ce72;
+}
+
+.gamepad-btn--right {
+  fill: #dd352e;
+}
+
+.gamepad-btn--right:hover {
+  fill: #fa4d47;
+}
+
+.gamepad-btn--bottom {
+  fill: #ebba16;
+}
+
+.gamepad-btn--bottom:hover {
+  fill: #ffce2d;
+}

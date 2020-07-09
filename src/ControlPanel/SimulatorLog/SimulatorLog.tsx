@@ -10,11 +10,11 @@ export const SimulatorLog: FunctionComponent = () => {
   const currentExecutionLogs = useSelector(getCurrentExecutionLogs);
 
   return (
-    <table>
+    <table className="simulator-log">
       <thead>
         <tr>
-          <th>Timestamp</th>
-          <th>Command</th>
+          <th className="simulator-log--timestamp">Timestamp</th>
+          <th className="simulator-log--command">Command</th>
         </tr>
       </thead>
       <tbody>
