@@ -1,5 +1,6 @@
 .blockly-workspace {
-  height: 100%;
+  /* position set to absolute so this element dont't contribute to overall height calculation */
+  position: absolute;
 }
 
 .blockly-workspace.executing {

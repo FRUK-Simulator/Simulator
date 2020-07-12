@@ -6,7 +6,6 @@
   grid-template-areas:
     "Editor"
     "EditorControls";
-  height: 100%;
   position: relative;
   grid-area: Editor;
 }
