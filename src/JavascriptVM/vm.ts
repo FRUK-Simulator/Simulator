@@ -152,7 +152,7 @@ export class BlocklyInterpreter {
    */
   private _run(steps: number) {
     let timeout = EXECUTION_INTERVAL;
-    
+
     if (this.nextStepDelay > EXECUTION_INTERVAL) {
       timeout = this.nextStepDelay;
       this.nextStepDelay = 0;
