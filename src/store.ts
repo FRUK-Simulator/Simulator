@@ -4,7 +4,7 @@ import { robotSimulatorSlice } from "./RobotSimulator/robotSimulatorSlice";
 import { blocklySlice } from "./BlocklyInterface/blocklySlice";
 import { vmSlice } from "./JavascriptVM/vmSlice";
 import { messageSlice } from "./ErrorViews/messagesSlice";
-import { simulatorLogSlice } from "./Views/SimulatorLog/simulatorLogSlice";
+import { simulatorLogSlice } from "./ControlPanel/SimulatorLog/simulatorLogSlice";
 import { editorSlice } from "./Editor/editorSlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript

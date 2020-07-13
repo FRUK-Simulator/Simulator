@@ -7,6 +7,7 @@ import { SourceView } from "./SourceView";
 import { Toggle } from "@fluentui/react";
 
 import "./EditorView.css";
+import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 
 function getComponent(viewMode: Editor) {
   switch (viewMode) {
@@ -43,6 +44,14 @@ export const EditorView: FunctionComponent = () => {
     );
   }
 
+  function onToolboxToggled(_: any, checked: boolean | undefined) {
+    dispatch(
+      blocklySlice.actions.showToolbox({
+        visible: checked || false,
+      })
+    );
+  }
+
   return (
     <div ref={wrapperRef} className={"editor-view-workspace"} title={"Editor"}>
       <div className={"editor-panel"}>{getComponent(viewMode)}</div>
@@ -53,6 +62,13 @@ export const EditorView: FunctionComponent = () => {
           onText="Blockly"
           offText="Source"
           onChange={onEditorViewModeToggled}
+        />
+        <Toggle
+          label="Toolbar"
+          defaultChecked
+          onText="Expand"
+          offText="Collapse"
+          onChange={onToolboxToggled}
         />
       </div>
     </div>
