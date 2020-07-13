@@ -1,16 +1,12 @@
 import React, { FunctionComponent } from "react";
-import { robotSimulatorSlice } from "../../RobotSimulator/robotSimulatorSlice";
-import { useDispatch } from "react-redux";
 import "./GameController.css";
 
 import { useVM } from "../../JavascriptVM/JavascriptVM";
-
 
 /**
  * Component for the game controller
  */
 export const GameController: FunctionComponent = () => {
-  const dispatch = useDispatch();
   const vm = useVM();
 
   const onRelease = () => {
@@ -63,12 +59,6 @@ export const GameController: FunctionComponent = () => {
   };
 
   const handleMotorChange = (leftPower: number, rightPower: number) => {
-    dispatch(
-      robotSimulatorSlice.actions.setPower({ channel: 0, power: rightPower })
-    );
-    dispatch(
-      robotSimulatorSlice.actions.setPower({ channel: 1, power: leftPower })
-    );
     vm.robot.setMotorPower(0, rightPower);
     vm.robot.setMotorPower(1, leftPower);
   };

@@ -1,10 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import "./ControlPanel.css";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getMotorPower,
-  robotSimulatorSlice,
-} from "../RobotSimulator/robotSimulatorSlice";
+import { useSelector } from "react-redux";
+import { getMotorPower } from "../RobotSimulator/robotSimulatorSlice";
 import { Slider, IconButton } from "@fluentui/react";
 import { GameController } from "./GameController/GameController";
 import { SimulatorLog } from "./SimulatorLog/SimulatorLog";
@@ -40,21 +37,15 @@ const MotorControl: FunctionComponent<{
 const MotorGroup: FunctionComponent<{ channels: number[] }> = ({
   channels,
 }) => {
-  const dispatch = useDispatch();
   const [locked, setLocked] = useState(false);
 
   const vm = useVM();
 
-  const setPower = (c: number, power: number) => {
-    dispatch(robotSimulatorSlice.actions.setPower({ channel: c, power }));
-    vm.robot.setMotorPower(c, power);
-  };
-
   const onChangeHandler = (channel: number, power: number) => {
     if (locked) {
-      channels.forEach((c) => setPower(c, power));
+      channels.forEach((c) => vm.robot.setMotorPower(channel, power));
     } else {
-      setPower(channel, power);
+      vm.robot.setMotorPower(channel, power);
     }
   };
 
