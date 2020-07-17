@@ -1,14 +1,12 @@
 import React, { FunctionComponent, useState } from "react";
 import "./ControlPanel.css";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getMotorPower,
-  robotSimulatorSlice,
-} from "../RobotSimulator/robotSimulatorSlice";
+import { useSelector } from "react-redux";
+import { getMotorPower } from "../RobotSimulator/robotSimulatorSlice";
 import { Slider, IconButton } from "@fluentui/react";
 import { GameController } from "./GameController/GameController";
 import { SimulatorLog } from "./SimulatorLog/SimulatorLog";
 import { ToggleButtonBar } from "../Components/ToggleButtonBar";
+import { useVM } from "../JavascriptVM/JavascriptVM";
 
 enum ControlPanelView {
   robot,
@@ -39,15 +37,15 @@ const MotorControl: FunctionComponent<{
 const MotorGroup: FunctionComponent<{ channels: number[] }> = ({
   channels,
 }) => {
-  const dispatch = useDispatch();
   const [locked, setLocked] = useState(false);
+
+  const vm = useVM();
+
   const onChangeHandler = (channel: number, power: number) => {
     if (locked) {
-      channels.forEach((c) => {
-        dispatch(robotSimulatorSlice.actions.setPower({ channel: c, power }));
-      });
+      channels.forEach((c) => vm.robot.setMotorPower(channel, power));
     } else {
-      dispatch(robotSimulatorSlice.actions.setPower({ channel, power }));
+      vm.robot.setMotorPower(channel, power);
     }
   };
 

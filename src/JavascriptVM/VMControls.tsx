@@ -1,10 +1,10 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent } from "react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { isExecuting, getExecutionState } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
-import { VMContext, IVirtualMachine } from "./JavascriptVM";
+import { useVM } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
 /**
  * Renders a component that is responsible for controlling the VM according to the state
@@ -13,12 +13,12 @@ import { ExecutionState } from "./vm";
 export const VMControls: FunctionComponent = () => {
   const executing = useSelector(isExecuting);
   const executionStatus = useSelector(getExecutionState);
-  const controls = useContext(VMContext) as IVirtualMachine;
+  const vm = useVM();
   const code = useSelector(getCode);
 
   const startButton: ICommandBarItemProps = {
     onClick() {
-      controls.start();
+      vm.start();
     },
     key: "start",
     text: "Start",
@@ -29,7 +29,7 @@ export const VMControls: FunctionComponent = () => {
   };
   const stepButton: ICommandBarItemProps = {
     onClick() {
-      controls.step();
+      vm.step();
     },
     key: "next",
     text: "Next",
@@ -40,7 +40,7 @@ export const VMControls: FunctionComponent = () => {
   };
   const runButton: ICommandBarItemProps = {
     onClick() {
-      controls.run();
+      vm.run();
     },
     key: "run",
     text: "Run",
@@ -51,7 +51,7 @@ export const VMControls: FunctionComponent = () => {
   };
   const pauseButton: ICommandBarItemProps = {
     onClick() {
-      controls.pause();
+      vm.pause();
     },
     key: "pause",
     text: "Pause",
@@ -62,7 +62,7 @@ export const VMControls: FunctionComponent = () => {
   };
   const stopButton: ICommandBarItemProps = {
     onClick() {
-      controls.stop();
+      vm.stop();
     },
     key: "stop",
     text: "Stop",
