@@ -144,9 +144,8 @@ export function addGamepadBlocks() {
   Blockly.Blocks["gamepad_getProperty"] = propertyProcessor;
 
   blocklyJavascript["gamepad_getProperty"] = function (block) {
-    var identifier = block.getFieldValue("IDENTIFIER");
     var property = block.getFieldValue("PROP");
-    var code = identifier + ".get" + property + "()";
+    var code = "checkGamepadKeyPress(" + property + ")";
     return [code, blocklyJavascript.ORDER_FUNCTION_CALL];
   };
 

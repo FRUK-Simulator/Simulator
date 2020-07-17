@@ -6,6 +6,7 @@ import { vmSlice } from "./JavascriptVM/vmSlice";
 import { messageSlice } from "./ErrorViews/messagesSlice";
 import { simulatorLogSlice } from "./ControlPanel/SimulatorLog/simulatorLogSlice";
 import { editorSlice } from "./Editor/editorSlice";
+import { gameControllerSlice } from "./ControlPanel/GameController/gameControllerSlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   messages: messageSlice.reducer,
   logs: simulatorLogSlice.reducer,
   editor: editorSlice.reducer,
+  gameController: gameControllerSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

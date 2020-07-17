@@ -1,4 +1,5 @@
 import Interpreter from "js-interpreter";
+import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
 
 export type BlocklyInterpreterCallbacks = {
   /**
@@ -17,6 +18,11 @@ export type BlocklyInterpreterCallbacks = {
   onFinish?: () => void;
 
   onIsSensorTouchPushed?: (port: number) => boolean;
+
+  /**
+   * Called on key press check. Returns true if the key is currently pressed
+   */
+  onControllerKeyCheck: (key: ControllerKey) => boolean;
 };
 
 export enum ExecutionState {
@@ -91,6 +97,14 @@ export class BlocklyInterpreter {
         }
       );
 
+      const checkGamepadKeyPress = interpreter.createNativeFunction(
+        (key: ControllerKey) => {
+          if (callbacks.onControllerKeyCheck) {
+            return callbacks.onControllerKeyCheck(key);
+          }
+        }
+      );
+
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
@@ -100,6 +114,11 @@ export class BlocklyInterpreter {
         isSensorTouchPushed
       );
       interpreter.setProperty(globals, "wait", waitWrapper);
+      interpreter.setProperty(
+        globals,
+        "checkGamepadKeyPress",
+        checkGamepadKeyPress
+      );
     });
 
     // Start running in a paused state - ie, spawn a "thread"
