@@ -12,14 +12,21 @@ interface JavaScriptGamepadGenerator extends JavaScriptGenerator {
   ORDER_FUNCTION_CALL: string;
 }
 
-export function addGamepadBlocks() {
-  /**
-   * @fileoverview FTC robot blocks related to game pads.
-   * @author lizlooney@google.com (Liz Looney)
-   */
+interface GamepadBlock {
+  init(): void;
+  setOutput?(arg0: boolean, arg1?: string): void;
+  appendDummyInput?(): void;
+  setColour?(arg0: number): void;
+}
 
-  // The following are defined in vars.js:
+export function addGamepadBlocks() {
+  // File pulled from ftc-blockly implementation. Lightly edited to include
+  // types and pass our linting.
+  // original author lizlooney@google.com (Liz Looney)
+
+  // The following are pulled from other locations in the ftc-blockly repo:
   // getPropertyColor
+  const getPropertyColor = 151;
 
   const blocklyJavascript = (Blockly as any)
     .JavaScript as JavaScriptGamepadGenerator;
@@ -32,8 +39,10 @@ export function addGamepadBlocks() {
     return new Blockly.FieldDropdown(CHOICES);
   }
 
-  Blockly.Blocks["gamepad_getProperty"] = {
+  const propertyProcessor: GamepadBlock = {
     init: function () {
+      const block = this as Blockly.Block;
+
       var PROPERTY_CHOICES = [
         ["A", "A"],
         ["AtRest", "AtRest"],
@@ -58,14 +67,14 @@ export function addGamepadBlocks() {
         ["X", "X"],
         ["Y", "Y"],
       ];
-      this.setOutput(true); // no type, for compatibility
-      this.appendDummyInput()
+      block.setOutput(true); // no type, for compatibility
+      block
+        .appendDummyInput()
         .appendField(createGamepadDropdown(), "IDENTIFIER")
         .appendField(".")
         .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
-      this.setColour(getPropertyColor);
-      // Assign 'this' to a variable for use in the tooltip closure below.
-      var thisBlock = this;
+      block.setColour(getPropertyColor);
+
       var TOOLTIPS = [
         ["A", "Returns true if the A button is pressed."],
         [
@@ -120,10 +129,10 @@ export function addGamepadBlocks() {
         ["X", "Returns true if the X button is pressed."],
         ["Y", "Returns true if the Y button is pressed."],
       ];
-      this.setTooltip(function () {
-        var key = thisBlock.getFieldValue("PROP");
+      block.setTooltip(function () {
+        var key = block.getFieldValue("PROP");
         for (var i = 0; i < TOOLTIPS.length; i++) {
-          if (TOOLTIPS[i][0] == key) {
+          if (TOOLTIPS[i][0] === key) {
             return TOOLTIPS[i][1];
           }
         }
@@ -132,6 +141,8 @@ export function addGamepadBlocks() {
     },
   };
 
+  Blockly.Blocks["gamepad_getProperty"] = propertyProcessor;
+
   blocklyJavascript["gamepad_getProperty"] = function (block) {
     var identifier = block.getFieldValue("IDENTIFIER");
     var property = block.getFieldValue("PROP");
@@ -139,8 +150,10 @@ export function addGamepadBlocks() {
     return [code, blocklyJavascript.ORDER_FUNCTION_CALL];
   };
 
-  const booleanProcessor: Blockly.Block = {
+  const booleanProcessor: GamepadBlock = {
     init: function () {
+      const block = this as Blockly.Block;
+
       var PROPERTY_CHOICES = [
         ["A", "A"],
         ["AtRest", "AtRest"],
@@ -159,14 +172,15 @@ export function addGamepadBlocks() {
         ["X", "X"],
         ["Y", "Y"],
       ];
-      this.setOutput(true, "Boolean");
-      this.appendDummyInput()
+
+      block.setOutput(true, "Boolean");
+      block
+        .appendDummyInput()
         .appendField(createGamepadDropdown(), "IDENTIFIER")
         .appendField(".")
         .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
-      this.setColour(getPropertyColor);
-      // Assign 'this' to a variable for use in the tooltip closure below.
-      var thisBlock = this;
+      block.setColour(getPropertyColor);
+
       var TOOLTIPS = [
         ["A", "Returns true if the A button is pressed."],
         [
@@ -197,10 +211,10 @@ export function addGamepadBlocks() {
         ["X", "Returns true if the X button is pressed."],
         ["Y", "Returns true if the Y button is pressed."],
       ];
-      this.setTooltip(function () {
-        var key = thisBlock.getFieldValue("PROP");
+      block.setTooltip(function () {
+        var key = block.getFieldValue("PROP");
         for (var i = 0; i < TOOLTIPS.length; i++) {
-          if (TOOLTIPS[i][0] == key) {
+          if (TOOLTIPS[i][0] === key) {
             return TOOLTIPS[i][1];
           }
         }
@@ -214,8 +228,10 @@ export function addGamepadBlocks() {
   blocklyJavascript["gamepad_getProperty_Boolean"] =
     blocklyJavascript["gamepad_getProperty"];
 
-  Blockly.Blocks["gamepad_getProperty_Number"] = {
+  const numberProcessor: GamepadBlock = {
     init: function () {
+      const block = this as Blockly.Block;
+
       var PROPERTY_CHOICES = [
         ["LeftStickX", "LeftStickX"],
         ["LeftStickY", "LeftStickY"],
@@ -224,14 +240,13 @@ export function addGamepadBlocks() {
         ["RightStickY", "RightStickY"],
         ["RightTrigger", "RightTrigger"],
       ];
-      this.setOutput(true, "Number");
-      this.appendDummyInput()
+      block.setOutput(true, "Number");
+      block
+        .appendDummyInput()
         .appendField(createGamepadDropdown(), "IDENTIFIER")
         .appendField(".")
         .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
-      this.setColour(getPropertyColor);
-      // Assign 'this' to a variable for use in the closures below.
-      var thisBlock = this;
+      block.setColour(getPropertyColor);
       var TOOLTIPS = [
         [
           "LeftStickX",
@@ -258,10 +273,10 @@ export function addGamepadBlocks() {
           "Returns a numeric value between 0.0 and +1.0 representing the right trigger value.",
         ],
       ];
-      this.setTooltip(function () {
-        var key = thisBlock.getFieldValue("PROP");
+      block.setTooltip(function () {
+        var key = block.getFieldValue("PROP");
         for (var i = 0; i < TOOLTIPS.length; i++) {
-          if (TOOLTIPS[i][0] == key) {
+          if (TOOLTIPS[i][0] === key) {
             return TOOLTIPS[i][1];
           }
         }
@@ -269,6 +284,8 @@ export function addGamepadBlocks() {
       });
     },
   };
+
+  Blockly.Blocks["gamepad_getProperty_Number"] = numberProcessor;
 
   blocklyJavascript["gamepad_getProperty_Number"] =
     blocklyJavascript["gamepad_getProperty"];
