@@ -1,11 +1,18 @@
 import React, { FunctionComponent, useState } from "react";
 import "./ControlPanel.css";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getMotorPower,
-  robotSimulatorSlice,
-} from "../RobotSimulator/robotSimulatorSlice";
+import { useSelector } from "react-redux";
+import { getMotorPower } from "../RobotSimulator/robotSimulatorSlice";
 import { Slider, IconButton } from "@fluentui/react";
+import { GameController } from "./GameController/GameController";
+import { SimulatorLog } from "./SimulatorLog/SimulatorLog";
+import { ToggleButtonBar } from "../Components/ToggleButtonBar";
+import { useVM } from "../JavascriptVM/JavascriptVM";
+
+enum ControlPanelView {
+  robot,
+  controller,
+  log,
+}
 
 const MotorControl: FunctionComponent<{
   channel: number;
@@ -30,15 +37,15 @@ const MotorControl: FunctionComponent<{
 const MotorGroup: FunctionComponent<{ channels: number[] }> = ({
   channels,
 }) => {
-  const dispatch = useDispatch();
   const [locked, setLocked] = useState(false);
+
+  const vm = useVM();
+
   const onChangeHandler = (channel: number, power: number) => {
     if (locked) {
-      channels.forEach((c) => {
-        dispatch(robotSimulatorSlice.actions.setPower({ channel: c, power }));
-      });
+      channels.forEach((c) => vm.robot.setMotorPower(channel, power));
     } else {
-      dispatch(robotSimulatorSlice.actions.setPower({ channel, power }));
+      vm.robot.setMotorPower(channel, power);
     }
   };
 
@@ -62,13 +69,55 @@ const MotorGroup: FunctionComponent<{ channels: number[] }> = ({
   );
 };
 
+const RobotView = () => {
+  return <MotorGroup channels={[0, 1]} />;
+};
+
+const ControllerView = () => {
+  return <GameController />;
+};
+
+const LogView = () => {
+  return <SimulatorLog />;
+};
+
 /**
  * Component that wraps the control panel.
  */
 export const ControlPanel: FunctionComponent = () => {
+  const [controlPanelView, setControlPanelView] = useState<ControlPanelView>(
+    ControlPanelView.robot
+  );
+
+  const changeView = (view: ControlPanelView) => () =>
+    setControlPanelView(view);
+
+  const CurrentView = {
+    [ControlPanelView.robot]: RobotView,
+    [ControlPanelView.controller]: ControllerView,
+    [ControlPanelView.log]: LogView,
+  }[controlPanelView];
+
   return (
     <div className="control-panel">
-      <MotorGroup channels={[0, 1]} />
+      <ToggleButtonBar
+        activeButton={
+          controlPanelView === ControlPanelView.robot
+            ? 0
+            : controlPanelView === ControlPanelView.controller
+            ? 1
+            : 2
+        }
+        buttons={[
+          { label: "Robot", onClick: changeView(ControlPanelView.robot) },
+          {
+            label: "Controller",
+            onClick: changeView(ControlPanelView.controller),
+          },
+          { label: "Log", onClick: changeView(ControlPanelView.log) },
+        ]}
+      />
+      <CurrentView />
     </div>
   );
 };

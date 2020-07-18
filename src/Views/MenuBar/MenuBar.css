@@ -1,6 +1,6 @@
 .menu-bar {
   grid-area: Menu-Bar;
-  width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,4 +12,11 @@
 .menu-bar--brand {
   /* 30px */
   height: 1.875em;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  margin-left: 1em;
+  margin-right: 1em;
 }

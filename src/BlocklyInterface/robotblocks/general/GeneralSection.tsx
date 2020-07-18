@@ -1,6 +1,9 @@
 import "./GeneralBlocks";
+import { addWaitBlock } from "./Wait";
 
 export default (() => {
+  addWaitBlock();
+
   return `
     <!-- Logic is from blockly/demos/code/index.html, with some modification. -->
     <category name="Logic" colour="210">
@@ -47,6 +50,7 @@ export default (() => {
         </block>
         <block type="controls_forEach"></block>
         <block type="controls_flow_statements"></block>
+        <block type="wait"></block>
     </category>
     <!-- Math is from blockly/demos/code/index.html, with some modifications -->
     <category name="Math" colour="230">

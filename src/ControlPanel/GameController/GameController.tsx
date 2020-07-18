@@ -1,12 +1,17 @@
 import React, { FunctionComponent } from "react";
-import { robotSimulatorSlice } from "../../RobotSimulator/robotSimulatorSlice";
-import { useDispatch } from "react-redux";
+import "./GameController.css";
+
+import { useVM } from "../../JavascriptVM/JavascriptVM";
 
 /**
  * Component for the game controller
  */
 export const GameController: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const vm = useVM();
+
+  const onRelease = () => {
+    handleMotorChange(0, 0);
+  };
 
   const onCrossButtonMiddleClicked = (event: React.MouseEvent) => {
     // stop
@@ -54,12 +59,8 @@ export const GameController: FunctionComponent = () => {
   };
 
   const handleMotorChange = (leftPower: number, rightPower: number) => {
-    dispatch(
-      robotSimulatorSlice.actions.setPower({ channel: 0, power: rightPower })
-    );
-    dispatch(
-      robotSimulatorSlice.actions.setPower({ channel: 1, power: leftPower })
-    );
+    vm.robot.setMotorPower(0, rightPower);
+    vm.robot.setMotorPower(1, leftPower);
   };
 
   return (
@@ -94,57 +95,61 @@ export const GameController: FunctionComponent = () => {
         y2="31.528"
       />
       <circle
+        className="gamepad-btn--left"
         onClick={onGreenButtonClicked}
-        fill="#43B05C"
         cx="36"
         cy="41.528"
         r="3"
       />
       <circle
+        className="gamepad-btn--right"
         onClick={onRedButtonClicked}
-        fill="#DD352E"
         cx="50"
         cy="41.528"
         r="3"
       />
       <circle
+        className="gamepad-btn--bottom"
         onClick={onYellowButtonClicked}
-        fill="#EBBA16"
         cx="43"
         cy="48.528"
         r="3"
       />
       <circle
+        className="gamepad-btn--top"
         onClick={onBlueButtonClicked}
-        fill="#366DB6"
         cx="43"
         cy="34.528"
         r="3"
       />
 
       <polygon
+        className="gamepad-btn--dpad"
         onClick={onCrossButtonMiddleClicked}
-        fill="#38454F"
         points="22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528"
       />
       <polygon
-        onClick={onCrossButtonRightClicked}
-        fill="#38454F"
+        className="gamepad-btn--dpad"
+        onMouseDown={onCrossButtonRightClicked}
+        onMouseUp={onRelease}
         points="22,38.528 18,38.528 18,44.528 22,44.528"
       />
       <polygon
-        onClick={onCrossButtonUpClicked}
-        fill="#38454F"
+        className="gamepad-btn--dpad"
+        onMouseDown={onCrossButtonUpClicked}
+        onMouseUp={onRelease}
         points="18,38.528 18,34.528 12,34.528 12,38.528"
       />
       <polygon
-        onClick={onCrossButtonLeftClicked}
-        fill="#38454F"
+        className="gamepad-btn--dpad"
+        onMouseDown={onCrossButtonLeftClicked}
+        onMouseUp={onRelease}
         points="12,38.528 8,38.528 8,44.528 12,44.528"
       />
       <polygon
-        onClick={onCrossButtonDownClicked}
-        fill="#38454F"
+        className="gamepad-btn--dpad"
+        onMouseDown={onCrossButtonDownClicked}
+        onMouseUp={onRelease}
         points="12,44.528 12,48.528 18,48.528 18,44.528"
       />
     </svg>

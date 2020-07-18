@@ -25,7 +25,6 @@ import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
  * Component that wraps the blockly interface.
  */
 export const BlocklyEditor: FunctionComponent = () => {
-  const workspaceAreaRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -40,27 +39,16 @@ export const BlocklyEditor: FunctionComponent = () => {
 
   function resizeBlocklyRegion() {
     // Compute the absolute coordinates and dimensions of wrapping area.
-    if (!wrapperRef.current || !workspaceAreaRef.current) {
+    if (!wrapperRef.current || !wrapperRef.current.parentElement) {
       return;
     }
 
-    let element = wrapperRef.current;
-    let x = 0;
-    let y = 0;
-    do {
-      x += element.offsetLeft;
-      y += element.offsetTop;
-      element = element.offsetParent! as HTMLDivElement;
-    } while (element);
-
     // Position blockly over wrapping area.
-    const workspaceStyle = workspaceAreaRef.current.style;
+    const workspaceStyle = wrapperRef.current.style;
 
-    workspaceStyle.left = x + "px";
-    workspaceStyle.top = y + "px";
-
-    workspaceStyle.width = wrapperRef.current.offsetWidth + "px";
-    workspaceStyle.height = wrapperRef.current.offsetHeight + "px";
+    workspaceStyle.width = wrapperRef.current.parentElement.clientWidth + "px";
+    workspaceStyle.height =
+      wrapperRef.current.parentElement.clientHeight + "px";
   }
 
   // Initialize blockly and return destruction callback
@@ -92,10 +80,7 @@ export const BlocklyEditor: FunctionComponent = () => {
     resizeBlocklyRegion();
 
     if (!blocklyRef.current) {
-      blocklyRef.current = new BlocklyInstance(
-        workspaceAreaRef.current!,
-        toolboxXml
-      );
+      blocklyRef.current = new BlocklyInstance(wrapperRef.current!, toolboxXml);
 
       loadPredefinedDemo(0, Blockly.getMainWorkspace());
 
@@ -164,13 +149,6 @@ export const BlocklyEditor: FunctionComponent = () => {
       workspace.resize();
     }
   }, [toolboxXml, showToolbox]);
-
-  const onToolboxButtonClick = () =>
-    dispatch(
-      blocklySlice.actions.showToolbox({
-        visible: !showToolbox,
-      })
-    );
   return (
     <div
       ref={wrapperRef}
@@ -178,13 +156,6 @@ export const BlocklyEditor: FunctionComponent = () => {
       title={
         executing ? "Your program cannot be changed until you stop it" : ""
       }
-    >
-      <img
-        src={require("./ToolboxButton.png")}
-        alt="Toolbox"
-        onClick={onToolboxButtonClick}
-      />
-      <div className="blockly-workspace-area" ref={workspaceAreaRef} />
-    </div>
+    ></div>
   );
 };
