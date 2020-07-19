@@ -228,7 +228,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           let arenaConfig: ArenaConfig = getArenaConfig(name);
           sim.current?.configureWorld(arenaConfig.worldConfig);
           const robot = new StdWorldBuilder(sim.current!).build();
-          robotRef.current = robot!;
+          robotRef.current = new Proxy(robot!, robot_handler);
           arenaConfig.ballSpecs?.forEach(function (ballSpec, index) {
             sim.current?.addBall(ballSpec);
           });

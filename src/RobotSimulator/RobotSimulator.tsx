@@ -1,8 +1,5 @@
 import React, { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
-import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
-import { useSelector } from "react-redux";
-import { getMotorPower } from "./robotSimulatorSlice";
 import { getArenaNames } from "./ArenaConfigLoader";
 import { useVM } from "../JavascriptVM/JavascriptVM";
 
@@ -10,10 +7,6 @@ import { useVM } from "../JavascriptVM/JavascriptVM";
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.
 export const RobotSimulator: FunctionComponent = () => {
   const canvasParentRef = useRef<HTMLDivElement>(null);
-  const robotRef = useRef<RobotHandle | null>(null);
-
-  const leftMotorPower = useSelector(getMotorPower(0));
-  const rightMotorPower = useSelector(getMotorPower(1));
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -32,12 +25,6 @@ export const RobotSimulator: FunctionComponent = () => {
   useEffect(() => {
     vm.setArena(getArenaNames()[0]);
   }, [vm]);
-
-  useEffect(() => {
-    console.log("updating", leftMotorPower, rightMotorPower);
-    robotRef.current?.setMotorPower(0, leftMotorPower);
-    robotRef.current?.setMotorPower(1, rightMotorPower);
-  }, [leftMotorPower, rightMotorPower]);
 
   return (
     <div className="robot-simulator" ref={canvasParentRef}>
