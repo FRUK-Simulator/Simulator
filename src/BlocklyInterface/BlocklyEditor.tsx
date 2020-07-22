@@ -14,12 +14,20 @@ import {
   isShowToolbox,
   getToolboxXml,
   blocklySlice,
+  getActiveBlocklyProgramId,
+  getBlocklyPrograms,
 } from "./blocklySlice";
 
 import "./Blockly.css";
-import { loadPredefinedDemo } from "./BlocklyProgramLoader";
+import { loadBlocklyXml } from "./BlocklyProgramLoader";
 import Blockly, { WorkspaceSvg } from "blockly";
 import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
+
+export function getCurrentBlocklyCode(): string {
+  const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
+  const xml_text = Blockly.Xml.domToText(xml);
+  return xml_text;
+}
 
 /**
  * Component that wraps the blockly interface.
@@ -34,6 +42,8 @@ export const BlocklyEditor: FunctionComponent = () => {
   const toolboxXml = useSelector(getToolboxXml);
 
   const executing = useSelector(isExecuting);
+  const activeBlocklyProgramId = useSelector(getActiveBlocklyProgramId);
+  const blocklyPrograms = useSelector(getBlocklyPrograms);
 
   const blocklyRef = useRef<BlocklyInstance | null>(null);
 
@@ -81,8 +91,6 @@ export const BlocklyEditor: FunctionComponent = () => {
 
     if (!blocklyRef.current) {
       blocklyRef.current = new BlocklyInstance(wrapperRef.current!, toolboxXml);
-
-      loadPredefinedDemo(0, Blockly.getMainWorkspace());
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
@@ -134,6 +142,15 @@ export const BlocklyEditor: FunctionComponent = () => {
       );
     }
   }, [showToolbox, dispatch, toolboxXml]);
+
+  useEffect(() => {
+    Blockly.getMainWorkspace().clear();
+    for (const entry of blocklyPrograms) {
+      if (entry.title === activeBlocklyProgramId) {
+        loadBlocklyXml(entry.xml, Blockly.getMainWorkspace());
+      }
+    }
+  }, [activeBlocklyProgramId, blocklyPrograms]);
 
   // update the toolbox UI based on the toolboxXml definition in the slice
   useEffect(() => {

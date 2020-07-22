@@ -20,3 +20,12 @@
   margin-left: 1em;
   margin-right: 1em;
 }
+
+.delete-button {
+  border-color: transparent;
+  background-color: transparent;
+  padding: 5px;
+  min-width: 5px;
+  margin: 5px;
+  align-self: flex-end;
+}
