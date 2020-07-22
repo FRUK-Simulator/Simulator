@@ -1,5 +1,56 @@
 import Blockly, { Workspace } from "blockly";
 
+export interface BlocklyProgram {
+  title: string;
+  xml: string;
+  predefined: boolean;
+}
+
+export type BlocklyProgramMap = Map<string, BlocklyProgram>;
+
+export function getAllPredefinedProgs(): BlocklyProgramMap {
+  // add all predefined progs
+  let map_of_predefined_progs: BlocklyProgramMap = new Map();
+  for (const entry of predefinedDemos) {
+    map_of_predefined_progs.set(entry.title, {
+      title: entry.title,
+      xml: entry.xml,
+      predefined: true,
+    });
+  }
+  return map_of_predefined_progs;
+}
+
+export function getUserDefinedProgs(): BlocklyProgramMap {
+  let user_progs_map: BlocklyProgramMap = new Map();
+  let persistedProgs = localStorage.getItem("fruk-magic-key");
+  let user_defined_progs: BlocklyProgram[] = JSON.parse(persistedProgs || "[]");
+  for (let i = 0; i < user_defined_progs.length; ++i) {
+    user_progs_map.set(user_defined_progs[i].title, {
+      title: user_defined_progs[i].title,
+      xml: user_defined_progs[i].xml,
+      predefined: false,
+    });
+  }
+  return user_progs_map;
+}
+
+export function storeUserDefinedProgs(
+  updated_blockly_programs: BlocklyProgramMap
+) {
+  let user_defined_progs: BlocklyProgram[] = [];
+  let it = updated_blockly_programs.values();
+  let result = it.next();
+  while (!result.done) {
+    const pro: BlocklyProgram = result.value;
+    if (pro.predefined == false) {
+      user_defined_progs.push(pro);
+    }
+    result = it.next();
+  }
+  localStorage.setItem("fruk-magic-key", JSON.stringify(user_defined_progs));
+}
+
 export interface BlocklyDemoProgram {
   title: string;
   description: string;
@@ -29,6 +80,10 @@ export function loadPredefinedDemo(
   workspace: Workspace
 ) {
   return build(predefinedDemos[predefinedDemoId].xml, workspace);
+}
+
+export function loadBlocklyXml(xml: string, workspace: Workspace) {
+  build(xml, workspace);
 }
 
 function build(xml: string, workspace: Workspace): void {

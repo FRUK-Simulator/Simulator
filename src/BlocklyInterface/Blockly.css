@@ -17,3 +17,11 @@
   background: #d8ff002e;
   z-index: 1;
 }
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin: 0.75em;
+  background-color: #f5f5f5;
+}
