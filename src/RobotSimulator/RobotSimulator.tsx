@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
+import { getArenaNames } from "./ArenaConfigLoader";
 import { useVM } from "../JavascriptVM/JavascriptVM";
 
 // This component coordinates between react html and the canvas. It uses the 3DSim class to handle the 3D scene and
@@ -18,6 +19,11 @@ export const RobotSimulator: FunctionComponent = () => {
     return () => {
       vm.onCanvasDestroyed(canvasEl);
     };
+  });
+
+  // effect to set the arena
+  useEffect(() => {
+    vm.setArena(getArenaNames()[0]);
   }, [vm]);
 
   return (

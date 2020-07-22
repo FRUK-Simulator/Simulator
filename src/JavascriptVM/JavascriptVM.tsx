@@ -17,7 +17,6 @@ import {
   BlocklyInterpreterCallbacks,
 } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
-
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
 import { messageSlice } from "../ErrorViews/messagesSlice";
@@ -26,6 +25,10 @@ import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
+import {
+  ArenaConfig,
+  getArenaConfig,
+} from "../RobotSimulator/ArenaConfigLoader";
 
 /**
  * Interface to control the VM
@@ -36,6 +39,8 @@ export interface IVirtualMachine {
   stop: () => void;
   start: () => void;
   pause: () => void;
+
+  setArena: (name: string) => void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
@@ -218,6 +223,21 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               })
             );
           }
+        },
+        setArena(name: string): void {
+          let arenaConfig: ArenaConfig = getArenaConfig(name);
+          sim.current?.configureWorld(arenaConfig.worldConfig);
+          const robot = new StdWorldBuilder(sim.current!).build();
+          robotRef.current = new Proxy(robot!, robot_handler);
+          arenaConfig.ballSpecs?.forEach(function (ballSpec, index) {
+            sim.current?.addBall(ballSpec);
+          });
+          arenaConfig.boxSpecs?.forEach(function (boxSpec, index) {
+            sim.current?.addBox(boxSpec);
+          });
+          arenaConfig.coneSpecs?.forEach(function (coneSpec, index) {
+            sim.current?.addCone(coneSpec);
+          });
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;

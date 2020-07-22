@@ -1,11 +1,13 @@
 import { FunctionComponent } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { isExecuting, getExecutionState } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
+import { getArenaNames } from "../RobotSimulator/ArenaConfigLoader";
+
 /**
  * Renders a component that is responsible for controlling the VM according to the state
  * of the application. Provides controls to conditionally start, stop, step, and run the VM.
@@ -15,7 +17,34 @@ export const VMControls: FunctionComponent = () => {
   const executionStatus = useSelector(getExecutionState);
   const vm = useVM();
   const code = useSelector(getCode);
+  const [arena, setArena] = useState(getArenaNames()[0]);
 
+  function getArenaMenuItems() {
+    let items: Array<any> = [];
+    let names = getArenaNames();
+    names.forEach((name: string) => {
+      let item = {
+        key: name,
+        name: name,
+        onClick: () => {
+          vm.setArena(name);
+          setArena(name);
+        },
+      };
+
+      items.push(item);
+    });
+
+    return items;
+  }
+
+  const arenaSelection: ICommandBarItemProps = {
+    key: arena,
+    text: arena,
+    subMenuProps: {
+      items: getArenaMenuItems(),
+    },
+  };
   const startButton: ICommandBarItemProps = {
     onClick() {
       vm.start();
@@ -72,6 +101,7 @@ export const VMControls: FunctionComponent = () => {
     },
   };
   const commandBarRunningItems: ICommandBarItemProps[] = [
+    { ...arenaSelection, disabled: true },
     stopButton,
     executionStatus === ExecutionState.RUNNING
       ? { ...stepButton, disabled: true }
@@ -79,6 +109,7 @@ export const VMControls: FunctionComponent = () => {
     executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
+    { ...arenaSelection, disabled: false },
     { ...startButton, disabled: !code },
     { ...stepButton, disabled: true },
     { ...runButton, disabled: true },
