@@ -2,7 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 export enum ControllerKey {
+  Y = "Y",
+  X = "X",
+  DpadUp = "DpadUp",
+  DpadRight = "DpadRight",
   A = "A",
+  B = "B",
+  DpadDown = "DpadDown",
+  DpadLeft = "DpadLeft",
 }
 
 type controllerState = {
@@ -10,7 +17,14 @@ type controllerState = {
 };
 
 const CONTROLLER_STATES: controllerState = {
+  Y: false,
+  X: false,
+  DpadUp: false,
+  DpadRight: false,
   A: false,
+  B: false,
+  DpadDown: false,
+  DpadLeft: false,
 };
 
 /**

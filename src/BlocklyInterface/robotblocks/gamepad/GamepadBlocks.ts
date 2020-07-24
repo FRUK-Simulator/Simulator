@@ -32,10 +32,7 @@ export function addGamepadBlocks() {
     .JavaScript as JavaScriptGamepadGenerator;
 
   function createGamepadDropdown() {
-    var CHOICES = [
-      ["gamepad1", "gamepad1"],
-      ["gamepad2", "gamepad2"],
-    ];
+    var CHOICES = [["gamepad1", "gamepad1"]];
     return new Blockly.FieldDropdown(CHOICES);
   }
 
@@ -45,27 +42,13 @@ export function addGamepadBlocks() {
 
       var PROPERTY_CHOICES = [
         ["A", "A"],
-        ["AtRest", "AtRest"],
         ["B", "B"],
-        ["Back", "Back"],
+        ["X", "X"],
+        ["Y", "Y"],
+        ["DpadUp", "DpadUp"],
         ["DpadDown", "DpadDown"],
         ["DpadLeft", "DpadLeft"],
         ["DpadRight", "DpadRight"],
-        ["DpadUp", "DpadUp"],
-        ["Guide", "Guide"],
-        ["LeftBumper", "LeftBumper"],
-        ["LeftStickButton", "LeftStickButton"],
-        ["LeftStickX", "LeftStickX"],
-        ["LeftStickY", "LeftStickY"],
-        ["LeftTrigger", "LeftTrigger"],
-        ["RightBumper", "RightBumper"],
-        ["RightStickButton", "RightStickButton"],
-        ["RightStickX", "RightStickX"],
-        ["RightStickY", "RightStickY"],
-        ["RightTrigger", "RightTrigger"],
-        ["Start", "Start"],
-        ["X", "X"],
-        ["Y", "Y"],
       ];
       block.setOutput(true); // no type, for compatibility
       block
@@ -77,57 +60,13 @@ export function addGamepadBlocks() {
 
       var TOOLTIPS = [
         ["A", "Returns true if the A button is pressed."],
-        [
-          "AtRest",
-          "Returns true if all analog sticks and triggers are in their rest position.",
-        ],
         ["B", "Returns true if the B button is pressed."],
-        ["Back", "Returns true if the Back button is pressed."],
+        ["X", "Returns true if the X button is pressed."],
+        ["Y", "Returns true if the Y button is pressed."],
+        ["DpadUp", "Returns true if the dpad up button is pressed."],
         ["DpadDown", "Returns true if the dpad down button is pressed."],
         ["DpadLeft", "Returns true if the dpad left button is pressed."],
         ["DpadRight", "Returns true if the dpad right button is pressed."],
-        ["DpadUp", "Returns true if the dpad up button is pressed."],
-        [
-          "Guide",
-          "Returns true if the Guide button is pressed. The Guide button is often the large button in the middle of the controller.",
-        ],
-        ["LeftBumper", "Returns true if the left bumper is pressed."],
-        [
-          "LeftStickButton",
-          "Returns true if the left stick button is pressed.",
-        ],
-        [
-          "LeftStickX",
-          "Returns a numeric value between -1.0 and +1.0 representing the left analog stick horizontal axis value.",
-        ],
-        [
-          "LeftStickY",
-          "Returns a numeric value between -1.0 and +1.0 representing the left analog stick vertical axis value.",
-        ],
-        [
-          "LeftTrigger",
-          "Returns a numeric value between 0.0 and +1.0 representing the left trigger value.",
-        ],
-        ["RightBumper", "Returns true if the right bumper is pressed."],
-        [
-          "RightStickButton",
-          "Returns true if the right stick button is pressed.",
-        ],
-        [
-          "RightStickX",
-          "Returns a numeric value between -1.0 and +1.0 representing the right analog stick horizontal axis value.",
-        ],
-        [
-          "RightStickY",
-          "Returns a numeric value between -1.0 and +1.0 representing the right analog stick vertical axis value .",
-        ],
-        [
-          "RightTrigger",
-          "Returns a numeric value between 0.0 and +1.0 representing the right trigger value.",
-        ],
-        ["Start", "Returns true if the Start button is pressed."],
-        ["X", "Returns true if the X button is pressed."],
-        ["Y", "Returns true if the Y button is pressed."],
       ];
       block.setTooltip(function () {
         var key = block.getFieldValue("PROP");
@@ -145,7 +84,7 @@ export function addGamepadBlocks() {
 
   blocklyJavascript["gamepad_getProperty"] = function (block) {
     var property = block.getFieldValue("PROP");
-    var code = "checkGamepadKeyPress(" + property + ")";
+    var code = "checkGamepadKeyPress('" + property + "')";
     return [code, blocklyJavascript.ORDER_FUNCTION_CALL];
   };
 
@@ -155,21 +94,13 @@ export function addGamepadBlocks() {
 
       var PROPERTY_CHOICES = [
         ["A", "A"],
-        ["AtRest", "AtRest"],
         ["B", "B"],
-        ["Back", "Back"],
+        ["X", "X"],
+        ["Y", "Y"],
+        ["DpadUp", "DpadUp"],
         ["DpadDown", "DpadDown"],
         ["DpadLeft", "DpadLeft"],
         ["DpadRight", "DpadRight"],
-        ["DpadUp", "DpadUp"],
-        ["Guide", "Guide"],
-        ["LeftBumper", "LeftBumper"],
-        ["LeftStickButton", "LeftStickButton"],
-        ["RightBumper", "RightBumper"],
-        ["RightStickButton", "RightStickButton"],
-        ["Start", "Start"],
-        ["X", "X"],
-        ["Y", "Y"],
       ];
 
       block.setOutput(true, "Boolean");
@@ -182,33 +113,13 @@ export function addGamepadBlocks() {
 
       var TOOLTIPS = [
         ["A", "Returns true if the A button is pressed."],
-        [
-          "AtRest",
-          "Returns true if all analog sticks and triggers are in their rest position.",
-        ],
         ["B", "Returns true if the B button is pressed."],
-        ["Back", "Returns true if the Back button is pressed."],
+        ["X", "Returns true if the X button is pressed."],
+        ["Y", "Returns true if the Y button is pressed."],
+        ["DpadUp", "Returns true if the dpad up button is pressed."],
         ["DpadDown", "Returns true if the dpad down button is pressed."],
         ["DpadLeft", "Returns true if the dpad left button is pressed."],
         ["DpadRight", "Returns true if the dpad right button is pressed."],
-        ["DpadUp", "Returns true if the dpad up button is pressed."],
-        [
-          "Guide",
-          "Returns true if the Guide button is pressed. The Guide button is often the large button in the middle of the controller.",
-        ],
-        ["LeftBumper", "Returns true if the left bumper is pressed."],
-        [
-          "LeftStickButton",
-          "Returns true if the left stick button is pressed.",
-        ],
-        ["RightBumper", "Returns true if the right bumper is pressed."],
-        [
-          "RightStickButton",
-          "Returns true if the right stick button is pressed.",
-        ],
-        ["Start", "Returns true if the Start button is pressed."],
-        ["X", "Returns true if the X button is pressed."],
-        ["Y", "Returns true if the Y button is pressed."],
       ];
       block.setTooltip(function () {
         var key = block.getFieldValue("PROP");

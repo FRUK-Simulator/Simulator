@@ -1,30 +1,34 @@
 import React, { FunctionComponent } from "react";
 import "./GameController.css";
 
-import { useVM } from "../../JavascriptVM/JavascriptVM";
+import { useDispatch } from "react-redux";
+
+import { gameControllerSlice, ControllerKey } from "./gameControllerSlice";
+import { AppDispatch } from "../../store";
 
 const BUTTON_SPECIFICATION = {
   dpad: [
     {
       points:
-        "22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528",
+        "22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 " +
+        " 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528",
       key: null,
     },
     {
       points: "22,38.528 18,38.528 18,44.528 22,44.528",
-      key: "right",
+      key: ControllerKey.DpadRight,
     },
     {
       points: "18,38.528 18,34.528 12,34.528 12,38.528",
-      key: "up",
+      key: ControllerKey.DpadUp,
     },
     {
       points: "12,38.528 8,38.528 8,44.528 12,44.528",
-      key: "left",
+      key: ControllerKey.DpadLeft,
     },
     {
       points: "12,44.528 12,48.528 18,48.528 18,44.528",
-      key: "down",
+      key: ControllerKey.DpadDown,
     },
   ],
   buttons: [
@@ -32,25 +36,25 @@ const BUTTON_SPECIFICATION = {
       x: "33",
       y: "38.528",
       buttonName: "left",
-      key: "A",
+      key: ControllerKey.X,
     },
     {
       x: "47",
       y: "38.528",
       buttonName: "right",
-      key: "B",
+      key: ControllerKey.B,
     },
     {
       x: "40",
       y: "45.528",
       buttonName: "bottom",
-      key: "X",
+      key: ControllerKey.A,
     },
     {
       x: "40",
       y: "31.528",
       buttonName: "top",
-      key: "Y",
+      key: ControllerKey.Y,
     },
   ],
 };
@@ -59,20 +63,22 @@ const BUTTON_SPECIFICATION = {
  * Component for the game controller
  */
 export const GameController: FunctionComponent = () => {
-  const vm = useVM();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const onRelease = () => {
-    handleMotorChange(0, 0);
+  const onRelease = (key: ControllerKey | null) => {
+    if (key) {
+      dispatch(
+        gameControllerSlice.actions.setControllerKeyState({ key, value: false })
+      );
+    }
   };
 
-  const onButtonClicked = (event: React.MouseEvent) => {
-    // forward
-    handleMotorChange(0.5, 0.5);
-  };
-
-  const handleMotorChange = (leftPower: number, rightPower: number) => {
-    vm.robot.setMotorPower(0, rightPower);
-    vm.robot.setMotorPower(1, leftPower);
+  const onButtonClicked = (key: ControllerKey | null) => {
+    if (key) {
+      dispatch(
+        gameControllerSlice.actions.setControllerKeyState({ key, value: true })
+      );
+    }
   };
 
   return (
@@ -110,10 +116,9 @@ export const GameController: FunctionComponent = () => {
       {BUTTON_SPECIFICATION.buttons.map(({ x, y, key, buttonName }) => (
         <svg key={key} viewBox="0 0 6 6" width="6" height="6" x={x} y={y}>
           <circle
-            data-key={key}
             className={"gamepad-btn--" + buttonName}
-            onMouseDown={onButtonClicked}
-            onMouseUp={onRelease}
+            onMouseDown={() => onButtonClicked(key)}
+            onMouseUp={() => onRelease(key)}
             cx="3"
             cy="3"
             r="3"
@@ -122,10 +127,10 @@ export const GameController: FunctionComponent = () => {
             className="gamepad-button-text"
             x="50%"
             y="66%"
-            text-anchor="middle"
+            textAnchor="middle"
             fill="white"
-            font-size="4"
-            font-family="courier"
+            fontSize="4"
+            fontFamily="courier"
           >
             {key}
           </text>
@@ -134,10 +139,10 @@ export const GameController: FunctionComponent = () => {
 
       {BUTTON_SPECIFICATION.dpad.map(({ points, key }) => (
         <polygon
+          key={key || "DEFAULT"}
           className="gamepad-btn--dpad"
-          data-key={key}
-          onMouseDown={onButtonClicked}
-          onMouseUp={onRelease}
+          onMouseDown={() => onButtonClicked(key)}
+          onMouseUp={() => onRelease(key)}
           points={points}
         />
       ))}

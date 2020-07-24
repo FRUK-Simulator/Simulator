@@ -11,19 +11,19 @@
 }
 
 .gamepad-btn--top {
-  fill: #366db6;
+  fill: #ebba16;
 }
 
 .gamepad-btn--top:hover {
-  fill: #4882ce;
+  fill: #ffce2d;
 }
 
 .gamepad-btn--left {
-  fill: #43b05c;
+  fill: #366db6;
 }
 
 .gamepad-btn--left:hover {
-  fill: #56ce72;
+  fill: #4882ce;
 }
 
 .gamepad-btn--right {
@@ -35,11 +35,11 @@
 }
 
 .gamepad-btn--bottom {
-  fill: #ebba16;
+  fill: #43b05c;
 }
 
 .gamepad-btn--bottom:hover {
-  fill: #ffce2d;
+  fill: #56ce72;
 }
 
 .gamepad-button-text {
