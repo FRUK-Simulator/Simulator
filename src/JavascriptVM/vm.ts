@@ -22,7 +22,7 @@ export type BlocklyInterpreterCallbacks = {
   /**
    * Called on key press check. Returns true if the key is currently pressed
    */
-  onControllerKeyCheck: (key: ControllerKey) => boolean;
+  onControllerKeyCheck?: (key: ControllerKey) => boolean;
 };
 
 export enum ExecutionState {
