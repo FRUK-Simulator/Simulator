@@ -24,7 +24,7 @@ import { MessageBarType } from "@fluentui/react";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
-import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
+import { Handles } from "@fruk/simulator-core";
 import {
   ArenaConfig,
   getArenaConfig,
@@ -47,7 +47,7 @@ export interface IVirtualMachine {
   onCanvasDestroyed: (canvasEl: HTMLCanvasElement) => void;
 
   // Holds a handle to the robot in the curent scene.
-  robot: RobotHandle;
+  robot: Handles.RobotHandle;
 }
 
 /**
@@ -73,13 +73,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sim = useRef<Sim3D | null>(null);
-  const robotRef = useRef<RobotHandle | null>(null);
+  const robotRef = useRef<Handles.RobotHandle | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
   // handler for robot handlers, all calls to setMotorPower will update state in redux
-  const robot_handler: ProxyHandler<RobotHandle> = {
+  const robot_handler: ProxyHandler<Handles.RobotHandle> = {
     get: function (target, property, receiver) {
       if (property === "setMotorPower") {
         const originalImpl = target[property];
@@ -254,7 +254,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current = null;
           robotRef.current = null;
         },
-        get robot(): RobotHandle {
+        get robot(): Handles.RobotHandle {
           return robotRef.current!;
         },
       }}
