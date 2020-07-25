@@ -24,12 +24,9 @@ import { MessageBarType } from "@fluentui/react";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
-import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
-import {
-  ArenaConfig,
-  getArenaConfig,
-} from "../RobotSimulator/ArenaConfigLoader";
-
+import { Handles } from "@fruk/simulator-core";
+import { ArenaConfig } from "../RobotSimulator/ArenaConfigLoader";
+import { getChallengeConfig } from "../RobotSimulator/ChallengeConfigLoader";
 /**
  * Interface to control the VM
  */
@@ -40,14 +37,14 @@ export interface IVirtualMachine {
   start: () => void;
   pause: () => void;
 
-  setArena: (name: string) => void;
+  setChallenge: (name: string) => void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
   onCanvasDestroyed: (canvasEl: HTMLCanvasElement) => void;
 
   // Holds a handle to the robot in the curent scene.
-  robot: RobotHandle;
+  robot: Handles.RobotHandle;
 }
 
 /**
@@ -73,13 +70,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sim = useRef<Sim3D | null>(null);
-  const robotRef = useRef<RobotHandle | null>(null);
+  const robotRef = useRef<Handles.RobotHandle | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
   // handler for robot handlers, all calls to setMotorPower will update state in redux
-  const robot_handler: ProxyHandler<RobotHandle> = {
+  const robot_handler: ProxyHandler<Handles.RobotHandle> = {
     get: function (target, property, receiver) {
       if (property === "setMotorPower") {
         const originalImpl = target[property];
@@ -224,8 +221,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             );
           }
         },
-        setArena(name: string): void {
-          let arenaConfig: ArenaConfig = getArenaConfig(name);
+        setChallenge(name: string): void {
+          let arenaConfig: ArenaConfig = getChallengeConfig(name).arenaConfig;
           sim.current?.configureWorld(arenaConfig.worldConfig);
           const robot = new StdWorldBuilder(sim.current!).build();
           robotRef.current = new Proxy(robot!, robot_handler);
@@ -254,7 +251,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current = null;
           robotRef.current = null;
         },
-        get robot(): RobotHandle {
+        get robot(): Handles.RobotHandle {
           return robotRef.current!;
         },
       }}
