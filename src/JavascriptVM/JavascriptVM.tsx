@@ -256,7 +256,15 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current?.addListener(
             "simulation-event",
             (event: CoreSpecs.ISimulatorEvent) => {
-              console.log("EVENT: " + event);
+              console.log("EVENT: " + event.data + " " + event.type);
+              if (event.type == "zone-entry") {
+                dispatch(
+                  messageSlice.actions.addMessage({
+                    type: MessageBarType.error,
+                    msg: "Entered.",
+                  })
+                );
+              }
             }
           );
         },
