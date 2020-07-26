@@ -24,7 +24,7 @@ import { MessageBarType } from "@fluentui/react";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
-import { Handles } from "@fruk/simulator-core";
+import { Handles, CoreSpecs } from "@fruk/simulator-core";
 import { ArenaConfig } from "../RobotSimulator/ArenaConfigLoader";
 import { getChallengeConfig } from "../RobotSimulator/ChallengeConfigLoader";
 /**
@@ -235,6 +235,22 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           arenaConfig.coneSpecs?.forEach(function (coneSpec, index) {
             sim.current?.addCone(coneSpec);
           });
+          sim.current?.addZone({
+            type: "zone",
+            initialPosition: { x: 0, y: 0 },
+            baseColor: 0xff0000,
+            opacity: 0.4,
+            xLength: 2,
+            zLength: 1,
+            zoneId: "test-zone",
+          });
+
+          sim.current?.addListener(
+            "simulation-event",
+            (event: CoreSpecs.ISimulatorEvent) => {
+              console.log("EVENT: " + event);
+            }
+          );
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;

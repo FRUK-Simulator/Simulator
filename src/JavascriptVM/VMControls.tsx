@@ -6,10 +6,9 @@ import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
-import { getArenaNames } from "../RobotSimulator/ArenaConfigLoader";
 import {
   getChallengeNames,
-  getChallengeNamesForArena,
+  getChallengesPerArena,
 } from "../RobotSimulator/ChallengeConfigLoader";
 
 /**
@@ -41,34 +40,35 @@ export const VMControls: FunctionComponent = () => {
     return items;
   }
 
-  function getArenaMenuItems() {
+  function getChallengeMenuItems() {
     let items: Array<any> = [];
     let item;
-    let arenaNames = getArenaNames();
-    arenaNames.forEach((arenaName: string) => {
-      let challengeNames = getChallengeNamesForArena(arenaName);
 
-      if (challengeNames.length > 1) {
-        item = {
-          key: arenaName,
-          name: arenaName,
-          subMenuProps: {
-            items: getChallengeSubMenuItems(challengeNames),
-          },
-        };
-        items.push(item);
-      } else if (challengeNames.length === 1) {
-        item = {
-          key: challengeNames[0],
-          name: challengeNames[0],
-          onClick: () => {
-            vm.setChallenge(challengeNames[0]);
-            setChallenge(challengeNames[0]);
-          },
-        };
-        items.push(item);
+    let challengesPerArena = getChallengesPerArena();
+    challengesPerArena.forEach(
+      (challengeNames: Array<string>, arena: string) => {
+        if (challengeNames.length > 1) {
+          item = {
+            key: arena,
+            name: arena,
+            subMenuProps: {
+              items: getChallengeSubMenuItems(challengeNames),
+            },
+          };
+          items.push(item);
+        } else if (challengeNames.length === 1) {
+          item = {
+            key: challengeNames[0],
+            name: challengeNames[0],
+            onClick: () => {
+              vm.setChallenge(challengeNames[0]);
+              setChallenge(challengeNames[0]);
+            },
+          };
+          items.push(item);
+        }
       }
-    });
+    );
 
     return items;
   }
@@ -78,7 +78,7 @@ export const VMControls: FunctionComponent = () => {
     text: challenge,
     subMenuProps: {
       // We list challenges by arena first
-      items: getArenaMenuItems(),
+      items: getChallengeMenuItems(),
     },
   };
   const startButton: ICommandBarItemProps = {

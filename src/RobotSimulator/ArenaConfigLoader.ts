@@ -16,14 +16,6 @@ export interface ArenaConfig {
   coneSpecs?: CoreSpecs.IConeSpec[];
 }
 
-export function getArenaNames(): Array<string> {
-  let names: Array<string> = new Array<string>();
-  for (let arenaConfig of arenaConfigs) {
-    names.push(arenaConfig.name);
-  }
-  return names;
-}
-
 export function getArenaConfig(name: string): ArenaConfig {
   for (let arenaConfig of arenaConfigs) {
     if (arenaConfig.name === name) {

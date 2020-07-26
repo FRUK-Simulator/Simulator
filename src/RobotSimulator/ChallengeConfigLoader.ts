@@ -12,24 +12,32 @@ let challengeConfigs: Array<ChallengeConfig> = [
 
 export interface ChallengeConfig {
   name: string;
-  arenaName: string; // Foreign key to arena table
   arenaConfig: ArenaConfig;
+}
+
+export function getChallengesPerArena(): Map<string, Array<string>> {
+  let challengesPerArena = new Map();
+
+  for (let challengeConfig of challengeConfigs) {
+    if (challengesPerArena.has(challengeConfig.arenaConfig.name)) {
+      challengesPerArena
+        .get(challengeConfig.arenaConfig.name)
+        .push(challengeConfig.name);
+    } else {
+      challengesPerArena.set(
+        challengeConfig.arenaConfig.name,
+        new Array<string>(challengeConfig.name)
+      );
+    }
+  }
+
+  return challengesPerArena;
 }
 
 export function getChallengeNames(): Array<string> {
   let names: Array<string> = new Array<string>();
   for (let challengeConfig of challengeConfigs) {
     names.push(challengeConfig.name);
-  }
-  return names;
-}
-
-export function getChallengeNamesForArena(arenaName: string): Array<string> {
-  let names: Array<string> = new Array<string>();
-  for (let challengeConfig of challengeConfigs) {
-    if (challengeConfig.arenaName === arenaName) {
-      names.push(challengeConfig.name);
-    }
   }
   return names;
 }
@@ -48,7 +56,6 @@ export function getChallengeConfig(name: string): ChallengeConfig {
 function setupDefaultChallenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Default",
-    arenaName: "Plain Arena",
     arenaConfig: getArenaConfig("Plain Arena"),
   };
 
@@ -58,7 +65,6 @@ function setupDefaultChallenge(): ChallengeConfig {
 function setupChallenge1(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Challenge1",
-    arenaName: "Plain Arena",
     arenaConfig: getArenaConfig("Plain Arena"),
   };
 
@@ -68,7 +74,6 @@ function setupChallenge1(): ChallengeConfig {
 function setupParkingLotChallenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Parking Lot Challenge",
-    arenaName: "Parking Lot Arena",
     arenaConfig: getArenaConfig("Parking Lot Arena"),
   };
 
@@ -78,7 +83,6 @@ function setupParkingLotChallenge(): ChallengeConfig {
 function setupZigZagChallenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "ZigZag Challenge",
-    arenaName: "ZigZag Arena",
     arenaConfig: getArenaConfig("ZigZag Arena"),
   };
 
@@ -88,7 +92,6 @@ function setupZigZagChallenge(): ChallengeConfig {
 function setupBowlingChallenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Bowling Challenge",
-    arenaName: "Bowling Arena",
     arenaConfig: getArenaConfig("Bowling Arena"),
   };
 
