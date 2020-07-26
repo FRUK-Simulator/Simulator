@@ -1,6 +1,6 @@
 import { Sim3D } from "@fruk/simulator-core";
 import { RobotSpecs } from "@fruk/simulator-core";
-import { RobotHandle } from "@fruk/simulator-core/dist/engine/handles";
+import { Handles } from "@fruk/simulator-core";
 
 export class StdWorldBuilder {
   private sim3D: Sim3D;
@@ -9,7 +9,7 @@ export class StdWorldBuilder {
     this.sim3D = sim3D;
   }
 
-  build(): RobotHandle | undefined {
+  build(): Handles.RobotHandle | undefined {
     const robotSpec: RobotSpecs.IRobotSpec = {
       type: "robot",
       dimensions: { x: 2, y: 1, z: 3 },

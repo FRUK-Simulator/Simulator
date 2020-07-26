@@ -1,9 +1,5 @@
-import { WorldConfig } from "@fruk/simulator-core/dist/engine/SimulatorConfig";
-import {
-  IBallSpec,
-  IBoxSpec,
-  IConeSpec,
-} from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
+import { WorldConfig } from "@fruk/simulator-core";
+import { CoreSpecs } from "@fruk/simulator-core";
 
 var arenaConfigs: any = {
   "Plain Arena": setupPlainArena(),
@@ -14,9 +10,9 @@ var arenaConfigs: any = {
 
 export interface ArenaConfig {
   worldConfig: WorldConfig;
-  ballSpecs?: IBallSpec[];
-  boxSpecs?: IBoxSpec[];
-  coneSpecs?: IConeSpec[];
+  ballSpecs?: CoreSpecs.IBallSpec[];
+  boxSpecs?: CoreSpecs.IBoxSpec[];
+  coneSpecs?: CoreSpecs.IConeSpec[];
 }
 
 export function getArenaNames(): Array<string> {
