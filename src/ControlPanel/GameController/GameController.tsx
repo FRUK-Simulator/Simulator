@@ -1,66 +1,84 @@
 import React, { FunctionComponent } from "react";
 import "./GameController.css";
 
-import { useVM } from "../../JavascriptVM/JavascriptVM";
+import { useDispatch } from "react-redux";
+
+import { gameControllerSlice, ControllerKey } from "./gameControllerSlice";
+import { AppDispatch } from "../../store";
+
+const BUTTON_SPECIFICATION = {
+  dpad: [
+    {
+      points:
+        "22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 " +
+        " 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528",
+      key: null,
+    },
+    {
+      points: "22,38.528 18,38.528 18,44.528 22,44.528",
+      key: ControllerKey.DpadRight,
+    },
+    {
+      points: "18,38.528 18,34.528 12,34.528 12,38.528",
+      key: ControllerKey.DpadUp,
+    },
+    {
+      points: "12,38.528 8,38.528 8,44.528 12,44.528",
+      key: ControllerKey.DpadLeft,
+    },
+    {
+      points: "12,44.528 12,48.528 18,48.528 18,44.528",
+      key: ControllerKey.DpadDown,
+    },
+  ],
+  buttons: [
+    {
+      x: "33",
+      y: "38.528",
+      buttonName: "left",
+      key: ControllerKey.X,
+    },
+    {
+      x: "47",
+      y: "38.528",
+      buttonName: "right",
+      key: ControllerKey.B,
+    },
+    {
+      x: "40",
+      y: "45.528",
+      buttonName: "bottom",
+      key: ControllerKey.A,
+    },
+    {
+      x: "40",
+      y: "31.528",
+      buttonName: "top",
+      key: ControllerKey.Y,
+    },
+  ],
+};
 
 /**
  * Component for the game controller
  */
 export const GameController: FunctionComponent = () => {
-  const vm = useVM();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const onRelease = () => {
-    handleMotorChange(0, 0);
+  const onRelease = (key: ControllerKey | null) => {
+    if (key) {
+      dispatch(
+        gameControllerSlice.actions.setControllerKeyState({ key, value: false })
+      );
+    }
   };
 
-  const onCrossButtonMiddleClicked = (event: React.MouseEvent) => {
-    // stop
-    handleMotorChange(0, 0);
-  };
-
-  const onCrossButtonDownClicked = (event: React.MouseEvent) => {
-    // backward
-    handleMotorChange(-0.5, -0.5);
-  };
-
-  const onCrossButtonLeftClicked = (event: React.MouseEvent) => {
-    // left
-    handleMotorChange(-0.5, 0.5);
-  };
-
-  const onCrossButtonRightClicked = (event: React.MouseEvent) => {
-    // right
-    handleMotorChange(0.5, -0.5);
-  };
-
-  const onCrossButtonUpClicked = (event: React.MouseEvent) => {
-    // forward
-    handleMotorChange(0.5, 0.5);
-  };
-
-  const onBlueButtonClicked = (event: React.MouseEvent) => {
-    // forward
-    handleMotorChange(1, 1);
-  };
-
-  const onYellowButtonClicked = (event: React.MouseEvent) => {
-    // backward
-    handleMotorChange(-1, -1);
-  };
-
-  const onGreenButtonClicked = (event: React.MouseEvent) => {
-    // left
-    handleMotorChange(-1, 1);
-  };
-
-  const onRedButtonClicked = (event: React.MouseEvent) => {
-    // right
-    handleMotorChange(1, -1);
-  };
-
-  const handleMotorChange = (leftPower: number, rightPower: number) => {
-    vm.robot.setMotorPower(0, rightPower);
-    vm.robot.setMotorPower(1, leftPower);
+  const onButtonClicked = (key: ControllerKey | null) => {
+    if (key) {
+      dispatch(
+        gameControllerSlice.actions.setControllerKeyState({ key, value: true })
+      );
+    }
   };
 
   return (
@@ -94,64 +112,40 @@ export const GameController: FunctionComponent = () => {
         x2="31.632"
         y2="31.528"
       />
-      <circle
-        className="gamepad-btn--left"
-        onClick={onGreenButtonClicked}
-        cx="36"
-        cy="41.528"
-        r="3"
-      />
-      <circle
-        className="gamepad-btn--right"
-        onClick={onRedButtonClicked}
-        cx="50"
-        cy="41.528"
-        r="3"
-      />
-      <circle
-        className="gamepad-btn--bottom"
-        onClick={onYellowButtonClicked}
-        cx="43"
-        cy="48.528"
-        r="3"
-      />
-      <circle
-        className="gamepad-btn--top"
-        onClick={onBlueButtonClicked}
-        cx="43"
-        cy="34.528"
-        r="3"
-      />
 
-      <polygon
-        className="gamepad-btn--dpad"
-        onClick={onCrossButtonMiddleClicked}
-        points="22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528"
-      />
-      <polygon
-        className="gamepad-btn--dpad"
-        onMouseDown={onCrossButtonRightClicked}
-        onMouseUp={onRelease}
-        points="22,38.528 18,38.528 18,44.528 22,44.528"
-      />
-      <polygon
-        className="gamepad-btn--dpad"
-        onMouseDown={onCrossButtonUpClicked}
-        onMouseUp={onRelease}
-        points="18,38.528 18,34.528 12,34.528 12,38.528"
-      />
-      <polygon
-        className="gamepad-btn--dpad"
-        onMouseDown={onCrossButtonLeftClicked}
-        onMouseUp={onRelease}
-        points="12,38.528 8,38.528 8,44.528 12,44.528"
-      />
-      <polygon
-        className="gamepad-btn--dpad"
-        onMouseDown={onCrossButtonDownClicked}
-        onMouseUp={onRelease}
-        points="12,44.528 12,48.528 18,48.528 18,44.528"
-      />
+      {BUTTON_SPECIFICATION.buttons.map(({ x, y, key, buttonName }) => (
+        <svg key={key} viewBox="0 0 6 6" width="6" height="6" x={x} y={y}>
+          <circle
+            className={"gamepad-btn--" + buttonName}
+            onMouseDown={() => onButtonClicked(key)}
+            onMouseUp={() => onRelease(key)}
+            cx="3"
+            cy="3"
+            r="3"
+          />
+          <text
+            className="gamepad-button-text"
+            x="50%"
+            y="66%"
+            textAnchor="middle"
+            fill="white"
+            fontSize="4"
+            fontFamily="courier"
+          >
+            {key}
+          </text>
+        </svg>
+      ))}
+
+      {BUTTON_SPECIFICATION.dpad.map(({ points, key }) => (
+        <polygon
+          key={key || "DEFAULT"}
+          className="gamepad-btn--dpad"
+          onMouseDown={() => onButtonClicked(key)}
+          onMouseUp={() => onRelease(key)}
+          points={points}
+        />
+      ))}
     </svg>
   );
 };

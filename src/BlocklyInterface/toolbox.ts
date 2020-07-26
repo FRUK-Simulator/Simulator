@@ -1,5 +1,6 @@
 import ActuatorSection from "./robotblocks/actuators/ActuatorSection";
 import SensorSection from "./robotblocks/sensors/SensorSection";
+import GamepadSection from "./robotblocks/gamepad/GamepadSection";
 import GeneralSection from "./robotblocks/general/GeneralSection";
 
 /**
@@ -10,6 +11,7 @@ export function getDefaultToolbox() {
 <xml>
     ${ActuatorSection}
     ${SensorSection}
+    ${GamepadSection}
     ${GeneralSection}
 </xml>`;
 }
