@@ -6,8 +6,6 @@ export class BlocklyUiEvent extends Events.Ui {
   public element: string | undefined;
 }
 
-declare interface BlocklyJavaScript {}
-
 export type BlocklyEvent =
   | Events.BlockChange
   | Events.BlockMove

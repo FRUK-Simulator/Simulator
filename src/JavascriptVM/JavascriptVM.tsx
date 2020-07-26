@@ -7,7 +7,7 @@ import {
   useContext,
 } from "react";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
@@ -29,6 +29,7 @@ import {
   ArenaConfig,
   getArenaConfig,
 } from "../RobotSimulator/ArenaConfigLoader";
+import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
 
 /**
  * Interface to control the VM
@@ -77,6 +78,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
+
+  const store = useStore();
 
   // handler for robot handlers, all calls to setMotorPower will update state in redux
   const robot_handler: ProxyHandler<RobotHandle> = {
@@ -204,6 +207,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
             onIsSensorTouchPushed: (channel: number): boolean => {
               return true;
+            },
+
+            onControllerKeyCheck: (key: ControllerKey): boolean => {
+              return store.getState().gameController[key];
             },
           };
 

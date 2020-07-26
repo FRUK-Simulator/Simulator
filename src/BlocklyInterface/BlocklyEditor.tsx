@@ -82,7 +82,7 @@ export const BlocklyEditor: FunctionComponent = () => {
     if (!blocklyRef.current) {
       blocklyRef.current = new BlocklyInstance(wrapperRef.current!, toolboxXml);
 
-      loadPredefinedDemo(0, Blockly.getMainWorkspace());
+      loadPredefinedDemo(1, Blockly.getMainWorkspace());
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
