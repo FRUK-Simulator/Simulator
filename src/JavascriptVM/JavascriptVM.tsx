@@ -30,6 +30,10 @@ import {
   getDefaultArenaName,
 } from "../RobotSimulator/ArenaConfigLoader";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
+import {
+  ISimulatorEvent,
+  IRawZoneEvent,
+} from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 
 /**
  * Interface to control the VM
@@ -72,9 +76,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
     null
   );
 
+  type EventCallback = (event: IRawZoneEvent) => void;
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sim = useRef<Sim3D | null>(null);
   const robotRef = useRef<Handles.RobotHandle | null>(null);
+  const zoneEnterCb = useRef<EventCallback | null>(null);
+  const zoneExitCb = useRef<EventCallback | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
@@ -257,6 +265,9 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           arenaConfig.zoneSpecs?.forEach(function (zoneSpec, index) {
             sim.current?.addZone(zoneSpec);
           });
+
+          zoneEnterCb.current = arenaConfig.zoneEntryCallback || null;
+          zoneExitCb.current = arenaConfig.zoneExitCallback || null;
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;
@@ -265,6 +276,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current = new Sim3D(canvasEl);
           sim.current.beginRendering();
           this.setArena(getDefaultArenaName());
+          sim.current?.on("simulation-event", (event: ISimulatorEvent) => {
+            if (event.type === "zone-entry" && zoneEnterCb.current) {
+              zoneEnterCb.current(event.data as IRawZoneEvent);
+            } else if (event.type === "zone-exit" && zoneExitCb.current) {
+              zoneExitCb.current(event.data as IRawZoneEvent);
+            }
+          });
         },
         onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
           // remove the simulator

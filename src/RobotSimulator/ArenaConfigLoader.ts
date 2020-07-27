@@ -1,7 +1,10 @@
 import { WorldConfig, RobotSpecs } from "@fruk/simulator-core";
 import { CoreSpecs } from "@fruk/simulator-core";
 import { createDefaultRobotSpec } from "./RobotConfigLoader";
-import { IZoneSpec } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
+import {
+  IZoneSpec,
+  IRawZoneEvent,
+} from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 
 var arenaConfigs: any = {
   "Plain Arena": setupPlainArena(),
@@ -19,6 +22,8 @@ export interface ArenaConfig {
   boxSpecs?: CoreSpecs.IBoxSpec[];
   coneSpecs?: CoreSpecs.IConeSpec[];
   zoneSpecs?: CoreSpecs.IZoneSpec[];
+  zoneEntryCallback?: (event: IRawZoneEvent) => void;
+  zoneExitCallback?: (event: IRawZoneEvent) => void;
 }
 
 export function getArenaNames(): Array<string> {
@@ -362,10 +367,33 @@ function setupChallengeArenaOne(options: {
     },
   ];
 
+  let successCountdown: number | null = null;
+
+  let zoneEntryCallback = (event: IRawZoneEvent) => {
+    if (event.zoneId == "a-guide-finish" && options.startingLocation == "A") {
+      if (successCountdown) {
+        clearTimeout(successCountdown);
+      }
+      successCountdown = window.setTimeout(() => {
+        alert("Success");
+      }, 2000);
+    }
+  };
+
+  let zoneExitCallback = (event: IRawZoneEvent) => {
+    if (event.zoneId == "a-guide-finish" && options.startingLocation == "A") {
+      if (successCountdown) {
+        clearTimeout(successCountdown);
+      }
+    }
+  };
+
   let arenaConfig: ArenaConfig = {
     worldConfig: worldConfig,
     robotSpec: robotSpec,
     zoneSpecs: zoneSpecs,
+    zoneEntryCallback: zoneEntryCallback,
+    zoneExitCallback: zoneExitCallback,
   };
 
   return arenaConfig;
