@@ -1,17 +1,19 @@
 import { ArenaConfig, getArenaConfig } from "./ArenaConfigLoader";
+import { CoreSpecs, CoreSimTypes } from "@fruk/simulator-core";
 
 let challengeConfigs: Array<ChallengeConfig> = [
-  setupDefaultChallenge(),
-  setupChallenge1(),
-  setupChallenge1(),
-  setupChallenge1(),
-  setupParkingLotChallenge(),
+  setupLesson1ChallengeA(),
+  setupLesson1ChallengeB(),
+  setupParkingLotChallenge1(),
+  setupParkingLotChallenge2(),
   setupZigZagChallenge(),
   setupBowlingChallenge(),
 ];
 
 export interface ChallengeConfig {
   name: string;
+  startPosition: CoreSimTypes.Vector2d;
+  finishZoneSpec?: CoreSpecs.IZoneSpec;
   arenaConfig: ArenaConfig;
 }
 
@@ -50,31 +52,48 @@ export function getChallengeConfig(name: string): ChallengeConfig {
   }
 
   // return default if 'name' not found
-  return setupDefaultChallenge();
+  return setupLesson1ChallengeA();
 }
 
-function setupDefaultChallenge(): ChallengeConfig {
+function setupLesson1ChallengeA(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
-    name: "Default",
-    arenaConfig: getArenaConfig("Plain Arena"),
+    name: "Lesson 1 - Challenge A",
+    startPosition: { x: 0, y: 8 },
+    finishZoneSpec: createFinishZoneSpec({ x: 0, y: -8 }),
+    arenaConfig: getArenaConfig("Lesson 1"),
   };
 
   return challengeConfig;
 }
 
-function setupChallenge1(): ChallengeConfig {
+function setupLesson1ChallengeB(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
-    name: "Challenge1",
-    arenaConfig: getArenaConfig("Plain Arena"),
+    name: "Lesson 1 - Challenge B",
+    startPosition: { x: 8, y: 8 },
+    finishZoneSpec: createFinishZoneSpec({ x: -8, y: 8 }),
+    arenaConfig: getArenaConfig("Lesson 1"),
   };
 
   return challengeConfig;
 }
 
-function setupParkingLotChallenge(): ChallengeConfig {
+function setupParkingLotChallenge1(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
-    name: "Parking Lot Challenge",
-    arenaConfig: getArenaConfig("Parking Lot Arena"),
+    name: "Parking Lot Challenge 1",
+    startPosition: { x: 0, y: 0 },
+    finishZoneSpec: createFinishZoneSpec({ x: 7, y: -13 }),
+    arenaConfig: getArenaConfig("Parking Lot"),
+  };
+
+  return challengeConfig;
+}
+
+function setupParkingLotChallenge2(): ChallengeConfig {
+  const challengeConfig: ChallengeConfig = {
+    name: "Parking Lot Challenge 2",
+    startPosition: { x: 0, y: 0 },
+    finishZoneSpec: createFinishZoneSpec({ x: -9, y: -10 }),
+    arenaConfig: getArenaConfig("Parking Lot"),
   };
 
   return challengeConfig;
@@ -83,7 +102,9 @@ function setupParkingLotChallenge(): ChallengeConfig {
 function setupZigZagChallenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "ZigZag Challenge",
-    arenaConfig: getArenaConfig("ZigZag Arena"),
+    startPosition: { x: 0, y: 0 },
+    finishZoneSpec: createFinishZoneSpec({ x: 0, y: 0 }),
+    arenaConfig: getArenaConfig("ZigZag"),
   };
 
   return challengeConfig;
@@ -92,8 +113,24 @@ function setupZigZagChallenge(): ChallengeConfig {
 function setupBowlingChallenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Bowling Challenge",
-    arenaConfig: getArenaConfig("Bowling Arena"),
+    startPosition: { x: 0, y: 10 },
+    arenaConfig: getArenaConfig("Bowling"),
   };
 
   return challengeConfig;
+}
+
+function createFinishZoneSpec(
+  initialPosition: CoreSimTypes.Vector2d
+): CoreSpecs.IZoneSpec {
+  let finishZoneSpec: CoreSpecs.IZoneSpec = {
+    type: "zone",
+    zoneId: "finish",
+    xLength: 2,
+    zLength: 2,
+    baseColor: 0x00ff00,
+    initialPosition: initialPosition,
+  };
+
+  return finishZoneSpec;
 }

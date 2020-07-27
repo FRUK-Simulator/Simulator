@@ -25,8 +25,10 @@ import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
-import { ArenaConfig } from "../RobotSimulator/ArenaConfigLoader";
-import { getChallengeConfig } from "../RobotSimulator/ChallengeConfigLoader";
+import {
+  ChallengeConfig,
+  getChallengeConfig,
+} from "../RobotSimulator/ChallengeConfigLoader";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
 
 /**
@@ -230,52 +232,62 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           }
         },
         setChallenge(name: string): void {
-          let arenaConfig: ArenaConfig = getChallengeConfig(name).arenaConfig;
-          sim.current?.configureWorld(arenaConfig.worldConfig);
-          const robot = new StdWorldBuilder(sim.current!).build();
+          let challengeConfig: ChallengeConfig = getChallengeConfig(name);
+          sim.current?.configureWorld(challengeConfig.arenaConfig.worldConfig);
+          const robot = new StdWorldBuilder(
+            sim.current!,
+            challengeConfig.startPosition
+          ).build();
           robotRef.current = new Proxy(robot!, robot_handler);
-          arenaConfig.ballSpecs?.forEach(function (ballSpec, index) {
+          challengeConfig.arenaConfig.ballSpecs?.forEach(function (
+            ballSpec,
+            index
+          ) {
             sim.current?.addBall(ballSpec);
           });
-          arenaConfig.boxSpecs?.forEach(function (boxSpec, index) {
+          challengeConfig.arenaConfig.boxSpecs?.forEach(function (
+            boxSpec,
+            index
+          ) {
             sim.current?.addBox(boxSpec);
           });
-          arenaConfig.coneSpecs?.forEach(function (coneSpec, index) {
+          challengeConfig.arenaConfig.coneSpecs?.forEach(function (
+            coneSpec,
+            index
+          ) {
             sim.current?.addCone(coneSpec);
           });
-          sim.current?.addZone({
-            type: "zone",
-            initialPosition: { x: 0, y: 0 },
-            baseColor: 0xff0000,
-            opacity: 0.4,
-            xLength: 2,
-            zLength: 1,
-            zoneId: "test-zone",
-          });
-
-          sim.current?.addListener(
-            "simulation-event",
-            (event: CoreSpecs.ISimulatorEvent) => {
-              console.log("EVENT: " + event.data + " " + event.type);
-              if (event.type == "zone-entry") {
-                dispatch(
-                  messageSlice.actions.addMessage({
-                    type: MessageBarType.error,
-                    msg: "Entered.",
-                  })
-                );
-              }
-            }
-          );
+          if (challengeConfig.finishZoneSpec) {
+            sim.current?.addZone(challengeConfig.finishZoneSpec);
+          }
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;
           updateCanvasSize();
           // create the simulator
           sim.current = new Sim3D(canvasEl);
-          const robot = new StdWorldBuilder(sim.current).build();
+          const robot = new StdWorldBuilder(sim.current, {
+            x: 0,
+            y: 0,
+          }).build();
           sim.current.beginRendering();
           robotRef.current = new Proxy(robot!, robot_handler);
+          sim.current?.addListener(
+            "simulation-event",
+            (event: CoreSpecs.ISimulatorEvent) => {
+              if (
+                event.type === "zone-entry" &&
+                event.data.zoneId === "finish"
+              ) {
+                dispatch(
+                  messageSlice.actions.addMessage({
+                    type: MessageBarType.error,
+                    msg: "Robot wins!",
+                  })
+                );
+              }
+            }
+          );
         },
         onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
           // remove the simulator

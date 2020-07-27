@@ -2,7 +2,7 @@ import { WorldConfig } from "@fruk/simulator-core";
 import { CoreSpecs } from "@fruk/simulator-core";
 
 let arenaConfigs: Array<ArenaConfig> = [
-  setupPlainArena(),
+  setupLesson1Arena(),
   setupParkingLotArena(),
   setupZigZagArena(),
   setupBowlingArena(),
@@ -23,13 +23,13 @@ export function getArenaConfig(name: string): ArenaConfig {
     }
   }
 
-  // return plain arena if 'name' not found
-  return setupPlainArena();
+  // return default arena if 'name' not found
+  return setupLesson1Arena();
 }
 
-function setupPlainArena(): ArenaConfig {
+function setupLesson1Arena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "Plain Arena",
+    name: "Lesson 1",
     worldConfig: {
       zLength: 20,
       xLength: 20,
@@ -38,7 +38,7 @@ function setupPlainArena(): ArenaConfig {
         position: {
           x: 0,
           y: 8,
-          z: 10,
+          z: 14,
         },
       },
     },
@@ -53,7 +53,7 @@ function setupParkingLotArena(): ArenaConfig {
   const length: number = 4;
   const width: number = 3;
   const arenaConfig: ArenaConfig = {
-    name: "Parking Lot Arena",
+    name: "Parking Lot",
     worldConfig: {
       zLength: 30,
       xLength: 20,
@@ -95,7 +95,7 @@ function setupParkingLotArena(): ArenaConfig {
 
 function setupZigZagArena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "ZigZag Arena",
+    name: "ZigZag",
     worldConfig: {
       zLength: 40,
       xLength: 20,
@@ -166,7 +166,7 @@ function setupZigZagArena(): ArenaConfig {
 
 function setupBowlingArena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "Bowling Arena",
+    name: "Bowling",
     worldConfig: {
       zLength: 60,
       xLength: 20,

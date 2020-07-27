@@ -1,17 +1,21 @@
 import { Sim3D } from "@fruk/simulator-core";
 import { RobotSpecs } from "@fruk/simulator-core";
 import { Handles } from "@fruk/simulator-core";
+import { CoreSimTypes } from "@fruk/simulator-core";
 
 export class StdWorldBuilder {
   private sim3D: Sim3D;
+  private startPosition: CoreSimTypes.Vector2d;
 
-  constructor(sim3D: Sim3D) {
+  constructor(sim3D: Sim3D, startPosition: CoreSimTypes.Vector2d) {
     this.sim3D = sim3D;
+    this.startPosition = startPosition;
   }
 
   build(): Handles.RobotHandle | undefined {
     const robotSpec: RobotSpecs.IRobotSpec = {
       type: "robot",
+      initialPosition: this.startPosition,
       dimensions: { x: 2, y: 1, z: 3 },
       drivetrain: {
         motorGroups: [
