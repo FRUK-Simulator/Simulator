@@ -1,5 +1,6 @@
 import Interpreter from "js-interpreter";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
+import { DISTANCE_SENSOR_RANGE } from "./distanceSensorConstants";
 
 export type BlocklyInterpreterCallbacks = {
   /**
@@ -23,6 +24,11 @@ export type BlocklyInterpreterCallbacks = {
    * Called on key press check. Returns true if the key is currently pressed
    */
   onControllerKeyCheck?: (key: ControllerKey) => boolean;
+
+  /**
+   * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
+   */
+  getSensorValue?: (port: number) => number;
 };
 
 export enum ExecutionState {
@@ -37,7 +43,7 @@ export enum ExecutionState {
 }
 
 // This is the tunable. How many steps on the vm do we want to execute per second.
-const STEPS_FREQUENCY = 5; // Hz
+const STEPS_FREQUENCY = 25; // Hz
 
 // Calling 'setTimeout' more than say '10' times per second is ill advisable, so we need to adjust the frequency
 const MIN_EXECUTION_INTERVAL = 10; // minimum milliseconds between execution
@@ -91,6 +97,15 @@ export class BlocklyInterpreter {
         }
       );
 
+      const getSensorValue = interpreter.createNativeFunction(
+        (port: number): number => {
+          if (callbacks.getSensorValue) {
+            return callbacks.getSensorValue(port);
+          }
+          return 0.0;
+        }
+      );
+
       const waitWrapper = interpreter.createNativeFunction(
         (milliseconds: number) => {
           this.nextStepDelay = milliseconds;
@@ -105,6 +120,18 @@ export class BlocklyInterpreter {
         }
       );
 
+      const sensorConversionFactor = interpreter.createNativeFunction(
+        (unit: string) => {
+          if (unit === "centimeters") {
+            return DISTANCE_SENSOR_RANGE * 100.0;
+          } else if (unit === "meters") {
+            return DISTANCE_SENSOR_RANGE;
+          }
+
+          return DISTANCE_SENSOR_RANGE;
+        }
+      );
+
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
@@ -113,11 +140,17 @@ export class BlocklyInterpreter {
         "isSensorTouchPushed",
         isSensorTouchPushed
       );
+      interpreter.setProperty(globals, "getSensorValue", getSensorValue);
       interpreter.setProperty(globals, "wait", waitWrapper);
       interpreter.setProperty(
         globals,
         "checkGamepadKeyPress",
         checkGamepadKeyPress
+      );
+      interpreter.setProperty(
+        globals,
+        "sensorConversionFactor",
+        sensorConversionFactor
       );
     });
 

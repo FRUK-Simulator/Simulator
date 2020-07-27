@@ -212,6 +212,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             onControllerKeyCheck: (key: ControllerKey): boolean => {
               return store.getState().gameController[key];
             },
+            getSensorValue: (channel: number): number => {
+              const value = robotRef.current?.getAnalogInput(channel);
+              if (value) {
+                return value;
+              }
+              return 0.0;
+            },
           };
 
           try {
