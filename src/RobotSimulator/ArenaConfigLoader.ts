@@ -1,12 +1,15 @@
 import { WorldConfig, RobotSpecs } from "@fruk/simulator-core";
 import { CoreSpecs } from "@fruk/simulator-core";
 import { createDefaultRobotSpec } from "./RobotConfigLoader";
+import { IZoneSpec } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 
 var arenaConfigs: any = {
   "Plain Arena": setupPlainArena(),
   "Parking Lot Arena": setupParkingLotArena(),
   "ZigZag Arena": setupZigZagArena(),
   "Bowling Arena": setupBowlingArena(),
+  "Challenge Arena One: A": setupChallengeArenaOne({ startingLocation: "A" }),
+  "Challenge Arena One: B": setupChallengeArenaOne({ startingLocation: "B" }),
 };
 
 export interface ArenaConfig {
@@ -15,6 +18,7 @@ export interface ArenaConfig {
   ballSpecs?: CoreSpecs.IBallSpec[];
   boxSpecs?: CoreSpecs.IBoxSpec[];
   coneSpecs?: CoreSpecs.IConeSpec[];
+  zoneSpecs?: CoreSpecs.IZoneSpec[];
 }
 
 export function getArenaNames(): Array<string> {
@@ -22,7 +26,7 @@ export function getArenaNames(): Array<string> {
 }
 
 export function getDefaultArenaName(): string {
-  return "Plain Arena";
+  return "Challenge Arena One: A";
 }
 
 export function getArenaConfig(name?: string): ArenaConfig {
@@ -262,6 +266,106 @@ function setupBowlingArena(): ArenaConfig {
       },
     ],
     robotSpec: createDefaultRobotSpec(),
+  };
+
+  return arenaConfig;
+}
+
+function setupChallengeArenaOne(options: {
+  startingLocation: string;
+}): ArenaConfig {
+  let worldConfig: WorldConfig = {
+    zLength: 10,
+    xLength: 10,
+    walls: [],
+    camera: {
+      position: {
+        x: 0,
+        y: 5,
+        z: 5,
+      },
+    },
+  };
+
+  let robotSpec = createDefaultRobotSpec();
+
+  switch (options.startingLocation) {
+    case "A": {
+      robotSpec.initialPosition = { x: 0, y: 4.5 };
+      break;
+    }
+    case "B": {
+      robotSpec.initialPosition = { x: -4.5, y: 4.5 };
+      break;
+    }
+    default:
+      throw new Error("Unknown starting location");
+  }
+
+  let zoneSpecs: IZoneSpec[] = [
+    {
+      type: "zone",
+      zoneId: "a-guide-bottom",
+      xLength: 1.5,
+      zLength: 8.5,
+      baseColor: 0xff3344,
+      initialPosition: { x: 0, y: 0.75 },
+    },
+    {
+      type: "zone",
+      zoneId: "a-guide-finish",
+      xLength: 1.5,
+      zLength: 1.5,
+      baseColor: 0x3344ff,
+      initialPosition: { x: 0, y: -4.25 },
+    },
+    {
+      type: "zone",
+      zoneId: "b-guide-top",
+      xLength: 1.5,
+      zLength: 1.5,
+      baseColor: 0x3344ff,
+      opacity: 0,
+      initialPosition: { x: 0, y: -4.25 },
+    },
+    {
+      type: "zone",
+      zoneId: "b-guide-left",
+      xLength: 1.5,
+      zLength: 10,
+      baseColor: 0x33ff44,
+      initialPosition: { x: -4.25, y: 0 },
+    },
+    {
+      type: "zone",
+      zoneId: "b-guide-right",
+      xLength: 1.5,
+      zLength: 10,
+      baseColor: 0x33ff44,
+      initialPosition: { x: 4.25, y: 0 },
+    },
+    {
+      type: "zone",
+      zoneId: "b-guide-top-left",
+      xLength: 3.5,
+      zLength: 1.5,
+      baseColor: 0x33ff44,
+      initialPosition: { x: -2.5, y: -4.25 },
+    },
+    {
+      type: "zone",
+      zoneId: "b-guide-top-right",
+      xLength: 3.5,
+      zLength: 1.5,
+      baseColor: 0x33ff44,
+      initialPosition: { x: 2.5, y: -4.25 },
+    },
+  ];
+
+  let arenaConfig: ArenaConfig = {
+    worldConfig: worldConfig,
+    robotSpec: robotSpec,
+    zoneSpecs: zoneSpecs,
   };
 
   return arenaConfig;
