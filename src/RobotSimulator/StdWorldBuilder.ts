@@ -18,7 +18,7 @@ export class StdWorldBuilder {
     {
       // Sensors
       const distanceSensor = new RobotBuilder.DistanceSensorBuilder(0);
-      distanceSensor.setMountFace(RobotSpecs.SensorMountingFace.REAR);
+      distanceSensor.setMountFace(RobotSpecs.SensorMountingFace.FRONT);
       distanceSensor.setMaxRange(DISTANCE_SENSOR_RANGE);
 
       robotBuilder.addBasicSensor(distanceSensor);
