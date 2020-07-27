@@ -6,7 +6,10 @@ import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
-import { getArenaNames } from "../RobotSimulator/ArenaConfigLoader";
+import {
+  getArenaNames,
+  getDefaultArenaName,
+} from "../RobotSimulator/ArenaConfigLoader";
 
 /**
  * Renders a component that is responsible for controlling the VM according to the state
@@ -17,7 +20,7 @@ export const VMControls: FunctionComponent = () => {
   const executionStatus = useSelector(getExecutionState);
   const vm = useVM();
   const code = useSelector(getCode);
-  const [arena, setArena] = useState(getArenaNames()[0]);
+  const [arena, setArena] = useState(getDefaultArenaName());
 
   function getArenaMenuItems() {
     let items: Array<any> = [];

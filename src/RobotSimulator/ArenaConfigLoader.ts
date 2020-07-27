@@ -1,5 +1,6 @@
-import { WorldConfig } from "@fruk/simulator-core";
+import { WorldConfig, RobotSpecs } from "@fruk/simulator-core";
 import { CoreSpecs } from "@fruk/simulator-core";
+import { createDefaultRobotSpec } from "./RobotConfigLoader";
 
 var arenaConfigs: any = {
   "Plain Arena": setupPlainArena(),
@@ -10,6 +11,7 @@ var arenaConfigs: any = {
 
 export interface ArenaConfig {
   worldConfig: WorldConfig;
+  robotSpec: RobotSpecs.IRobotSpec;
   ballSpecs?: CoreSpecs.IBallSpec[];
   boxSpecs?: CoreSpecs.IBoxSpec[];
   coneSpecs?: CoreSpecs.IConeSpec[];
@@ -19,15 +21,20 @@ export function getArenaNames(): Array<string> {
   return Object.keys(arenaConfigs);
 }
 
-export function getArenaConfig(name: string): ArenaConfig {
-  for (var property in arenaConfigs) {
-    if (arenaConfigs.hasOwnProperty(property) && property === name) {
-      return arenaConfigs[property];
+export function getDefaultArenaName(): string {
+  return "Plain Arena";
+}
+
+export function getArenaConfig(name?: string): ArenaConfig {
+  if (name) {
+    for (var property in arenaConfigs) {
+      if (arenaConfigs.hasOwnProperty(property) && property === name) {
+        return arenaConfigs[property];
+      }
     }
   }
 
-  // return default if 'name' not found
-  return arenaConfigs["Plain Arena"];
+  throw new Error("Unable to load arena");
 }
 
 function setupPlainArena(): ArenaConfig {
@@ -44,6 +51,7 @@ function setupPlainArena(): ArenaConfig {
         },
       },
     },
+    robotSpec: createDefaultRobotSpec(),
   };
 
   return arenaConfig;
@@ -89,6 +97,7 @@ function setupParkingLotArena(): ArenaConfig {
         initialPosition: { x: -8.5, y: -8 },
       },
     ],
+    robotSpec: createDefaultRobotSpec(),
   };
 
   return arenaConfig;
@@ -159,6 +168,7 @@ function setupZigZagArena(): ArenaConfig {
         initialPosition: { x: 0, y: 15 },
       },
     ],
+    robotSpec: createDefaultRobotSpec(),
   };
 
   return arenaConfig;
@@ -251,6 +261,7 @@ function setupBowlingArena(): ArenaConfig {
         initialPosition: { x: 0, y: -16 },
       },
     ],
+    robotSpec: createDefaultRobotSpec(),
   };
 
   return arenaConfig;

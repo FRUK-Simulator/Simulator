@@ -23,11 +23,11 @@ import { messageSlice } from "../ErrorViews/messagesSlice";
 import { MessageBarType } from "@fluentui/react";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
-import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles } from "@fruk/simulator-core";
 import {
   ArenaConfig,
   getArenaConfig,
+  getDefaultArenaName,
 } from "../RobotSimulator/ArenaConfigLoader";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
 
@@ -241,8 +241,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
         setArena(name: string): void {
           let arenaConfig: ArenaConfig = getArenaConfig(name);
           sim.current?.configureWorld(arenaConfig.worldConfig);
-          const robot = new StdWorldBuilder(sim.current!).build();
+
+          const robot = sim.current?.addRobot(arenaConfig.robotSpec);
           robotRef.current = new Proxy(robot!, robot_handler);
+
           arenaConfig.ballSpecs?.forEach(function (ballSpec, index) {
             sim.current?.addBall(ballSpec);
           });
@@ -252,15 +254,17 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           arenaConfig.coneSpecs?.forEach(function (coneSpec, index) {
             sim.current?.addCone(coneSpec);
           });
+          arenaConfig.zoneSpecs?.forEach(function (zoneSpec, index) {
+            sim.current?.addZone(zoneSpec);
+          });
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;
           updateCanvasSize();
           // create the simulator
           sim.current = new Sim3D(canvasEl);
-          const robot = new StdWorldBuilder(sim.current).build();
           sim.current.beginRendering();
-          robotRef.current = new Proxy(robot!, robot_handler);
+          this.setArena(getDefaultArenaName());
         },
         onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
           // remove the simulator
