@@ -1,11 +1,11 @@
-import { addSensorTouchBlock } from "./SensorTouch";
+import { addDistanceSensorBlock } from "./SensorDistance";
 
 export default (() => {
-  addSensorTouchBlock();
+  addDistanceSensorBlock();
 
   return `
 <category name="Sensors">
-    <block type="sensor_touch"></block>
+    <block type="distance_sensor"></block>
 </category>
 `;
 })();
