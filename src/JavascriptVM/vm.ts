@@ -42,6 +42,11 @@ export enum ExecutionState {
   PAUSED = "paused",
 }
 
+export enum ExecutionSpeed {
+  SLOW = 20,
+  FAST = 100,
+}
+
 // This is the tunable. How many steps on the vm do we want to execute per second.
 const STEPS_FREQUENCY = 25; // Hz
 
