@@ -43,24 +43,11 @@ export enum ExecutionState {
 }
 
 export enum ExecutionSpeed {
-  SLOW = 20,
+  SLOW = 15,
   FAST = 100,
 }
 
-// This is the tunable. How many steps on the vm do we want to execute per second.
-const STEPS_FREQUENCY = 25; // Hz
-
-// Calling 'setTimeout' more than say '10' times per second is ill advisable, so we need to adjust the frequency
 const MIN_EXECUTION_INTERVAL = 10; // minimum milliseconds between execution
-const EXECUTION_INTERVAL = Math.max(
-  MIN_EXECUTION_INTERVAL,
-  1000 * (1 / STEPS_FREQUENCY)
-); // milliseconds between execution
-const EXECUTION_FREQUENCY = 1000 / EXECUTION_INTERVAL;
-
-// Now we must re compute the number of steps we need per each 'setTimeout' call.
-// N.b. this may eventually be fractional, if say we have a max execution interval or a fractional number of steps per second.
-const STEPS_PER_EXECUTION = STEPS_FREQUENCY / EXECUTION_FREQUENCY;
 
 export class BlocklyInterpreter {
   private interpreter: Interpreter;
@@ -68,12 +55,22 @@ export class BlocklyInterpreter {
   private blockHighlighted: boolean;
   private callbacks: BlocklyInterpreterCallbacks;
   private nextStepDelay: number;
+  private executionInterval: number;
+  private stepsPerExecution: number;
 
-  constructor(code: string, callbacks: BlocklyInterpreterCallbacks) {
+  constructor(
+    code: string,
+    speed: ExecutionSpeed,
+    callbacks: BlocklyInterpreterCallbacks
+  ) {
     this.executionState = ExecutionState.PAUSED;
     this.callbacks = callbacks;
     this.blockHighlighted = false;
     this.nextStepDelay = 0;
+    this.executionInterval = 0;
+    this.stepsPerExecution = 0;
+
+    this._computeExecutionSpeed(speed);
 
     this.interpreter = new Interpreter(code, (interpreter, globals) => {
       const highlightBlock = interpreter.createNativeFunction((id: string) => {
@@ -163,6 +160,20 @@ export class BlocklyInterpreter {
     this._run(0);
   }
 
+  private _computeExecutionSpeed(speed: ExecutionSpeed): void {
+    // Calling 'setTimeout' more than say '10' times per second is ill advisable, so we need to adjust the frequency
+    const executionInterval = Math.max(
+      MIN_EXECUTION_INTERVAL,
+      1000 * (1 / speed)
+    ); // milliseconds between execution
+    const executionFrequency = 1000 / executionInterval;
+
+    // Now we must re compute the number of steps we need per each 'setTimeout' call.
+    // N.b. this may eventually be fractional, if say we have a max execution interval or a fractional number of steps per second.
+    this.stepsPerExecution = speed / executionFrequency;
+    this.executionInterval = executionInterval;
+  }
+
   /**
    * Executes a "block" of work. If there is no more work to be executed, stops execution and
    * fires the "onFinished" callback if present. This is the main function that should be called
@@ -208,9 +219,9 @@ export class BlocklyInterpreter {
    * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
    */
   private _run(steps: number) {
-    let timeout = EXECUTION_INTERVAL;
+    let timeout = this.executionInterval;
 
-    if (this.nextStepDelay > EXECUTION_INTERVAL) {
+    if (this.nextStepDelay > this.executionInterval) {
       timeout = this.nextStepDelay;
       this.nextStepDelay = 0;
     }
@@ -227,7 +238,7 @@ export class BlocklyInterpreter {
       }
 
       // Add however many (maybe fractional) steps we are instructed to complete
-      steps += STEPS_PER_EXECUTION;
+      steps += this.stepsPerExecution;
 
       for (let i = 0; i < steps; i++) {
         this._step();
