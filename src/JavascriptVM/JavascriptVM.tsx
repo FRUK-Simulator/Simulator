@@ -24,11 +24,11 @@ import { MessageBarType } from "@fluentui/react";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
-import { Handles } from "@fruk/simulator-core";
+import { Handles, CoreSpecs } from "@fruk/simulator-core";
 import {
-  ArenaConfig,
-  getArenaConfig,
-} from "../RobotSimulator/ArenaConfigLoader";
+  ChallengeConfig,
+  getChallengeConfig,
+} from "../RobotSimulator/ChallengeConfigLoader";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
 
 /**
@@ -41,7 +41,7 @@ export interface IVirtualMachine {
   start: () => void;
   pause: () => void;
 
-  setArena: (name: string) => void;
+  setChallenge: (name: string) => void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
@@ -238,29 +238,63 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             );
           }
         },
-        setArena(name: string): void {
-          let arenaConfig: ArenaConfig = getArenaConfig(name);
-          sim.current?.configureWorld(arenaConfig.worldConfig);
-          const robot = new StdWorldBuilder(sim.current!).build();
+        setChallenge(name: string): void {
+          let challengeConfig: ChallengeConfig = getChallengeConfig(name);
+          sim.current?.configureWorld(challengeConfig.arenaConfig.worldConfig);
+          const robot = new StdWorldBuilder(
+            sim.current!,
+            challengeConfig.startPosition
+          ).build();
           robotRef.current = new Proxy(robot!, robot_handler);
-          arenaConfig.ballSpecs?.forEach(function (ballSpec, index) {
+          challengeConfig.arenaConfig.ballSpecs?.forEach(function (
+            ballSpec,
+            index
+          ) {
             sim.current?.addBall(ballSpec);
           });
-          arenaConfig.boxSpecs?.forEach(function (boxSpec, index) {
+          challengeConfig.arenaConfig.boxSpecs?.forEach(function (
+            boxSpec,
+            index
+          ) {
             sim.current?.addBox(boxSpec);
           });
-          arenaConfig.coneSpecs?.forEach(function (coneSpec, index) {
+          challengeConfig.arenaConfig.coneSpecs?.forEach(function (
+            coneSpec,
+            index
+          ) {
             sim.current?.addCone(coneSpec);
           });
+          if (challengeConfig.finishZoneSpec) {
+            sim.current?.addZone(challengeConfig.finishZoneSpec);
+          }
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;
           updateCanvasSize();
           // create the simulator
           sim.current = new Sim3D(canvasEl);
-          const robot = new StdWorldBuilder(sim.current).build();
+          const robot = new StdWorldBuilder(sim.current, {
+            x: 0,
+            y: 0,
+          }).build();
           sim.current.beginRendering();
           robotRef.current = new Proxy(robot!, robot_handler);
+          sim.current?.addListener(
+            "simulation-event",
+            (event: CoreSpecs.ISimulatorEvent) => {
+              if (
+                event.type === "zone-entry" &&
+                event.data.zoneId === "finish"
+              ) {
+                dispatch(
+                  messageSlice.actions.addMessage({
+                    type: MessageBarType.error,
+                    msg: "Robot wins!",
+                  })
+                );
+              }
+            }
+          );
         },
         onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
           // remove the simulator

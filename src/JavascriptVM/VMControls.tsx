@@ -6,7 +6,10 @@ import { getCode } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
 import { ExecutionState } from "./vm";
-import { getArenaNames } from "../RobotSimulator/ArenaConfigLoader";
+import {
+  getChallengeNames,
+  getChallengesPerArena,
+} from "../RobotSimulator/ChallengeConfigLoader";
 
 /**
  * Renders a component that is responsible for controlling the VM according to the state
@@ -17,18 +20,17 @@ export const VMControls: FunctionComponent = () => {
   const executionStatus = useSelector(getExecutionState);
   const vm = useVM();
   const code = useSelector(getCode);
-  const [arena, setArena] = useState(getArenaNames()[0]);
+  const [challenge, setChallenge] = useState(getChallengeNames()[0]);
 
-  function getArenaMenuItems() {
+  function getChallengeSubMenuItems(challengeNames: string[]) {
     let items: Array<any> = [];
-    let names = getArenaNames();
-    names.forEach((name: string) => {
+    challengeNames.forEach((challengeName: string) => {
       let item = {
-        key: name,
-        name: name,
+        key: challengeName,
+        name: challengeName,
         onClick: () => {
-          vm.setArena(name);
-          setArena(name);
+          vm.setChallenge(challengeName);
+          setChallenge(challengeName);
         },
       };
 
@@ -38,11 +40,45 @@ export const VMControls: FunctionComponent = () => {
     return items;
   }
 
-  const arenaSelection: ICommandBarItemProps = {
-    key: arena,
-    text: arena,
+  function getChallengeMenuItems() {
+    let items: Array<any> = [];
+    let item;
+
+    let challengesPerArena = getChallengesPerArena();
+    challengesPerArena.forEach(
+      (challengeNames: Array<string>, arena: string) => {
+        if (challengeNames.length > 1) {
+          item = {
+            key: arena,
+            name: arena,
+            subMenuProps: {
+              items: getChallengeSubMenuItems(challengeNames),
+            },
+          };
+          items.push(item);
+        } else if (challengeNames.length === 1) {
+          item = {
+            key: challengeNames[0],
+            name: challengeNames[0],
+            onClick: () => {
+              vm.setChallenge(challengeNames[0]);
+              setChallenge(challengeNames[0]);
+            },
+          };
+          items.push(item);
+        }
+      }
+    );
+
+    return items;
+  }
+
+  const challengeSelection: ICommandBarItemProps = {
+    key: challenge,
+    text: challenge,
     subMenuProps: {
-      items: getArenaMenuItems(),
+      // We list challenges by arena first
+      items: getChallengeMenuItems(),
     },
   };
   const startButton: ICommandBarItemProps = {
@@ -101,7 +137,7 @@ export const VMControls: FunctionComponent = () => {
     },
   };
   const commandBarRunningItems: ICommandBarItemProps[] = [
-    { ...arenaSelection, disabled: true },
+    { ...challengeSelection, disabled: true },
     stopButton,
     executionStatus === ExecutionState.RUNNING
       ? { ...stepButton, disabled: true }
@@ -109,7 +145,7 @@ export const VMControls: FunctionComponent = () => {
     executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
-    { ...arenaSelection, disabled: false },
+    { ...challengeSelection, disabled: false },
     { ...startButton, disabled: !code },
     { ...stepButton, disabled: true },
     { ...runButton, disabled: true },
