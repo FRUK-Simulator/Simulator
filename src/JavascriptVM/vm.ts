@@ -175,6 +175,13 @@ export class BlocklyInterpreter {
   }
 
   /**
+   * Set the VM execution speed for a currently active VM
+   */
+  setSpeed(speed: ExecutionSpeed): void {
+    this._computeExecutionSpeed(speed);
+  }
+
+  /**
    * Executes a "block" of work. If there is no more work to be executed, stops execution and
    * fires the "onFinished" callback if present. This is the main function that should be called
    * to execute code on the VM.

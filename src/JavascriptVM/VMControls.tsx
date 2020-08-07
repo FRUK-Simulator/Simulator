@@ -1,15 +1,16 @@
 import { FunctionComponent } from "react";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isExecuting, getExecutionState } from "./vmSlice";
-import { getCode } from "./vmSlice";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
+import { getCode, vmSlice } from "./vmSlice";
+import { CommandBar, ICommandBarItemProps, Toggle } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
-import { ExecutionState } from "./vm";
 import {
   getChallengeNames,
   getChallengesPerArena,
 } from "../RobotSimulator/ChallengeConfigLoader";
+import { ExecutionState, ExecutionSpeed } from "./vm";
+import { AppDispatch } from "../store";
 
 /**
  * Renders a component that is responsible for controlling the VM according to the state
@@ -21,6 +22,18 @@ export const VMControls: FunctionComponent = () => {
   const vm = useVM();
   const code = useSelector(getCode);
   const [challenge, setChallenge] = useState(getChallengeNames()[0]);
+  const dispatch = useDispatch<AppDispatch>();
+
+  function onExecutionSpeedToggled(
+    ev: React.MouseEvent<HTMLElement>,
+    checked: boolean | undefined
+  ) {
+    dispatch(
+      vmSlice.actions.setExecutionSpeed({
+        speed: checked ? ExecutionSpeed.FAST : ExecutionSpeed.SLOW,
+      })
+    );
+  }
 
   function getChallengeSubMenuItems(challengeNames: string[]) {
     let items: Array<any> = [];
@@ -136,6 +149,24 @@ export const VMControls: FunctionComponent = () => {
       className: "javascript-vm-controls--stop-button",
     },
   };
+
+  const executionSpeedSelector: ICommandBarItemProps = {
+    onClick() {
+      vm.stop();
+    },
+    key: "executionSpeed",
+    className: "javascript-vm-controls--execution-speed-toggle",
+    onRender: () => (
+      <Toggle
+        label="Speed"
+        inlineLabel
+        onText="Fast"
+        offText="Slow"
+        onChange={onExecutionSpeedToggled}
+      />
+    ),
+  };
+
   const commandBarRunningItems: ICommandBarItemProps[] = [
     { ...challengeSelection, disabled: true },
     stopButton,
@@ -143,12 +174,14 @@ export const VMControls: FunctionComponent = () => {
       ? { ...stepButton, disabled: true }
       : stepButton,
     executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
+    executionSpeedSelector,
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
     { ...challengeSelection, disabled: false },
     { ...startButton, disabled: !code },
     { ...stepButton, disabled: true },
     { ...runButton, disabled: true },
+    executionSpeedSelector,
   ];
   return (
     <div className="javascript-vm-controls">

@@ -14,6 +14,7 @@ import { AppDispatch } from "../store";
 import {
   BlocklyInterpreter,
   ExecutionState,
+  ExecutionSpeed,
   BlocklyInterpreterCallbacks,
 } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
@@ -42,6 +43,8 @@ export interface IVirtualMachine {
   pause: () => void;
 
   setChallenge: (name: string) => void;
+
+  updateSpeed: (speed: ExecutionSpeed) => void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
@@ -109,6 +112,17 @@ export const VMProvider: FunctionComponent = ({ children }) => {
     dispatch(
       vmSlice.actions.setExecutionState({
         executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
+      })
+    );
+  }
+
+  /**
+   * Syncs the redux state with the interpreter state.
+   */
+  function syncExecutionSpeed(speed: ExecutionSpeed) {
+    dispatch(
+      vmSlice.actions.setExecutionSpeed({
+        speed: speed,
       })
     );
   }
@@ -242,6 +256,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               })
             );
           }
+        },
+        updateSpeed(speed: ExecutionSpeed): void {
+          interpreter?.setSpeed(speed);
+          syncExecutionSpeed(speed);
         },
         setChallenge(name: string): void {
           let challengeConfig: ChallengeConfig = getChallengeConfig(name);
