@@ -57,6 +57,7 @@ export class BlocklyInterpreter {
   private nextStepDelay: number;
   private executionInterval: number;
   private stepsPerExecution: number;
+  private highlightBlocks: boolean;
 
   constructor(
     code: string,
@@ -69,13 +70,17 @@ export class BlocklyInterpreter {
     this.nextStepDelay = 0;
     this.executionInterval = 0;
     this.stepsPerExecution = 0;
+    this.highlightBlocks = false;
 
     this._computeExecutionSpeed(speed);
 
     this.interpreter = new Interpreter(code, (interpreter, globals) => {
       const highlightBlock = interpreter.createNativeFunction((id: string) => {
         this.blockHighlighted = true;
-        callbacks.onHighlight && callbacks.onHighlight(id);
+
+        if (this.highlightBlocks) {
+          callbacks.onHighlight && callbacks.onHighlight(id);
+        }
       });
 
       const alert = interpreter.createNativeFunction((text: string) => {
@@ -172,6 +177,8 @@ export class BlocklyInterpreter {
     // N.b. this may eventually be fractional, if say we have a max execution interval or a fractional number of steps per second.
     this.stepsPerExecution = speed / executionFrequency;
     this.executionInterval = executionInterval;
+
+    this.highlightBlocks = speed === ExecutionSpeed.SLOW;
   }
 
   /**
