@@ -8,8 +8,7 @@ import {
 } from "react";
 import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { vmSlice } from "./vmSlice";
-import { getCode, getExecutionSpeed } from "./vmSlice";
+import { vmSlice, getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import {
   BlocklyInterpreter,
@@ -81,7 +80,6 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
-  const vmSpeed = useSelector(getExecutionSpeed);
 
   const store = useStore();
 
@@ -120,11 +118,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
    * Syncs the redux state with the interpreter state.
    */
   function syncExecutionSpeed(speed: ExecutionSpeed) {
-    dispatch(
-      vmSlice.actions.setExecutionSpeed({
-        speed: speed,
-      })
-    );
+    dispatch(vmSlice.actions.setExecutionSpeed({ speed }));
   }
 
   // Sets the canvas width and height properties to match the parent
@@ -243,7 +237,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
             const interpreter = new BlocklyInterpreter(
               code,
-              vmSpeed,
+              store.getState().vm.speed,
               callbacks
             );
             setInterpreter(interpreter);

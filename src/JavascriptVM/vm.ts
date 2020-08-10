@@ -43,7 +43,7 @@ export enum ExecutionState {
 }
 
 export enum ExecutionSpeed {
-  SLOW = 15,
+  SLOW = 2,
   FAST = 100,
 }
 
