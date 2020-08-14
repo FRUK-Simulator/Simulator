@@ -123,11 +123,16 @@ function setupBowlingChallenge(): ChallengeConfig {
 function createFinishZoneSpec(
   initialPosition: CoreSimTypes.Vector2d
 ): CoreSpecs.IZoneSpec {
-  let finishZoneSpec: CoreSpecs.IZoneSpec = {
-    type: "zone",
-    zoneId: "finish",
+  const zoneShape: CoreSpecs.IRectangleZoneSpec = {
     xLength: 2,
     zLength: 2,
+    type: "rectangle",
+  };
+
+  const finishZoneSpec: CoreSpecs.IZoneSpec = {
+    type: "zone",
+    zoneId: "finish",
+    zoneShape: zoneShape,
     baseColor: 0x00ff00,
     initialPosition: initialPosition,
   };
