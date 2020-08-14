@@ -197,7 +197,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             onFinish: () => {
               syncExecutionState(interpreter);
 
-              sim.current?.haltPhysics();
+              sim.current?.setPhysicsActive(false);
 
               dispatch(
                 messageSlice.actions.addMessage({
