@@ -25,7 +25,6 @@ import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
-import { getChallengeConfig } from "../RobotSimulator/ChallengeConfigLoader";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
 import { ChallengeConfig } from "../RobotSimulator/Areanas/base";
 
@@ -39,7 +38,7 @@ export interface IVirtualMachine {
   start: () => void;
   pause: () => void;
 
-  setChallenge: (name: string) => void;
+  setChallenge: (config: ChallengeConfig) => void;
 
   updateSpeed: (speed: ExecutionSpeed) => void;
 
@@ -253,34 +252,35 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           interpreter?.setSpeed(speed);
           syncExecutionSpeed(speed);
         },
-        setChallenge(name: string): void {
-          let challengeConfig: ChallengeConfig = getChallengeConfig(name);
-          sim.current?.configureWorld(challengeConfig.arenaConfig.worldConfig);
+        setChallenge(challengeConfig: ChallengeConfig): void {
+          if (!sim.current) return;
+
+          const simulator = sim.current;
+          const arena = challengeConfig.arenaConfig;
+
+          simulator?.configureWorld(arena.worldConfig);
+
           const robot = new StdWorldBuilder(
-            sim.current!,
+            simulator,
             challengeConfig.startPosition
           ).build();
+
           robotRef.current = new Proxy(robot!, robot_handler);
-          challengeConfig.arenaConfig.ballSpecs?.forEach(function (
-            ballSpec,
-            index
-          ) {
-            sim.current?.addBall(ballSpec);
+
+          arena.ballSpecs?.forEach(function (ballSpec) {
+            simulator.addBall(ballSpec);
           });
-          challengeConfig.arenaConfig.boxSpecs?.forEach(function (
-            boxSpec,
-            index
-          ) {
-            sim.current?.addBox(boxSpec);
+
+          arena.boxSpecs?.forEach(function (boxSpec) {
+            simulator.addBox(boxSpec);
           });
-          challengeConfig.arenaConfig.coneSpecs?.forEach(function (
-            coneSpec,
-            index
-          ) {
-            sim.current?.addCone(coneSpec);
+
+          arena.coneSpecs?.forEach(function (coneSpec) {
+            simulator.addCone(coneSpec);
           });
+
           if (challengeConfig.finishZoneSpec) {
-            sim.current?.addZone(challengeConfig.finishZoneSpec);
+            simulator.addZone(challengeConfig.finishZoneSpec);
           }
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {

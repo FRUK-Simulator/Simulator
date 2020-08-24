@@ -12,40 +12,19 @@ let challengeConfigs: Array<ChallengeConfig> = [
   ...expand(Bowling.challenges),
 ];
 
-export function getChallengesPerArena(): Map<string, Array<string>> {
-  let challengesPerArena = new Map();
+export function getChallengesPerArena(): Map<string, Array<ChallengeConfig>> {
+  let challengesPerArena = new Map<string, Array<ChallengeConfig>>();
 
   for (let challengeConfig of challengeConfigs) {
-    if (challengesPerArena.has(challengeConfig.arenaConfig.name)) {
-      challengesPerArena
-        .get(challengeConfig.arenaConfig.name)
-        .push(challengeConfig.name);
-    } else {
-      challengesPerArena.set(
-        challengeConfig.arenaConfig.name,
-        new Array<string>(challengeConfig.name)
-      );
+    const arenaName = challengeConfig.arenaConfig.name;
+    if (!challengesPerArena.has(arenaName)) {
+      challengesPerArena.set(arenaName, []);
     }
+
+    challengesPerArena.get(arenaName)!.push(challengeConfig);
   }
 
   return challengesPerArena;
 }
 
-export function getChallengeNames(): Array<string> {
-  let names: Array<string> = new Array<string>();
-  for (let challengeConfig of challengeConfigs) {
-    names.push(challengeConfig.name);
-  }
-  return names;
-}
-
-export function getChallengeConfig(name: string): ChallengeConfig {
-  for (let challengeConfig of challengeConfigs) {
-    if (challengeConfig.name === name) {
-      return challengeConfig;
-    }
-  }
-
-  // return default if 'name' not found
-  return Lesson1.challenges[0]();
-}
+export const getDefaultChallenge = Lesson1.challenges[0];
