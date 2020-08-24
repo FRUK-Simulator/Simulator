@@ -11,7 +11,6 @@ export interface ArenaConfig {
 export interface ChallengeConfig {
   name: string;
   startPosition: CoreSimTypes.Vector2d;
-  finishZoneSpec?: CoreSpecs.IZoneSpec;
   arenaConfig: ArenaConfig;
   eventListener?: ChallengeListener;
 }
@@ -19,8 +18,13 @@ export interface ChallengeConfig {
 // interface to trigger actions and events in the current challenge.
 export interface ChallengeActions {
   addObject(
-    o: CoreSpecs.IBallSpec | CoreSpecs.IBoxSpec | CoreSpecs.IConeSpec
+    o:
+      | CoreSpecs.IBallSpec
+      | CoreSpecs.IBoxSpec
+      | CoreSpecs.IConeSpec
+      | CoreSpecs.IZoneSpec
   ): void;
+  displayMessage(message: string): void;
 }
 
 export interface ZoneEvent {

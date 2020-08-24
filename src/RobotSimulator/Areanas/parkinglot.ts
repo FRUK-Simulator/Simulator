@@ -54,7 +54,6 @@ function challengeA(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Parking Lot Challenge 1",
     startPosition: { x: 0, y: 0 },
-    finishZoneSpec: createFinishZoneSpec({ x: 7, y: -13 }),
     arenaConfig: arena(),
   };
 
@@ -65,7 +64,6 @@ function challengeB(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "Parking Lot Challenge 2",
     startPosition: { x: 0, y: 0 },
-    finishZoneSpec: createFinishZoneSpec({ x: -9, y: -10 }),
     arenaConfig: arena(),
   };
 

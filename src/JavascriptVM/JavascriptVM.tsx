@@ -26,7 +26,12 @@ import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
-import { ChallengeConfig } from "../RobotSimulator/Areanas/base";
+import {
+  ChallengeConfig,
+  ChallengeListener,
+} from "../RobotSimulator/Areanas/base";
+import { ChallengeActionsImpl } from "./ChallengeActionsImpl";
+import { getDefaultChallenge } from "../RobotSimulator/ChallengeConfigLoader";
 
 /**
  * Interface to control the VM
@@ -74,6 +79,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const sim = useRef<Sim3D | null>(null);
   const robotRef = useRef<Handles.RobotHandle | null>(null);
+  const challengeListener = useRef<ChallengeListener | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
@@ -279,9 +285,14 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             simulator.addCone(coneSpec);
           });
 
-          if (challengeConfig.finishZoneSpec) {
-            simulator.addZone(challengeConfig.finishZoneSpec);
+          if (challengeListener.current) {
+            challengeListener.current.onStop();
           }
+
+          challengeListener.current = challengeConfig.eventListener || null;
+          challengeListener.current?.onStart(
+            new ChallengeActionsImpl(simulator, dispatch)
+          );
         },
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;
@@ -297,19 +308,16 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current?.addListener(
             "simulation-event",
             (event: CoreSpecs.ISimulatorEvent) => {
-              if (
-                event.type === "zone-entry" &&
-                event.data.zoneId === "finish"
-              ) {
-                dispatch(
-                  messageSlice.actions.addMessage({
-                    type: MessageBarType.error,
-                    msg: "Robot wins!",
-                  })
-                );
+              if (event.type === "zone-entry") {
+                challengeListener.current?.onEvent({
+                  kind: "ZoneEvent",
+                  entry: true,
+                  zoneId: event.data.zoneId,
+                });
               }
             }
           );
+          this.setChallenge(getDefaultChallenge());
         },
         onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
           // remove the simulator

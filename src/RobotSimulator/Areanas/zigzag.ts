@@ -79,7 +79,6 @@ function challenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
     name: "ZigZag Challenge",
     startPosition: { x: 0, y: 0 },
-    finishZoneSpec: createFinishZoneSpec({ x: 0, y: 0 }),
     arenaConfig: arena(),
   };
 
