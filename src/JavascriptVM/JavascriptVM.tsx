@@ -25,11 +25,9 @@ import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
-import {
-  ChallengeConfig,
-  getChallengeConfig,
-} from "../RobotSimulator/ChallengeConfigLoader";
+import { getChallengeConfig } from "../RobotSimulator/ChallengeConfigLoader";
 import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
+import { ChallengeConfig } from "../RobotSimulator/Areanas/base";
 
 /**
  * Interface to control the VM

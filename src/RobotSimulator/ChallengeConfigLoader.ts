@@ -1,14 +1,15 @@
-import { getArenaConfig } from "./ArenaConfigLoader";
 import { ChallengeConfig } from "./Areanas/base";
-import { createFinishZoneSpec, expand } from "./Areanas/common";
+import { expand } from "./Areanas/common";
 import * as Lesson1 from "./Areanas/lesson1";
+import * as ParkingLot from "./Areanas/parkinglot";
+import * as ZigZag from "./Areanas/zigzag";
+import * as Bowling from "./Areanas/bowling";
 
 let challengeConfigs: Array<ChallengeConfig> = [
   ...expand(Lesson1.challenges),
-  setupParkingLotChallenge1(),
-  setupParkingLotChallenge2(),
-  setupZigZagChallenge(),
-  setupBowlingChallenge(),
+  ...expand(ParkingLot.challenges),
+  ...expand(ZigZag.challenges),
+  ...expand(Bowling.challenges),
 ];
 
 export function getChallengesPerArena(): Map<string, Array<string>> {
@@ -47,47 +48,4 @@ export function getChallengeConfig(name: string): ChallengeConfig {
 
   // return default if 'name' not found
   return Lesson1.challenges[0]();
-}
-
-function setupParkingLotChallenge1(): ChallengeConfig {
-  const challengeConfig: ChallengeConfig = {
-    name: "Parking Lot Challenge 1",
-    startPosition: { x: 0, y: 0 },
-    finishZoneSpec: createFinishZoneSpec({ x: 7, y: -13 }),
-    arenaConfig: getArenaConfig("Parking Lot"),
-  };
-
-  return challengeConfig;
-}
-
-function setupParkingLotChallenge2(): ChallengeConfig {
-  const challengeConfig: ChallengeConfig = {
-    name: "Parking Lot Challenge 2",
-    startPosition: { x: 0, y: 0 },
-    finishZoneSpec: createFinishZoneSpec({ x: -9, y: -10 }),
-    arenaConfig: getArenaConfig("Parking Lot"),
-  };
-
-  return challengeConfig;
-}
-
-function setupZigZagChallenge(): ChallengeConfig {
-  const challengeConfig: ChallengeConfig = {
-    name: "ZigZag Challenge",
-    startPosition: { x: 0, y: 0 },
-    finishZoneSpec: createFinishZoneSpec({ x: 0, y: 0 }),
-    arenaConfig: getArenaConfig("ZigZag"),
-  };
-
-  return challengeConfig;
-}
-
-function setupBowlingChallenge(): ChallengeConfig {
-  const challengeConfig: ChallengeConfig = {
-    name: "Bowling Challenge",
-    startPosition: { x: 0, y: 10 },
-    arenaConfig: getArenaConfig("Bowling"),
-  };
-
-  return challengeConfig;
 }
