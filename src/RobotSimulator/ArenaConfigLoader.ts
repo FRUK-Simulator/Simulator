@@ -1,20 +1,13 @@
-import { WorldConfig } from "@fruk/simulator-core";
-import { CoreSpecs } from "@fruk/simulator-core";
+import { ArenaConfig } from "./Areanas/base";
+import * as Lesson1 from "./Areanas/lesson1";
+import { expand } from "./Areanas/common";
 
 let arenaConfigs: Array<ArenaConfig> = [
-  setupLesson1Arena(),
+  ...expand(Lesson1.arenas),
   setupParkingLotArena(),
   setupZigZagArena(),
   setupBowlingArena(),
 ];
-
-export interface ArenaConfig {
-  name: string;
-  worldConfig: WorldConfig;
-  ballSpecs?: CoreSpecs.IBallSpec[];
-  boxSpecs?: CoreSpecs.IBoxSpec[];
-  coneSpecs?: CoreSpecs.IConeSpec[];
-}
 
 export function getArenaConfig(name: string): ArenaConfig {
   for (let arenaConfig of arenaConfigs) {
@@ -24,27 +17,7 @@ export function getArenaConfig(name: string): ArenaConfig {
   }
 
   // return default arena if 'name' not found
-  return setupLesson1Arena();
-}
-
-function setupLesson1Arena(): ArenaConfig {
-  const arenaConfig: ArenaConfig = {
-    name: "Lesson 1",
-    worldConfig: {
-      zLength: 20,
-      xLength: 20,
-      walls: [],
-      camera: {
-        position: {
-          x: 0,
-          y: 8,
-          z: 14,
-        },
-      },
-    },
-  };
-
-  return arenaConfig;
+  return Lesson1.arenas[0]();
 }
 
 function setupParkingLotArena(): ArenaConfig {
