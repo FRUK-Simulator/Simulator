@@ -8,12 +8,12 @@ import {
 } from "react";
 import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { vmSlice } from "./vmSlice";
-import { getCode } from "./vmSlice";
+import { vmSlice, getCode } from "./vmSlice";
 import { AppDispatch } from "../store";
 import {
   BlocklyInterpreter,
   ExecutionState,
+  ExecutionSpeed,
   BlocklyInterpreterCallbacks,
 } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
@@ -42,6 +42,8 @@ export interface IVirtualMachine {
   pause: () => void;
 
   setChallenge: (name: string) => void;
+
+  updateSpeed: (speed: ExecutionSpeed) => void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
@@ -110,6 +112,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
         executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
       })
     );
+  }
+
+  /**
+   * Syncs the redux state with the interpreter state.
+   */
+  function syncExecutionSpeed(speed: ExecutionSpeed) {
+    dispatch(vmSlice.actions.setExecutionSpeed({ speed }));
   }
 
   // Sets the canvas width and height properties to match the parent
@@ -228,7 +237,11 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
             console.log(Blockly.Xml.domToText(xml));
 
-            const interpreter = new BlocklyInterpreter(code, callbacks);
+            const interpreter = new BlocklyInterpreter(
+              code,
+              store.getState().vm.speed,
+              callbacks
+            );
             setInterpreter(interpreter);
             syncExecutionState(interpreter);
           } catch (err) {
@@ -239,6 +252,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               })
             );
           }
+        },
+        updateSpeed(speed: ExecutionSpeed): void {
+          interpreter?.setSpeed(speed);
+          syncExecutionSpeed(speed);
         },
         setChallenge(name: string): void {
           let challengeConfig: ChallengeConfig = getChallengeConfig(name);
