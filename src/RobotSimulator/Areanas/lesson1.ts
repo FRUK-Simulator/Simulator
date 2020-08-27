@@ -36,16 +36,22 @@ function challengeA(): ChallengeConfig {
     {
       type: "zone",
       initialPosition: { x: -3, y: 0 },
-      xLength: 2,
-      zLength: 20,
+      zoneShape: {
+        type: "rectangle",
+        xLength: 2,
+        zLength: 20,
+      },
       baseColor: 0x000000,
       zoneId: "0",
     },
     {
       type: "zone",
       initialPosition: { x: 3, y: 0 },
-      xLength: 2,
-      zLength: 20,
+      zoneShape: {
+        type: "rectangle",
+        xLength: 2,
+        zLength: 20,
+      },
       baseColor: 0x000000,
       zoneId: "1",
     },
@@ -65,8 +71,11 @@ function challengeB(): ChallengeConfig {
     {
       type: "zone",
       initialPosition: { x: 0, y: 5 },
-      xLength: 4,
-      zLength: 10,
+      zoneShape: {
+        type: "rectangle",
+        xLength: 4,
+        zLength: 10,
+      },
       baseColor: 0x000000,
       zoneId: "0",
     },
@@ -93,8 +102,11 @@ class Lesson1Challenge implements ChallengeListener {
       type: "zone",
       initialPosition: this.finishPosition,
       zoneId: FinishZoneId,
-      zLength: 2,
-      xLength: 2,
+      zoneShape: {
+        type: "rectangle",
+        zLength: 2,
+        xLength: 2,
+      },
       baseColor: 0x00ff00,
     });
     this.badZones.forEach((z) => {

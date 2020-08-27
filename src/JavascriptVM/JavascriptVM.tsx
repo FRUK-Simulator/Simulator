@@ -208,7 +208,9 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
             onFinish: () => {
               syncExecutionState(interpreter);
-              setInterpreter(null);
+
+              sim.current?.setPhysicsActive(false);
+
               dispatch(
                 messageSlice.actions.addMessage({
                   type: MessageBarType.success,
