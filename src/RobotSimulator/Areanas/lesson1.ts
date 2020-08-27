@@ -102,8 +102,11 @@ class Lesson1Challenge implements ChallengeListener {
       type: "zone",
       initialPosition: this.finishPosition,
       zoneId: FinishZoneId,
-      zLength: 2,
-      xLength: 2,
+      zoneShape: {
+        type: "rectangle",
+        zLength: 2,
+        xLength: 2,
+      },
       baseColor: 0x00ff00,
     });
     this.badZones.forEach((z) => {
