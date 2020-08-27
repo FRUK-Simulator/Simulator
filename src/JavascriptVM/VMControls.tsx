@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { isExecuting, getExecutionState } from "./vmSlice";
@@ -6,10 +6,11 @@ import { getCode, getExecutionSpeed } from "./vmSlice";
 import { CommandBar, ICommandBarItemProps, Toggle } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
 import {
-  getChallengeNames,
   getChallengesPerArena,
+  getDefaultChallenge,
 } from "../RobotSimulator/ChallengeConfigLoader";
 import { ExecutionState, ExecutionSpeed } from "./vm";
+import { ChallengeConfig } from "../RobotSimulator/Areanas/base";
 
 /**
  * Renders a component that is responsible for controlling the VM according to the state
@@ -20,7 +21,7 @@ export const VMControls: FunctionComponent = () => {
   const executionStatus = useSelector(getExecutionState);
   const vm = useVM();
   const code = useSelector(getCode);
-  const [challenge, setChallenge] = useState(getChallengeNames()[0]);
+  const [challenge, setChallenge] = useState(getDefaultChallenge());
   const executionSpeed = useSelector(getExecutionSpeed);
 
   function onExecutionSpeedToggled(
@@ -30,15 +31,14 @@ export const VMControls: FunctionComponent = () => {
     vm.updateSpeed(checked ? ExecutionSpeed.FAST : ExecutionSpeed.SLOW);
   }
 
-  function getChallengeSubMenuItems(challengeNames: string[]) {
+  function getChallengeSubMenuItems(challenges: ChallengeConfig[]) {
     let items: Array<any> = [];
-    challengeNames.forEach((challengeName: string) => {
+    challenges.forEach((challenge) => {
       let item = {
-        key: challengeName,
-        name: challengeName,
+        key: challenge.name,
+        name: challenge.name,
         onClick: () => {
-          vm.setChallenge(challengeName);
-          setChallenge(challengeName);
+          setChallenge(challenge);
         },
       };
 
@@ -53,37 +53,38 @@ export const VMControls: FunctionComponent = () => {
     let item;
 
     let challengesPerArena = getChallengesPerArena();
-    challengesPerArena.forEach(
-      (challengeNames: Array<string>, arena: string) => {
-        if (challengeNames.length > 1) {
-          item = {
-            key: arena,
-            name: arena,
-            subMenuProps: {
-              items: getChallengeSubMenuItems(challengeNames),
-            },
-          };
-          items.push(item);
-        } else if (challengeNames.length === 1) {
-          item = {
-            key: challengeNames[0],
-            name: challengeNames[0],
-            onClick: () => {
-              vm.setChallenge(challengeNames[0]);
-              setChallenge(challengeNames[0]);
-            },
-          };
-          items.push(item);
-        }
+    challengesPerArena.forEach((challenges, arena) => {
+      if (challenges.length > 1) {
+        item = {
+          key: arena,
+          name: arena,
+          subMenuProps: {
+            items: getChallengeSubMenuItems(challenges),
+          },
+        };
+        items.push(item);
+      } else if (challenges.length === 1) {
+        item = {
+          key: challenges[0].name,
+          name: challenges[0].name,
+          onClick: () => {
+            setChallenge(challenges[0]);
+          },
+        };
+        items.push(item);
       }
-    );
+    });
 
     return items;
   }
 
+  useEffect(() => {
+    vm.setChallenge(challenge);
+  }, [challenge, vm]);
+
   const challengeSelection: ICommandBarItemProps = {
-    key: challenge,
-    text: challenge,
+    key: challenge.name,
+    text: challenge.name,
     subMenuProps: {
       // We list challenges by arena first
       items: getChallengeMenuItems(),
