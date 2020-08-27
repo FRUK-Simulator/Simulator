@@ -1,5 +1,4 @@
 import { ArenaConfig, ChallengeConfig } from "./base";
-import { createFinishZoneSpec } from "./common";
 
 export const arenas = [arena];
 export const challenges = [challenge];
