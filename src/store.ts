@@ -1,5 +1,4 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { throttle } from "lodash";
 import { userSlice } from "./User/userSlice";
 import { robotSimulatorSlice } from "./RobotSimulator/robotSimulatorSlice";
 import {
@@ -34,11 +33,7 @@ export const store = configureStore({
   },
 });
 
-store.subscribe(
-  throttle(() => {
-    saveBlocklyState();
-  }, 1000)
-);
+store.subscribe(saveBlocklyState);
 
 // Dispatch Type - See https://redux-toolkit.js.org/usage/usage-with-typescript#getting-the-dispatch-type
 export type AppDispatch = typeof store.dispatch;
