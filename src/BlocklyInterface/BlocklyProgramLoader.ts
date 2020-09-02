@@ -1,5 +1,23 @@
 import Blockly, { Workspace } from "blockly";
 
+export interface BlocklyProgram {
+  title: string;
+  xml: string;
+  predefined: boolean;
+}
+
+export function getPredefinedBlocklyProgs(): BlocklyProgram[] {
+  let arr = [] as BlocklyProgram[];
+  for (const entry of predefinedDemos) {
+    arr.push({
+      title: entry.title,
+      xml: entry.xml,
+      predefined: true,
+    });
+  }
+  return arr;
+}
+
 export interface BlocklyDemoProgram {
   title: string;
   description: string;
@@ -29,6 +47,10 @@ export function loadPredefinedDemo(
   workspace: Workspace
 ) {
   return build(predefinedDemos[predefinedDemoId].xml, workspace);
+}
+
+export function loadBlocklyXml(xml: string, workspace: Workspace) {
+  build(xml, workspace);
 }
 
 function build(xml: string, workspace: Workspace): void {

@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { RootState, store } from "../store";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { ExecutionState } from "../JavascriptVM/vm";
 import { getDefaultToolbox } from "./toolbox";
+import {
+  BlocklyProgram,
+  getPredefinedBlocklyProgs,
+} from "./BlocklyProgramLoader";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -18,6 +22,11 @@ export const blocklySlice = createSlice({
     /** current definition of the toolbox. Blockly only supports one toolbox so we have
      *  update this one to simulate multiple toolboxes */
     toolboxXml: getDefaultToolbox(),
+    /** Array of blockly programs */
+    blocklyPrograms: getPredefinedBlocklyProgs() as BlocklyProgram[],
+    /** The id of the blockly program that is currently selected - an empty string
+     * designates no selection */
+    activeBlocklyProgramId: getPredefinedBlocklyProgs()[0].title,
   },
   name: "blockly",
   reducers: {
@@ -41,6 +50,37 @@ export const blocklySlice = createSlice({
 
       return state;
     },
+    addBlockyProgram(state, action: PayloadAction<{ prog: BlocklyProgram }>) {
+      // If the program already exists then we update it.
+      for (let i = 0; i < state.blocklyPrograms.length; ++i) {
+        if (state.blocklyPrograms[i].title === action.payload.prog.title) {
+          state.blocklyPrograms[i] = action.payload.prog;
+          return state;
+        }
+      }
+
+      // If the program is new we add it to the end of the array.
+      state.blocklyPrograms.push(action.payload.prog);
+      return state;
+    },
+    removeBlockyProgram(state, action: PayloadAction<{ title: string }>) {
+      let ind = -1;
+      for (let i = 0; i < state.blocklyPrograms.length; ++i) {
+        if (state.blocklyPrograms[i].title === action.payload.title) {
+          ind = i;
+        }
+      }
+
+      if (ind !== -1) {
+        state.blocklyPrograms.splice(ind, 1);
+      }
+
+      return state;
+    },
+    setActiveBlocklyProgramId(state, action: PayloadAction<{ title: string }>) {
+      state.activeBlocklyProgramId = action.payload.title;
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(vmSlice.actions.setExecutionState, (state, action) => {
@@ -60,6 +100,26 @@ export const blocklySlice = createSlice({
   },
 });
 
+const localStorageKey = "fruk-blockly-slice-state";
+
+export const loadBlockyState = () => {
+  try {
+    const serializedState = localStorage.getItem(localStorageKey);
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return undefined;
+  }
+};
+
+export const saveBlocklyState = () => {
+  try {
+    const serializedState = JSON.stringify(store.getState().blockly);
+    localStorage.setItem(localStorageKey, serializedState);
+  } catch {}
+};
 /**
  * Retrieves the ID of the highlighted block.
  *
@@ -97,3 +157,23 @@ export const isShowToolbox = (state: RootState) => state.blockly.showToolbox;
  * @returns the definition of the toolbox
  */
 export const getToolboxXml = (state: RootState) => state.blockly.toolboxXml;
+
+/**
+ * Retrieves the ID of the blockly program that is currently active.
+ *
+ * @param state the root state of the application
+ *
+ * @returns the active blockly program id
+ */
+export const getActiveBlocklyProgramId = (state: RootState) =>
+  state.blockly.activeBlocklyProgramId;
+
+/**
+ * Retrieves the available blockly programs
+ *
+ * @param state the root state of the application
+ *
+ * @returns the available blockly programs
+ */
+export const getBlocklyPrograms = (state: RootState) =>
+  state.blockly.blocklyPrograms;
