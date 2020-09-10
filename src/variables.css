@@ -1,0 +1,35 @@
+:root {
+  /* General Values */
+  --main-bg-color: #eceff1;
+  --text-color-dark: #333333;
+  --text-color-light: #eeeeee;
+
+  /* Padding */
+  --less-padding: 0.25em;
+  --normal-padding: 0.5em;
+  --more-padding: 0.75em;
+
+  /* Margins */
+  --less-margin: 0.25em;
+  --normal-margin: 0.5em;
+  --more-margin: 0.75em;
+
+  /* Primary Color and Hues */
+  --primary-color: #0096e4;
+  --primary-color-dark: #007dbf;
+  --primary-color-darker: #0072aa;
+  --primary-color-darkest: #00689e;
+
+  /* Accent Color and Hues */
+  --accent-color: #e53935;
+  --accent-color-dark: #b71c1c;
+
+  /* Status Colors */
+  --success-color: green;
+  --fail-color: darkred;
+  --info-color: gray;
+  --trophy-color: goldenrod;
+
+  /* Border Radiuses */
+  --border-radius: 10px;
+}
