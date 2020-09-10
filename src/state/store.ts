@@ -1,7 +1,11 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { userSlice } from "../User/userSlice";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
-import { blocklySlice } from "../BlocklyInterface/blocklySlice";
+import {
+  blocklySlice,
+  loadBlockyState,
+  saveBlocklyState,
+} from "../BlocklyInterface/blocklySlice";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { messageSlice } from "../ErrorViews/messagesSlice";
 import { simulatorLogSlice } from "../ControlPanel/SimulatorLog/simulatorLogSlice";
@@ -24,7 +28,12 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 export const store = configureStore({
   reducer: rootReducer,
+  preloadedState: {
+    blockly: loadBlockyState(),
+  },
 });
+
+store.subscribe(saveBlocklyState);
 
 // Dispatch Type - See https://redux-toolkit.js.org/usage/usage-with-typescript#getting-the-dispatch-type
 export type AppDispatch = typeof store.dispatch;

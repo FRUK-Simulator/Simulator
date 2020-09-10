@@ -10,6 +10,7 @@ export const vmSlice = createSlice({
   initialState: {
     code: null as string | null,
     executionState: ExecutionState.NONE,
+    speed: ExecutionSpeed.SLOW,
   },
   reducers: {
     setExecutionState(
@@ -21,6 +22,11 @@ export const vmSlice = createSlice({
     },
     setCode(state, action: PayloadAction<{ code: string }>) {
       state.code = action.payload.code;
+      return state;
+    },
+    setExecutionSpeed(state, action: PayloadAction<{ speed: ExecutionSpeed }>) {
+      state.speed = action.payload.speed;
+
       return state;
     },
   },
@@ -47,3 +53,12 @@ export const isExecuting = (state: RootState) =>
  * @returns the code as a string
  */
 export const getCode = (state: RootState) => state.vm.code;
+
+/**
+ * Retrieves the current speed setting stored in the VM
+ *
+ * @param state the root state of the application
+ *
+ * @returns the speed setting
+ */
+export const getExecutionSpeed = (state: RootState) => state.vm.speed;

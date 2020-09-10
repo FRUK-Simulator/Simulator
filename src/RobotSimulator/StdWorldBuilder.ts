@@ -1,14 +1,17 @@
 import { Sim3D } from "@fruk/simulator-core";
 import { RobotSpecs } from "@fruk/simulator-core";
 import { Handles } from "@fruk/simulator-core";
+import { CoreSimTypes } from "@fruk/simulator-core";
 import { RobotBuilder } from "@fruk/simulator-core";
 import { DISTANCE_SENSOR_RANGE } from "../JavascriptVM/distanceSensorConstants";
 
 export class StdWorldBuilder {
   private sim3D: Sim3D;
+  private startPosition: CoreSimTypes.Vector2d;
 
-  constructor(sim3D: Sim3D) {
+  constructor(sim3D: Sim3D, startPosition: CoreSimTypes.Vector2d) {
     this.sim3D = sim3D;
+    this.startPosition = startPosition;
   }
 
   build(): Handles.RobotHandle | undefined {
@@ -66,6 +69,7 @@ export class StdWorldBuilder {
     }
 
     const robotSpec = robotBuilder.generateSpec();
+    robotSpec.initialPosition = this.startPosition;
     return this.sim3D.addRobot(robotSpec);
   }
 }

@@ -1,12 +1,16 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { isExecuting, getExecutionState } from "./vmSlice";
-import { getCode } from "./vmSlice";
-import { CommandBar, ICommandBarItemProps } from "@fluentui/react";
+import { getCode, getExecutionSpeed } from "./vmSlice";
+import { CommandBar, ICommandBarItemProps, Toggle } from "@fluentui/react";
 import { useVM } from "./JavascriptVM";
-import { ExecutionState } from "./vm";
-import { getArenaNames } from "../RobotSimulator/ArenaConfigLoader";
+import {
+  getChallengesPerArena,
+  getDefaultChallenge,
+} from "../RobotSimulator/ChallengeConfigLoader";
+import { ExecutionState, ExecutionSpeed } from "./vm";
+import { ChallengeConfig } from "../RobotSimulator/Areanas/base";
 
 /**
  * Renders a component that is responsible for controlling the VM according to the state
@@ -17,18 +21,24 @@ export const VMControls: FunctionComponent = () => {
   const executionStatus = useSelector(getExecutionState);
   const vm = useVM();
   const code = useSelector(getCode);
-  const [arena, setArena] = useState(getArenaNames()[0]);
+  const [challenge, setChallenge] = useState(getDefaultChallenge());
+  const executionSpeed = useSelector(getExecutionSpeed);
 
-  function getArenaMenuItems() {
+  function onExecutionSpeedToggled(
+    ev: React.MouseEvent<HTMLElement>,
+    checked: boolean | undefined
+  ) {
+    vm.updateSpeed(checked ? ExecutionSpeed.FAST : ExecutionSpeed.SLOW);
+  }
+
+  function getChallengeSubMenuItems(challenges: ChallengeConfig[]) {
     let items: Array<any> = [];
-    let names = getArenaNames();
-    names.forEach((name: string) => {
+    challenges.forEach((challenge) => {
       let item = {
-        key: name,
-        name: name,
+        key: challenge.name,
+        name: challenge.name,
         onClick: () => {
-          vm.setArena(name);
-          setArena(name);
+          setChallenge(challenge);
         },
       };
 
@@ -38,11 +48,46 @@ export const VMControls: FunctionComponent = () => {
     return items;
   }
 
-  const arenaSelection: ICommandBarItemProps = {
-    key: arena,
-    text: arena,
+  function getChallengeMenuItems() {
+    let items: Array<any> = [];
+    let item;
+
+    let challengesPerArena = getChallengesPerArena();
+    challengesPerArena.forEach((challenges, arena) => {
+      if (challenges.length > 1) {
+        item = {
+          key: arena,
+          name: arena,
+          subMenuProps: {
+            items: getChallengeSubMenuItems(challenges),
+          },
+        };
+        items.push(item);
+      } else if (challenges.length === 1) {
+        item = {
+          key: challenges[0].name,
+          name: challenges[0].name,
+          onClick: () => {
+            setChallenge(challenges[0]);
+          },
+        };
+        items.push(item);
+      }
+    });
+
+    return items;
+  }
+
+  useEffect(() => {
+    vm.setChallenge(challenge);
+  }, [challenge, vm]);
+
+  const challengeSelection: ICommandBarItemProps = {
+    key: challenge.name,
+    text: challenge.name,
     subMenuProps: {
-      items: getArenaMenuItems(),
+      // We list challenges by arena first
+      items: getChallengeMenuItems(),
     },
   };
   const startButton: ICommandBarItemProps = {
@@ -100,19 +145,55 @@ export const VMControls: FunctionComponent = () => {
       className: "javascript-vm-controls--stop-button",
     },
   };
+
+  function getExecutionSpeedSelector(disabled: boolean) {
+    return {
+      key: "executionSpeed",
+      className: "javascript-vm-controls--execution-speed-toggle",
+      onRender: () => {
+        if (executionSpeed === ExecutionSpeed.SLOW) {
+          return (
+            <Toggle
+              label="Speed"
+              inlineLabel
+              onText="Fast"
+              offText="Slow"
+              disabled={disabled}
+              onChange={onExecutionSpeedToggled}
+            />
+          );
+        } else {
+          return (
+            <Toggle
+              defaultChecked
+              label="Speed"
+              inlineLabel
+              onText="Fast"
+              offText="Slow"
+              disabled={disabled}
+              onChange={onExecutionSpeedToggled}
+            />
+          );
+        }
+      },
+    };
+  }
+
+  const isRunning = executionStatus === ExecutionState.RUNNING;
+
   const commandBarRunningItems: ICommandBarItemProps[] = [
-    { ...arenaSelection, disabled: true },
+    { ...challengeSelection, disabled: true },
     stopButton,
-    executionStatus === ExecutionState.RUNNING
-      ? { ...stepButton, disabled: true }
-      : stepButton,
-    executionStatus === ExecutionState.RUNNING ? pauseButton : runButton,
+    isRunning ? { ...stepButton, disabled: true } : stepButton,
+    isRunning ? pauseButton : runButton,
+    getExecutionSpeedSelector(isRunning),
   ];
   const commandBarStoppedItems: ICommandBarItemProps[] = [
-    { ...arenaSelection, disabled: false },
+    { ...challengeSelection, disabled: false },
     { ...startButton, disabled: !code },
     { ...stepButton, disabled: true },
     { ...runButton, disabled: true },
+    getExecutionSpeedSelector(false),
   ];
   return (
     <div className="javascript-vm-controls">

@@ -23,3 +23,7 @@
 .javascript-vm-controls--step-button {
   color: #007bff;
 }
+
+.javascript-vm-controls--execution-speed-toggle {
+  margin: 10px;
+}
