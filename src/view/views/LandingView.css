@@ -1,0 +1,17 @@
+.lesson-section {
+}
+
+.lesson-title {
+  background-color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color-dark);
+  width: 66%;
+  color: var(--text-color-light);
+  /* Rounded Right Side, Flat Left Side */
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  padding: var(--less-padding);
+}
+
+.lessons {
+  display: flex;
+  flex-direction: row;
+}
