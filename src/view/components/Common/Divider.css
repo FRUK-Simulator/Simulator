@@ -1,0 +1,8 @@
+.divider-vertical {
+  margin-left: var(--normal-margin);
+  margin-right: var(--normal-margin);
+  border-right: 2px solid white;
+
+  height: auto;
+  align-self: stretch;
+}
