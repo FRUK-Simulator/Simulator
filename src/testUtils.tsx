@@ -6,7 +6,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "./state/store";
 import { createMemoryHistory, History } from "history";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
 

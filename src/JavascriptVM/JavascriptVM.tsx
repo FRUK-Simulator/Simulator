@@ -10,7 +10,7 @@ import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { vmSlice } from "./vmSlice";
 import { getCode } from "./vmSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch } from "../state/store";
 import {
   BlocklyInterpreter,
   ExecutionState,

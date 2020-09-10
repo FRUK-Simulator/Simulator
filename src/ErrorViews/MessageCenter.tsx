@@ -3,7 +3,7 @@ import { MessageBar } from "@fluentui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMessages, messageSlice } from "./messagesSlice";
 import "./MessageCenter.css";
-import { AppDispatch } from "../store";
+import { AppDispatch } from "../state/store";
 
 export const MessageCenter: FunctionComponent = () => {
   const dispatch: AppDispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editorSlice, getActiveEditor, Editor } from "./editorSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch } from "../state/store";
 import { BlocklyEditor } from "../BlocklyInterface/BlocklyEditor";
 import { SourceView } from "./SourceView";
 import { Toggle } from "@fluentui/react";

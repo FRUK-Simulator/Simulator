@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MessageBarType } from "@fluentui/react";
-import { RootState } from "../store";
+import { RootState } from "../state/store";
 import { v4 as uuidv4 } from "uuid";
 
 export enum ErrorType {

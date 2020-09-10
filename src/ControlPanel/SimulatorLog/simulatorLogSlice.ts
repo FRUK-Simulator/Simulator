@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { RootState } from "../../state/store";
 import { vmSlice } from "../../JavascriptVM/vmSlice";
 import { ExecutionState } from "../../JavascriptVM/vm";
 import { robotSimulatorSlice } from "../../RobotSimulator/robotSimulatorSlice";

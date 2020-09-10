@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch } from "../state/store";
 import {
   BlocklyEvent,
   BlocklyUiEvent,
