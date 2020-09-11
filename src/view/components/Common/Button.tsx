@@ -1,3 +1,5 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
-export const Button = () => <button>Button</button>;
+export const Button: FunctionComponent = ({ children }) => (
+  <button>{children}</button>
+);
