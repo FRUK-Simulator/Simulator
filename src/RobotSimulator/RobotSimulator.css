@@ -1,8 +1,19 @@
 .robot-simulator {
-  grid-area: Simulator;
-  background-color: #c8e6c9;
+  height: 100%;
+  width: 100%;
+
+  padding: 0;
+  margin: 0;
+
   /* making the overflow hidden allows us to properly handle both shrinking, and expanding
      the height of the <canvas> element. See RobotSimulator::onresize();
    */
   overflow: hidden;
+}
+
+.simulator {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
