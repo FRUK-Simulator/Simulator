@@ -30,7 +30,7 @@
 
 /* Left Panel */
 .simulator-view--panel:nth-child(1) {
-  flex: 1;
+  flex: 2;
 }
 
 /* Right Panel */

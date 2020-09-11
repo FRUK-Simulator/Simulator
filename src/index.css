@@ -12,5 +12,17 @@ code {
 }
 
 a {
+  /* No underlines for links */
   text-decoration-line: none;
+  color: unset;
+}
+
+a:visited {
+  /* Remove text color when clicking on already visited links */
+  color: unset;
+}
+
+* {
+  /* The height is content height + margin + border */
+  box-sizing: border-box;
 }
