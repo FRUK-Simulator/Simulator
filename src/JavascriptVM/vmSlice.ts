@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../state/store";
-import { ExecutionState } from "./vm";
+import { ExecutionState, ExecutionSpeed } from "./vm";
 
 /**
  * Reducer responsible for the execution of the JS

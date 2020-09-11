@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../state/store";
+import { RootState, store } from "../state/store";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { ExecutionState } from "../JavascriptVM/vm";
 import { getDefaultToolbox } from "./toolbox";

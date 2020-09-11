@@ -17,7 +17,7 @@ import {
 } from "@fluentui/react";
 import { TextField } from "office-ui-fabric-react/lib/TextField";
 import { DefaultButton } from "@fluentui/react";
-import { AppDispatch } from "../../store";
+import { AppDispatch } from "../../state/store";
 
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 300 },
