@@ -36,4 +36,7 @@
   /* Border Radiuses */
   --border-radius: 10px;
   --border-radius-rounder: 20px;
+
+  /* Header */
+  --header-height: 4em;
 }
