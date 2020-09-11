@@ -5,9 +5,9 @@
   --text-color-light: #eeeeee;
 
   /* Padding */
-  --less-padding: 0.25em;
-  --normal-padding: 0.5em;
-  --more-padding: 0.75em;
+  --less-padding: 0.5em;
+  --normal-padding: 1.5em;
+  --more-padding: 2em;
 
   /* Margins */
   --less-margin: 0.25em;
@@ -15,6 +15,7 @@
   --more-margin: 0.75em;
 
   /* Primary Color and Hues */
+  --primary-color-light: #0096e4cc;
   --primary-color: #0096e4;
   --primary-color-dark: #007dbf;
   --primary-color-darker: #0072aa;
@@ -32,4 +33,5 @@
 
   /* Border Radiuses */
   --border-radius: 10px;
+  --border-radius-rounder: 20px;
 }
