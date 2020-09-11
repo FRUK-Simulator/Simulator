@@ -7,8 +7,8 @@ export const Card: FunctionComponent = ({ children }) => (
 
 export const CardImage: FunctionComponent<
   { src: string } & { imgProps?: React.HTMLAttributes<HTMLImageElement> }
-> = ({ src, imgProps }) => (
-  <img {...(imgProps ?? {})} className="card--image" src={src} />
+> = ({ src, imgProps = {} }) => (
+  <img alt="" {...imgProps} className="card--image" src={src} />
 );
 
 export const CardTitle: FunctionComponent<{

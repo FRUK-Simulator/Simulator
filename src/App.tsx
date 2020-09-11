@@ -5,9 +5,7 @@ import { AppRouter } from "./AppRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
-import { MenuBar } from "./Views/MenuBar/MenuBar";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
-import { MessageCenter } from "./ErrorViews/MessageCenter";
 import { Header } from "./view/components/Header/Header";
 
 /**

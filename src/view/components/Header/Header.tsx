@@ -7,7 +7,7 @@ import brandImage from "./FIRST_HorzRGB_reverse.png";
 export const Brand = () => {
   return (
     <Link to="/">
-      <img className="brand" src={brandImage} />
+      <img className="brand" src={brandImage} alt="FIRST Robotics" />
     </Link>
   );
 };
