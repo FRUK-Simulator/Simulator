@@ -51,6 +51,10 @@
   background-color: #cfcfcf;
 }
 
+.btn--disabled .fas {
+  color: var(--text-color-disabled);
+}
+
 .btn--disabled:hover {
   cursor: not-allowed;
   background-color: #cfcfcf;
