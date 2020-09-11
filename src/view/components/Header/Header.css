@@ -6,10 +6,12 @@
   background-color: var(--primary-color);
   border-bottom: 2px solid var(--primary-color-dark);
 
+  height: var(--header-height);
+
   z-index: 100;
 }
 
 .brand {
   /* Brand Icon must be at least 1.875 (30px) */
-  height: 4em;
+  height: var(--header-height);
 }
