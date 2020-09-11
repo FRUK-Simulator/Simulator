@@ -19,12 +19,28 @@ export class BlocklyProgramSaver {
       predefined: false,
     };
 
-    this.saveToLocalStorage(blocklyProgram);
+    if (toFile) {
+      this.exportToFile(blocklyProgram);
+    } else {
+      this.saveToLocalStorage(blocklyProgram);
+    }
   }
 
   saveToLocalStorage(prog: Program) {
     this.dispatch(blocklySlice.actions.addBlockyProgram({ prog }));
+
+    this.dispatch(
+      blocklySlice.actions.setActiveBlocklyProgramId({
+        title: prog.title,
+      })
+    );
   }
 
-  exportToFile(program: Program) {}
+  exportToFile(program: Program) {
+    const fakeLink = document.createElement("a");
+    const file = new Blob([program.xml], { type: "application/xml" });
+    fakeLink.href = URL.createObjectURL(file);
+    fakeLink.download = `${program.title}.xml`;
+    fakeLink.click();
+  }
 }
