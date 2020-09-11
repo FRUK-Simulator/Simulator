@@ -13,7 +13,7 @@ export const AppRouter = () => {
       <Route path="/" exact>
         <LandingView />
       </Route>
-      <Route path="/lesson/:lesson/challenge/:challenge" exact>
+      <Route path="/lessons/:lesson/challenges/:challenge/" exact>
         <SimulatorView />
       </Route>
       <Route>
