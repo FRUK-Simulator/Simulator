@@ -1,10 +1,17 @@
 import { getCurrentBlocklyCode } from "./BlocklyEditor";
 import { blocklySlice } from "./blocklySlice";
 
+export type Version = {
+  major: number;
+  minor: number;
+  patch?: number;
+};
+
 export type Program = {
   title: string;
   xml: string;
   predefined: boolean;
+  version: Version;
 };
 
 export class BlocklyProgramSaver {
@@ -17,6 +24,10 @@ export class BlocklyProgramSaver {
       title: title,
       xml: getCurrentBlocklyCode(),
       predefined: false,
+      version: {
+        major: 1,
+        minor: 0,
+      },
     };
 
     this.saveProgram(blocklyProgram, toFile);
@@ -31,7 +42,7 @@ export class BlocklyProgramSaver {
   }
 
   saveToLocalStorage(prog: Program) {
-    this.dispatch(blocklySlice.actions.addBlockyProgram({ prog }));
+    this.dispatch(blocklySlice.actions.addBlocklyProgram({ prog }));
 
     this.dispatch(
       blocklySlice.actions.setActiveBlocklyProgramId({
@@ -42,9 +53,11 @@ export class BlocklyProgramSaver {
 
   exportToFile(program: Program) {
     const fakeLink = document.createElement("a");
-    const file = new Blob([program.xml], { type: "application/xml" });
+    const file = new Blob([JSON.stringify(program)], {
+      type: "application/json",
+    });
     fakeLink.href = URL.createObjectURL(file);
-    fakeLink.download = `${program.title}.xml`;
+    fakeLink.download = `${program.title}.json`;
     fakeLink.click();
   }
 }

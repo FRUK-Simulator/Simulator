@@ -50,7 +50,7 @@ export const blocklySlice = createSlice({
 
       return state;
     },
-    addBlockyProgram(state, action: PayloadAction<{ prog: BlocklyProgram }>) {
+    addBlocklyProgram(state, action: PayloadAction<{ prog: BlocklyProgram }>) {
       // If the program already exists then we update it.
       for (let i = 0; i < state.blocklyPrograms.length; ++i) {
         if (state.blocklyPrograms[i].title === action.payload.prog.title) {
@@ -63,7 +63,7 @@ export const blocklySlice = createSlice({
       state.blocklyPrograms.push(action.payload.prog);
       return state;
     },
-    removeBlockyProgram(state, action: PayloadAction<{ title: string }>) {
+    removeBlocklyProgram(state, action: PayloadAction<{ title: string }>) {
       let ind = -1;
       for (let i = 0; i < state.blocklyPrograms.length; ++i) {
         if (state.blocklyPrograms[i].title === action.payload.title) {
@@ -102,7 +102,7 @@ export const blocklySlice = createSlice({
 
 const localStorageKey = "fruk-blockly-slice-state";
 
-export const loadBlockyState = () => {
+export const loadBlocklyState = () => {
   try {
     const serializedState = localStorage.getItem(localStorageKey);
     if (serializedState === null) {
