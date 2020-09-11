@@ -1,0 +1,52 @@
+:root {
+  --card-width: 16em;
+  --card-height: 20em;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--primary-color);
+  box-shadow: -6px 6px 0px 2px var(--primary-color-dark);
+  color: var(--text-color-light);
+
+  border-radius: var(--border-radius-rounder);
+
+  width: var(--card-width);
+  height: var(--card-height);
+  margin-right: calc(var(--more-margin) * 2);
+  padding: var(--normal-padding);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translate(-2px, 2px);
+  box-shadow: -4px 4px 0px -2px var(--primary-color-darkest);
+  background-color: var(--primary-color-light);
+}
+
+.card--image {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 128px;
+  border-radius: 10px;
+  border: 2px solid #0072aa;
+}
+
+.card--title {
+  /* Place Holder */
+}
+
+.card--body {
+  background-color: var(--primary-color-dark);
+  padding: 0.25em;
+  padding-left: 0.5em;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 0px 2px var(--primary-color-darker);
+  flex: 1;
+}

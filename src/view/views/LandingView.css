@@ -1,4 +1,5 @@
 .lesson-section {
+  margin-bottom: calc(var(--more-margin) * 4);
 }
 
 .lesson-title {
@@ -14,4 +15,5 @@
 .lessons {
   display: flex;
   flex-direction: row;
+  padding-left: var(--more-padding);
 }
