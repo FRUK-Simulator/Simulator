@@ -10,6 +10,8 @@
   height: 80px;
   transform: translate(0px, -40px);
   transition: transform 0.25s ease-in-out;
+
+  z-index: 50;
 }
 
 .toolbar:hover {
