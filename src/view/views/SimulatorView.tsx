@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";
 import "./SimulatorView.css";
 import { Button } from "../components/Common/Button";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { BlocklyEditor } from "../../BlocklyInterface/BlocklyEditor";
 
 export enum SimulatorViews {
