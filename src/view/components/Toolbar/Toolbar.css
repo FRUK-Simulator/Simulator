@@ -44,7 +44,6 @@
 
 /* Remove Default Button Hover */
 .toolbar .btn:hover {
-  background-color: var(--success-color);
   border-bottom: none;
 }
 

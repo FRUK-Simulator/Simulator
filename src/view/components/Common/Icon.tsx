@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import React from "react";
+import "./Icon.css";
 
 export enum IconName {
   start = "fas fa-check",

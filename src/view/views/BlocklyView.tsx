@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "../components/Common/Container";
-import { ButtonBar, Button } from "../components/Common/Button";
+import { ButtonBar, Button, ButtonVariant } from "../components/Common/Button";
 import { BlocklyEditor } from "../../BlocklyInterface/BlocklyEditor";
 import { useSelector } from "react-redux";
 import { isExecuting, getExecutionState } from "../../JavascriptVM/vmSlice";
@@ -16,11 +16,19 @@ const VMControls = () => {
   return (
     <ButtonBar>
       {isVMStarted ? (
-        <Button iconName={IconName.exit} onClick={vm.stop}>
+        <Button
+          iconName={IconName.exit}
+          onClick={vm.stop}
+          variant={ButtonVariant.danger}
+        >
           Quit
         </Button>
       ) : (
-        <Button iconName={IconName.start} onClick={vm.start}>
+        <Button
+          iconName={IconName.start}
+          onClick={vm.start}
+          variant={ButtonVariant.success}
+        >
           Start
         </Button>
       )}
@@ -28,11 +36,16 @@ const VMControls = () => {
         disabled={!isVMStarted || executionState === ExecutionState.RUNNING}
         iconName={IconName.step}
         onClick={vm.step}
+        variant={ButtonVariant.success}
       >
         Step
       </Button>
       {executionState === ExecutionState.RUNNING ? (
-        <Button iconName={IconName.stop} onClick={vm.pause}>
+        <Button
+          iconName={IconName.stop}
+          onClick={vm.pause}
+          variant={ButtonVariant.warning}
+        >
           Pause
         </Button>
       ) : (
@@ -40,6 +53,7 @@ const VMControls = () => {
           disabled={!isVMStarted}
           iconName={IconName.run}
           onClick={vm.run}
+          variant={ButtonVariant.success}
         >
           Run
         </Button>

@@ -1,0 +1,15 @@
+.fas {
+  vertical-align: middle;
+  font-size: 1em;
+}
+
+.fa-play,
+.fa-forward,
+.fa-check {
+  color: #4caf50;
+}
+
+.fa-stop,
+.fa-times {
+  color: #f44336;
+}

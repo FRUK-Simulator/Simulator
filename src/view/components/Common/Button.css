@@ -30,6 +30,22 @@
   border-bottom: 2px dashed black;
 }
 
+.btn--success:hover {
+  background-color: var(--success-color);
+}
+
+.btn--danger:hover {
+  background-color: var(--danger-color);
+}
+
+.btn--warning:hover {
+  background-color: var(--warning-color);
+}
+
+.btn--info:hover {
+  background-color: var(--info-color);
+}
+
 .btn--disabled {
   color: var(--text-color-disabled);
   background-color: #cfcfcf;

@@ -28,8 +28,9 @@
 
   /* Status Colors */
   --success-color: #c8e6c9;
-  --fail-color: darkred;
-  --info-color: gray;
+  --danger-color: #ffcdd2;
+  --warning-color: #fccf8d;
+  --info-color: #b3e5fc;
   --trophy-color: goldenrod;
 
   /* Border Radiuses */
