@@ -1,0 +1,31 @@
+.btn {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.5em;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  /* Center Button Contents Vertically and Horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #efefef;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+  /* 2px Margin takes the place of the 2px border when not active - prevents content from jumping */
+  margin-bottom: 2px;
+}
+
+.btn:hover:enabled {
+  cursor: pointer;
+  background-color: #cfd8dc;
+
+  /* Remove the 2px margin and replace with 2px border - this prevents the content from jumping */
+  margin-bottom: 0px;
+  border-bottom: 2px dashed black;
+}
+
+.btn-bar {
+  display: flex;
+  flex-direction: row;
+}

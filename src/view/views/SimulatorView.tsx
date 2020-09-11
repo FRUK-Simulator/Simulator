@@ -3,6 +3,7 @@ import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";
 import "./SimulatorView.css";
+import { Button } from "../components/Common/Button";
 
 export const LeftPanel = () => (
   <div className="simulator-view--panel">
@@ -10,7 +11,8 @@ export const LeftPanel = () => (
       Left Panel (Main)
     </Container>
     <Container className="simulator-view--panel__utility">
-      Left Panel (Utility)
+      <Button>Test Button 1</Button>
+      <Button>Test Button 2</Button>
     </Container>
   </div>
 );

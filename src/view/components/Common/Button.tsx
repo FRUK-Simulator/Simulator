@@ -1,5 +1,12 @@
 import React, { FunctionComponent } from "react";
+import "./Button.css";
 
-export const Button: FunctionComponent = ({ children }) => (
-  <button>{children}</button>
+enum Icon {}
+
+export const Button: FunctionComponent<{ iconName?: Icon }> = ({
+  children,
+}) => <button className="btn">{children}</button>;
+
+export const ButtonBar: FunctionComponent = ({ children }) => (
+  <div className="btn-bar">{children}</div>
 );
