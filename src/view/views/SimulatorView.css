@@ -16,7 +16,7 @@
 }
 
 .simulator-view--panel__main {
-  flex: 2;
+  flex: 4;
 }
 
 .simulator-view--panel__utility {

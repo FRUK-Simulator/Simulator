@@ -3,9 +3,8 @@ import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";
 import "./SimulatorView.css";
-import { Button } from "../components/Common/Button";
 import { useLocation } from "react-router-dom";
-import { BlocklyEditor } from "../../BlocklyInterface/BlocklyEditor";
+import { BlocklyView } from "./BlocklyView";
 
 export enum SimulatorViews {
   code = "code",
@@ -13,20 +12,6 @@ export enum SimulatorViews {
   programs = "programs",
   settings = "settings",
 }
-
-const BlocklyView = () => {
-  return (
-    <>
-      <Container className="simulator-view--panel__main">
-        <BlocklyEditor />
-      </Container>
-      <Container className="simulator-view--panel__utility">
-        <Button>Test Button 1</Button>
-        <Button>Test Button 2</Button>
-      </Container>
-    </>
-  );
-};
 
 const simulatorViews: Record<SimulatorViews, () => React.ReactNode> = {
   code: BlocklyView,

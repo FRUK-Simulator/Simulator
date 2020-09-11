@@ -21,7 +21,7 @@
   margin-bottom: 2px;
 }
 
-.btn:hover:enabled {
+.btn:hover {
   cursor: pointer;
   background-color: #cfd8dc;
 
@@ -30,7 +30,26 @@
   border-bottom: 2px dashed black;
 }
 
+.btn--disabled {
+  color: var(--text-color-disabled);
+  background-color: #cfcfcf;
+}
+
+.btn--disabled:hover {
+  cursor: not-allowed;
+  background-color: #cfcfcf;
+  margin-bottom: 2px;
+  border-bottom: 0px;
+}
+
 .btn-bar {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.btn-bar .btn {
+  /* Each Button Fills Up Button Bar */
+  flex: 1;
 }

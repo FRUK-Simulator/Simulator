@@ -3,6 +3,7 @@
   --main-bg-color: #eceff1;
   --text-color-dark: #333333;
   --text-color-light: #eeeeee;
+  --text-color-disabled: #858585;
 
   /* Padding */
   --less-padding: 0.5em;
