@@ -1,0 +1,17 @@
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 35%;
+  width: 35%;
+  height: 80px;
+  transform: translate(0px, 40px);
+  transition: transform 0.25s ease-in-out;
+}
+
+.toolbar:hover {
+  transform: translate(0px, 0px);
+}
