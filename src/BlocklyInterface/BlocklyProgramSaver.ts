@@ -1,7 +1,7 @@
 import { getCurrentBlocklyCode } from "./BlocklyEditor";
 import { blocklySlice } from "./blocklySlice";
 
-declare type Program = {
+export type Program = {
   title: string;
   xml: string;
   predefined: boolean;
@@ -19,10 +19,14 @@ export class BlocklyProgramSaver {
       predefined: false,
     };
 
+    this.saveProgram(blocklyProgram, toFile);
+  }
+
+  saveProgram(program: Program, toFile = false) {
     if (toFile) {
-      this.exportToFile(blocklyProgram);
+      this.exportToFile(program);
     } else {
-      this.saveToLocalStorage(blocklyProgram);
+      this.saveToLocalStorage(program);
     }
   }
 
