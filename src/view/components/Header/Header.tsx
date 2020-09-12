@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.css";
 import { Divider } from "../Common/Divider";
-import { Link, useParams, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import brandImage from "./FIRST_HorzRGB_reverse.png";
 
 export const Brand = () => {
