@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";
@@ -10,6 +10,7 @@ import {
   getChallengesPerArena,
   getDefaultChallenge,
 } from "../../RobotSimulator/ChallengeConfigLoader";
+import { MyProgramsView } from "./MyProgramsView";
 
 export enum SimulatorViews {
   code = "code",
@@ -18,10 +19,10 @@ export enum SimulatorViews {
   settings = "settings",
 }
 
-const simulatorViews: Record<SimulatorViews, () => React.ReactNode> = {
+const simulatorViews: Record<SimulatorViews, FunctionComponent> = {
   code: BlocklyView,
   robot: () => null,
-  programs: () => null,
+  programs: MyProgramsView,
   settings: () => null,
 };
 
@@ -30,15 +31,13 @@ export const LeftPanel = () => {
   const queryParams = new URLSearchParams(location.search);
   const selectedView = queryParams.get("view") as SimulatorViews;
 
-  if (simulatorViews[selectedView]) {
-    return (
-      <div className="simulator-view--panel">
-        {simulatorViews[selectedView]()}
-      </div>
-    );
-  }
+  const View = simulatorViews[selectedView] ?? simulatorViews.code;
 
-  return <div className="simulator-view--panel">{simulatorViews.code()}</div>;
+  return (
+    <div className="simulator-view--panel">
+      <View />
+    </div>
+  );
 };
 export const RightPanel = () => (
   <div className="simulator-view--panel">
