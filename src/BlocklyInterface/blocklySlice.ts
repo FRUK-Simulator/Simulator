@@ -177,3 +177,25 @@ export const getActiveBlocklyProgramId = (state: RootState) =>
  */
 export const getBlocklyPrograms = (state: RootState) =>
   state.blockly.blocklyPrograms;
+
+/**
+ * Retrieves the current active blockly program.
+ *
+ * @param state the root state of the app
+ *
+ * @returns the blockly program
+ */
+export const getCurrentBlocklyProgram = (state: RootState) =>
+  getBlocklyProgram(state.blockly.activeBlocklyProgramId)(
+    state
+  ) as BlocklyProgram;
+
+/**
+ * Retrieves the program from the list of programs or returns nothing.
+ *
+ * @param title the title of the blockly program
+ *
+ * @returns the program or nothing
+ */
+export const getBlocklyProgram = (title: string) => (state: RootState) =>
+  state.blockly.blocklyPrograms.find((p) => p.title === title);

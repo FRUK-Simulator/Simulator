@@ -1,7 +1,10 @@
 import React, { useCallback } from "react";
 import { Container } from "../components/Common/Container";
 import { ButtonBar, Button, ButtonVariant } from "../components/Common/Button";
-import { BlocklyEditor } from "../../BlocklyInterface/BlocklyEditor";
+import {
+  BlocklyEditor,
+  getCurrentBlocklyCode,
+} from "../../BlocklyInterface/BlocklyEditor";
 import { useSelector, useDispatch } from "react-redux";
 import { isExecuting, getExecutionState } from "../../JavascriptVM/vmSlice";
 import { ExecutionState } from "../../JavascriptVM/vm";
@@ -9,6 +12,11 @@ import { IconName } from "../components/Common/Icon";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
 import { getActiveEditor, editorSlice } from "../../Editor/editorSlice";
 import { SourceView } from "../../Editor/SourceView";
+import {
+  blocklySlice,
+  getCurrentBlocklyProgram,
+} from "../../BlocklyInterface/blocklySlice";
+import { useDialog } from "../components/Dialog/Dialog";
 
 const VMControls = () => {
   const isVMStarted = useSelector(isExecuting);
@@ -67,6 +75,37 @@ const VMControls = () => {
 const EditorControls = () => {
   const dispatch = useDispatch();
   const currentView = useSelector(getActiveEditor);
+  const currentProgram = useSelector(getCurrentBlocklyProgram);
+  const dialog = useDialog();
+  // TODO: Move this to its own file
+  const saveProgram = useCallback(() => {
+    dialog.open({
+      content: () => <div>Placeholder for save form fields</div>,
+      heading: "Save Program",
+      negativeAction: {
+        label: "Cancel",
+        onClick: () => {
+          return true;
+        },
+      },
+      positiveAction: {
+        label: "Save",
+        onClick: () => {
+          dispatch(
+            blocklySlice.actions.addBlockyProgram({
+              prog: {
+                ...currentProgram,
+                xml: getCurrentBlocklyCode(),
+              },
+            })
+          );
+
+          return true;
+        },
+      },
+    });
+  }, [dispatch, currentProgram, dialog]);
+
   const changeViewCallback = useCallback(() => {
     dispatch(
       editorSlice.actions.setActiveEditor({
@@ -80,8 +119,7 @@ const EditorControls = () => {
       <Button
         variant={ButtonVariant.info}
         iconName={IconName.save}
-        disabled={true}
-        title="Functionality coming soon"
+        onClick={saveProgram}
       >
         Save Program
       </Button>

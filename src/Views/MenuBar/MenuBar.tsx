@@ -148,7 +148,10 @@ export const MenuBar: FunctionComponent = () => {
               title: saveBlocklyProgramInputForm,
               xml: getCurrentBlocklyCode(),
               predefined: false,
+              id: `${Math.random() * 10000}`,
+              description: "",
             };
+
             dispatch(
               blocklySlice.actions.addBlockyProgram({ prog: blocklyProgram })
             );

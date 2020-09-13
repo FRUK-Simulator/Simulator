@@ -1,7 +1,10 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { BlocklyProgram } from "../../BlocklyInterface/BlocklyProgramLoader";
+import {
+  BlocklyProgram,
+  newProgramXML,
+} from "../../BlocklyInterface/BlocklyProgramLoader";
 import {
   blocklySlice,
   getBlocklyPrograms,
@@ -32,6 +35,26 @@ export const MyProgramsView = () => {
     [dispatch, history]
   );
 
+  const newProgramCallback = useCallback(() => {
+    const program = {
+      description: "",
+      id: `${Math.random() * 10000}`,
+      predefined: false,
+      title: "New Program",
+      xml: newProgramXML,
+    };
+
+    dispatch(
+      blocklySlice.actions.addBlockyProgram({
+        prog: program,
+      })
+    );
+    dispatch(
+      blocklySlice.actions.setActiveBlocklyProgramId({ title: program.title })
+    );
+    history.replace("?view=code");
+  }, [dispatch, history]);
+
   return (
     <>
       <Container className="simulator-view--panel__main">
@@ -40,6 +63,7 @@ export const MyProgramsView = () => {
           variant={ButtonVariant.success}
           iconName={IconName.file}
           iconPosition="left"
+          onClick={newProgramCallback}
         >
           New Program
         </Button>
@@ -48,7 +72,8 @@ export const MyProgramsView = () => {
             <ListItem key={program.title}>
               <ListItemHeader as="h3" title={program.title} />
               <ListItemContent>
-                There doesn't appear to be a description yet.
+                "There doesn't seem to be a description for this program..."
+                <i>{program.predefined ? " (Sample Program)" : ""}</i>
               </ListItemContent>
               <ButtonBar>
                 <Button
