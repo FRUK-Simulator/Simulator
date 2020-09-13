@@ -33,6 +33,9 @@
   --info-color: #b3e5fc;
   --trophy-color: goldenrod;
 
+  /* General Colors */
+  --color-gray: #dddddd;
+
   /* Border Radiuses */
   --border-radius: 10px;
   --border-radius-rounder: 20px;
