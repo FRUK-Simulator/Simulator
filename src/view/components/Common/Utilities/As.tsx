@@ -12,7 +12,7 @@ export const As: FunctionComponent<{
   className?: string;
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }> = ({ children, as, className = "" }) => {
-  const renderMap: Record<typeof as, () => React.ReactElement> = {
+  const renderMap: Record<typeof as, FunctionComponent> = {
     h1: () => <h1 className={className}>{children}</h1>,
     h2: () => <h2 className={className}>{children}</h2>,
     h3: () => <h3 className={className}>{children}</h3>,
@@ -21,5 +21,7 @@ export const As: FunctionComponent<{
     h6: () => <h6 className={className}>{children}</h6>,
   };
 
-  return renderMap[as]();
+  const Component = renderMap[as];
+
+  return <Component />;
 };
