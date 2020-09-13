@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import { Button, ButtonBar, ButtonVariant } from "../Common/Button";
-import { Container } from "../Common/Container";
 import { IconName } from "../Common/Icon";
 import "./Dialog.css";
 
