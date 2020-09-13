@@ -42,7 +42,13 @@ export const Button: FunctionComponent<
   ...rest
 }) => (
   <button
-    className={getButtonClass({ disabled, iconPosition, iconName, ...rest })}
+    className={getButtonClass({
+      disabled,
+      iconPosition,
+      iconName,
+      compact,
+      ...rest,
+    })}
     {...rest}
   >
     {iconName ? <Icon iconName={iconName} /> : null}
