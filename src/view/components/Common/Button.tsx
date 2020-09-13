@@ -38,6 +38,7 @@ export const Button: FunctionComponent<
   iconName,
   iconPosition,
   compact,
+  variant,
   disabled = false,
   ...rest
 }) => (
@@ -47,6 +48,7 @@ export const Button: FunctionComponent<
       iconPosition,
       iconName,
       compact,
+      variant,
       ...rest,
     })}
     {...rest}

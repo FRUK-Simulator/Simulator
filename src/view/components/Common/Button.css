@@ -29,9 +29,15 @@
   flex-direction: row;
 }
 
-.btn--icon-left .fa,
-.fas,
-.far {
+.btn + .btn {
+  border-left: 2px dashed black;
+}
+
+.btn > i {
+  padding-right: 0;
+}
+
+.btn.btn--icon-left > i {
   padding-right: var(--less-padding);
 }
 
