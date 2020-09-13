@@ -1,6 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes } from "react";
 import "./Button.css";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import { IconName, Icon } from "./Icon";
 
 export enum ButtonVariant {
@@ -37,7 +37,7 @@ export const Button: FunctionComponent<
 );
 
 export const LinkButton: FunctionComponent<
-  ButtonProps & { to: string } & HTMLAttributes<HTMLAnchorElement>
+  ButtonProps & { to: string } & LinkProps
 > = ({ children, to, disabled = false, iconName, ...rest }) => (
   <Link className={getButtonClass({ disabled, ...rest })} to={to} {...rest}>
     {iconName ? <Icon iconName={iconName} /> : null}

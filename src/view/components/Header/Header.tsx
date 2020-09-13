@@ -23,11 +23,7 @@ export const Header = () => {
     <div className="header">
       <Brand />
       <Divider vertical />
-      {match ? (
-        <h1>
-          {match.params.lesson} - {match.params.challenge}
-        </h1>
-      ) : null}
+      {match ? <h1>{match.params.challenge}</h1> : null}
     </div>
   );
 };
