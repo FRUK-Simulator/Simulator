@@ -12,9 +12,11 @@ export enum ButtonVariant {
 }
 
 interface ButtonProps {
+  iconPosition?: "top" | "left";
   iconName?: IconName;
   disabled?: boolean;
   variant?: ButtonVariant;
+  compact?: boolean;
 }
 
 function getButtonClass(buttonProps: ButtonProps) {
@@ -22,6 +24,8 @@ function getButtonClass(buttonProps: ButtonProps) {
     "btn",
     buttonProps.variant,
     buttonProps.disabled ? "btn--disabled" : null,
+    buttonProps.iconPosition === "left" ? "btn--icon-left" : null,
+    buttonProps.compact ? "btn--compact" : null,
   ]
     .join(" ")
     .trim();
@@ -29,8 +33,18 @@ function getButtonClass(buttonProps: ButtonProps) {
 
 export const Button: FunctionComponent<
   ButtonProps & HTMLAttributes<HTMLButtonElement>
-> = ({ children, iconName, disabled = false, ...rest }) => (
-  <button className={getButtonClass({ disabled, ...rest })} {...rest}>
+> = ({
+  children,
+  iconName,
+  iconPosition,
+  compact,
+  disabled = false,
+  ...rest
+}) => (
+  <button
+    className={getButtonClass({ disabled, iconPosition, iconName, ...rest })}
+    {...rest}
+  >
     {iconName ? <Icon iconName={iconName} /> : null}
     {children}
   </button>
@@ -38,8 +52,20 @@ export const Button: FunctionComponent<
 
 export const LinkButton: FunctionComponent<
   ButtonProps & { to: string } & LinkProps
-> = ({ children, to, disabled = false, iconName, ...rest }) => (
-  <Link className={getButtonClass({ disabled, ...rest })} to={to} {...rest}>
+> = ({
+  children,
+  to,
+  disabled = false,
+  iconName,
+  iconPosition,
+  compact,
+  ...rest
+}) => (
+  <Link
+    className={getButtonClass({ disabled, iconPosition, compact, ...rest })}
+    to={to}
+    {...rest}
+  >
     {iconName ? <Icon iconName={iconName} /> : null}
     {children}
   </Link>

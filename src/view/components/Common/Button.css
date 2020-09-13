@@ -21,6 +21,20 @@
   margin-bottom: 2px;
 }
 
+.btn--compact {
+  font-size: 1em;
+}
+
+.btn--icon-left {
+  flex-direction: row;
+}
+
+.btn--icon-left .fa,
+.fas,
+.far {
+  padding-right: var(--less-padding);
+}
+
 .btn:hover {
   cursor: pointer;
   background-color: #cfd8dc;
