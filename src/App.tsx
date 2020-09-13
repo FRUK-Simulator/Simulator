@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
 import { Header } from "./view/components/Header/Header";
+import { DialogProvider } from "./view/components/Dialog/Dialog";
 
 /**
  * This is exported seperately so that tests can provide their own providers. This
@@ -26,7 +27,9 @@ const AppWithProviders: FunctionComponent = () => {
     <Router>
       <Provider store={store}>
         <VMProvider>
-          <App />
+          <DialogProvider>
+            <App />
+          </DialogProvider>
         </VMProvider>
       </Provider>
     </Router>
