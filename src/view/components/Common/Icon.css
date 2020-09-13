@@ -1,11 +1,15 @@
-.fas {
+.fas,
+.far,
+.fa {
   vertical-align: middle;
   font-size: 1em;
 }
 
 .fa-play,
 .fa-forward,
-.fa-check {
+.fa-check,
+.fa-external-link-alt,
+.fa-file-download {
   color: #4caf50;
 }
 

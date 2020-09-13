@@ -10,6 +10,9 @@ export enum IconName {
   view = "fas fa-eye",
   save = "fas fa-save",
   exit = "fas fa-times",
+  file = "far fa-file",
+  load = "fas fa-external-link-alt",
+  download = "fas fa-file-download",
 }
 
 export const Icon: FunctionComponent<{ iconName: IconName }> = ({
