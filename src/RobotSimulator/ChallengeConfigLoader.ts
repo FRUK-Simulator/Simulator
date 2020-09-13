@@ -1,13 +1,13 @@
 import { ChallengeConfig } from "./Areanas/base";
 import * as Lesson1 from "./Areanas/lesson1";
+import * as Lesson3 from "./Areanas/lesson3";
 import * as ParkingLot from "./Areanas/parkinglot";
-import * as ZigZag from "./Areanas/zigzag";
 import * as Bowling from "./Areanas/bowling";
 
 let challengeConfigs: Array<ChallengeConfig> = [
   ...Lesson1.challenges,
+  ...Lesson3.challenges,
   ...ParkingLot.challenges,
-  ...ZigZag.challenges,
   ...Bowling.challenges,
 ].map((getChallenge) => getChallenge());
 

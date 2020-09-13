@@ -309,10 +309,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current?.addListener(
             "simulation-event",
             (event: CoreSpecs.ISimulatorEvent) => {
-              if (event.type === "zone-entry") {
+              if (event.type === "zone-entry" || event.type === "zone-exit") {
                 challengeListener.current?.onEvent({
                   kind: "ZoneEvent",
-                  entry: true,
+                  entry: event.type === "zone-entry",
                   zoneId: event.data.zoneId,
                 });
               }
