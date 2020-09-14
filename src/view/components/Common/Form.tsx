@@ -3,7 +3,7 @@ import "./Form.css";
 
 export const TextFormField: FunctionComponent<{
   label: string;
-  inputProps?: React.HTMLAttributes<HTMLInputElement>;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }> = ({ label, inputProps = {} }) => {
   return (
     <label className="form-field--label">

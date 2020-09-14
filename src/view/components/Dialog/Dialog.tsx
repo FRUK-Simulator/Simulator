@@ -1,6 +1,7 @@
 import { KeyCodes } from "@fluentui/react";
 import React, {
   FunctionComponent,
+  ReactNode,
   useCallback,
   useContext,
   useState,
@@ -18,13 +19,13 @@ interface Action {
 interface DialogContext {
   isOpen: boolean;
   heading: string | null;
-  content: FunctionComponent;
+  content: ReactNode;
   positiveAction: Action | null;
   negativeAction: Action | null;
 }
 
 const defaultDialogContext = {
-  content: () => null,
+  content: null,
   heading: null,
   isOpen: false,
   negativeAction: null,
@@ -74,16 +75,8 @@ const Dialog: FunctionComponent<{
 
         return;
       }
-
-      if (e.keyCode === KeyCodes.enter) {
-        if (callPositiveAction()) {
-          closeDialog();
-        }
-
-        return;
-      }
     },
-    [callNegativeAction, callPositiveAction, closeDialog]
+    [callNegativeAction, closeDialog]
   );
 
   if (!dialogContext.isOpen) {
@@ -95,8 +88,6 @@ const Dialog: FunctionComponent<{
     return null;
   }
 
-  const Content = dialogContext.content;
-
   return ReactDOM.createPortal(
     <div className="dialog dialog--overlay" onKeyUp={handleKeyUp}>
       <div className="dialog--container">
@@ -106,7 +97,7 @@ const Dialog: FunctionComponent<{
           </h2>
         ) : null}
         <div className="dialog--container__content">
-          <Content />
+          {dialogContext.content}
         </div>
         <div className="dialog--container__actions">
           <ButtonBar>

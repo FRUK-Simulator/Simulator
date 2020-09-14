@@ -58,6 +58,7 @@
 
 .toolbar .btn:hover {
   border-bottom: 2px solid black;
+  transform: scaleY(1.1);
 }
 
 /* Left Border of Toolbar */
@@ -79,21 +80,4 @@
 /* Dashed Border Between Each Button */
 .toolbar .btn + .btn {
   border-left: 2px dashed black;
-}
-
-/* Make the Buttons Silly */
-.toolbar .btn:nth-child(n):hover {
-  transform: rotate(1.5deg);
-}
-
-.toolbar .btn:nth-child(2n):hover {
-  transform: rotate(-1.4deg);
-}
-
-.toolbar .btn:nth-child(3n):hover {
-  transform: rotate(0.7deg);
-}
-
-.toolbar .btn:nth-child(4n):hover {
-  transform: rotate(-1deg);
 }
