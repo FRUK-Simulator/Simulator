@@ -1,0 +1,20 @@
+.form-field--label {
+  display: block;
+  background-color: var(--color-light-gray);
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: calc(var(--more-margin) * 2);
+  border-bottom: 2px dashed var(--primary-color);
+  font-size: 1.5em;
+}
+
+.form-field--label__text {
+  margin-bottom: var(--more-margin);
+}
+
+.form-field--input {
+  display: block;
+  border: none;
+  background-color: var(--color-light-gray);
+  min-height: 1.5em;
+  width: 100%;
+}
