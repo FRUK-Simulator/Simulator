@@ -13,6 +13,7 @@ export enum IconName {
   file = "far fa-file",
   load = "fas fa-external-link-alt",
   download = "fas fa-file-download",
+  controller = "fas fa-gamepad",
 }
 
 export const Icon: FunctionComponent<

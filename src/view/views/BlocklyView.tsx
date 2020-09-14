@@ -87,6 +87,13 @@ const EditorControls = () => {
       >
         View {currentView === "Blockly" ? "Source" : "Blocks"}
       </Button>
+      <Button
+        variant={ButtonVariant.info}
+        disabled
+        iconName={IconName.controller}
+      >
+        Show Controller
+      </Button>
     </ButtonBar>
   );
 };
