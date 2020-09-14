@@ -17,6 +17,11 @@
   padding: 0;
 }
 
+.header--user-controls {
+  margin-left: auto;
+  color: var(--text-color-light);
+}
+
 .brand {
   /* Brand Icon must be at least 1.875 (30px) */
   height: var(--header-height);

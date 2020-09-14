@@ -42,6 +42,7 @@ export const LandingView = () => {
         <LessonSection title={lesson.title} key={lesson.title}>
           {lesson.challenges.map((challenge) => (
             <Link
+              className="lesson-link"
               to={`/lessons/${lesson.title}/challenges/${challenge.name}/`}
               key={challenge.name}
             >

@@ -17,3 +17,11 @@
   flex-direction: row;
   padding-left: var(--more-padding);
 }
+
+.lesson-link:focus {
+  outline: none;
+}
+
+.lesson-link:focus .card {
+  border: 2px solid black;
+}

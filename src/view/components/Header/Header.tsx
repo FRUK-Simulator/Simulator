@@ -6,6 +6,7 @@ import brandImage from "./FIRST_HorzRGB_reverse.png";
 import { useSelector } from "react-redux";
 import { getCurrentBlocklyProgram } from "../../../BlocklyInterface/blocklySlice";
 import { Icon, IconName } from "../Common/Icon";
+import { UserControls } from "../../../Views/MenuBar/UserControls/UserControls";
 
 export const Brand = () => {
   return (
@@ -39,6 +40,9 @@ export const Header = () => {
           <Icon iconName={IconName.file} /> {currentProgram.title}
         </h1>
       ) : null}
+      <div className="header--user-controls">
+        <UserControls />
+      </div>
     </div>
   );
 };
