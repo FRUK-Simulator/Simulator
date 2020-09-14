@@ -4,3 +4,7 @@
   margin: 0;
   padding: var(--less-padding);
 }
+
+.my-programs-view {
+  overflow-y: auto;
+}

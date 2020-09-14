@@ -12,6 +12,11 @@
   z-index: var(--header-z-index);
 }
 
+.header--program-title {
+  margin: 0;
+  padding: 0;
+}
+
 .brand {
   /* Brand Icon must be at least 1.875 (30px) */
   height: var(--header-height);

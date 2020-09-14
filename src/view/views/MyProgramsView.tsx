@@ -1,10 +1,7 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  BlocklyProgram,
-  newProgramXML,
-} from "../../BlocklyInterface/BlocklyProgramLoader";
+import { BlocklyProgram } from "../../BlocklyInterface/BlocklyProgramLoader";
 import {
   blocklySlice,
   getBlocklyPrograms,
@@ -18,6 +15,7 @@ import {
   ListItemContent,
   ListItemHeader,
 } from "../components/Common/List";
+import { useProgramDialog } from "../hooks/useProgramDialog";
 import "./MyProgramsView.css";
 
 export const MyProgramsView = () => {
@@ -35,29 +33,11 @@ export const MyProgramsView = () => {
     [dispatch, history]
   );
 
-  const newProgramCallback = useCallback(() => {
-    const program = {
-      description: "",
-      id: `${Math.random() * 10000}`,
-      predefined: false,
-      title: "New Program",
-      xml: newProgramXML,
-    };
-
-    dispatch(
-      blocklySlice.actions.addBlockyProgram({
-        prog: program,
-      })
-    );
-    dispatch(
-      blocklySlice.actions.setActiveBlocklyProgramId({ title: program.title })
-    );
-    history.replace("?view=code");
-  }, [dispatch, history]);
+  const newProgramCallback = useProgramDialog("create");
 
   return (
     <>
-      <Container className="simulator-view--panel__main">
+      <Container className="simulator-view--panel__main my-programs-view">
         <h2 className="my-programs-heading">My Programs</h2>
         <Button
           variant={ButtonVariant.success}

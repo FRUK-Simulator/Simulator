@@ -1,0 +1,148 @@
+import React, { FunctionComponent, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentBlocklyCode } from "../../BlocklyInterface/BlocklyEditor";
+import {
+  BlocklyProgram,
+  newProgramXML,
+} from "../../BlocklyInterface/BlocklyProgramLoader";
+import {
+  getCurrentBlocklyProgram,
+  blocklySlice,
+  getBlocklyPrograms,
+} from "../../BlocklyInterface/blocklySlice";
+import { messageSlice, MessageType } from "../../state/messagesSlice";
+import { TextFormField, TextAreaFormField } from "../components/Common/Form";
+import { useDialog } from "../components/Dialog/Dialog";
+
+const DialogContent: FunctionComponent<{
+  title: string;
+  description: string;
+}> = ({ title, description }) => {
+  return (
+    <div>
+      <TextFormField
+        label="Program Name"
+        inputProps={{ id: "blockly-program-id", defaultValue: title }}
+      />
+      <TextAreaFormField
+        label="Program Description"
+        inputProps={{
+          id: "blockly-program-description",
+          defaultValue: description,
+        }}
+      />
+    </div>
+  );
+};
+
+/**
+ * Returns a callback to open a dialog and save or create a new program.
+ */
+export const useProgramDialog = (type: "create" | "save") => {
+  const dispatch = useDispatch();
+  const allPrograms = useSelector(getBlocklyPrograms);
+  const currentProgram = useSelector(getCurrentBlocklyProgram);
+  const dialog = useDialog();
+  const program: BlocklyProgram =
+    type === "save"
+      ? currentProgram
+      : {
+          description: "",
+          id: `${Math.random() * 1000}`,
+          predefined: false,
+          title: "New Program",
+          xml: newProgramXML,
+        };
+
+  const saveProgram = useCallback(() => {
+    dialog.open({
+      content: (
+        <DialogContent
+          title={program.title}
+          description={program.description}
+        />
+      ),
+      heading: "Save Program",
+      negativeAction: {
+        label: "Cancel",
+        onClick: () => {
+          return true;
+        },
+      },
+      positiveAction: {
+        label: "Save",
+        onClick: () => {
+          const programName =
+            (document.getElementById("blockly-program-id") as HTMLInputElement)
+              ?.value ?? "";
+
+          const programDescription =
+            (document.getElementById(
+              "blockly-program-description"
+            ) as HTMLInputElement)?.value ?? "";
+
+          // TODO: Check if the title / description before saving
+          if (!programName) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageType.danger,
+                msg: "Program Name cannot be blank",
+              })
+            );
+
+            return false;
+          }
+
+          if (
+            programName === currentProgram.title &&
+            currentProgram.predefined
+          ) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageType.danger,
+                msg:
+                  "You cannot save over a sample program. Please choose a new name.",
+              })
+            );
+
+            return false;
+          }
+
+          if (allPrograms.some((p) => p.title === programName)) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageType.danger,
+                msg: `"${programName}" already exists. Please choose a new name.`,
+              })
+            );
+
+            return false;
+          }
+
+          dispatch(
+            blocklySlice.actions.addBlockyProgram({
+              prog: {
+                ...currentProgram,
+                predefined: false,
+                title: programName,
+                description: programDescription,
+                xml: type === "save" ? getCurrentBlocklyCode() : newProgramXML,
+              },
+            })
+          );
+
+          dispatch(
+            messageSlice.actions.addMessage({
+              type: MessageType.success,
+              msg: `${programName} has been saved!`,
+            })
+          );
+
+          return true;
+        },
+      },
+    });
+  }, [dispatch, currentProgram, dialog]);
+
+  return saveProgram;
+};
