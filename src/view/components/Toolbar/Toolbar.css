@@ -56,7 +56,14 @@
 
 .toolbar .btn:hover {
   border-bottom: 2px solid black;
-  transform: scaleY(1.1);
+  border-right: 2px dashed black;
+  transform: scale(1.2, 1.2);
+}
+
+.toolbar .btn:last-child:hover {
+  border-bottom: 2px solid black;
+  border-right: none;
+  transform: scale(1.2, 1.2);
 }
 
 /* Left Border of Toolbar */
@@ -68,11 +75,6 @@
 .toolbar .btn:last-child {
   /* Right Corner */
   border-radius: 0 0 var(--border-radius) 0;
-}
-
-/* Remove Default Button Hover */
-.toolbar .btn:hover {
-  border-bottom: 2px solid black;
 }
 
 /* Dashed Border Between Each Button */

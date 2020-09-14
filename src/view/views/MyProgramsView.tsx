@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { BlocklyProgram } from "../../BlocklyInterface/BlocklyProgramLoader";
 import {
   blocklySlice,
   getBlocklyPrograms,
 } from "../../BlocklyInterface/blocklySlice";
+import { BlocklyProgram } from "../../core/blockly/programs";
 import { Button, ButtonBar, ButtonVariant } from "../components/Common/Button";
 import { Container } from "../components/Common/Container";
 import { IconName } from "../components/Common/Icon";

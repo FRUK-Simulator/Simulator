@@ -19,9 +19,9 @@ import {
 } from "./blocklySlice";
 
 import "./Blockly.css";
-import { loadBlocklyXml } from "./BlocklyProgramLoader";
 import Blockly, { WorkspaceSvg } from "blockly";
 import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
+import { loadBlocklyXml } from "../core/blockly/programs";
 
 export function getCurrentBlocklyCode(): string {
   const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());

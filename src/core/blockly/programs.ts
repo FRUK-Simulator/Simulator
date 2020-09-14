@@ -29,10 +29,10 @@ export interface BlocklyDemoProgram {
 }
 
 export const newProgramXML = `<xml xmlns="https://developers.google.com/blockly/xml"><block type="comment" id="9aWEa(k7D0kT0(pOom4]" x="227" y="94"><field name="COMMENT">New Program</field></block></xml>`;
-
 /**
  * Use this to build a menu for selecting a predefined demo program and call loadPredefinedDemo() to load a demo program
  */
+
 export const predefinedDemos: BlocklyDemoProgram[] = [
   {
     title: "Simple Demo",
@@ -58,8 +58,17 @@ export function loadPredefinedDemo(
 export function loadBlocklyXml(xml: string, workspace: Workspace) {
   build(xml, workspace);
 }
-
 function build(xml: string, workspace: Workspace): void {
   const element = Blockly.Xml.textToDom(xml);
   Blockly.Xml.domToWorkspace(element, workspace);
+}
+
+export function createNewProgram() {
+  return {
+    description: "",
+    id: `${Math.random() * 1000}`,
+    predefined: false,
+    title: "New Program",
+    xml: newProgramXML,
+  };
 }

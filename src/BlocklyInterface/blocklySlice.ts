@@ -6,7 +6,7 @@ import { getDefaultToolbox } from "./toolbox";
 import {
   BlocklyProgram,
   getPredefinedBlocklyProgs,
-} from "./BlocklyProgramLoader";
+} from "../core/blockly/programs";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -120,6 +120,7 @@ export const saveBlocklyState = () => {
     localStorage.setItem(localStorageKey, serializedState);
   } catch {}
 };
+
 /**
  * Retrieves the ID of the highlighted block.
  *

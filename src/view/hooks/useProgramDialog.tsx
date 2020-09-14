@@ -2,14 +2,11 @@ import React, { FunctionComponent, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentBlocklyCode } from "../../BlocklyInterface/BlocklyEditor";
 import {
-  BlocklyProgram,
-  newProgramXML,
-} from "../../BlocklyInterface/BlocklyProgramLoader";
-import {
   getCurrentBlocklyProgram,
   blocklySlice,
   getBlocklyPrograms,
 } from "../../BlocklyInterface/blocklySlice";
+import { BlocklyProgram, createNewProgram } from "../../core/blockly/programs";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
 import { TextFormField, TextAreaFormField } from "../components/Common/Form";
 import { useDialog } from "../components/Dialog/Dialog";
@@ -44,15 +41,7 @@ export const useProgramDialog = (type: "create" | "save") => {
   const currentProgram = useSelector(getCurrentBlocklyProgram);
   const dialog = useDialog();
   const program: BlocklyProgram =
-    type === "save"
-      ? currentProgram
-      : {
-          description: "",
-          id: `${Math.random() * 1000}`,
-          predefined: false,
-          title: "New Program",
-          xml: newProgramXML,
-        };
+    type === "save" ? currentProgram : createNewProgram();
 
   const saveProgram = useCallback(() => {
     dialog.open({
@@ -93,10 +82,7 @@ export const useProgramDialog = (type: "create" | "save") => {
             return false;
           }
 
-          if (
-            programName === currentProgram.title &&
-            currentProgram.predefined
-          ) {
+          if (programName === program.title && currentProgram.predefined) {
             dispatch(
               messageSlice.actions.addMessage({
                 type: MessageType.danger,
@@ -108,7 +94,10 @@ export const useProgramDialog = (type: "create" | "save") => {
             return false;
           }
 
-          if (allPrograms.some((p) => p.title === programName)) {
+          if (
+            type === "create" &&
+            allPrograms.some((p) => p.title === programName)
+          ) {
             dispatch(
               messageSlice.actions.addMessage({
                 type: MessageType.danger,
@@ -122,11 +111,11 @@ export const useProgramDialog = (type: "create" | "save") => {
           dispatch(
             blocklySlice.actions.addBlockyProgram({
               prog: {
-                ...currentProgram,
+                ...program,
                 predefined: false,
                 title: programName,
                 description: programDescription,
-                xml: type === "save" ? getCurrentBlocklyCode() : newProgramXML,
+                xml: type === "save" ? getCurrentBlocklyCode() : program.xml,
               },
             })
           );
@@ -142,7 +131,7 @@ export const useProgramDialog = (type: "create" | "save") => {
         },
       },
     });
-  }, [dispatch, currentProgram, dialog]);
+  }, [dispatch, currentProgram, dialog, allPrograms, program, type]);
 
   return saveProgram;
 };
