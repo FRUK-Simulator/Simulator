@@ -20,14 +20,18 @@
 
   background-color: var(--color-light-gray);
   width: var(--toolbar-width);
-  text-align: center;
   padding: var(--less-padding);
   border: 2px solid var(--color-gray);
   margin: var(--normal-margin);
 }
 
+.message-content {
+  text-align: start;
+}
+
 .message--icon {
   font-size: 1.5em;
+  margin-left: 1.5em;
 }
 
 .message--icon:hover {

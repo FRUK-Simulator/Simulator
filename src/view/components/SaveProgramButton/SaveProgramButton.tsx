@@ -94,6 +94,7 @@ export const SaveProgramButton = () => {
             blocklySlice.actions.addBlockyProgram({
               prog: {
                 ...currentProgram,
+                predefined: false,
                 title: programName,
                 description: programDescription,
                 xml: getCurrentBlocklyCode(),

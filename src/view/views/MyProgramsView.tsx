@@ -72,7 +72,8 @@ export const MyProgramsView = () => {
             <ListItem key={program.title}>
               <ListItemHeader as="h3" title={program.title} />
               <ListItemContent>
-                "There doesn't seem to be a description for this program..."
+                {program.description ||
+                  "There doesn't seem to be a description for this program..."}
                 <i>{program.predefined ? " (Sample Program)" : ""}</i>
               </ListItemContent>
               <ButtonBar>
