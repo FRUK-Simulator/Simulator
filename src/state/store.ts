@@ -7,7 +7,7 @@ import {
   saveBlocklyState,
 } from "../BlocklyInterface/blocklySlice";
 import { vmSlice } from "../JavascriptVM/vmSlice";
-import { messageSlice } from "../ErrorViews/messagesSlice";
+import { messageSlice } from "./messagesSlice";
 import { simulatorLogSlice } from "../ControlPanel/SimulatorLog/simulatorLogSlice";
 import { editorSlice } from "../Editor/editorSlice";
 import { gameControllerSlice } from "../ControlPanel/GameController/gameControllerSlice";

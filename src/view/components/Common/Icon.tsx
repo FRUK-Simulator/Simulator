@@ -15,8 +15,8 @@ export enum IconName {
   download = "fas fa-file-download",
 }
 
-export const Icon: FunctionComponent<{ iconName: IconName }> = ({
-  iconName,
-}) => {
-  return <i className={iconName}></i>;
+export const Icon: FunctionComponent<
+  { iconName: IconName } & React.HtmlHTMLAttributes<HTMLElement>
+> = ({ iconName, ...rest }) => {
+  return <i {...rest} className={`${iconName} ${rest.className}`.trim()}></i>;
 };

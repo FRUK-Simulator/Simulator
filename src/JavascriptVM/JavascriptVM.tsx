@@ -19,8 +19,7 @@ import {
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
-import { messageSlice } from "../ErrorViews/messagesSlice";
-import { MessageBarType } from "@fluentui/react";
+import { MessageType, messageSlice } from "../state/messagesSlice";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
@@ -213,7 +212,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
               dispatch(
                 messageSlice.actions.addMessage({
-                  type: MessageBarType.success,
+                  type: MessageType.success,
                   msg: "Program finished!",
                 })
               );
@@ -250,7 +249,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           } catch (err) {
             dispatch(
               messageSlice.actions.addMessage({
-                type: MessageBarType.error,
+                type: MessageType.danger,
                 msg: "Code cannot be executed.",
               })
             );

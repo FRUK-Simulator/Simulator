@@ -5,6 +5,7 @@ import {
   getCurrentBlocklyProgram,
   blocklySlice,
 } from "../../../BlocklyInterface/blocklySlice";
+import { MessageType, messageSlice } from "../../../state/messagesSlice";
 import { Button, ButtonVariant } from "../Common/Button";
 import { TextAreaFormField, TextFormField } from "../Common/Form";
 import { IconName } from "../Common/Icon";
@@ -62,6 +63,33 @@ export const SaveProgramButton = () => {
               "blockly-program-description"
             ) as HTMLInputElement)?.value ?? "";
 
+          // TODO: Check if the title / description before saving
+          if (!programName) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageType.danger,
+                msg: "Program Name cannot be blank",
+              })
+            );
+
+            return false;
+          }
+
+          if (
+            programName === currentProgram.title &&
+            currentProgram.predefined
+          ) {
+            dispatch(
+              messageSlice.actions.addMessage({
+                type: MessageType.danger,
+                msg:
+                  "You cannot save over a sample program. Please choose a new name.",
+              })
+            );
+
+            return false;
+          }
+
           dispatch(
             blocklySlice.actions.addBlockyProgram({
               prog: {
@@ -70,6 +98,13 @@ export const SaveProgramButton = () => {
                 description: programDescription,
                 xml: getCurrentBlocklyCode(),
               },
+            })
+          );
+
+          dispatch(
+            messageSlice.actions.addMessage({
+              type: MessageType.success,
+              msg: `${programName} has been saved!`,
             })
           );
 

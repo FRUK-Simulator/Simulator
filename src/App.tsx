@@ -8,6 +8,7 @@ import "./App.css";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
 import { Header } from "./view/components/Header/Header";
 import { DialogProvider } from "./view/components/Dialog/Dialog";
+import { MessageCenter } from "./view/components/MessageCenter/MessageCenter";
 
 /**
  * This is exported seperately so that tests can provide their own providers. This
@@ -17,6 +18,7 @@ export const App: FunctionComponent = () => {
   return (
     <div className="app-container">
       <Header />
+      <MessageCenter />
       <AppRouter />
     </div>
   );

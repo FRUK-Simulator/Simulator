@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageBarType } from "@fluentui/react";
-import { RootState } from "../state/store";
+import { RootState } from "./store";
 import { v4 as uuidv4 } from "uuid";
 
-export enum ErrorType {
-  error,
+export enum MessageType {
+  danger,
+  success,
+  info,
 }
 
 interface IMessageState {
   messages: Array<{
     id: string;
-    type: MessageBarType;
+    type: MessageType;
     msg: string;
   }>;
 }
@@ -22,9 +23,12 @@ export const messageSlice = createSlice({
   reducers: {
     addMessage(
       state,
-      action: PayloadAction<{ type: MessageBarType; msg: string }>
+      action: PayloadAction<{ type: MessageType; msg: string }>
     ) {
-      state.messages = [{ ...action.payload, id: uuidv4() }, ...state.messages];
+      state.messages = [
+        { ...action.payload, id: uuidv4() },
+        ...state.messages,
+      ].slice(0, 5);
 
       return state;
     },

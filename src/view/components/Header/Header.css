@@ -9,7 +9,7 @@
 
   height: var(--header-height);
 
-  z-index: 100;
+  z-index: var(--header-z-index);
 }
 
 .brand {

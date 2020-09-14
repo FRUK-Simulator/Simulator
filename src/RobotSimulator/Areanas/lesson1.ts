@@ -7,6 +7,7 @@ import {
 } from "./base";
 import { Vector2d } from "@fruk/simulator-core/dist/engine/SimTypes";
 import { IZoneSpec } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
+import { MessageType } from "../../state/messagesSlice";
 
 export const arenas = [arena];
 export const challenges = [challengeA, challengeB];
@@ -122,9 +123,9 @@ class Lesson1Challenge implements ChallengeListener {
   onEvent(e: ChallengeEvent) {
     if (e.kind === "ZoneEvent") {
       if (e.zoneId === FinishZoneId) {
-        this.actions?.displayMessage("Robot Wins!");
+        this.actions?.displayMessage("Robot Wins!", MessageType.success);
       } else if (e.zoneId.startsWith("bad-")) {
-        this.actions?.displayMessage("Robot Looses!");
+        this.actions?.displayMessage("Robot Looses!", MessageType.danger);
       }
     }
   }

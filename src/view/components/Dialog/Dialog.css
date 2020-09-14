@@ -1,7 +1,7 @@
 .dialog {
   position: fixed;
   top: var(--header-height);
-  z-index: 100;
+  z-index: var(--dialog-z-index);
   width: 100%;
   height: calc(100% - var(--header-height));
   display: flex;

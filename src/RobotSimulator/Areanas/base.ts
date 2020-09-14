@@ -1,4 +1,5 @@
 import { WorldConfig, CoreSpecs, CoreSimTypes } from "@fruk/simulator-core";
+import { MessageType } from "../../state/messagesSlice";
 
 export interface ArenaConfig {
   name: string;
@@ -24,7 +25,7 @@ export interface ChallengeActions {
       | CoreSpecs.IConeSpec
       | CoreSpecs.IZoneSpec
   ): void;
-  displayMessage(message: string): void;
+  displayMessage(message: string, type: MessageType): void;
 }
 
 export interface ZoneEvent {

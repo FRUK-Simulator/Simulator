@@ -1,22 +1,22 @@
-.toolbar {
-  /* The total height of the toolbar */
-  --toolbar-height: 80px;
-  /* How much of the toolbar is visible when 'hidden' */
-  --toolbar-visible-height: 10px;
-  /* How close the mouse needs to get to the bottom edge of the toolbar to open it */
-  --toolbar-hover-height: 20px;
+.toolbar-container {
+  position: fixed;
+  /* The top of the toolbar should align with the bottom of the header */
+  top: var(--header-height);
+  z-index: var(--toolbar-z-index);
 
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toolbar {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  position: fixed;
 
-  /* The top of the toolbar should align with the bottom of the header */
-  top: var(--header-height);
-
-  left: 35%;
-  width: 35%;
+  width: var(--toolbar-width);
   height: var(--toolbar-height);
 
   /* calculate the hover area and move the toolbar up */
@@ -31,8 +31,6 @@
   );
 
   transition: transform 0.25s ease-in-out;
-
-  z-index: 50;
 }
 
 .toolbar:hover {

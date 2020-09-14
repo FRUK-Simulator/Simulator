@@ -1,7 +1,6 @@
 import { ChallengeActions } from "../RobotSimulator/Areanas/base";
 import { Sim3D, CoreSpecs } from "@fruk/simulator-core";
-import { messageSlice } from "../ErrorViews/messagesSlice";
-import { MessageBarType } from "@fluentui/react";
+import { MessageType, messageSlice } from "../state/messagesSlice";
 
 export class ChallengeActionsImpl implements ChallengeActions {
   constructor(private sim: Sim3D, private dispatch: (a: any) => void) {}
@@ -29,10 +28,10 @@ export class ChallengeActionsImpl implements ChallengeActions {
     }
   }
 
-  displayMessage(message: string): void {
+  displayMessage(message: string, type: MessageType): void {
     this.dispatch(
       messageSlice.actions.addMessage({
-        type: MessageBarType.info,
+        type,
         msg: message,
       })
     );
