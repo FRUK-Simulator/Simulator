@@ -18,6 +18,14 @@
   padding-left: var(--more-padding);
 }
 
+.lesson-link {
+  margin-right: calc(var(--more-margin) * 2);
+}
+
+.lesson-link .card {
+  margin-right: 0;
+}
+
 .lesson-link:focus {
   outline: none;
 }
