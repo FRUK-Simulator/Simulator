@@ -30,7 +30,7 @@
   margin-right: calc((100% - var(--toolbar-width)) / 2);
   flex-direction: column;
   align-items: center;
-  pointer-events: visible;
+  pointer-events: none;
 }
 
 .toolbar {
@@ -38,7 +38,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  z-index: var(--toolbar-z-index);
+  pointer-events: auto;
 
   width: 100%;
   height: var(--toolbar-height);
