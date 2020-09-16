@@ -60,7 +60,7 @@
   border-radius: var(--border-radius);
   margin: 2px;
   padding: 2px;
-  z-index: 1000;
+  z-index: var(--gamepad-z-index);
 }
 
 .gamepad:hover {

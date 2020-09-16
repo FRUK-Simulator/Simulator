@@ -62,10 +62,17 @@ const BUTTON_SPECIFICATION = {
 };
 
 // Ensures the value falls within the window with margins
-function withinWindow(value: number, width: number) {
+function withinWindowWidth(value: number, width: number) {
   const MIN_X = 0;
   const MAX_X = window.innerWidth - width;
   return Math.max(Math.min(value, MAX_X), MIN_X);
+}
+
+// Ensures the value falls within the window with margins
+function withinWindowHeight(value: number, height: number) {
+  const MIN_Y = 80;
+  const MAX_Y = window.innerHeight - height;
+  return Math.min(Math.max(value, MIN_Y), MAX_Y);
 }
 /**
  * Component for the game controller
@@ -133,13 +140,13 @@ export const Gamepad: FunctionComponent = () => {
 
         const startPos = dragOffsetRef.current || { x: 0, y: 0 };
         setCoordinates({
-          x: withinWindow(
+          x: withinWindowWidth(
             e.clientX - startPos.x,
             gamepadRef.current!.getBoundingClientRect().width
           ),
-          y: withinWindow(
+          y: withinWindowHeight(
             e.clientY - startPos.y,
-            gamepadRef.current!.getBoundingClientRect().width
+            gamepadRef.current!.getBoundingClientRect().height
           ),
         });
       }}

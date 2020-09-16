@@ -58,8 +58,9 @@
   --toolbar-hover-height: 30px;
 
   /* Z-Indexes */
-  --message-z-index: 250;
-  --header-z-index: 200;
-  --dialog-z-index: 150;
+  --message-z-index: 300;
+  --dialog-z-index: 250;
+  --gamepad-z-index: 200;
+  --header-z-index: 150;
   --toolbar-z-index: 100;
 }
