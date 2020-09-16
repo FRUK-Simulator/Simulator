@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   gameControllerSlice,
   isControllerVisible,
-} from "../../../ControlPanel/GameController/gameControllerSlice";
+} from "../../../state/gameControllerSlice";
 import { SelectField } from "../Common/Form";
 
 const gamepadOptions = [

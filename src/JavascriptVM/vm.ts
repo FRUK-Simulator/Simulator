@@ -1,5 +1,5 @@
 import Interpreter from "js-interpreter";
-import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
+import { ControllerKey } from "../state/gameControllerSlice";
 import { DISTANCE_SENSOR_RANGE } from "./distanceSensorConstants";
 
 export type BlocklyInterpreterCallbacks = {

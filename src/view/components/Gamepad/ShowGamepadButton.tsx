@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   gameControllerSlice,
   isControllerVisible,
-} from "../../../ControlPanel/GameController/gameControllerSlice";
+} from "../../../state/gameControllerSlice";
 import { Button, ButtonVariant } from "../Common/Button";
 import { IconName } from "../Common/Icon";
 

@@ -5,7 +5,7 @@ import {
   ControllerKey,
   gameControllerSlice,
   isControllerVisible,
-} from "../../../ControlPanel/GameController/gameControllerSlice";
+} from "../../../state/gameControllerSlice";
 import { AppDispatch } from "../../../state/store";
 
 const BUTTON_SPECIFICATION = {

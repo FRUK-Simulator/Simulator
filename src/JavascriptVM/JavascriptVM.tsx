@@ -24,7 +24,7 @@ import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
-import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
+import { ControllerKey } from "../state/gameControllerSlice";
 import {
   ChallengeConfig,
   ChallengeListener,
