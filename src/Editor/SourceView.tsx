@@ -22,7 +22,7 @@ export const SourceView: FunctionComponent = () => {
       <SyntaxHighlighter
         language="javascript"
         showLineNumbers={true}
-        customStyle={{ margin: 1 }}
+        customStyle={{ margin: 0, padding: "1em", height: "100%" }}
       >
         {code}
       </SyntaxHighlighter>

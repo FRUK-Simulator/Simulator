@@ -16,10 +16,12 @@
 }
 
 .simulator-view--panel__main {
+  overflow-y: hidden;
   flex: 4;
 }
 
 .simulator-view--panel__utility {
+  overflow-y: hidden;
   flex: 1;
 }
 
