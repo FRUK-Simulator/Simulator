@@ -11,6 +11,8 @@ import {
   getDefaultChallenge,
 } from "../../RobotSimulator/ChallengeConfigLoader";
 import { MyProgramsView } from "./MyProgramsView";
+import { RobotView } from "./RobotView";
+import { SettingsView } from "./SettingsView";
 
 export enum SimulatorViews {
   code = "code",
@@ -21,9 +23,9 @@ export enum SimulatorViews {
 
 const simulatorViews: Record<SimulatorViews, FunctionComponent> = {
   code: BlocklyView,
-  robot: () => null,
+  robot: RobotView,
   programs: MyProgramsView,
-  settings: () => null,
+  settings: SettingsView,
 };
 
 export const LeftPanel = () => {
