@@ -1,13 +1,36 @@
+:root {
+  --toolbar-transform: translate(
+    0px,
+    calc(
+      var(--toolbar-visible-height) - var(--toolbar-height) +
+        var(--toolbar-hover-height)
+    )
+  );
+}
+
+/** Start open and then close to normal position **/
+@keyframes peek-a-boo {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  100% {
+    transform: var(--toolbar-transform);
+  }
+}
+
 .toolbar-container {
   position: fixed;
   /* The top of the toolbar should align with the bottom of the header */
   top: var(--header-height);
-  z-index: var(--toolbar-z-index);
 
   display: flex;
-  width: 100%;
+  width: var(--toolbar-width);
+  margin-left: calc((100% - var(--toolbar-width)) / 2);
+  margin-right: calc((100% - var(--toolbar-width)) / 2);
   flex-direction: column;
   align-items: center;
+  pointer-events: visible;
 }
 
 .toolbar {
@@ -15,22 +38,20 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  z-index: var(--toolbar-z-index);
 
-  width: var(--toolbar-width);
+  width: 100%;
   height: var(--toolbar-height);
 
   /* calculate the hover area and move the toolbar up */
   padding-bottom: var(--toolbar-hover-height);
   margin-bottom: calc(var(--toolbar-hover-height) * -1);
-  transform: translate(
-    0px,
-    calc(
-      var(--toolbar-visible-height) - var(--toolbar-height) +
-        var(--toolbar-hover-height)
-    )
-  );
+
+  transform: var(--toolbar-transform);
 
   transition: transform 0.25s ease-in-out;
+
+  animation: peek-a-boo ease 1.5s;
 }
 
 .toolbar:hover {
@@ -57,7 +78,7 @@
 .toolbar .btn:hover {
   border-bottom: 2px solid black;
   border-right: 2px dashed black;
-  transform: scale(1.2, 1.2);
+  transform: scale(1.1, 1.1);
 }
 
 .toolbar .btn:last-child:hover {

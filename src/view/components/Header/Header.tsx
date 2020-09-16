@@ -35,7 +35,7 @@ export const Header = () => {
           <Divider vertical />
         </>
       ) : null}
-      {currentProgram ? (
+      {currentProgram && match ? (
         <h1 className="header--program-title">
           <Icon iconName={IconName.file} /> {currentProgram.title}
         </h1>
