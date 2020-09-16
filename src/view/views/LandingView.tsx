@@ -37,7 +37,7 @@ export const LandingView = () => {
   });
 
   return (
-    <div>
+    <div className="landing-view">
       {lessons.map((lesson) => (
         <LessonSection title={lesson.title} key={lesson.title}>
           {lesson.challenges.map((challenge) => (

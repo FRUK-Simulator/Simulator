@@ -5,7 +5,8 @@
 .lesson-title {
   background-color: var(--accent-color);
   border-bottom: 2px solid var(--accent-color-dark);
-  width: 66%;
+  text-align: center;
+  width: 95%;
   color: var(--text-color-light);
   /* Rounded Right Side, Flat Left Side */
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
@@ -15,11 +16,16 @@
 .lessons {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding-left: var(--more-padding);
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .lesson-link {
   margin-right: calc(var(--more-margin) * 2);
+  margin-bottom: calc(var(--more-margin) * 2);
 }
 
 .lesson-link .card {
@@ -32,4 +38,8 @@
 
 .lesson-link:focus .card {
   border: 2px solid black;
+}
+
+.landing-view {
+  overflow-y: auto;
 }
