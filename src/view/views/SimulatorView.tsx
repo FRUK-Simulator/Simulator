@@ -3,7 +3,7 @@ import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";
 import "./SimulatorView.css";
-import { useLocation, useParams } from "react-router-dom";
+import { Prompt, useLocation, useParams } from "react-router-dom";
 import { BlocklyView } from "./BlocklyView";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
 import {
@@ -28,6 +28,22 @@ const simulatorViews: Record<SimulatorViews, FunctionComponent> = {
   settings: SettingsView,
 };
 
+const WarningPrompt = () => {
+  const currentLocation = useLocation();
+
+  return (
+    <Prompt
+      message={(nextLocation) => {
+        if (nextLocation.pathname !== currentLocation.pathname) {
+          return "Are you sure you want to leave? All unsaved work will be lost.";
+        }
+
+        return true;
+      }}
+    />
+  );
+};
+
 export const LeftPanel = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -41,6 +57,7 @@ export const LeftPanel = () => {
     </div>
   );
 };
+
 export const RightPanel = () => (
   <div className="simulator-view--panel">
     <Container>
@@ -51,6 +68,7 @@ export const RightPanel = () => (
 
 export const SimulatorView = () => {
   const vm = useVM();
+
   const { lesson = "", challenge = "" } = useParams<{
     lesson: string;
     challenge: string;
@@ -66,6 +84,7 @@ export const SimulatorView = () => {
 
   return (
     <div className="simulator-view">
+      <WarningPrompt />
       <LeftPanel />
       <RightPanel />
       <Toolbar />

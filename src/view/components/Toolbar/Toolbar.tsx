@@ -35,7 +35,7 @@ export const Toolbar = () => (
         Settings
       </LinkButton>
       <LinkButton to="/" iconPosition="left" iconName={IconName.back}>
-        Back
+        Challenges
       </LinkButton>
     </div>
   </div>
