@@ -1,4 +1,3 @@
-import { KeyCodes } from "@fluentui/react";
 import React, {
   FunctionComponent,
   ReactNode,
