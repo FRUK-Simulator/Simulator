@@ -62,7 +62,6 @@
   font-family: "Indie Flower", cursive;
   font-weight: bold;
   text-align: center;
-  justify-content: flex-end;
   /* Buttons should expand to take up the entire space equally */
   width: 100%;
   height: 100%;

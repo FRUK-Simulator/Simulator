@@ -1,5 +1,6 @@
 import React from "react";
 import { LinkButton, ButtonVariant } from "../Common/Button";
+import { IconName } from "../Common/Icon";
 import "./Toolbar.css";
 
 export const Toolbar = () => (
@@ -32,6 +33,9 @@ export const Toolbar = () => (
         replace={true}
       >
         Settings
+      </LinkButton>
+      <LinkButton to="/" iconPosition="left" iconName={IconName.back}>
+        Back
       </LinkButton>
     </div>
   </div>
