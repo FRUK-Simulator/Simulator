@@ -8,7 +8,9 @@ import {
 } from "../../BlocklyInterface/blocklySlice";
 import { BlocklyProgram, createNewProgram } from "../../core/blockly/programs";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
+import { ButtonVariant } from "../components/Common/Button";
 import { TextFormField, TextAreaFormField } from "../components/Common/Form";
+import { IconName } from "../components/Common/Icon";
 import { useDialog } from "../components/Dialog/Dialog";
 
 const DialogContent: FunctionComponent<{
@@ -52,14 +54,18 @@ export const useProgramDialog = (type: "create" | "save") => {
         />
       ),
       heading: "Save Program",
-      negativeAction: {
+      cancelAction: {
         label: "Cancel",
+        variant: ButtonVariant.danger,
+        iconName: IconName.exit,
         onClick: () => {
           return true;
         },
       },
-      positiveAction: {
+      acceptAction: {
         label: "Save",
+        iconName: IconName.save,
+        variant: ButtonVariant.success,
         onClick: () => {
           const programName =
             (document.getElementById("blockly-program-id") as HTMLInputElement)

@@ -16,6 +16,7 @@ import {
   ListItemHeader,
 } from "../components/Common/List";
 import { useProgramDialog } from "../hooks/useProgramDialog";
+import { useDeleteProgramDialog } from "../hooks/useDeleteProgramDialog";
 import "./MyProgramsView.css";
 
 export const MyProgramsView = () => {
@@ -34,6 +35,7 @@ export const MyProgramsView = () => {
   );
 
   const newProgramCallback = useProgramDialog("create");
+  const deleteProgramCallback = useDeleteProgramDialog();
 
   return (
     <>
@@ -73,6 +75,16 @@ export const MyProgramsView = () => {
                   title="Not yet implemented..."
                 >
                   Download
+                </Button>
+                <Button
+                  compact
+                  iconName={IconName.exit}
+                  iconPosition="left"
+                  disabled={program.predefined}
+                  variant={ButtonVariant.danger}
+                  onClick={deleteProgramCallback.bind(null, program)}
+                >
+                  Delete
                 </Button>
               </ButtonBar>
             </ListItem>
