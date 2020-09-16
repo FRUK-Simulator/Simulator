@@ -13,6 +13,7 @@ import {
 import { MyProgramsView } from "./MyProgramsView";
 import { RobotView } from "./RobotView";
 import { SettingsView } from "./SettingsView";
+import { Gamepad } from "../components/Gamepad/Gamepad";
 
 export enum SimulatorViews {
   code = "code",
@@ -59,11 +60,9 @@ export const LeftPanel = () => {
 };
 
 export const RightPanel = () => (
-  <div className="simulator-view--panel">
-    <Container>
-      <RobotSimulator />
-    </Container>
-  </div>
+  <Container className="simulator-view--panel">
+    <RobotSimulator />
+  </Container>
 );
 
 export const SimulatorView = () => {
@@ -88,6 +87,7 @@ export const SimulatorView = () => {
       <LeftPanel />
       <RightPanel />
       <Toolbar />
+      <Gamepad />
     </div>
   );
 };

@@ -58,6 +58,16 @@
   transform: translate(0px, 0px);
 }
 
+.toolbar:focus {
+  transform: translate(0px, 0px);
+}
+
+/* The following CSS is to allow the toolbar to expand when the user tabs throughout the page - it requires extra work
+   to behave properly however so its commented out for now. */
+/* .toolbar:focus-within {
+  transform: translate(0px, 0px);
+} */
+
 .toolbar .btn {
   font-family: "Indie Flower", cursive;
   font-weight: bold;

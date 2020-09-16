@@ -18,9 +18,15 @@
   min-height: 1.5em;
   width: 100%;
   border-bottom: 2px dashed var(--primary-color);
+  margin-bottom: 1px;
 }
 
 .form-field--input:focus {
   outline: none;
-  border-bottom: 2px solid var(--primary-color);
+  margin-bottom: 0px;
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.form-field--select:hover {
+  cursor: pointer;
 }

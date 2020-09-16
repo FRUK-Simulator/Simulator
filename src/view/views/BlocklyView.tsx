@@ -10,6 +10,7 @@ import { useVM } from "../../JavascriptVM/JavascriptVM";
 import { getActiveEditor, editorSlice } from "../../Editor/editorSlice";
 import { SourceView } from "../../Editor/SourceView";
 import { SaveProgramButton } from "../components/SaveProgramButton/SaveProgramButton";
+import { ShowGamepadButton } from "../components/Gamepad/ShowGamepadButton";
 
 const VMControls = () => {
   const isVMStarted = useSelector(isExecuting);
@@ -87,13 +88,7 @@ const EditorControls = () => {
       >
         View {currentView === "Blockly" ? "Source" : "Blocks"}
       </Button>
-      <Button
-        variant={ButtonVariant.info}
-        disabled
-        iconName={IconName.controller}
-      >
-        Show Controller
-      </Button>
+      <ShowGamepadButton />
     </ButtonBar>
   );
 };
