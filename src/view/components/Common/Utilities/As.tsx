@@ -1,6 +1,8 @@
 import React from "react";
 import { FunctionComponent } from "react";
 
+export type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
 /**
  * Utility component to render children under a specific html tag.
  *
@@ -10,7 +12,7 @@ import { FunctionComponent } from "react";
  */
 export const As: FunctionComponent<{
   className?: string;
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  as: Headings;
 }> = ({ children, as, className = "" }) => {
   const renderMap: Record<typeof as, FunctionComponent> = {
     h1: () => <h1 className={className}>{children}</h1>,

@@ -26,3 +26,6 @@ export const robotSimulatorSlice = createSlice({
 
 export const getMotorPower = (channel: number) => (state: RootState) =>
   state.simulator.motors[channel] || 0;
+
+export const getMotorStats = (state: RootState) =>
+  Object.entries(state.simulator.motors);

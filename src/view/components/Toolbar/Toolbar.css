@@ -26,6 +26,7 @@
 
   display: flex;
   width: var(--toolbar-width);
+  z-index: var(--toolbar-z-index);
   margin-left: calc((100% - var(--toolbar-width)) / 2);
   margin-right: calc((100% - var(--toolbar-width)) / 2);
   flex-direction: column;
@@ -42,6 +43,7 @@
 
   width: 100%;
   height: var(--toolbar-height);
+  z-index: var(--toolbar-z-index);
 
   /* calculate the hover area and move the toolbar up */
   padding-bottom: var(--toolbar-hover-height);

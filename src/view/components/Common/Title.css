@@ -1,0 +1,7 @@
+.title {
+  text-align: center;
+}
+
+.title--divider {
+  border-bottom: 2px solid var(--color-gray);
+}
