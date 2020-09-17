@@ -1,0 +1,14 @@
+.draggable-container {
+  position: absolute;
+  background: transparent;
+  border-radius: var(--border-radius);
+  margin: 2px;
+  padding: 2px;
+  z-index: var(--gamepad-z-index);
+}
+
+.draggable-container:hover {
+  margin: 0px;
+  cursor: move;
+  border: 2px dotted black;
+}

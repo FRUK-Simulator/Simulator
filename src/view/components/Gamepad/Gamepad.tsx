@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import React, { FunctionComponent } from "react";
 import "./Gamepad.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +7,7 @@ import {
   isControllerVisible,
 } from "../../../state/gameControllerSlice";
 import { AppDispatch } from "../../../state/store";
+import { DraggableContainer } from "../Common/DraggableContainer";
 
 const BUTTON_SPECIFICATION = {
   dpad: [
@@ -62,29 +63,13 @@ const BUTTON_SPECIFICATION = {
 };
 
 // Ensures the value falls within the window with margins
-function withinWindowWidth(value: number, width: number) {
-  const MIN_X = 0;
-  const MAX_X = window.innerWidth - width;
-  return Math.max(Math.min(value, MAX_X), MIN_X);
-}
 
 // Ensures the value falls within the window with margins
-function withinWindowHeight(value: number, height: number) {
-  const MIN_Y = 80;
-  const MAX_Y = window.innerHeight - height;
-  return Math.min(Math.max(value, MIN_Y), MAX_Y);
-}
 /**
  * Component for the game controller
  */
 export const Gamepad: FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [coordinates, setCoordinates] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  });
-  const gamepadRef = useRef<HTMLElement | null>();
-  const dragOffsetRef = useRef<{ x: number; y: number } | null>(null);
   const isVisible = useSelector(isControllerVisible);
 
   const onRelease = (key: ControllerKey | null) => {
@@ -103,62 +88,9 @@ export const Gamepad: FunctionComponent = () => {
     }
   };
 
-  useEffect(() => {
-    const onResize = (e: UIEvent) => {
-      // Ensure the gamepad doesn't get hidden by shrinking the window
-      setCoordinates({
-        x: Math.min(coordinates.x, window.innerWidth - 40),
-        y: Math.min(coordinates.y, window.innerHeight - 40),
-      });
-    };
-
-    window.addEventListener("resize", onResize);
-
-    return () => window.removeEventListener("resize", onResize);
-  });
-
   return (
     // original svg image is from https://www.svgrepo.com/svg/95376/game-controller LICENSE: CC0 License
-    <div
-      className="gamepad"
-      draggable
-      onDragStart={(e) => {
-        if (!gamepadRef.current) {
-          return;
-        }
-
-        const gamePadRect = gamepadRef.current.getBoundingClientRect();
-        dragOffsetRef.current = {
-          x: e.clientX - gamePadRect.x,
-          y: e.clientY - gamePadRect.y,
-        };
-      }}
-      onDragEnd={(e) => {
-        if (!gamepadRef.current || !dragOffsetRef.current) {
-          return;
-        }
-
-        const startPos = dragOffsetRef.current || { x: 0, y: 0 };
-        setCoordinates({
-          x: withinWindowWidth(
-            e.clientX - startPos.x,
-            gamepadRef.current!.getBoundingClientRect().width
-          ),
-          y: withinWindowHeight(
-            e.clientY - startPos.y,
-            gamepadRef.current!.getBoundingClientRect().height
-          ),
-        });
-      }}
-      style={{
-        top: coordinates.y,
-        left: coordinates.x,
-        visibility: isVisible ? "visible" : "hidden",
-      }}
-      ref={(e) => {
-        gamepadRef.current = e;
-      }}
-    >
+    <DraggableContainer className={isVisible ? "visible" : "hidden"}>
       <svg
         version="1.1"
         id="GameController"
@@ -226,6 +158,6 @@ export const Gamepad: FunctionComponent = () => {
           />
         ))}
       </svg>
-    </div>
+    </DraggableContainer>
   );
 };

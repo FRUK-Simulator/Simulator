@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import "normalize.css";
 import "./variables.css";
 import "./index.css";
+import "./utils.css";
+
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
