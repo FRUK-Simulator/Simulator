@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";
@@ -83,6 +83,11 @@ export const SimulatorView = () => {
     },
     [lesson, challenge, vm]
   );
+
+  // Use layout effect ensures the vm is stopped before leaving
+  useLayoutEffect(() => {
+    return () => vm.stop();
+  }, [vm]);
 
   return (
     <div className="simulator-view">

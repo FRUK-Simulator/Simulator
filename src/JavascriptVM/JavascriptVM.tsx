@@ -8,7 +8,7 @@ import {
 } from "react";
 import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { vmSlice, getCode } from "./vmSlice";
+import { vmSlice, getCode, getExecutionSpeed } from "./vmSlice";
 import { AppDispatch } from "../state/store";
 import {
   BlocklyInterpreter,
@@ -24,7 +24,7 @@ import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
-import { ControllerKey } from "../state/gameControllerSlice";
+import { ControllerKey, getControllerKeys } from "../state/gameControllerSlice";
 import {
   ChallengeConfig,
   ChallengeListener,
@@ -223,7 +223,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             },
 
             onControllerKeyCheck: (key: ControllerKey): boolean => {
-              return store.getState().gameController[key];
+              return getControllerKeys(store.getState())[key];
             },
             getSensorValue: (channel: number): number => {
               const value = robotRef.current?.getAnalogInput(channel);
@@ -241,7 +241,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
             const interpreter = new BlocklyInterpreter(
               code,
-              store.getState().vm.speed,
+              getExecutionSpeed(store.getState()),
               callbacks
             );
             setInterpreter(interpreter);
