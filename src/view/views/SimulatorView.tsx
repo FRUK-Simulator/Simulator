@@ -81,7 +81,7 @@ export const SimulatorView = () => {
           ?.find((c) => c.name === challenge) ?? getDefaultChallenge()
       );
     },
-    [lesson, challenge]
+    [lesson, challenge, vm]
   );
 
   return (

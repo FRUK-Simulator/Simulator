@@ -5,6 +5,7 @@ import { ExecutionSpeed } from "../../JavascriptVM/vm";
 import { getExecutionSpeed } from "../../JavascriptVM/vmSlice";
 import { Container } from "../components/Common/Container";
 import { SelectField } from "../components/Common/Form";
+import { Title } from "../components/Common/Title";
 import { GamepadSettings } from "../components/Gamepad/GamepadSettings";
 
 const executionSpeedOptions = [
@@ -44,8 +45,10 @@ const ExecutionSpeedSelect = () => {
 
 export const SettingsView = () => {
   return (
-    <Container>
-      <h2>Settings</h2>
+    <Container className="simulator-view--panel__main">
+      <Title as="h2" divider>
+        Settings
+      </Title>
       <ExecutionSpeedSelect />
       <GamepadSettings />
     </Container>

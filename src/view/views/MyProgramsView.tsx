@@ -18,6 +18,7 @@ import {
 import { useProgramDialog } from "../hooks/useProgramDialog";
 import { useDeleteProgramDialog } from "../hooks/useDeleteProgramDialog";
 import "./MyProgramsView.css";
+import { Title } from "../components/Common/Title";
 
 export const MyProgramsView = () => {
   const programs = useSelector(getBlocklyPrograms);
@@ -40,7 +41,9 @@ export const MyProgramsView = () => {
   return (
     <>
       <Container className="simulator-view--panel__main my-programs-view">
-        <h2 className="my-programs-heading">My Programs</h2>
+        <Title as="h2" divider>
+          My Programs
+        </Title>
         <Button
           variant={ButtonVariant.success}
           iconName={IconName.file}

@@ -8,6 +8,7 @@
   justify-content: center;
   align-items: center;
   z-index: var(--message-z-index);
+  pointer-events: none;
 }
 
 .message {
@@ -23,6 +24,7 @@
   padding: var(--less-padding);
   border: 2px solid var(--color-gray);
   margin: var(--normal-margin);
+  pointer-events: auto;
 }
 
 .message-content {

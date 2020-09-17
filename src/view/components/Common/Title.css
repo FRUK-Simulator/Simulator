@@ -1,7 +1,10 @@
 .title {
   text-align: center;
+  margin: 0;
+  padding: var(--less-padding);
+  margin-bottom: var(--more-margin);
 }
 
 .title--divider {
-  border-bottom: 2px solid var(--color-gray);
+  border-bottom: 2px solid black;
 }

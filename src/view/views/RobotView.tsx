@@ -12,7 +12,7 @@ export const RobotView = () => {
 
   return (
     <>
-      <Container className="robot-view">
+      <Container className="simulator-view--panel__main robot-view">
         <Title as="h2" divider>
           Robot Status
         </Title>
