@@ -73,13 +73,16 @@ export const SimulatorView = () => {
     challenge: string;
   }>();
 
-  useEffect(function loadChallengeFromURL() {
-    vm.setChallenge(
-      getChallengesPerArena()
-        .get(lesson)
-        ?.find((c) => c.name === challenge) ?? getDefaultChallenge()
-    );
-  });
+  useEffect(
+    function loadChallengeFromURL() {
+      vm.setChallenge(
+        getChallengesPerArena()
+          .get(lesson)
+          ?.find((c) => c.name === challenge) ?? getDefaultChallenge()
+      );
+    },
+    [lesson, challenge]
+  );
 
   return (
     <div className="simulator-view">
