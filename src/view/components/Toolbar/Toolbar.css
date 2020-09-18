@@ -14,6 +14,10 @@
     transform: translate(0px, 0px);
   }
 
+  50% {
+    transform: translate(0px, 0px);
+  }
+
   100% {
     transform: var(--toolbar-transform);
   }
@@ -53,7 +57,7 @@
 
   transition: transform 0.25s ease-in-out;
 
-  animation: peek-a-boo ease 1.5s;
+  animation: peek-a-boo ease-in 2s;
 }
 
 .toolbar:hover {
