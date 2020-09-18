@@ -5,9 +5,12 @@
 
 .blockly-workspace.executing {
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .blockly-workspace.executing:before {
+  /* We want to display the not allowed ico */
+  pointer-events: auto;
   content: " ";
   position: absolute;
   top: 0;
