@@ -139,6 +139,20 @@ export class BlocklyInterpreter {
         }
       );
 
+      const colorSensorConversion = interpreter.createNativeFunction(
+        (color: string) => {
+          if (color === "red") {
+            return 0xff0000;
+          } else if (color == "blue") {
+            return 0x0000ff;
+          } else if (color == "green") {
+            return 0x00ff00;
+          }
+          // default arbitrarily to green
+          return 0xff0000;
+        }
+      );
+
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
@@ -158,6 +172,11 @@ export class BlocklyInterpreter {
         globals,
         "sensorConversionFactor",
         sensorConversionFactor
+      );
+      interpreter.setProperty(
+        globals,
+        "colorSensorConversion",
+        colorSensorConversion
       );
     });
 
