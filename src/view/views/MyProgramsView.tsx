@@ -56,7 +56,7 @@ export const MyProgramsView = () => {
             </Button>
             <Button
               variant={ButtonVariant.info}
-              iconName={IconName.load}
+              iconName={IconName.import}
               iconPosition="left"
               disabled
               title="Not yet implemented"

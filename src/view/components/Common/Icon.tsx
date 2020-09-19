@@ -15,6 +15,7 @@ export enum IconName {
   download = "fas fa-file-download",
   controller = "fas fa-gamepad",
   back = "fas fa-arrow-left",
+  import = "fas fa-file-upload",
 }
 
 export const Icon: FunctionComponent<
