@@ -44,14 +44,27 @@ export const MyProgramsView = () => {
         <Title as="h2" divider>
           My Programs
         </Title>
-        <Button
-          variant={ButtonVariant.success}
-          iconName={IconName.file}
-          iconPosition="left"
-          onClick={newProgramCallback}
-        >
-          New Program
-        </Button>
+        <div className="my-programs-view--btn-container">
+          <ButtonBar>
+            <Button
+              variant={ButtonVariant.success}
+              iconName={IconName.file}
+              iconPosition="left"
+              onClick={newProgramCallback}
+            >
+              New Program
+            </Button>
+            <Button
+              variant={ButtonVariant.info}
+              iconName={IconName.load}
+              iconPosition="left"
+              disabled
+              title="Not yet implemented"
+            >
+              Import
+            </Button>
+          </ButtonBar>
+        </div>
         <List>
           {programs.map((program) => (
             <ListItem key={program.title}>

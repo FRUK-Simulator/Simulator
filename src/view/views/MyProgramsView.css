@@ -8,3 +8,8 @@
 .my-programs-view {
   overflow-y: auto;
 }
+
+.my-programs-view--btn-container {
+  width: 100%;
+  padding: var(--normal-margin);
+}

@@ -43,6 +43,12 @@ export const Button: FunctionComponent<
   ...rest
 }) => (
   <button
+    {...rest}
+    onClick={(e) => {
+      if (!disabled && rest.onClick) {
+        rest.onClick(e);
+      }
+    }}
     className={getButtonClass({
       disabled,
       iconPosition,
@@ -51,7 +57,6 @@ export const Button: FunctionComponent<
       variant,
       ...rest,
     })}
-    {...rest}
   >
     {iconName ? <Icon iconName={iconName} /> : null}
     {children}
@@ -70,9 +75,14 @@ export const LinkButton: FunctionComponent<
   ...rest
 }) => (
   <Link
+    {...rest}
+    onClick={(e) => {
+      if (!disabled && rest.onClick) {
+        rest.onClick(e);
+      }
+    }}
     className={getButtonClass({ disabled, iconPosition, compact, ...rest })}
     to={to}
-    {...rest}
   >
     {iconName ? <Icon iconName={iconName} /> : null}
     {children}
