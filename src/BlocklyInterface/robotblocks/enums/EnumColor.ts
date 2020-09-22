@@ -27,7 +27,6 @@ export function addColorEnumBlock() {
     ],
     (block) => {
       const colorString = block.getFieldValue("color");
-
       const code = `colorSensorConversion("${colorString}")`;
 
       return [code, JavaScript.ORDER_ATOMIC];
