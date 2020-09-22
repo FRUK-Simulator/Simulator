@@ -6,9 +6,7 @@ import { useVM } from "../JavascriptVM/JavascriptVM";
 // proxies all required events from the browsers into the simulation. All react redux integration is done at this level.
 export const RobotSimulator: FunctionComponent = () => {
   const canvasParentRef = useRef<HTMLDivElement>(null);
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
   const vm = useVM();
 
   // effect to initialize the simulator on first mount
@@ -18,7 +16,7 @@ export const RobotSimulator: FunctionComponent = () => {
     return () => {
       vm.onCanvasDestroyed(canvasEl);
     };
-  });
+  }, [vm]);
 
   return (
     <div className="robot-simulator" ref={canvasParentRef}>

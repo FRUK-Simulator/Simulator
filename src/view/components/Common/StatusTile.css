@@ -1,0 +1,32 @@
+.status-tile {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-color-dark);
+  background-color: var(--color-light-gray);
+  box-shadow: -2px 3px 1px 2px var(--color-gray);
+  width: 8em;
+  height: 8em;
+  margin: 1em;
+  padding: 1em;
+}
+
+.status-tile--active {
+  color: var(--text-color-light);
+  background-color: var(--primary-color);
+  box-shadow: -2px 3px 1px 2px var(--primary-color-darker);
+}
+
+.status-tile--label {
+  font-size: 1.25em;
+  text-overflow: ellipsis;
+}
+
+.status-tile--value {
+  vertical-align: bottom;
+  text-align: right;
+  font-size: 2.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+}

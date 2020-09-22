@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { RootState } from "../../state/store";
 
 export enum ControllerKey {
   Y = "Y",
@@ -32,15 +32,30 @@ const CONTROLLER_STATES: controllerState = {
  */
 export const gameControllerSlice = createSlice({
   name: "gameController",
-  initialState: CONTROLLER_STATES,
+  initialState: {
+    buttonStates: CONTROLLER_STATES,
+    visible: false,
+  },
   reducers: {
     setControllerKeyState(
       state,
       keyPress: PayloadAction<{ key: ControllerKey; value: boolean }>
     ) {
-      state[keyPress.payload.key] = keyPress.payload.value;
+      state.buttonStates[keyPress.payload.key] = keyPress.payload.value;
 
       return state;
+    },
+    showController(state) {
+      return {
+        ...state,
+        visible: true,
+      };
+    },
+    hideController(state) {
+      return {
+        ...state,
+        visible: false,
+      };
     },
   },
 });
@@ -52,4 +67,8 @@ export const gameControllerSlice = createSlice({
  *
  * @returns the currently selected Editor type
  */
-export const getControllerKeys = (state: RootState) => state.gameController;
+export const getControllerKeys = (state: RootState) =>
+  state.gameController.buttonStates;
+
+export const isControllerVisible = (state: RootState) =>
+  state.gameController.visible;

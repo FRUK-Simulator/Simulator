@@ -1,0 +1,15 @@
+.robot-view {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.robot-view h2 {
+  text-align: center;
+}
+
+.robot-view--stats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: var(--normal-padding);
+}

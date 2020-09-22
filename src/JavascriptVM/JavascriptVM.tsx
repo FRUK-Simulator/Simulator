@@ -8,8 +8,8 @@ import {
 } from "react";
 import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { vmSlice, getCode } from "./vmSlice";
-import { AppDispatch } from "../store";
+import { vmSlice, getCode, getExecutionSpeed } from "./vmSlice";
+import { AppDispatch } from "../state/store";
 import {
   BlocklyInterpreter,
   ExecutionState,
@@ -19,13 +19,12 @@ import {
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
-import { messageSlice } from "../ErrorViews/messagesSlice";
-import { MessageBarType } from "@fluentui/react";
+import { MessageType, messageSlice } from "../state/messagesSlice";
 import Blockly from "blockly";
 import { Sim3D } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
-import { ControllerKey } from "../ControlPanel/GameController/gameControllerSlice";
+import { ControllerKey, getControllerKeys } from "../state/gameControllerSlice";
 import {
   ChallengeConfig,
   ChallengeListener,
@@ -213,7 +212,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
               dispatch(
                 messageSlice.actions.addMessage({
-                  type: MessageBarType.success,
+                  type: MessageType.success,
                   msg: "Program finished!",
                 })
               );
@@ -224,7 +223,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             },
 
             onControllerKeyCheck: (key: ControllerKey): boolean => {
-              return store.getState().gameController[key];
+              return getControllerKeys(store.getState())[key];
             },
             getSensorValue: (channel: number): number => {
               const value = robotRef.current?.getAnalogInput(channel);
@@ -242,7 +241,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
             const interpreter = new BlocklyInterpreter(
               code,
-              store.getState().vm.speed,
+              getExecutionSpeed(store.getState()),
               callbacks
             );
             setInterpreter(interpreter);
@@ -250,7 +249,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           } catch (err) {
             dispatch(
               messageSlice.actions.addMessage({
-                type: MessageBarType.error,
+                type: MessageType.danger,
                 msg: "Code cannot be executed.",
               })
             );

@@ -1,0 +1,61 @@
+.dialog {
+  position: fixed;
+  top: var(--header-height);
+  z-index: var(--dialog-z-index);
+  width: 100%;
+  height: calc(100% - var(--header-height));
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog--overlay {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.dialog--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: white;
+  border: 4px dashed var(--primary-color);
+
+  opacity: 1;
+  flex: 1;
+
+  margin: 10%;
+  padding: var(--more-padding);
+}
+
+.dialog--danger {
+  border: 4px dashed var(--accent-color);
+}
+
+.dialog--container__content {
+  flex: 1;
+  justify-self: stretch;
+  margin-bottom: var(--more-margin);
+}
+
+.dialog--container__heading {
+  color: white;
+  background-color: var(--primary-color);
+  padding: var(--less-padding);
+  margin-bottom: var(--more-margin);
+}
+
+.dialog--danger .dialog--container__heading {
+  background-color: var(--accent-color);
+}
+
+.delete-program-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1em;
+
+  font-size: 2em;
+  background-color: var(--color-light-gray);
+}

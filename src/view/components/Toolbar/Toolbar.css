@@ -1,0 +1,119 @@
+:root {
+  --toolbar-transform: translate(
+    0px,
+    calc(
+      var(--toolbar-visible-height) - var(--toolbar-height) +
+        var(--toolbar-hover-height)
+    )
+  );
+}
+
+/** Start open and then close to normal position **/
+@keyframes peek-a-boo {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  50% {
+    transform: translate(0px, 0px);
+  }
+
+  100% {
+    transform: var(--toolbar-transform);
+  }
+}
+
+.toolbar-container {
+  position: fixed;
+  /* The top of the toolbar should align with the bottom of the header */
+  top: var(--header-height);
+
+  display: flex;
+  width: var(--toolbar-width);
+  z-index: var(--toolbar-z-index);
+  margin-left: calc((100% - var(--toolbar-width)) / 2);
+  margin-right: calc((100% - var(--toolbar-width)) / 2);
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  pointer-events: auto;
+
+  width: 100%;
+  height: var(--toolbar-height);
+  z-index: var(--toolbar-z-index);
+
+  /* calculate the hover area and move the toolbar up */
+  padding-bottom: var(--toolbar-hover-height);
+  margin-bottom: calc(var(--toolbar-hover-height) * -1);
+
+  transform: var(--toolbar-transform);
+
+  transition: transform 0.25s ease-in-out;
+
+  animation: peek-a-boo ease-in 2s;
+}
+
+.toolbar:hover {
+  transform: translate(0px, 0px);
+}
+
+.toolbar:focus {
+  transform: translate(0px, 0px);
+}
+
+/* The following CSS is to allow the toolbar to expand when the user tabs throughout the page - it requires extra work
+   to behave properly however so its commented out for now. */
+/* .toolbar:focus-within {
+  transform: translate(0px, 0px);
+} */
+
+.toolbar .btn {
+  font-family: "Indie Flower", cursive;
+  font-weight: bold;
+  text-align: center;
+  /* Buttons should expand to take up the entire space equally */
+  width: 100%;
+  height: 100%;
+
+  /* remove margin as there is no hover border */
+  margin-bottom: 0px;
+
+  color: var(--text-color-light);
+  border-bottom: 2px solid black;
+  background-color: var(--accent-color);
+}
+
+.toolbar .btn:hover {
+  border-bottom: 2px solid black;
+  border-right: 2px dashed black;
+  transform: scale(1.1, 1.1);
+}
+
+.toolbar .btn:last-child:hover {
+  border-bottom: 2px solid black;
+  border-right: none;
+  transform: scale(1.2, 1.2);
+}
+
+/* Left Border of Toolbar */
+.toolbar .btn:first-child {
+  /* Left Corner */
+  border-radius: 0 0 0 var(--border-radius);
+}
+
+.toolbar .btn:last-child {
+  /* Right Corner */
+  border-radius: 0 0 var(--border-radius) 0;
+}
+
+/* Dashed Border Between Each Button */
+.toolbar .btn + .btn {
+  border-left: 2px dashed black;
+}

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch } from "../state/store";
 import {
   BlocklyEvent,
   BlocklyUiEvent,
@@ -19,9 +19,9 @@ import {
 } from "./blocklySlice";
 
 import "./Blockly.css";
-import { loadBlocklyXml } from "./BlocklyProgramLoader";
 import Blockly, { WorkspaceSvg } from "blockly";
 import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
+import { loadBlocklyXml } from "../core/blockly/programs";
 
 export function getCurrentBlocklyCode(): string {
   const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());

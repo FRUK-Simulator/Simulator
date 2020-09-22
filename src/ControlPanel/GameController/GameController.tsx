@@ -4,7 +4,7 @@ import "./GameController.css";
 import { useDispatch } from "react-redux";
 
 import { gameControllerSlice, ControllerKey } from "./gameControllerSlice";
-import { AppDispatch } from "../../store";
+import { AppDispatch } from "../../state/store";
 
 const BUTTON_SPECIFICATION = {
   dpad: [

@@ -10,6 +10,7 @@
     "@uifabric/icons": "^7.3.48",
     "blockly": "^3.20200402.1",
     "js-interpreter": "^2.2.0",
+    "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.20",

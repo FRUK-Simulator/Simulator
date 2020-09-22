@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "normalize.css";
+import "./variables.css";
 import "./index.css";
+import "./utils.css";
+
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { initializeIcons } from "@uifabric/icons";
-
-initializeIcons();
 
 ReactDOM.render(
   <React.StrictMode>

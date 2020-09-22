@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from "react";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "./state/store";
 import { AppRouter } from "./AppRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
-import { MenuBar } from "./Views/MenuBar/MenuBar";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
-import { MessageCenter } from "./ErrorViews/MessageCenter";
+import { Header } from "./view/components/Header/Header";
+import { DialogProvider } from "./view/components/Dialog/Dialog";
+import { MessageCenter } from "./view/components/MessageCenter/MessageCenter";
 
 /**
  * This is exported seperately so that tests can provide their own providers. This
@@ -16,10 +17,9 @@ import { MessageCenter } from "./ErrorViews/MessageCenter";
 export const App: FunctionComponent = () => {
   return (
     <div className="app-container">
-      <MenuBar />
+      <Header />
       <MessageCenter />
       <AppRouter />
-      <div className="footer"></div>
     </div>
   );
 };
@@ -29,7 +29,9 @@ const AppWithProviders: FunctionComponent = () => {
     <Router>
       <Provider store={store}>
         <VMProvider>
-          <App />
+          <DialogProvider>
+            <App />
+          </DialogProvider>
         </VMProvider>
       </Provider>
     </Router>

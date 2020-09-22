@@ -1,0 +1,32 @@
+.form-field--label {
+  display: block;
+  background-color: var(--color-light-gray);
+  font-family: "Roboto Mono", monospace;
+  margin-bottom: calc(var(--more-margin) * 2);
+  font-size: 1.5em;
+}
+
+.form-field--label__text {
+  margin-bottom: var(--more-margin);
+  color: var(--primary-color);
+}
+
+.form-field--input {
+  display: block;
+  border: none;
+  background-color: var(--color-light-gray);
+  min-height: 1.5em;
+  width: 100%;
+  border-bottom: 2px dashed var(--primary-color);
+  margin-bottom: 1px;
+}
+
+.form-field--input:focus {
+  outline: none;
+  margin-bottom: 0px;
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.form-field--select:hover {
+  cursor: pointer;
+}

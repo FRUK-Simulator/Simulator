@@ -1,16 +1,16 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { userSlice } from "./User/userSlice";
-import { robotSimulatorSlice } from "./RobotSimulator/robotSimulatorSlice";
+import { userSlice } from "../User/userSlice";
+import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
 import {
   blocklySlice,
   loadBlockyState,
   saveBlocklyState,
-} from "./BlocklyInterface/blocklySlice";
-import { vmSlice } from "./JavascriptVM/vmSlice";
-import { messageSlice } from "./ErrorViews/messagesSlice";
-import { simulatorLogSlice } from "./ControlPanel/SimulatorLog/simulatorLogSlice";
-import { editorSlice } from "./Editor/editorSlice";
-import { gameControllerSlice } from "./ControlPanel/GameController/gameControllerSlice";
+} from "../BlocklyInterface/blocklySlice";
+import { vmSlice } from "../JavascriptVM/vmSlice";
+import { messageSlice } from "./messagesSlice";
+import { simulatorLogSlice } from "../ControlPanel/SimulatorLog/simulatorLogSlice";
+import { editorSlice } from "../Editor/editorSlice";
+import { gameControllerSlice } from "./gameControllerSlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript
 const rootReducer = combineReducers({

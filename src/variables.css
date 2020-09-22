@@ -1,0 +1,66 @@
+:root {
+  /* General Values */
+  --main-bg-color: #eceff1;
+  --text-color-dark: #333333;
+  --text-color-light: #eeeeee;
+  --text-color-disabled: #858585;
+
+  /* Padding */
+  --less-padding: 0.5em;
+  --normal-padding: 1.5em;
+  --more-padding: 2em;
+
+  /* Margins */
+  --less-margin: 0.25em;
+  --normal-margin: 0.5em;
+  --more-margin: 0.75em;
+
+  /* Primary Color and Hues */
+  --primary-color-light: #0096e4cc;
+  --primary-color: #0096e4;
+  --primary-color-dark: #007dbf;
+  --primary-color-darker: #0072aa;
+  --primary-color-darkest: #00689e;
+
+  /* Accent Color and Hues */
+  --accent-color: #e53935;
+  --accent-color-dark: #b71c1c;
+
+  /* Status Colors */
+  --success-color: #c8e6c9;
+  --success-color-dark: #81b984;
+
+  --danger-color: #ffcdd2;
+  --danger-color-dark: #f08c96;
+
+  --warning-color: #fccf8d;
+  --info-color: #b3e5fc;
+  --trophy-color: goldenrod;
+
+  /* General Colors */
+  --color-light-gray: #eeeeee;
+  --color-gray: #dddddd;
+
+  /* Border Radiuses */
+  --border-radius: 10px;
+  --border-radius-rounder: 20px;
+
+  /* Header */
+  --header-height: 4em;
+
+  /* Toolbar */
+  /* The total height of the toolbar */
+  --toolbar-height: 90px;
+  --toolbar-width: 50%;
+  /* How much of the toolbar is visible when 'hidden' */
+  --toolbar-visible-height: 10px;
+  /* How close the mouse needs to get to the bottom edge of the toolbar to open it */
+  --toolbar-hover-height: 30px;
+
+  /* Z-Indexes */
+  --message-z-index: 300;
+  --dialog-z-index: 250;
+  --gamepad-z-index: 200;
+  --header-z-index: 150;
+  --toolbar-z-index: 100;
+}

@@ -1,0 +1,44 @@
+.simulator-view {
+  display: flex;
+  flex-direction: row;
+
+  overflow: hidden;
+  width: 100%;
+
+  flex: 1;
+}
+
+.simulator-view--panel {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+  margin: var(--normal-margin);
+}
+
+.simulator-view--panel__main {
+  overflow-y: hidden;
+  flex: 4;
+  margin-top: 0;
+}
+
+.simulator-view--panel__utility {
+  overflow-y: hidden;
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.simulator-view--panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left Panel */
+.simulator-view--panel:nth-child(1) {
+  flex: 2;
+}
+
+/* Right Panel */
+.simulator-view--panel:nth-child(2) {
+  flex: 2;
+}

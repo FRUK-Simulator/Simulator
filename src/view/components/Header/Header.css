@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  color: var(--text-color-light);
+  background-color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color-dark);
+
+  height: var(--header-height);
+
+  z-index: var(--header-z-index);
+}
+
+.header--program-title {
+  margin: 0;
+  padding: 0;
+}
+
+.header--user-controls {
+  margin-left: auto;
+  color: var(--text-color-light);
+}
+
+.brand {
+  /* Brand Icon must be at least 1.875 (30px) */
+  height: var(--header-height);
+}

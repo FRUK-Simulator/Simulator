@@ -1,0 +1,15 @@
+.my-programs-heading {
+  text-align: center;
+  border-bottom: 2px solid black;
+  margin: 0;
+  padding: var(--less-padding);
+}
+
+.my-programs-view {
+  overflow-y: auto;
+}
+
+.my-programs-view--btn-container {
+  width: 100%;
+  padding: var(--normal-margin);
+}

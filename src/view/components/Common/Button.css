@@ -1,0 +1,96 @@
+.btn {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.5em;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  /* Center Button Contents Vertically and Horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #efefef;
+
+  /* Reset margin / padding */
+  padding: 0;
+  margin: 0;
+
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+  /* 2px Margin takes the place of the 2px border when not active - prevents content from jumping */
+  margin-bottom: 2px;
+}
+
+.btn--compact {
+  font-size: 1em;
+}
+
+.btn--icon-left {
+  flex-direction: row;
+}
+
+.btn + .btn {
+  border-left: 2px dashed black;
+}
+
+.btn > i {
+  padding-right: 0;
+}
+
+.btn.btn--icon-left > i {
+  padding-right: var(--less-padding);
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: #cfd8dc;
+
+  /* Remove the 2px margin and replace with 2px border - this prevents the content from jumping */
+  margin-bottom: 0px;
+  border-bottom: 2px dashed black;
+}
+
+.btn--success:hover {
+  background-color: var(--success-color);
+}
+
+.btn--danger:hover {
+  background-color: var(--danger-color);
+}
+
+.btn--warning:hover {
+  background-color: var(--warning-color);
+}
+
+.btn--info:hover {
+  background-color: var(--info-color);
+}
+
+.btn--disabled {
+  color: var(--text-color-disabled);
+  background-color: #cfcfcf;
+}
+
+.btn--disabled .fas {
+  color: var(--text-color-disabled);
+}
+
+.btn--disabled:hover {
+  cursor: not-allowed;
+  background-color: #cfcfcf;
+  margin-bottom: 2px;
+  border-bottom: 0px;
+}
+
+.btn-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-bar .btn {
+  /* Each Button Fills Up Button Bar */
+  flex: 1;
+}
