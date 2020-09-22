@@ -232,6 +232,16 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               }
               return 0.0;
             },
+            getComplexSensorValue: (channel: number, type: string): any => {
+              const value = robotRef.current?.getComplexSensorValue(
+                channel,
+                type
+              );
+              if (value) {
+                return value;
+              }
+              return {};
+            },
           };
 
           try {

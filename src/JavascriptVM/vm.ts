@@ -29,6 +29,8 @@ export type BlocklyInterpreterCallbacks = {
    * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
    */
   getSensorValue?: (port: number) => number;
+
+  getComplexSensorValue?: (port: number, type: string) => any;
 };
 
 export enum ExecutionState {
@@ -113,6 +115,17 @@ export class BlocklyInterpreter {
         }
       );
 
+      const getComplexSensorValue = interpreter.createNativeFunction(
+        (port: number, type: string): any => {
+          if (callbacks.getComplexSensorValue) {
+            return interpreter.nativeToPseudo(
+              callbacks.getComplexSensorValue(port, type)
+            );
+          }
+          return {};
+        }
+      );
+
       const waitWrapper = interpreter.createNativeFunction(
         (milliseconds: number) => {
           this.nextStepDelay = milliseconds;
@@ -143,13 +156,12 @@ export class BlocklyInterpreter {
         (color: string) => {
           if (color === "red") {
             return 0xff0000;
-          } else if (color == "blue") {
+          } else if (color === "blue") {
             return 0x0000ff;
-          } else if (color == "green") {
+          } else if (color === "green") {
             return 0x00ff00;
           }
-          // default arbitrarily to green
-          return 0xff0000;
+          return 0;
         }
       );
 
@@ -162,6 +174,11 @@ export class BlocklyInterpreter {
         isSensorTouchPushed
       );
       interpreter.setProperty(globals, "getSensorValue", getSensorValue);
+      interpreter.setProperty(
+        globals,
+        "getComplexSensorValue",
+        getComplexSensorValue
+      );
       interpreter.setProperty(globals, "wait", waitWrapper);
       interpreter.setProperty(
         globals,
