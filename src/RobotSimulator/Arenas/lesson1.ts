@@ -66,6 +66,11 @@ function challengeA(): ChallengeConfig {
     startPosition: { x: 0, y: 2 },
     arenaConfig: arena(),
     eventListener: new Lesson1Challenge({ x: 0, y: -2 }, badZones),
+    descriptions: {
+      short:
+        "Drive motors at the same speed to create forward " +
+        "drive for a certain distance",
+    },
   };
 
   return challengeConfig;

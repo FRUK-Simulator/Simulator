@@ -11,6 +11,8 @@ import placeholder from "../components/Header/FIRST_Horz_RGB.png";
 import { Link } from "react-router-dom";
 import { ChallengeConfig } from "../../RobotSimulator/Arenas/base";
 
+const DEFAULT_LANDING_DESCRIPTION = "Solve this challenge!";
+
 const LessonSection: FunctionComponent<{ title: string }> = ({
   title,
   children,
@@ -47,9 +49,11 @@ export const LandingView = () => {
               key={challenge.name}
             >
               <Card>
-                <CardImage src={placeholder} />
+                <CardImage src={challenge.image || placeholder} />
                 <CardTitle title={challenge.name} as="h2" />
-                <CardBody>Lorem Ipsum Text</CardBody>
+                <CardBody>
+                  {challenge.descriptions?.short || DEFAULT_LANDING_DESCRIPTION}
+                </CardBody>
               </Card>
             </Link>
           ))}
