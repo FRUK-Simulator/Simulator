@@ -1,3 +1,4 @@
+import { AppDispatch } from "../state/store";
 import { getCurrentBlocklyCode } from "./BlocklyEditor";
 import { blocklySlice } from "./blocklySlice";
 
@@ -9,13 +10,14 @@ export type Version = {
 
 export type Program = {
   title: string;
+  description?: string;
   xml: string;
   predefined: boolean;
   version: Version;
 };
 
 export class BlocklyProgramSaver {
-  constructor(private dispatch: (a: any) => void) {
+  constructor(private dispatch: AppDispatch) {
     this.dispatch = dispatch;
   }
 

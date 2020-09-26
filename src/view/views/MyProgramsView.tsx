@@ -5,7 +5,6 @@ import {
   blocklySlice,
   getBlocklyPrograms,
 } from "../../BlocklyInterface/blocklySlice";
-import { BlocklyProgram } from "../../core/blockly/programs";
 import { Button, ButtonBar, ButtonVariant } from "../components/Common/Button";
 import { Container } from "../components/Common/Container";
 import { IconName } from "../components/Common/Icon";
@@ -19,14 +18,22 @@ import { useProgramDialog } from "../hooks/useProgramDialog";
 import { useDeleteProgramDialog } from "../hooks/useDeleteProgramDialog";
 import "./MyProgramsView.css";
 import { Title } from "../components/Common/Title";
+import { loadDialogueAndImport } from "../../core/blockly/import";
+import { messageSlice, MessageType } from "../../state/messagesSlice";
+import {
+  BlocklyProgramSaver,
+  Program,
+} from "../../BlocklyInterface/BlocklyProgramSaver";
 
 export const MyProgramsView = () => {
   const programs = useSelector(getBlocklyPrograms);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const blocklyProgramSaver = new BlocklyProgramSaver(dispatch);
+
   const setProgramCallback = useCallback(
-    (program: BlocklyProgram) => {
+    (program: Program) => {
       dispatch(
         blocklySlice.actions.setActiveBlocklyProgramId({ title: program.title })
       );
@@ -37,6 +44,19 @@ export const MyProgramsView = () => {
 
   const newProgramCallback = useProgramDialog("create");
   const deleteProgramCallback = useDeleteProgramDialog();
+  const importCallback = useCallback(async () => {
+    try {
+      const program = await loadDialogueAndImport();
+      dispatch(blocklySlice.actions.addBlocklyProgram({ prog: program }));
+    } catch (err) {
+      dispatch(
+        messageSlice.actions.addMessage({
+          type: MessageType.danger,
+          msg: err.message,
+        })
+      );
+    }
+  }, [dispatch]);
 
   return (
     <>
@@ -58,8 +78,7 @@ export const MyProgramsView = () => {
               variant={ButtonVariant.info}
               iconName={IconName.import}
               iconPosition="left"
-              disabled
-              title="Not yet implemented"
+              onClick={importCallback}
             >
               Import
             </Button>
@@ -87,8 +106,10 @@ export const MyProgramsView = () => {
                   compact
                   iconName={IconName.download}
                   iconPosition="left"
-                  disabled={true}
-                  title="Not yet implemented..."
+                  onClick={blocklyProgramSaver.exportToFile.bind(
+                    blocklyProgramSaver,
+                    { ...program, predefined: false }
+                  )}
                 >
                   Download
                 </Button>

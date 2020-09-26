@@ -1,22 +1,19 @@
 import Blockly, { Workspace } from "blockly";
+import { Program } from "../../BlocklyInterface/BlocklyProgramSaver";
 
-export interface BlocklyProgram {
-  id: string;
-  title: string;
-  description: string;
-  xml: string;
-  predefined: boolean;
-}
-
-export function getPredefinedBlocklyProgs(): BlocklyProgram[] {
-  let arr = [] as BlocklyProgram[];
+export function getPredefinedBlocklyProgs(): Program[] {
+  let arr = [] as Program[];
   for (const entry of predefinedDemos) {
     arr.push({
-      id: `${Math.random() * 100000}`,
       title: entry.title,
       description: entry.description,
       xml: entry.xml,
       predefined: true,
+      version: {
+        major: 1,
+        minor: 0,
+        patch: 0,
+      },
     });
   }
   return arr;
@@ -63,12 +60,16 @@ function build(xml: string, workspace: Workspace): void {
   Blockly.Xml.domToWorkspace(element, workspace);
 }
 
-export function createNewProgram() {
+export function createNewProgram(): Program {
   return {
     description: "",
-    id: `${Math.random() * 1000}`,
     predefined: false,
     title: "New Program",
     xml: newProgramXML,
+    version: {
+      major: 1,
+      minor: 0,
+      patch: 0,
+    },
   };
 }
