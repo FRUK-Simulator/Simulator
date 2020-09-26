@@ -1,6 +1,28 @@
-import { Program } from "../../BlocklyInterface/BlocklyProgramSaver";
+export type Version = {
+  major: number;
+  minor: number;
+  patch?: number;
+};
 
-export function loadDialogueAndImport() {
+export type Program = {
+  title: string;
+  description?: string;
+  xml: string;
+  predefined: boolean;
+  version: Version;
+};
+
+export function exportToFile(program: Program) {
+  const fakeLink = document.createElement("a");
+  const file = new Blob([JSON.stringify(program)], {
+    type: "application/json",
+  });
+  fakeLink.href = URL.createObjectURL(file);
+  fakeLink.download = `${program.title}.json`;
+  fakeLink.click();
+}
+
+export function importFromFile() {
   return new Promise<Program>((res, rej) => {
     const fakeFileInput = document.createElement("input");
     fakeFileInput.type = "file";

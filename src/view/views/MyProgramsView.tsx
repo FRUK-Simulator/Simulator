@@ -18,19 +18,17 @@ import { useProgramDialog } from "../hooks/useProgramDialog";
 import { useDeleteProgramDialog } from "../hooks/useDeleteProgramDialog";
 import "./MyProgramsView.css";
 import { Title } from "../components/Common/Title";
-import { loadDialogueAndImport } from "../../core/blockly/import";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
 import {
-  BlocklyProgramSaver,
+  exportToFile,
   Program,
-} from "../../BlocklyInterface/BlocklyProgramSaver";
+  importFromFile,
+} from "../../BlocklyInterface/ProgramExportImport";
 
 export const MyProgramsView = () => {
   const programs = useSelector(getBlocklyPrograms);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const blocklyProgramSaver = new BlocklyProgramSaver(dispatch);
 
   const setProgramCallback = useCallback(
     (program: Program) => {
@@ -46,7 +44,7 @@ export const MyProgramsView = () => {
   const deleteProgramCallback = useDeleteProgramDialog();
   const importCallback = useCallback(async () => {
     try {
-      const program = await loadDialogueAndImport();
+      const program = await importFromFile();
       dispatch(blocklySlice.actions.addBlocklyProgram({ prog: program }));
     } catch (err) {
       dispatch(
@@ -106,10 +104,10 @@ export const MyProgramsView = () => {
                   compact
                   iconName={IconName.download}
                   iconPosition="left"
-                  onClick={blocklyProgramSaver.exportToFile.bind(
-                    blocklyProgramSaver,
-                    { ...program, predefined: false }
-                  )}
+                  onClick={exportToFile.bind(null, {
+                    ...program,
+                    predefined: false,
+                  })}
                 >
                   Download
                 </Button>

@@ -4,7 +4,7 @@ import { vmSlice } from "../JavascriptVM/vmSlice";
 import { ExecutionState } from "../JavascriptVM/vm";
 import { getDefaultToolbox } from "./toolbox";
 import { getPredefinedBlocklyProgs } from "../core/blockly/programs";
-import { Program } from "./BlocklyProgramSaver";
+import { Program } from "./ProgramExportImport";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.

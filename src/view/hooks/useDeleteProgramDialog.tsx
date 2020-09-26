@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Program } from "../../BlocklyInterface/BlocklyProgramSaver";
+import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import { blocklySlice } from "../../BlocklyInterface/blocklySlice";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
 import { ButtonVariant } from "../components/Common/Button";

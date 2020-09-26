@@ -1,5 +1,5 @@
 import Blockly, { Workspace } from "blockly";
-import { Program } from "../../BlocklyInterface/BlocklyProgramSaver";
+import { Program } from "../../BlocklyInterface/ProgramExportImport";
 
 export function getPredefinedBlocklyProgs(): Program[] {
   let arr = [] as Program[];
