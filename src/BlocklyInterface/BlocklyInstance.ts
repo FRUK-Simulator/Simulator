@@ -17,7 +17,7 @@ export enum BlocklyEventName {
   Ui = "Ui",
 }
 
-const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
+export const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 
 // Class wrapping blockly providing methods to directly access it. React/redux
 // interaction is handled above this.
