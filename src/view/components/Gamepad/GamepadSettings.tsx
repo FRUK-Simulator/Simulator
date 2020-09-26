@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { loadSettings, persistSettings } from "../../../core/settings/settings";
 import {
   gameControllerSlice,
   isControllerVisible,
@@ -23,6 +24,15 @@ export const GamepadSettings = () => {
   const isVisible = useSelector(isControllerVisible);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const settings = loadSettings();
+    if (settings.showController) {
+      dispatch(gameControllerSlice.actions.showController());
+    } else {
+      dispatch(gameControllerSlice.actions.hideController());
+    }
+  }, [dispatch]);
+
   return (
     <SelectField
       label="Show Virtual Gamepad"
@@ -38,6 +48,8 @@ export const GamepadSettings = () => {
         } else {
           dispatch(gameControllerSlice.actions.hideController());
         }
+
+        persistSettings({ showController: opt.value });
       }}
     />
   );

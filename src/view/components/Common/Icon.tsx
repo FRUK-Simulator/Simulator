@@ -3,7 +3,8 @@ import React from "react";
 import "./Icon.css";
 
 export enum IconName {
-  start = "fas fa-check",
+  start = "fas fa-play",
+  pause = "fas fa-pause",
   step = "fas fa-forward",
   stop = "fas fa-stop",
   run = "fas fa-play",

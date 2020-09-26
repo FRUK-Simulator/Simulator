@@ -46,7 +46,7 @@ const VMControls = () => {
       </Button>
       {executionState === ExecutionState.RUNNING ? (
         <Button
-          iconName={IconName.stop}
+          iconName={IconName.pause}
           onClick={vm.pause}
           variant={ButtonVariant.warning}
         >
