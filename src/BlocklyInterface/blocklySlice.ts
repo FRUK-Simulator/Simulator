@@ -3,10 +3,8 @@ import { RootState, store } from "../state/store";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { ExecutionState } from "../JavascriptVM/vm";
 import { getDefaultToolbox } from "./toolbox";
-import {
-  BlocklyProgram,
-  getPredefinedBlocklyProgs,
-} from "../core/blockly/programs";
+import { getPredefinedBlocklyProgs } from "../core/blockly/programs";
+import { Program } from "./ProgramExportImport";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -23,7 +21,7 @@ export const blocklySlice = createSlice({
      *  update this one to simulate multiple toolboxes */
     toolboxXml: getDefaultToolbox(),
     /** Array of blockly programs */
-    blocklyPrograms: getPredefinedBlocklyProgs() as BlocklyProgram[],
+    blocklyPrograms: getPredefinedBlocklyProgs() as Program[],
     /** The id of the blockly program that is currently selected - an empty string
      * designates no selection */
     activeBlocklyProgramId: getPredefinedBlocklyProgs()[0].title,
@@ -50,7 +48,7 @@ export const blocklySlice = createSlice({
 
       return state;
     },
-    addBlockyProgram(state, action: PayloadAction<{ prog: BlocklyProgram }>) {
+    addBlocklyProgram(state, action: PayloadAction<{ prog: Program }>) {
       // If the program already exists then we update it.
       for (let i = 0; i < state.blocklyPrograms.length; ++i) {
         if (state.blocklyPrograms[i].title === action.payload.prog.title) {
@@ -63,7 +61,7 @@ export const blocklySlice = createSlice({
       state.blocklyPrograms.push(action.payload.prog);
       return state;
     },
-    removeBlockyProgram(state, action: PayloadAction<{ title: string }>) {
+    removeBlocklyProgram(state, action: PayloadAction<{ title: string }>) {
       let ind = -1;
       for (let i = 0; i < state.blocklyPrograms.length; ++i) {
         if (state.blocklyPrograms[i].title === action.payload.title) {
@@ -102,7 +100,7 @@ export const blocklySlice = createSlice({
 
 const localStorageKey = "fruk-blockly-slice-state";
 
-export const loadBlockyState = () => {
+export const loadBlocklyState = () => {
   try {
     const serializedState = localStorage.getItem(localStorageKey);
     if (serializedState === null) {
@@ -187,9 +185,7 @@ export const getBlocklyPrograms = (state: RootState) =>
  * @returns the blockly program
  */
 export const getCurrentBlocklyProgram = (state: RootState) =>
-  getBlocklyProgram(state.blockly.activeBlocklyProgramId)(
-    state
-  ) as BlocklyProgram;
+  getBlocklyProgram(state.blockly.activeBlocklyProgramId)(state) as Program;
 
 /**
  * Retrieves the program from the list of programs or returns nothing.

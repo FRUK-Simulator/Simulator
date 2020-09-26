@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import { blocklySlice } from "../../BlocklyInterface/blocklySlice";
-import { BlocklyProgram } from "../../core/blockly/programs";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
 import { ButtonVariant } from "../components/Common/Button";
 import { IconName } from "../components/Common/Icon";
@@ -25,7 +25,7 @@ export const useDeleteProgramDialog = () => {
   const dialog = useDialog();
 
   const deleteProgram = useCallback(
-    (program: BlocklyProgram) => {
+    (program: Program) => {
       dialog.open({
         content: <DialogContent title={program.title} />,
         variant: DialogVariant.danger,
@@ -47,7 +47,9 @@ export const useDeleteProgramDialog = () => {
             }
 
             dispatch(
-              blocklySlice.actions.removeBlockyProgram({ title: program.title })
+              blocklySlice.actions.removeBlocklyProgram({
+                title: program.title,
+              })
             );
 
             dispatch(

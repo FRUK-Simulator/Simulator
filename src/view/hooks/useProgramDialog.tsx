@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentBlocklyCode } from "../../BlocklyInterface/BlocklyEditor";
+import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import {
   getCurrentBlocklyProgram,
   blocklySlice,
   getBlocklyPrograms,
 } from "../../BlocklyInterface/blocklySlice";
-import { BlocklyProgram, createNewProgram } from "../../core/blockly/programs";
+import { createNewProgram } from "../../core/blockly/programs";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
 import { ButtonVariant } from "../components/Common/Button";
 import { TextFormField, TextAreaFormField } from "../components/Common/Form";
@@ -42,7 +43,7 @@ export const useProgramDialog = (type: "create" | "save") => {
   const allPrograms = useSelector(getBlocklyPrograms);
   const currentProgram = useSelector(getCurrentBlocklyProgram);
   const dialog = useDialog();
-  const program: BlocklyProgram =
+  const program: Program =
     type === "save" ? currentProgram : createNewProgram();
 
   const saveProgram = useCallback(() => {
@@ -50,7 +51,7 @@ export const useProgramDialog = (type: "create" | "save") => {
       content: (
         <DialogContent
           title={program.title}
-          description={program.description}
+          description={program.description ?? ""}
         />
       ),
       heading: "Save Program",
@@ -115,7 +116,7 @@ export const useProgramDialog = (type: "create" | "save") => {
           }
 
           dispatch(
-            blocklySlice.actions.addBlockyProgram({
+            blocklySlice.actions.addBlocklyProgram({
               prog: {
                 ...program,
                 predefined: false,

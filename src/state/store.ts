@@ -3,7 +3,7 @@ import { userSlice } from "../User/userSlice";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
 import {
   blocklySlice,
-  loadBlockyState,
+  loadBlocklyState,
   saveBlocklyState,
 } from "../BlocklyInterface/blocklySlice";
 import { vmSlice } from "../JavascriptVM/vmSlice";
@@ -29,7 +29,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState: {
-    blockly: loadBlockyState(),
+    blockly: loadBlocklyState(),
   },
 });
 
