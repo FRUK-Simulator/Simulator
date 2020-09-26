@@ -17,23 +17,13 @@ import { BLOCKLY_HIGHLIGHT_PREFIX } from "../BlocklyInterface/BlocklyInstance";
  * but without BLOCKLY_HIGHLIGHT_PREFIX statements.
  */
 function removeHighlightBlockCalls(blocklyCode: string | null): string {
-  if (!blocklyCode) return "";
-
-  const blocklyCodeLines: Array<string> = blocklyCode.split("\n");
-  let output: string = "";
-  for (let i = 0; i < blocklyCodeLines.length; ++i) {
-    if (blocklyCodeLines[i].includes(BLOCKLY_HIGHLIGHT_PREFIX)) {
-      continue;
-    }
-
-    output += blocklyCodeLines[i];
-
-    // Avoid superfluous linebreak at the end of the code
-    if (i + 1 !== blocklyCodeLines.length) {
-      output += "\n";
-    }
+  if (!blocklyCode) {
+    return "";
   }
-  return output;
+  return blocklyCode
+    .split("\n")
+    .filter((line) => !line.includes(BLOCKLY_HIGHLIGHT_PREFIX))
+    .join("\n");
 }
 
 /**
