@@ -28,7 +28,7 @@ import { ControllerKey, getControllerKeys } from "../state/gameControllerSlice";
 import {
   ChallengeConfig,
   ChallengeListener,
-} from "../RobotSimulator/Areanas/base";
+} from "../RobotSimulator/Arenas/base";
 import { ChallengeActionsImpl } from "./ChallengeActionsImpl";
 import { getDefaultChallenge } from "../RobotSimulator/ChallengeConfigLoader";
 

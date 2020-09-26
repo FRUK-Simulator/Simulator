@@ -1,8 +1,8 @@
-import { ChallengeConfig } from "./Areanas/base";
-import * as Lesson1 from "./Areanas/lesson1";
-import * as Lesson3 from "./Areanas/lesson3";
-import * as ParkingLot from "./Areanas/parkinglot";
-import * as Bowling from "./Areanas/bowling";
+import { ChallengeConfig } from "./Arenas/base";
+import * as Lesson1 from "./Arenas/lesson1";
+import * as Lesson3 from "./Arenas/lesson3";
+import * as ParkingLot from "./Arenas/parkinglot";
+import * as Bowling from "./Arenas/bowling";
 
 let challengeConfigs: Array<ChallengeConfig> = [
   ...Lesson1.challenges,

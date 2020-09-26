@@ -9,7 +9,7 @@ import {
 } from "../components/Common/Card";
 import placeholder from "../components/Header/FIRST_Horz_RGB.png";
 import { Link } from "react-router-dom";
-import { ChallengeConfig } from "../../RobotSimulator/Areanas/base";
+import { ChallengeConfig } from "../../RobotSimulator/Arenas/base";
 
 const LessonSection: FunctionComponent<{ title: string }> = ({
   title,
