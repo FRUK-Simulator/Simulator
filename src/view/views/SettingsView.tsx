@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { loadSettings, persistSettings } from "../../core/settings/settings";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
 import { ExecutionSpeed } from "../../JavascriptVM/vm";
 import { getExecutionSpeed } from "../../JavascriptVM/vmSlice";
@@ -25,6 +26,13 @@ const ExecutionSpeedSelect = () => {
   const vm = useVM();
   const executionSpeed = useSelector(getExecutionSpeed);
 
+  // load settings initially
+  useEffect(() => {
+    const settings = loadSettings();
+
+    vm.updateSpeed(settings.simulatorSpeed);
+  }, [vm]);
+
   return (
     <SelectField
       label="Code Speed"
@@ -38,6 +46,7 @@ const ExecutionSpeedSelect = () => {
         }
 
         vm.updateSpeed(opt.value);
+        persistSettings({ simulatorSpeed: opt.value });
       }}
     />
   );
