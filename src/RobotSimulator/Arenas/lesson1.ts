@@ -5,25 +5,29 @@ import {
   ChallengeActions,
   ChallengeEvent,
 } from "./base";
-import { Vector2d } from "@fruk/simulator-core/dist/engine/SimTypes";
-import { IZoneSpec } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 import { MessageType } from "../../state/messagesSlice";
+import { CoreSimTypes } from "@fruk/simulator-core";
+import { CoreSpecs } from "@fruk/simulator-core";
 
 export const arenas = [arena];
-export const challenges = [challengeA, challengeB];
+export const challenges = [challengeA, challengeB, challengeC];
 
 function arena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
     name: "Lesson 1",
     worldConfig: {
-      zLength: 20,
-      xLength: 20,
+      zLength: 5,
+      xLength: 5,
       walls: [],
+      perimeter: {
+        height: 0.5,
+        thickness: 0.1,
+      },
       camera: {
         position: {
           x: 0,
-          y: 10,
-          z: 10,
+          y: 3,
+          z: 3,
         },
       },
     },
@@ -33,25 +37,25 @@ function arena(): ArenaConfig {
 }
 
 function challengeA(): ChallengeConfig {
-  const badZones: IZoneSpec[] = [
+  const badZones: CoreSpecs.IZoneSpec[] = [
     {
       type: "zone",
-      initialPosition: { x: -3, y: 0 },
+      initialPosition: { x: -1.2, y: 0 },
       zoneShape: {
         type: "rectangle",
-        xLength: 2,
-        zLength: 20,
+        xLength: 0.5,
+        zLength: 5,
       },
       baseColor: 0x000000,
       zoneId: "0",
     },
     {
       type: "zone",
-      initialPosition: { x: 3, y: 0 },
+      initialPosition: { x: 1.2, y: 0 },
       zoneShape: {
         type: "rectangle",
-        xLength: 2,
-        zLength: 20,
+        xLength: 0.5,
+        zLength: 5,
       },
       baseColor: 0x000000,
       zoneId: "1",
@@ -59,23 +63,23 @@ function challengeA(): ChallengeConfig {
   ];
   const challengeConfig: ChallengeConfig = {
     name: "Lesson 1 - Challenge A",
-    startPosition: { x: 0, y: 6 },
+    startPosition: { x: 0, y: 2 },
     arenaConfig: arena(),
-    eventListener: new Lesson1Challenge({ x: 0, y: -8 }, badZones),
+    eventListener: new Lesson1Challenge({ x: 0, y: -2 }, badZones),
   };
 
   return challengeConfig;
 }
 
 function challengeB(): ChallengeConfig {
-  const badZones: IZoneSpec[] = [
+  const badZones: CoreSpecs.IZoneSpec[] = [
     {
       type: "zone",
-      initialPosition: { x: 0, y: 5 },
+      initialPosition: { x: 0, y: 1 },
       zoneShape: {
         type: "rectangle",
-        xLength: 4,
-        zLength: 10,
+        xLength: 1,
+        zLength: 3,
       },
       baseColor: 0x000000,
       zoneId: "0",
@@ -83,9 +87,55 @@ function challengeB(): ChallengeConfig {
   ];
   const challengeConfig: ChallengeConfig = {
     name: "Lesson 1 - Challenge B",
-    startPosition: { x: -8, y: 6 },
+    startPosition: { x: -2, y: 2 },
     arenaConfig: arena(),
-    eventListener: new Lesson1Challenge({ x: +8, y: 8 }, badZones),
+    eventListener: new Lesson1Challenge({ x: +2, y: 2 }, badZones),
+  };
+
+  return challengeConfig;
+}
+
+function challengeC(): ChallengeConfig {
+  const badZones: CoreSpecs.IZoneSpec[] = [
+    {
+      type: "zone",
+      initialPosition: { x: -1.4, y: 0.5 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 0.2,
+        zLength: 4,
+      },
+      baseColor: 0x000000,
+      zoneId: "0",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 1.4, y: 0.5 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 0.2,
+        zLength: 4,
+      },
+      baseColor: 0x000000,
+      zoneId: "1",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: -0.5 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 0.4,
+        zLength: 4,
+      },
+      baseColor: 0x000000,
+      zoneId: "2",
+    },
+  ];
+  const challengeConfig: ChallengeConfig = {
+    name: "Lesson 1 - Challenge C",
+    startPosition: { x: -2, y: 2 },
+    arenaConfig: arena(),
+    eventListener: new Lesson1Challenge({ x: 2, y: 2 }, badZones),
   };
 
   return challengeConfig;
@@ -94,7 +144,10 @@ function challengeB(): ChallengeConfig {
 const FinishZoneId = "finish-zone";
 
 class Lesson1Challenge implements ChallengeListener {
-  constructor(public finishPosition: Vector2d, public badZones: IZoneSpec[]) {}
+  constructor(
+    public finishPosition: CoreSimTypes.Vector2d,
+    public badZones: CoreSpecs.IZoneSpec[]
+  ) {}
   actions?: ChallengeActions;
 
   onStart(actions: ChallengeActions) {
@@ -105,8 +158,8 @@ class Lesson1Challenge implements ChallengeListener {
       zoneId: FinishZoneId,
       zoneShape: {
         type: "rectangle",
-        zLength: 2,
-        xLength: 2,
+        zLength: 1,
+        xLength: 1,
       },
       baseColor: 0x00ff00,
     });

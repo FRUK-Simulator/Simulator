@@ -28,7 +28,7 @@ import { ControllerKey, getControllerKeys } from "../state/gameControllerSlice";
 import {
   ChallengeConfig,
   ChallengeListener,
-} from "../RobotSimulator/Areanas/base";
+} from "../RobotSimulator/Arenas/base";
 import { ChallengeActionsImpl } from "./ChallengeActionsImpl";
 import { getDefaultChallenge } from "../RobotSimulator/ChallengeConfigLoader";
 
@@ -309,10 +309,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           sim.current?.addListener(
             "simulation-event",
             (event: CoreSpecs.ISimulatorEvent) => {
-              if (event.type === "zone-entry") {
+              if (event.type === "zone-entry" || event.type === "zone-exit") {
                 challengeListener.current?.onEvent({
                   kind: "ZoneEvent",
-                  entry: true,
+                  entry: event.type === "zone-entry",
                   zoneId: event.data.zoneId,
                 });
               }

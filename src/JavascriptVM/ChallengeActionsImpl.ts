@@ -1,4 +1,4 @@
-import { ChallengeActions } from "../RobotSimulator/Areanas/base";
+import { ChallengeActions } from "../RobotSimulator/Arenas/base";
 import { Sim3D, CoreSpecs } from "@fruk/simulator-core";
 import { MessageType, messageSlice } from "../state/messagesSlice";
 
