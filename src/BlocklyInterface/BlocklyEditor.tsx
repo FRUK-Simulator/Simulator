@@ -14,8 +14,7 @@ import {
   isShowToolbox,
   getToolboxXml,
   blocklySlice,
-  getActiveBlocklyProgramId,
-  getBlocklyPrograms,
+  getBlocklyXmlWorkspace,
 } from "./blocklySlice";
 
 import "./Blockly.css";
@@ -23,7 +22,11 @@ import Blockly, { WorkspaceSvg } from "blockly";
 import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
 import { loadBlocklyXml } from "../core/blockly/programs";
 
-export function getCurrentBlocklyCode(): string {
+/**
+ * Return the BlocklyInstance's current block tree as a
+ * XML-formatted string.
+ */
+export function getCurrentBlocklyInstanceCode(): string {
   const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
   const xml_text = Blockly.Xml.domToText(xml);
   return xml_text;
@@ -42,10 +45,9 @@ export const BlocklyEditor: FunctionComponent = () => {
   const toolboxXml = useSelector(getToolboxXml);
 
   const executing = useSelector(isExecuting);
-  const activeBlocklyProgramId = useSelector(getActiveBlocklyProgramId);
-  const blocklyPrograms = useSelector(getBlocklyPrograms);
-
   const blocklyRef = useRef<BlocklyInstance | null>(null);
+
+  const currentBlocklyCode = useSelector(getBlocklyXmlWorkspace);
 
   function resizeBlocklyRegion() {
     // Compute the absolute coordinates and dimensions of wrapping area.
@@ -68,6 +70,13 @@ export const BlocklyEditor: FunctionComponent = () => {
         return;
       }
 
+      // Store the BlocklyInstance state in redux. Otherwise, when this
+      // component gets unmounted we loose the current blocks.
+      dispatch(
+        blocklySlice.actions.setBlocklyXmlWorkspace({
+          blocklyXmlWorkspace: getCurrentBlocklyInstanceCode(),
+        })
+      );
       dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
     }
 
@@ -90,7 +99,11 @@ export const BlocklyEditor: FunctionComponent = () => {
     resizeBlocklyRegion();
 
     if (!blocklyRef.current) {
+      // Create a new 'BlocklyInstance' and load it with the blocks that we
+      // have stored in redux.
       blocklyRef.current = new BlocklyInstance(wrapperRef.current!, toolboxXml);
+      Blockly.getMainWorkspace().clear();
+      loadBlocklyXml(currentBlocklyCode, Blockly.getMainWorkspace());
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
@@ -144,13 +157,12 @@ export const BlocklyEditor: FunctionComponent = () => {
   }, [showToolbox, dispatch, toolboxXml]);
 
   useEffect(() => {
-    Blockly.getMainWorkspace().clear();
-    for (const entry of blocklyPrograms) {
-      if (entry.title === activeBlocklyProgramId) {
-        loadBlocklyXml(entry.xml, Blockly.getMainWorkspace());
-      }
+    // Has a different program been selected?
+    if (getCurrentBlocklyInstanceCode() !== currentBlocklyCode) {
+      Blockly.getMainWorkspace().clear();
+      loadBlocklyXml(currentBlocklyCode, Blockly.getMainWorkspace());
     }
-  }, [activeBlocklyProgramId, blocklyPrograms]);
+  }, [currentBlocklyCode, dispatch]);
 
   // update the toolbox UI based on the toolboxXml definition in the slice
   useEffect(() => {

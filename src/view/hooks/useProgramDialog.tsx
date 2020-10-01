@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentBlocklyCode } from "../../BlocklyInterface/BlocklyEditor";
+import { getCurrentBlocklyInstanceCode } from "../../BlocklyInterface/BlocklyEditor";
 import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import {
   getCurrentBlocklyProgram,
@@ -122,7 +122,10 @@ export const useProgramDialog = (type: "create" | "save") => {
                 predefined: false,
                 title: programName,
                 description: programDescription,
-                xml: type === "save" ? getCurrentBlocklyCode() : program.xml,
+                xml:
+                  type === "save"
+                    ? getCurrentBlocklyInstanceCode()
+                    : program.xml,
               },
             })
           );
