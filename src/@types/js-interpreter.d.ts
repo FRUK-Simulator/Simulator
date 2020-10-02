@@ -58,6 +58,15 @@ declare module "js-interpreter" {
     createNativeFunction(wrapper: function): function;
 
     /**
+     * Converts a native object to a pseudo object.
+     *
+     * @param object to create a pseudo instance of
+     *
+     * @returns the pseudo version of the object
+     */
+    nativeToPseudo(object: any): any;
+
+    /**
      * Appends new code to the interpreter.
      *
      * @param code new code to be added to the interpreter

@@ -2,6 +2,7 @@ import ActuatorSection from "./robotblocks/actuators/ActuatorSection";
 import SensorSection from "./robotblocks/sensors/SensorSection";
 import GamepadSection from "./robotblocks/gamepad/GamepadSection";
 import GeneralSection from "./robotblocks/general/GeneralSection";
+import EnumSection from "./robotblocks/enums/EnumSection";
 
 /**
  * Returns the XML for the Toolbox.
@@ -13,6 +14,7 @@ export function getDefaultToolbox() {
     ${SensorSection}
     ${GamepadSection}
     ${GeneralSection}
+    ${EnumSection}
 </xml>`;
 }
 
