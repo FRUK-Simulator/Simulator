@@ -25,6 +25,11 @@ export class StdWorldBuilder {
       distanceSensor.setMaxRange(DISTANCE_SENSOR_RANGE);
 
       robotBuilder.addBasicSensor(distanceSensor);
+
+      const colorSensor = new RobotBuilder.ColorSensorBuilder(1);
+      colorSensor.setMountFace(RobotSpecs.SensorMountingFace.BOTTOM);
+
+      robotBuilder.addComplexSensor(colorSensor);
     }
 
     {
