@@ -6,13 +6,11 @@ import "./SimulatorView.css";
 import { Prompt, useLocation, useParams } from "react-router-dom";
 import { BlocklyView } from "./BlocklyView";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
-import {
-  getChallengesPerArena,
-  getDefaultChallenge,
-} from "../../RobotSimulator/ChallengeConfigLoader";
+import { getChallengeFromURL } from "../../RobotSimulator/ChallengeConfigLoader";
 import { MyProgramsView } from "./MyProgramsView";
 import { RobotView } from "./RobotView";
 import { SettingsView } from "./SettingsView";
+import { ChallengeView } from "./ChallengeView";
 import { Gamepad } from "../components/Gamepad/Gamepad";
 
 export enum SimulatorViews {
@@ -20,6 +18,7 @@ export enum SimulatorViews {
   robot = "robot",
   programs = "programs",
   settings = "settings",
+  challenge = "challenge",
 }
 
 const simulatorViews: Record<SimulatorViews, FunctionComponent> = {
@@ -27,6 +26,7 @@ const simulatorViews: Record<SimulatorViews, FunctionComponent> = {
   robot: RobotView,
   programs: MyProgramsView,
   settings: SettingsView,
+  challenge: ChallengeView,
 };
 
 const WarningPrompt = () => {
@@ -75,11 +75,7 @@ export const SimulatorView = () => {
 
   useEffect(
     function loadChallengeFromURL() {
-      vm.setChallenge(
-        getChallengesPerArena()
-          .get(lesson)
-          ?.find((c) => c.name === challenge) ?? getDefaultChallenge()
-      );
+      vm.setChallenge(getChallengeFromURL(lesson, challenge));
     },
     [lesson, challenge, vm]
   );
