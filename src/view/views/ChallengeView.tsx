@@ -28,7 +28,6 @@ export const ChallengeView = () => {
       <Divider />
       <MarkdownDisplay
         markdown={displayableDescription}
-        divider
         classes={["challenge-view--content"]}
       />
       <Divider />
