@@ -34,25 +34,25 @@ export class StdWorldBuilder {
 
     {
       // Wheels
-      const wheelTemplate = new RobotBuilder.WheelBuilder(0.1);
+      const wheelTemplate = new RobotBuilder.WheelBuilder(0.1, 0.03);
       const leftFront = wheelTemplate.copy();
       leftFront.setMountPoint(RobotSpecs.WheelMountingPoint.LEFT_FRONT);
-      leftFront.setMountOffset({ x: +0.05, y: -0.05, z: 0.033 });
+      leftFront.setMountOffset({ x: 0, y: -0.05, z: 0.033 });
 
       const leftRear = wheelTemplate.copy();
       leftRear.setMountPoint(RobotSpecs.WheelMountingPoint.LEFT_REAR);
-      leftRear.setMountOffset({ x: +0.05, y: -0.05, z: -0.033 });
+      leftRear.setMountOffset({ x: 0, y: -0.05, z: -0.033 });
 
       robotBuilder.addWheel("left-drive", leftFront);
       robotBuilder.addWheel("left-drive", leftRear);
 
       const rightFront = wheelTemplate.copy();
       rightFront.setMountPoint(RobotSpecs.WheelMountingPoint.RIGHT_FRONT);
-      rightFront.setMountOffset({ x: -0.05, y: -0.05, z: 0.033 });
+      rightFront.setMountOffset({ x: 0, y: -0.05, z: 0.033 });
 
       const rightRear = wheelTemplate.copy();
       rightRear.setMountPoint(RobotSpecs.WheelMountingPoint.RIGHT_REAR);
-      rightRear.setMountOffset({ x: -0.05, y: -0.05, z: -0.033 });
+      rightRear.setMountOffset({ x: 0, y: -0.05, z: -0.033 });
 
       robotBuilder.addWheel("right-drive", rightFront);
       robotBuilder.addWheel("right-drive", rightRear);
