@@ -7,14 +7,29 @@
   border-bottom: 2px solid black;
 }
 
-.challenge-view--header > a {
+.challenge-view--header {
   margin: 2px;
+  background-color: var(--color-light-gray);
 }
 
 .challenge-view--header > h2 {
   margin: 2px;
+  font-family: "Roboto Mono", monospace;
 }
 
 .challenge-view--footer {
   margin: 2px;
+  background-color: var(--color-light-gray);
+}
+
+.challenge-view--footer > a {
+  margin: 2px;
+}
+
+.challenge-view--content {
+  padding: 1em;
+}
+
+.challenge-view {
+  font-family: "Roboto Mono";
 }

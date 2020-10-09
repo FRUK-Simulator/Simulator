@@ -23,9 +23,6 @@ export const ChallengeView = () => {
   return (
     <Container className="simulator-view--panel__main challenge-view">
       <div className="challenge-view--header">
-        <LinkButton to="/" iconPosition="left" iconName={IconName.back}>
-          Return To Challenges
-        </LinkButton>
         <Title as="h2">Challenge Description</Title>
       </div>
       <Divider />
@@ -36,7 +33,9 @@ export const ChallengeView = () => {
       />
       <Divider />
       <div className="challenge-view--footer">
-        {/*left for future content - lesson success/failure etc*/}
+        <LinkButton to="/" iconPosition="left" iconName={IconName.back}>
+          All Challenges
+        </LinkButton>
       </div>
     </Container>
   );
