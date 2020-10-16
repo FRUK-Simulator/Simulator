@@ -75,6 +75,20 @@ export class StdWorldBuilder {
 
     const robotSpec = robotBuilder.generateSpec();
     robotSpec.initialPosition = this.startPosition;
+    robotSpec.customMesh = {
+      filePath: `${process.env.PUBLIC_URL}/assets/models/robot.gltf`,
+      rotation: {
+        y: Math.PI / 2,
+        x: 0,
+        z: 0,
+      },
+      scale: {
+        x: 0.2,
+        z: 0.2,
+        y: 0.2,
+      },
+    };
+
     return this.sim3D.addRobot(robotSpec);
   }
 }
