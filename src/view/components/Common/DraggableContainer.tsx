@@ -100,7 +100,6 @@ export const DraggableContainer: FunctionComponent<{
   }, []);
 
   return (
-    // original svg image is from https://www.svgrepo.com/svg/95376/game-controller LICENSE: CC0 License
     <div
       className={`${className} draggable-container`}
       draggable

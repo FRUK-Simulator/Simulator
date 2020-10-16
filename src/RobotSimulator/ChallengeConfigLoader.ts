@@ -27,3 +27,11 @@ export function getChallengesPerArena(): Map<string, Array<ChallengeConfig>> {
 }
 
 export const getDefaultChallenge = Lesson1.challenges[0];
+
+export function getChallengeFromURL(lesson: string, challenge: string) {
+  return (
+    getChallengesPerArena()
+      .get(lesson)
+      ?.find((c) => c.name === challenge) ?? getDefaultChallenge()
+  );
+}

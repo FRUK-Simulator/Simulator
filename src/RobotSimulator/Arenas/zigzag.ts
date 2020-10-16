@@ -5,90 +5,68 @@ export const challenges = [challenge];
 
 function arena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "Bowling",
+    name: "ZigZag",
     worldConfig: {
-      zLength: 60,
+      zLength: 40,
       xLength: 20,
       walls: [],
       camera: {
         position: {
           x: 0,
-          y: 10,
+          y: 8,
           z: 10,
         },
       },
     },
-    ballSpecs: [{ type: "ball", radius: 1, initialPosition: { x: 0, y: -5 } }],
     coneSpecs: [
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: 1.5, y: -25 },
+        initialPosition: { x: 0, y: -15 },
       },
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: -1.5, y: -25 },
+        initialPosition: { x: 2, y: -10 },
       },
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: 4.5, y: -25 },
+        initialPosition: { x: -2, y: -5 },
       },
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: -4.5, y: -25 },
+        initialPosition: { x: 2, y: 0 },
       },
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: 0, y: -22 },
+        initialPosition: { x: -2, y: 5 },
       },
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: 3, y: -22 },
+        initialPosition: { x: 2, y: 10 },
       },
       {
         type: "cone",
         baseColor: 0x980000,
         height: 5,
         radius: 0.5,
-        initialPosition: { x: -3, y: -22 },
-      },
-      {
-        type: "cone",
-        baseColor: 0x980000,
-        height: 5,
-        radius: 0.5,
-        initialPosition: { x: 1.5, y: -19 },
-      },
-      {
-        type: "cone",
-        baseColor: 0x980000,
-        height: 5,
-        radius: 0.5,
-        initialPosition: { x: -1.5, y: -19 },
-      },
-      {
-        type: "cone",
-        baseColor: 0x980000,
-        height: 5,
-        radius: 0.5,
-        initialPosition: { x: 0, y: -16 },
+        initialPosition: { x: 0, y: 15 },
       },
     ],
   };
@@ -98,8 +76,8 @@ function arena(): ArenaConfig {
 
 function challenge(): ChallengeConfig {
   const challengeConfig: ChallengeConfig = {
-    name: "Bowling Challenge",
-    startPosition: { x: 0, y: 10 },
+    name: "ZigZag Challenge",
+    startPosition: { x: 0, y: 0 },
     arenaConfig: arena(),
   };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { LinkButton, ButtonVariant } from "../Common/Button";
-import { IconName } from "../Common/Icon";
 import "./Toolbar.css";
 
 export const Toolbar = () => (
@@ -34,8 +33,12 @@ export const Toolbar = () => (
       >
         Settings
       </LinkButton>
-      <LinkButton to="/" iconPosition="left" iconName={IconName.back}>
-        Challenges
+      <LinkButton
+        to="?view=challenge"
+        variant={ButtonVariant.success}
+        replace={true}
+      >
+        Challenge
       </LinkButton>
     </div>
   </div>

@@ -66,6 +66,54 @@ function challengeA(): ChallengeConfig {
     startPosition: { x: 0, y: 2 },
     arenaConfig: arena(),
     eventListener: new Lesson1Challenge({ x: 0, y: -2 }, badZones),
+    descriptions: {
+      short:
+        "Drive motors at the same speed to create forward " +
+        "drive for a certain distance",
+      markdown: `
+## Temperat posse Neretum
+
+Lorem markdownum. Meis has *Scirone* inter fraternis esse. Agmine quid;
+lacertis, veni mora ut: pars turba, undis **decipit**; meae iuvenes sit! Metu
+nec et germanam quamquam. Lac morte interdum mihi inploravere rogat
+poenaededidit ocior Cephenum quoque, ferunt.
+
+    e_multicasting_soa.softwarePopVlog = partitionCamelcase;
+    if (socket - code * irq) {
+        android_mirror(web);
+        proxy_redundancy.networking(grayscale_metal);
+        donationware_ios_pram.hardMemory.basic_web_install(mode / 1);
+    } else {
+        protector = rasterStringWindows.root(pngSymbolic, 4,
+                bsodAnalystPeopleware);
+        camera_minicomputer_yottabyte.abend += -1;
+        template.archie += import.localhost(server, cdn_file,
+                rw_icann.urlInterpreter.dos(image_io_ultra, expression));
+    }
+    mode_google.drive += xmlTrinitron + office_meta +
+            passivePostscriptPim.resourcesDaemon(ftp_error);
+    bar.tabletRemoteSdk -= menu_meta(user(duplex, driveZettabyte, 5));
+
+## Pastoris admonitu
+
+Ampyca nec negaretur greges, iuvenalis, *gravem*, uni lumina: non dixit: nam.
+**Anguis** Circe! Magis cornua, ut auras dextera. Nec qua, sparsit ipsa caelo
+Phoebus, vincemur iustitia et atro venatibus saepes,
+[primumque](http://nomen.com/sardibusfacinus.aspx).
+
+1. Quae gelido
+2. Aethera altera cognataque pharetram vitare
+3. Quam fuerant relinquit corpore pallenti dispersa
+4. Sperat modo
+5. Unoque rogati
+6. Modum parte et possum novam collocat custos
+
+Genero tamen suis umeris albo pollue et quamvis cursus tosta. Sinit sic, nostro,
+timide ostro, congestaque, ut ista erat, illo diremit equidem **paulatim
+ceciderunt me**. Gelidis suspiria, aristas clausere crudeles deflevit honore
+fretum poterant; tumulo?
+      `,
+    },
   };
 
   return challengeConfig;

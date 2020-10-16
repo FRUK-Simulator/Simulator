@@ -1,0 +1,32 @@
+.challenge-view--header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 1280px;
+  border-bottom: 2px solid black;
+  margin: 2px;
+  background-color: var(--color-light-gray);
+}
+
+.challenge-view--header > h2 {
+  margin: 2px;
+  font-family: "Roboto Mono", monospace;
+}
+
+.challenge-view--footer {
+  margin: 2px;
+  background-color: var(--color-light-gray);
+}
+
+.challenge-view--footer > a {
+  margin: 2px;
+}
+
+.challenge-view--content {
+  padding: 1em;
+}
+
+.challenge-view {
+  font-family: "Roboto Mono";
+}

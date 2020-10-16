@@ -1,0 +1,7 @@
+.markdown-display {
+  overflow-y: scroll;
+}
+
+.markdown-display--divider {
+  border-bottom: 2px solid black;
+}

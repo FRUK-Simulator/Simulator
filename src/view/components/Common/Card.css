@@ -1,6 +1,6 @@
 :root {
-  --card-width: 16em;
-  --card-height: 20em;
+  --card-width: 20em;
+  --card-height: 25em;
 }
 
 .card {
@@ -49,4 +49,5 @@
   border-radius: 10px;
   box-shadow: inset 0px 0px 0px 2px var(--primary-color-darker);
   flex: 1;
+  font-size: 24px;
 }

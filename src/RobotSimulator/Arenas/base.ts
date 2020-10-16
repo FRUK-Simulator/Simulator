@@ -9,11 +9,18 @@ export interface ArenaConfig {
   coneSpecs?: CoreSpecs.IConeSpec[];
 }
 
+interface ChallengeDescription {
+  short: string;
+  markdown?: string;
+}
+
 export interface ChallengeConfig {
   name: string;
   startPosition: CoreSimTypes.Vector2d;
   arenaConfig: ArenaConfig;
   eventListener?: ChallengeListener;
+  descriptions?: ChallengeDescription;
+  image?: any;
 }
 
 // interface to trigger actions and events in the current challenge.
