@@ -35,9 +35,23 @@ export const MyProgramsView = () => {
       dispatch(
         blocklySlice.actions.setActiveBlocklyProgramId({ title: program.title })
       );
+
+      // We need to load the blockly XML that is associated with the
+      // selected 'program.title'.
+      for (const entry of programs) {
+        if (entry.title === program.title) {
+          dispatch(
+            blocklySlice.actions.setBlocklyXmlWorkspace({
+              blocklyXmlWorkspace: entry.xml,
+            })
+          );
+          break;
+        }
+      }
+
       history.replace("?view=code");
     },
-    [dispatch, history]
+    [dispatch, history, programs]
   );
 
   const newProgramCallback = useProgramDialog("create");

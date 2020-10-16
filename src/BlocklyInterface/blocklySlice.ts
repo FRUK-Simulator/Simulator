@@ -25,6 +25,9 @@ export const blocklySlice = createSlice({
     /** The id of the blockly program that is currently selected - an empty string
      * designates no selection */
     activeBlocklyProgramId: getPredefinedBlocklyProgs()[0].title,
+    /** The current blockly code inside the 'BlocklyInstance'
+     */
+    blocklyXmlWorkspace: getPredefinedBlocklyProgs()[0].xml,
   },
   name: "blockly",
   reducers: {
@@ -47,6 +50,12 @@ export const blocklySlice = createSlice({
       state.toolboxXml = action.payload.toolboxXml;
 
       return state;
+    },
+    setBlocklyXmlWorkspace(
+      state,
+      action: PayloadAction<{ blocklyXmlWorkspace: string }>
+    ) {
+      state.blocklyXmlWorkspace = action.payload.blocklyXmlWorkspace;
     },
     addBlocklyProgram(state, action: PayloadAction<{ prog: Program }>) {
       // If the program already exists then we update it.
@@ -128,6 +137,9 @@ export const saveBlocklyState = () => {
  */
 export const getHighlightedBlockId = (state: RootState) =>
   state.blockly.highlightedBlock;
+
+export const getBlocklyXmlWorkspace = (state: RootState) =>
+  state.blockly.blocklyXmlWorkspace;
 
 /**
  * Retrieves the previously selected blockly block's ID.
