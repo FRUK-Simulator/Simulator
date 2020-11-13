@@ -6,17 +6,8 @@ export function addMechanismInputBlock() {
     [
       {
         type: "sendGrabberInput",
-        message0: "Send grabber port %1 %2 value %3",
+        message0: "Send grabber value %1",
         args0: [
-          {
-            type: "field_number",
-            name: "port",
-            value: 0,
-            min: 0,
-          },
-          {
-            type: "input_dummy",
-          },
           {
             type: "field_dropdown",
             name: "value",
@@ -34,10 +25,9 @@ export function addMechanismInputBlock() {
       },
     ],
     (block) => {
-      const portNumber = block.getFieldValue("port");
       const grabberValue = block.getFieldValue("value");
 
-      return `setDigitalInput(${portNumber}, ${grabberValue});\n`;
+      return `setDigitalInput(0, ${grabberValue});\n`;
     }
   );
 }
