@@ -87,6 +87,11 @@ export class StdWorldBuilder {
         z: 0.2,
         y: 0.2,
       },
+      translation: {
+        x: 0,
+        z: 0,
+        y: 0.05,
+      },
     };
 
     return this.sim3D.addRobot(robotSpec);
