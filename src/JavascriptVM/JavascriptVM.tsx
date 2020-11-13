@@ -205,6 +205,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               robotRef.current?.setMotorPower(channel, power);
             },
 
+            onSetDigitalInput: (channel: number, value: boolean) => {
+              robotRef.current?.setDigitalInput(channel, value);
+            },
+
             onFinish: () => {
               syncExecutionState(interpreter);
 
