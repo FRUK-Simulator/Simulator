@@ -6,7 +6,7 @@ export function addDigitalInputBlocks() {
     [
       {
         type: "digitalInput",
-        message0: "Send %1 targetting digital input channel %2",
+        message0: "Send %1%2 targeting digital input channel %3",
         args0: [
           {
             type: "field_dropdown",
@@ -37,7 +37,7 @@ export function addDigitalInputBlocks() {
       const grabberValue = block.getFieldValue("value");
       const channelNumber = block.getFieldValue("channel");
 
-      return `setDigitalInput(${channelNumber}, ${grabberValue})`;
+      return `setDigitalInput(${channelNumber}, ${grabberValue});\n`;
     }
   );
 }
