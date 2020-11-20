@@ -19,6 +19,11 @@ export type BlocklyInterpreterCallbacks = {
   onSetDigitalInput?: (channel: number, value: boolean) => void;
 
   /**
+   * Get the value for a given digital channel
+   */
+  onGetDigitalInput?: (channel: number) => boolean;
+
+  /**
    * Called when there is nothing left to execute or the vm has been stopped
    */
   onFinish?: () => void;
@@ -111,6 +116,16 @@ export class BlocklyInterpreter {
         }
       );
 
+      const getDigitalInput = interpreter.createNativeFunction(
+        (channel: number): boolean => {
+          if (callbacks.onGetDigitalInput) {
+            return callbacks.onGetDigitalInput(channel);
+          }
+
+          return false;
+        }
+      );
+
       const isSensorTouchPushed = interpreter.createNativeFunction(
         (port: number) => {
           if (callbacks.onIsSensorTouchPushed) {
@@ -182,6 +197,7 @@ export class BlocklyInterpreter {
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
       interpreter.setProperty(globals, "setDigitalInput", setDigitalInput);
+      interpreter.setProperty(globals, "getDigitalInput", getDigitalInput);
       interpreter.setProperty(
         globals,
         "isSensorTouchPushed",
