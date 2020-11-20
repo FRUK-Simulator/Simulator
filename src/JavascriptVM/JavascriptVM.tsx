@@ -211,6 +211,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               robotRef.current?.setDigitalInput(channel, value);
             },
 
+            onGetDigitalInput: (channel: number) => {
+              return !!robotRef.current?.getDigitalInput(channel);
+            },
+
             onFinish: () => {
               syncExecutionState(interpreter);
 

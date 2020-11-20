@@ -1,4 +1,4 @@
-import { addCustomBlock } from "../AddBlockUtil";
+import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 export function addDigitalOutputBlocks() {
   addCustomBlock(
@@ -6,7 +6,7 @@ export function addDigitalOutputBlocks() {
     [
       {
         type: "digitalOutput",
-        message0: "get digital channel %1 output",
+        message0: "Get digital input from channel %1 %2 value",
         lastDummyAlign0: "RIGHT",
         args0: [
           {
@@ -21,16 +21,16 @@ export function addDigitalOutputBlocks() {
             max: 20,
           },
         ],
-        output: "Number",
+        output: "Boolean",
         colour: 300,
-        tooltip: "Color sensor",
+        tooltip: "",
         helpUrl: "",
       },
     ],
     (block) => {
       const channelNumber = block.getFieldValue("channel");
 
-      return `getDigitalOutput(${channelNumber})`;
+      return [`getDigitalInput(${channelNumber})`, JavaScript.ORDER_ATOMIC];
     }
   );
 }
