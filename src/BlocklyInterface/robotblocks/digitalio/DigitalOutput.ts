@@ -1,13 +1,13 @@
-import { addCustomBlock, JavaScript } from "../AddBlockUtil";
+import { addCustomBlock } from "../AddBlockUtil";
 
-export function addColorSensorBlock() {
+export function addDigitalOutputBlocks() {
   addCustomBlock(
-    "color_sensor",
+    "digitalOutput",
     [
       {
-        type: "color_sensor",
+        type: "digitalOutput",
+        message0: "get digital channel %1 output",
         lastDummyAlign0: "RIGHT",
-        message0: "get color from sensor %1 on channel %2",
         args0: [
           {
             type: "input_dummy",
@@ -28,10 +28,9 @@ export function addColorSensorBlock() {
       },
     ],
     (block) => {
-      const numberChannel = block.getFieldValue("channel");
-      const code = `getComplexSensorValue(${numberChannel}, "ColorSensor").color`;
+      const channelNumber = block.getFieldValue("channel");
 
-      return [code, JavaScript.ORDER_ATOMIC];
+      return `getDigitalOutput(${channelNumber})`;
     }
   );
 }
