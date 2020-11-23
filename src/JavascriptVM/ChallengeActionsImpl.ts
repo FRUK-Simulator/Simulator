@@ -1,6 +1,7 @@
 import { ChallengeActions } from "../RobotSimulator/Arenas/base";
 import { Sim3D, CoreSpecs } from "@fruk/simulator-core";
 import { MessageType, messageSlice } from "../state/messagesSlice";
+import { v4 as uuidv4 } from "uuid";
 
 export class ChallengeActionsImpl implements ChallengeActions {
   constructor(private sim: Sim3D, private dispatch: (a: any) => void) {}
@@ -35,5 +36,32 @@ export class ChallengeActionsImpl implements ChallengeActions {
         msg: message,
       })
     );
+  }
+
+  displayFadingMessage(
+    message: string,
+    type: MessageType,
+    timeout?: number
+  ): void {
+    const msgId = uuidv4();
+    if (!timeout) {
+      timeout = 2000;
+    }
+
+    this.dispatch(
+      messageSlice.actions.addMessage({
+        type,
+        msg: message,
+        id: msgId,
+      })
+    );
+
+    setTimeout(() => {
+      this.dispatch(
+        messageSlice.actions.removeMessage({
+          id: msgId,
+        })
+      );
+    }, timeout);
   }
 }

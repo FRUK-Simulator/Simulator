@@ -33,6 +33,11 @@ export interface ChallengeActions {
       | CoreSpecs.IZoneSpec
   ): void;
   displayMessage(message: string, type: MessageType): void;
+  displayFadingMessage(
+    message: string,
+    type: MessageType,
+    timeout?: number
+  ): void;
 }
 
 export interface ZoneEvent {

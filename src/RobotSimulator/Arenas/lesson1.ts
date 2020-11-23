@@ -224,9 +224,9 @@ class Lesson1Challenge implements ChallengeListener {
   onEvent(e: ChallengeEvent) {
     if (e.kind === "ZoneEvent") {
       if (e.zoneId === FinishZoneId) {
-        this.actions?.displayMessage("Robot Wins!", MessageType.success);
+        this.actions?.displayFadingMessage("Robot Wins!", MessageType.success);
       } else if (e.zoneId.startsWith("bad-")) {
-        this.actions?.displayMessage("Robot Looses!", MessageType.danger);
+        this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
       }
     }
   }

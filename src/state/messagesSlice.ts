@@ -23,10 +23,14 @@ export const messageSlice = createSlice({
   reducers: {
     addMessage(
       state,
-      action: PayloadAction<{ type: MessageType; msg: string }>
+      action: PayloadAction<{ type: MessageType; msg: string; id?: string }>
     ) {
+      if (!action.payload.id) {
+        action.payload.id = uuidv4();
+      }
+
       state.messages = [
-        { ...action.payload, id: uuidv4() },
+        { ...action.payload, id: action.payload.id },
         ...state.messages,
       ].slice(0, 5);
 
