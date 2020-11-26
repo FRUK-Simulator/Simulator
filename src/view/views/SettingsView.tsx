@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadSettings, persistSettings } from "../../core/settings/settings";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
-import { ExecutionSpeed } from "../../JavascriptVM/vm";
-import { getExecutionSpeed } from "../../JavascriptVM/vmSlice";
+import { ExecutionSpeed, CameraView } from "../../JavascriptVM/vm";
+import {
+  getCameraMode,
+  getExecutionSpeed,
+  vmSlice,
+} from "../../JavascriptVM/vmSlice";
+import { AppDispatch } from "../../state/store";
 import { Container } from "../components/Common/Container";
 import { SelectField } from "../components/Common/Form";
 import { Title } from "../components/Common/Title";
@@ -19,6 +24,24 @@ const executionSpeedOptions = [
     key: "fast",
     label: "Rabbit",
     value: ExecutionSpeed.FAST,
+  },
+];
+
+const cameraViewOptions = [
+  {
+    key: "position",
+    label: "Top down",
+    value: CameraView.POSITION,
+  },
+  {
+    key: "third_person",
+    label: "Follow the robot",
+    value: CameraView.THIRD_PERSON,
+  },
+  {
+    key: "orbit",
+    label: "Orbit",
+    value: CameraView.ORBIT,
   },
 ];
 
@@ -52,6 +75,29 @@ const ExecutionSpeedSelect = () => {
   );
 };
 
+const CameraViewSelect = () => {
+  const vm = useVM();
+  const dispatch = useDispatch<AppDispatch>();
+  const cameraMode = useSelector(getCameraMode);
+
+  return (
+    <SelectField
+      label="Camera Mode"
+      options={cameraViewOptions}
+      selectedOption={cameraViewOptions.find((s) => s.value === cameraMode)}
+      onChange={(opt) => {
+        if (!opt) {
+          return;
+        }
+
+        vm.setCameraView(opt.value);
+        dispatch(vmSlice.actions.setCameraView({ val: opt.value }));
+        persistSettings({ cameraView: opt.value });
+      }}
+    />
+  );
+};
+
 export const SettingsView = () => {
   return (
     <Container className="simulator-view--panel__main">
@@ -60,6 +106,7 @@ export const SettingsView = () => {
       </Title>
       <ExecutionSpeedSelect />
       <GamepadSettings />
+      <CameraViewSelect />
     </Container>
   );
 };

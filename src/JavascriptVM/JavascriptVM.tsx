@@ -8,20 +8,21 @@ import {
 } from "react";
 import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { vmSlice, getCode, getExecutionSpeed } from "./vmSlice";
+import { vmSlice, getCode, getExecutionSpeed, getCameraMode } from "./vmSlice";
 import { AppDispatch } from "../state/store";
 import {
   BlocklyInterpreter,
   ExecutionState,
   ExecutionSpeed,
   BlocklyInterpreterCallbacks,
+  CameraView,
 } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 import "./JavascriptVM.css";
 import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
 import { MessageType, messageSlice } from "../state/messagesSlice";
 import Blockly from "blockly";
-import { Sim3D } from "@fruk/simulator-core";
+import { Sim3D, CameraSpecs } from "@fruk/simulator-core";
 import { StdWorldBuilder } from "../RobotSimulator/StdWorldBuilder";
 import { Handles, CoreSpecs } from "@fruk/simulator-core";
 import { ControllerKey, getControllerKeys } from "../state/gameControllerSlice";
@@ -45,6 +46,7 @@ export interface IVirtualMachine {
   setChallenge: (config: ChallengeConfig) => void;
 
   updateSpeed: (speed: ExecutionSpeed) => void;
+  setCameraView(val: CameraView): void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
@@ -79,7 +81,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   const sim = useRef<Sim3D | null>(null);
   const robotRef = useRef<Handles.RobotHandle | null>(null);
   const challengeListener = useRef<ChallengeListener | null>(null);
-
+  const cameraMode = useSelector(getCameraMode);
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
@@ -304,7 +306,45 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           challengeListener.current?.onStart(
             new ChallengeActionsImpl(simulator, dispatch)
           );
+          this.setCameraView(cameraMode);
         },
+
+        setCameraView(val: CameraView): void {
+          if (!sim.current) return;
+          if (!robotRef.current) return;
+          const simulator = sim.current;
+          switch (val) {
+            case CameraView.POSITION:
+              simulator.setCameraMode({
+                type: CameraSpecs.CameraMode.POSITION,
+                position: {
+                  x: 0,
+                  y: 3,
+                  z: 3,
+                },
+              });
+              break;
+            case CameraView.THIRD_PERSON:
+              simulator.setCameraMode({
+                type: CameraSpecs.CameraMode.THIRD_PERSON,
+                handle: robotRef.current,
+                offset: {
+                  x: 0.5,
+                  y: 1,
+                  z: 1,
+                },
+              });
+              break;
+            case CameraView.ORBIT:
+              simulator.setCameraMode({
+                type: CameraSpecs.CameraMode.ORBIT,
+                handle: robotRef.current,
+                radius: 3,
+                height: 3,
+              });
+          }
+        },
+
         onCanvasCreated(canvasEl: HTMLCanvasElement) {
           canvasRef.current = canvasEl;
           updateCanvasSize();
