@@ -16,7 +16,7 @@ export type BlocklyInterpreterCallbacks = {
   /**
    * Sets an exposed mechanism's value for a given channel
    */
-  onSetDigitalInput?: (channel: number, value: boolean) => void;
+  onSetDigitalOutput?: (channel: number, value: boolean) => void;
 
   /**
    * Get the value for a given digital channel
@@ -114,10 +114,10 @@ export class BlocklyInterpreter {
         }
       );
 
-      const setDigitalInput = interpreter.createNativeFunction(
+      const setDigitalOutput = interpreter.createNativeFunction(
         (channel: number, value: boolean) => {
-          if (callbacks.onSetDigitalInput) {
-            callbacks.onSetDigitalInput(channel, value);
+          if (callbacks.onSetDigitalOutput) {
+            callbacks.onSetDigitalOutput(channel, value);
           }
         }
       );
@@ -202,7 +202,7 @@ export class BlocklyInterpreter {
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
-      interpreter.setProperty(globals, "setDigitalInput", setDigitalInput);
+      interpreter.setProperty(globals, "setDigitalOutput", setDigitalOutput);
       interpreter.setProperty(globals, "getDigitalInput", getDigitalInput);
       interpreter.setProperty(
         globals,

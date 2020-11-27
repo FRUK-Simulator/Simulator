@@ -37,7 +37,7 @@ export function addDigitalInputBlocks() {
       const grabberValue = block.getFieldValue("value");
       const channelNumber = block.getFieldValue("channel");
 
-      return `setDigitalInput(${channelNumber}, ${grabberValue});\n`;
+      return `setDigitalOutput(${channelNumber}, ${grabberValue});\n`;
     }
   );
 }

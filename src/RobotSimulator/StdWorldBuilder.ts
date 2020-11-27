@@ -74,6 +74,7 @@ export class StdWorldBuilder {
     }
 
     const robotSpec = robotBuilder.generateSpec();
+
     robotSpec.mechanisms = [
       {
         type: "gripper-mechanism",
@@ -81,19 +82,19 @@ export class StdWorldBuilder {
           {
             id: "grab",
             channel: 0,
-            ioType: "DIGITAL_IN",
+            ioType: RobotSpecs.MechanismIOType.DIGITAL_OUT,
           },
           {
             id: "held",
             channel: 1,
-            ioType: "DIGITAL_OUT",
+            ioType: RobotSpecs.MechanismIOType.DIGITAL_IN,
           },
         ],
-        depth: 1,
-        maxWidth: 2,
-        minWidth: 0.9,
-        mountOffset: { x: 0, y: 0, z: -0.01 },
+        depth: 0.1,
+        maxWidth: 0.4,
+        mountOffset: { x: 0, y: 0.5, z: -0.01 },
         mountFace: RobotSpecs.SensorMountingFace.FRONT,
+        closeSpeed: 0.1,
       },
     ];
 
