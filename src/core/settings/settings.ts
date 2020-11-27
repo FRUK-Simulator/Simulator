@@ -1,8 +1,9 @@
-import { ExecutionSpeed } from "../../JavascriptVM/vm";
+import { CameraView, ExecutionSpeed } from "../../JavascriptVM/vm";
 
 interface SimulatorSettings {
   showController: boolean;
   simulatorSpeed: ExecutionSpeed;
+  cameraView: CameraView;
 }
 
 const SETTINGS_KEY = "simulator_settings";
@@ -11,6 +12,7 @@ export const getDefaultSettings = (): SimulatorSettings => {
   return {
     showController: false,
     simulatorSpeed: ExecutionSpeed.SLOW,
+    cameraView: CameraView.POSITION,
   };
 };
 

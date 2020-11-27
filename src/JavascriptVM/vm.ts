@@ -49,6 +49,12 @@ export enum ExecutionSpeed {
   FAST = 100,
 }
 
+export enum CameraView {
+  POSITION = 1,
+  THIRD_PERSON = 2,
+  ORBIT = 3,
+}
+
 const MIN_EXECUTION_INTERVAL = 10; // minimum milliseconds between execution
 
 export class BlocklyInterpreter {

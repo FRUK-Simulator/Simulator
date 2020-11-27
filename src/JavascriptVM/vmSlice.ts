@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { loadSettings } from "../core/settings/settings";
 import { RootState } from "../state/store";
-import { ExecutionState, ExecutionSpeed } from "./vm";
+import { ExecutionState, ExecutionSpeed, CameraView } from "./vm";
 
 /**
  * Reducer responsible for the execution of the JS
@@ -11,6 +12,7 @@ export const vmSlice = createSlice({
     code: null as string | null,
     executionState: ExecutionState.NONE,
     speed: ExecutionSpeed.SLOW,
+    view: loadSettings().cameraView,
   },
   reducers: {
     setExecutionState(
@@ -27,6 +29,10 @@ export const vmSlice = createSlice({
     setExecutionSpeed(state, action: PayloadAction<{ speed: ExecutionSpeed }>) {
       state.speed = action.payload.speed;
 
+      return state;
+    },
+    setCameraView(state, action: PayloadAction<{ val: CameraView }>) {
+      state.view = action.payload.val;
       return state;
     },
   },
@@ -62,3 +68,12 @@ export const getCode = (state: RootState) => state.vm.code;
  * @returns the speed setting
  */
 export const getExecutionSpeed = (state: RootState) => state.vm.speed;
+
+/**
+ * Retrieves the current camera view
+ *
+ * @param state the root state of the application
+ *
+ * @returns the camera view
+ */
+export const getCameraMode = (state: RootState) => state.vm.view;
