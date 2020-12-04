@@ -74,6 +74,30 @@ export class StdWorldBuilder {
     }
 
     const robotSpec = robotBuilder.generateSpec();
+
+    robotSpec.mechanisms = [
+      {
+        type: "gripper-mechanism",
+        ioMap: [
+          {
+            id: "grab",
+            channel: 0,
+            ioType: RobotSpecs.MechanismIOType.DIGITAL_OUT,
+          },
+          {
+            id: "held",
+            channel: 1,
+            ioType: RobotSpecs.MechanismIOType.DIGITAL_IN,
+          },
+        ],
+        depth: 0.1,
+        maxWidth: 0.4,
+        mountOffset: { x: 0, y: 0.5, z: -0.01 },
+        mountFace: RobotSpecs.SensorMountingFace.FRONT,
+        closeSpeed: 0.1,
+      },
+    ];
+
     robotSpec.initialPosition = this.startPosition;
     return this.sim3D.addRobot(robotSpec);
   }
