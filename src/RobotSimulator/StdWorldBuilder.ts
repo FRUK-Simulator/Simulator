@@ -83,14 +83,14 @@ export class StdWorldBuilder {
         z: 0,
       },
       scale: {
-        x: 0.11,
-        z: 0.12,
-        y: 0.1,
+        x: 0.35,
+        z: 0.28,
+        y: 0.3,
       },
       translation: {
-        x: -0.03,
-        z: 0,
-        y: 0.05,
+        x: 0,
+        z: 0.05,
+        y: 0,
       },
     };
 
