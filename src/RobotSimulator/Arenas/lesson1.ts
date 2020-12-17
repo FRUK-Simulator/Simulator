@@ -8,6 +8,7 @@ import {
 import { MessageType } from "../../state/messagesSlice";
 import { CoreSimTypes } from "@fruk/simulator-core";
 import { CoreSpecs } from "@fruk/simulator-core";
+import { ChallengeStatus } from "./challengeSlice";
 
 export const arenas = [arena];
 export const challenges = [challengeA, challengeB, challengeC];
@@ -225,8 +226,10 @@ class Lesson1Challenge implements ChallengeListener {
     if (e.kind === "ZoneEvent") {
       if (e.zoneId === FinishZoneId) {
         this.actions?.displayFadingMessage("Robot Wins!", MessageType.success);
+        this.actions?.setChallengeStatus(ChallengeStatus.Success);
       } else if (e.zoneId.startsWith("bad-")) {
         this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
+        this.actions?.setChallengeStatus(ChallengeStatus.Failure);
       }
     }
   }

@@ -1,5 +1,6 @@
 import { WorldConfig, CoreSpecs, CoreSimTypes } from "@fruk/simulator-core";
 import { MessageType } from "../../state/messagesSlice";
+import { ChallengeStatus } from "./challengeSlice";
 
 export interface ArenaConfig {
   name: string;
@@ -38,6 +39,7 @@ export interface ChallengeActions {
     type: MessageType,
     timeout?: number
   ): void;
+  setChallengeStatus(status: ChallengeStatus): void;
 }
 
 export interface ZoneEvent {

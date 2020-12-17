@@ -32,6 +32,10 @@ import {
 } from "../RobotSimulator/Arenas/base";
 import { ChallengeActionsImpl } from "./ChallengeActionsImpl";
 import { getDefaultChallenge } from "../RobotSimulator/ChallengeConfigLoader";
+import {
+  challengeSlice,
+  ChallengeStatus,
+} from "../RobotSimulator/Arenas/challengeSlice";
 
 /**
  * Interface to control the VM
@@ -310,9 +314,21 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             challengeListener.current.onStop();
           }
 
+          // Before we start the challenge listener we mark the challenge
+          // as pending.  The 'setChallengeStatus' reducer will make sure that if
+          // the challenge is already solved that we won't override the
+          // success state.
+          dispatch(
+            challengeSlice.actions.setChallengeStatus({
+              status: ChallengeStatus.Pending,
+              id: challengeConfig.name,
+            })
+          );
+
           challengeListener.current = challengeConfig.eventListener || null;
           challengeListener.current?.onStart(
-            new ChallengeActionsImpl(simulator, dispatch)
+            // We use the challenge name as the challenge ID
+            new ChallengeActionsImpl(simulator, dispatch, challengeConfig.name)
           );
           this.setCameraView(cameraMode);
         },

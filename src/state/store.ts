@@ -11,6 +11,7 @@ import { messageSlice } from "./messagesSlice";
 import { simulatorLogSlice } from "../ControlPanel/SimulatorLog/simulatorLogSlice";
 import { editorSlice } from "../Editor/editorSlice";
 import { gameControllerSlice } from "./gameControllerSlice";
+import { challengeSlice } from "../RobotSimulator/Arenas/challengeSlice";
 
 // Type Safe Reducers - see https://redux-toolkit.js.org/usage/usage-with-typescript#using-configurestore-with-typescript
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   logs: simulatorLogSlice.reducer,
   editor: editorSlice.reducer,
   gameController: gameControllerSlice.reducer,
+  challenge: challengeSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

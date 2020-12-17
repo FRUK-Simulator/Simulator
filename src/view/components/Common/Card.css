@@ -1,5 +1,5 @@
 :root {
-  --card-width: 20em;
+  --card-width: 21em;
   --card-height: 25em;
 }
 
@@ -21,6 +21,18 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.card--title-and-status {
+  display: flex;
+  flex-direction: row;
+  border-color: black;
+}
+
+.card--thumbs {
+  border-color: black;
+  height: "4em";
+  margin-left: 10px;
+  align-self: center;
+}
 .card:hover {
   transform: translate(-2px, 2px);
   box-shadow: -4px 4px 0px -2px var(--primary-color-darkest);

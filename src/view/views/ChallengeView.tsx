@@ -8,6 +8,21 @@ import { MarkdownDisplay } from "../components/Common/MarkdownDisplay";
 import { IconName } from "../components/Common/Icon";
 import { LinkButton } from "../components/Common/Button";
 import "./ChallengeView.css";
+import { useSelector } from "react-redux";
+import {
+  ChallengeInfo,
+  ChallengeStatus,
+  getChallengeInfo,
+} from "../../RobotSimulator/Arenas/challengeSlice";
+
+function statusStringRep(info?: ChallengeInfo): string {
+  if (info === undefined) return "Pending";
+
+  const status = info.status;
+  if (status === ChallengeStatus.Pending) return "Pending";
+  else if (status === ChallengeStatus.Success) return "Success";
+  else return "Failure";
+}
 
 export const ChallengeView = () => {
   const { lesson = "", challenge = "" } = useParams<{
@@ -15,6 +30,7 @@ export const ChallengeView = () => {
     challenge: string;
   }>();
 
+  const challengeResults = useSelector(getChallengeInfo);
   const challengeDescriptions = getChallengeFromURL(lesson, challenge)
     ?.descriptions;
   const displayableDescription =
@@ -30,8 +46,13 @@ export const ChallengeView = () => {
         markdown={displayableDescription}
         classes={["challenge-view--content"]}
       />
-      <Divider />
-      <div className="challenge-view--footer">
+      <div className="challenge-view--header">
+        <Title as="h2">
+          {"Challenge Status: " +
+            statusStringRep(challengeResults.find((e) => e.id === challenge))}
+        </Title>
+      </div>
+      <div className="challenge-view--statuster">
         <LinkButton to="/" iconPosition="left" iconName={IconName.back}>
           All Challenges
         </LinkButton>
