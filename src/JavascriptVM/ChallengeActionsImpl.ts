@@ -2,9 +2,17 @@ import { ChallengeActions } from "../RobotSimulator/Arenas/base";
 import { Sim3D, CoreSpecs } from "@fruk/simulator-core";
 import { MessageType, messageSlice } from "../state/messagesSlice";
 import { v4 as uuidv4 } from "uuid";
+import {
+  challengeSlice,
+  ChallengeStatus,
+} from "../RobotSimulator/Arenas/challengeSlice";
 
 export class ChallengeActionsImpl implements ChallengeActions {
-  constructor(private sim: Sim3D, private dispatch: (a: any) => void) {}
+  constructor(
+    private sim: Sim3D,
+    private dispatch: (a: any) => void,
+    private challengeId: string
+  ) {}
 
   addObject(
     o:
@@ -63,5 +71,13 @@ export class ChallengeActionsImpl implements ChallengeActions {
         })
       );
     }, timeout);
+  }
+  setChallengeStatus(status: ChallengeStatus): void {
+    this.dispatch(
+      challengeSlice.actions.setChallengeStatus({
+        status: status,
+        id: this.challengeId,
+      })
+    );
   }
 }
