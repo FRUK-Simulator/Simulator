@@ -39,7 +39,10 @@ export const ChallengeStatusBadge: FunctionComponent<{
   );
   if (!challengeResult || challengeResult.status === ChallengeStatus.Pending) {
     return <></>;
-  } else if (challengeResult.status === ChallengeStatus.Failure) {
+  } else if (
+    challengeResult.status === ChallengeStatus.Failure ||
+    challengeResult.status === ChallengeStatus.Pending_LastRunFailure
+  ) {
     return <FaThumbsDown className="card--thumbs" />;
   } else {
     return <FaThumbsUp className="card--thumbs" />;
