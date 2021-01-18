@@ -314,10 +314,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             challengeListener.current.onStop();
           }
 
-          // Before we start the challenge listener we mark the challenge
-          // as pending.  The 'setChallengeStatus' reducer will make sure that if
-          // the challenge is already solved that we won't override the
-          // success state.
+          // Before we start the challenge listener we mark the challenge as
+          // pending.  The 'setChallengeStatus' reducer will make sure that if
+          // the challenge is already solved (or currently marked as failed)
+          // that we won't loose that state.
           dispatch(
             challengeSlice.actions.setChallengeStatus({
               status: ChallengeStatus.Pending,
