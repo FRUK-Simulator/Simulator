@@ -11,7 +11,7 @@
     "@uifabric/icons": "^7.5.23",
     "blockly": "^3.20200924.4",
     "js-interpreter": "^2.3.0",
-    "marked": "^1.1.1",
+    "marked": "^2.0.0",
     "normalize.css": "^8.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
