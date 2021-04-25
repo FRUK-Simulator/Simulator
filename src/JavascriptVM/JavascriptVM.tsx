@@ -56,6 +56,12 @@ export interface IVirtualMachine {
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
   onCanvasDestroyed: (canvasEl: HTMLCanvasElement) => void;
 
+  // is simulator in debug mode
+  isDebugMode: () => boolean;
+
+  // set simulator debug mode
+  setDebugMode: (debug: boolean) => void;
+
   // Holds a handle to the robot in the curent scene.
   robot: Handles.RobotHandle;
 }
@@ -394,6 +400,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           );
           this.setChallenge(getDefaultChallenge());
         },
+
         onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
           // remove the simulator
           sim.current?.stopRendering();
@@ -402,6 +409,21 @@ export const VMProvider: FunctionComponent = ({ children }) => {
         },
         get robot(): Handles.RobotHandle {
           return robotRef.current!;
+        },
+
+        isDebugMode: (): boolean => {
+          if (!sim.current) {
+            return false;
+          }
+
+          return sim.current.isDebugMode();
+        },
+        setDebugMode: (debug: boolean) => {
+          if (!sim.current) {
+            return false;
+          }
+
+          return sim.current.setDebugMode(debug);
         },
       }}
     >

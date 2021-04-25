@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSettings, persistSettings } from "../../core/settings/settings";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
@@ -42,6 +43,19 @@ const cameraViewOptions = [
     key: "orbit",
     label: "Orbit",
     value: CameraView.ORBIT,
+  },
+];
+
+const physicsDebugOptions = [
+  {
+    key: "on",
+    label: "Tick",
+    value: true,
+  },
+  {
+    key: "off",
+    label: "Cross",
+    value: false,
   },
 ];
 
@@ -98,6 +112,27 @@ const CameraViewSelect = () => {
   );
 };
 
+const PhysicsDebugSelect = () => {
+  const vm = useVM();
+  const [physicsDebug, setPhysicsDebug] = useState(vm.isDebugMode());
+
+  return (
+    <SelectField
+      label="Physics Debug"
+      options={physicsDebugOptions}
+      selectedOption={physicsDebugOptions.find((s) => s.value === physicsDebug)}
+      onChange={(opt) => {
+        if (!opt) {
+          return;
+        }
+
+        vm.setDebugMode(opt.value);
+        setPhysicsDebug(opt.value);
+      }}
+    />
+  );
+};
+
 export const SettingsView = () => {
   return (
     <Container className="simulator-view--panel__main">
@@ -107,6 +142,7 @@ export const SettingsView = () => {
       <ExecutionSpeedSelect />
       <GamepadSettings />
       <CameraViewSelect />
+      <PhysicsDebugSelect />
     </Container>
   );
 };
