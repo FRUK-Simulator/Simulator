@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@fluentui/react": "^7.168.0",
-    "@fruk/simulator-core": "^1.6.0",
+    "@fruk/simulator-core": "^1.6.2",
     "@reduxjs/toolkit": "^1.5.1",
     "@types/marked": "^1.1.0",
     "@types/react-syntax-highlighter": "^11.0.5",
