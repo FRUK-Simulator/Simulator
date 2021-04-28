@@ -1,7 +1,7 @@
 import { BlocklyInterpreter, ExecutionState, ExecutionSpeed } from "./vm";
 import { version } from "process";
 
-jest.useFakeTimers();
+jest.useFakeTimers("modern");
 
 describe("javascript vm", () => {
   let speed: ExecutionSpeed;
