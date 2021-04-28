@@ -23,7 +23,7 @@ interface Action {
   onClick: () => boolean;
 }
 
-interface DialogContext {
+interface IDialogContext {
   isOpen: boolean;
   heading: string | null;
   content: ReactNode;
@@ -41,16 +41,16 @@ const defaultDialogContext = {
 };
 
 const DialogContext = React.createContext<{
-  dialogContext: DialogContext;
-  setDialogContext: (newContext: DialogContext) => void;
+  dialogContext: IDialogContext;
+  setDialogContext: (newContext: IDialogContext) => void;
 }>({
   dialogContext: defaultDialogContext,
   setDialogContext: () => {},
 });
 
 const Dialog: FunctionComponent<{
-  dialogContext: DialogContext;
-  setDialogContext: (dialogContext: DialogContext) => void;
+  dialogContext: IDialogContext;
+  setDialogContext: (dialogContext: IDialogContext) => void;
 }> = ({ dialogContext, setDialogContext }) => {
   /** Closes the dialog and sets it back to the default state */
   const closeDialog = useCallback(
@@ -164,7 +164,7 @@ const Dialog: FunctionComponent<{
 };
 
 export const DialogProvider: FunctionComponent = ({ children }) => {
-  const [dialogContext, setDialogContext] = useState<DialogContext>(
+  const [dialogContext, setDialogContext] = useState<IDialogContext>(
     defaultDialogContext
   );
 
@@ -190,7 +190,7 @@ export const useDialog = () => {
      *
      * There can only be 1 dialog open at any given time.
      */
-    open: (dialog: Omit<DialogContext, "isOpen">) => {
+    open: (dialog: Omit<IDialogContext, "isOpen">) => {
       dialogContext.setDialogContext({ ...dialog, isOpen: true });
     },
 
