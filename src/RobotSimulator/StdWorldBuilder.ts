@@ -14,7 +14,10 @@ export class StdWorldBuilder {
     this.startPosition = startPosition;
   }
 
-  build(): Handles.RobotHandle | undefined {
+  build = (): {
+    robot: Handles.RobotHandle | undefined;
+    robotSpec: RobotSpecs.IRobotSpec;
+  } => {
     const robotBuilder = new RobotBuilder.Builder();
     robotBuilder.setDimensions({ x: 0.225, y: 0.125, z: 0.255 });
 
@@ -99,6 +102,6 @@ export class StdWorldBuilder {
     ];
 
     robotSpec.initialPosition = this.startPosition;
-    return this.sim3D.addRobot(robotSpec);
-  }
+    return { robot: this.sim3D.addRobot(robotSpec), robotSpec: robotSpec };
+  };
 }
