@@ -1,6 +1,17 @@
+import {
+  ColorSensorBuilder,
+  ContactSensorBuilder,
+  DistanceSensorBuilder,
+} from "@fruk/simulator-core/dist/builder/RobotBuilder";
+import { SensorMountingFace } from "@fruk/simulator-core/dist/engine/specs/RobotSpecs";
 import React from "react";
 import { useSelector } from "react-redux";
-import { getMotorStats } from "../../RobotSimulator/robotSimulatorSlice";
+import { DISTANCE_SENSOR_RANGE } from "../../JavascriptVM/distanceSensorConstants";
+import { useVM } from "../../JavascriptVM/JavascriptVM";
+import {
+  getMotorStats,
+  getRoboSpec,
+} from "../../RobotSimulator/robotSimulatorSlice";
 import { Container } from "../components/Common/Container";
 import { Divider } from "../components/Common/Divider";
 import { StatusTile, StatusTileVariant } from "../components/Common/StatusTile";
@@ -9,6 +20,27 @@ import "./RobotView.css";
 
 export const RobotView = () => {
   const motorStats = useSelector(getMotorStats);
+  const robotSpec = useSelector(getRoboSpec);
+
+  let distSensors: Array<DistanceSensorBuilder> = [];
+  let contactSensors: Array<ContactSensorBuilder> = [];
+  let colorSensors: Array<ColorSensorBuilder> = [];
+
+  robotSpec.basicSensors?.forEach((basicSensor) => {
+    if (basicSensor.type === "distance-sensor") {
+      distSensors.push(basicSensor as DistanceSensorBuilder);
+    } else if (basicSensor.type === "contact-sensor") {
+      contactSensors.push(basicSensor as ContactSensorBuilder);
+    }
+  });
+  robotSpec.complexSensors?.forEach((complexSensor) => {
+    if (complexSensor.type === "color-sensor") {
+      colorSensors.push(complexSensor as ColorSensorBuilder);
+    }
+  });
+
+  const vm = useVM();
+  let robotHandle = vm.robot;
 
   return (
     <>
@@ -24,6 +56,47 @@ export const RobotView = () => {
               variant={StatusTileVariant.active}
               label={`Port ${label}`}
               value={value}
+            />
+          ))}
+        </div>
+
+        <div className="robot-view--stats">
+          <StatusTile label="Distance Sensors" value={distSensors.length} />
+          {distSensors.map((sensor) => (
+            <StatusTile
+              variant={StatusTileVariant.active}
+              label={`${SensorMountingFace[sensor.mountFace]}`}
+              sublabel={`Channel: ${sensor.channel}`}
+              // Show it in centimeters: this is inspired by vm.ts: 'sensorConversionFactor'
+              value={(
+                robotHandle.getAnalogInput(sensor.channel) *
+                DISTANCE_SENSOR_RANGE *
+                100
+              ).toFixed(1)}
+            />
+          ))}
+        </div>
+
+        <div className="robot-view--stats">
+          <StatusTile label="Color Sensors" value={colorSensors.length} />
+          {colorSensors.map((sensor) => (
+            <StatusTile
+              variant={StatusTileVariant.active}
+              label={SensorMountingFace[sensor.mountFace]}
+              sublabel={`Channel: ${sensor.channel}`}
+              value={`n/a`}
+            />
+          ))}
+        </div>
+
+        <div className="robot-view--stats">
+          <StatusTile label="Contact Sensors" value={contactSensors.length} />
+          {contactSensors.map((sensor) => (
+            <StatusTile
+              variant={StatusTileVariant.active}
+              label={SensorMountingFace[sensor.mountFace]}
+              sublabel={`Channel: ${sensor.channel}`}
+              value={robotHandle.getDigitalInput(sensor.channel) ? 1 : 0}
             />
           ))}
         </div>

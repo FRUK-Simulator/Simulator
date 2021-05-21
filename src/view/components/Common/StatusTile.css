@@ -21,6 +21,11 @@
   text-overflow: ellipsis;
 }
 
+.status-tile--sub-label {
+  font-size: 1em;
+  text-overflow: ellipsis;
+}
+
 .status-tile--value {
   vertical-align: bottom;
   text-align: right;
