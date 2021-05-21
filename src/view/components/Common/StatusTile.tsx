@@ -10,11 +10,20 @@ export enum StatusTileVariant {
 export const StatusTile: FunctionComponent<{
   label: string;
   value: string | number;
+  sublabel?: string;
   variant?: StatusTileVariant;
-}> = ({ label, value, variant = StatusTileVariant.static }) => {
+}> = ({
+  label,
+  value,
+  sublabel = null,
+  variant = StatusTileVariant.static,
+}) => {
   return (
     <div className={`status-tile ${variant}`}>
       <div className="status-tile--label">{label}</div>
+      {sublabel ? (
+        <div className="status-tile--sub-label">{sublabel}</div>
+      ) : null}
       <div className="status-tile--value">{value}</div>
     </div>
   );

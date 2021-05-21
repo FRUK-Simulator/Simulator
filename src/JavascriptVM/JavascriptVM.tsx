@@ -297,7 +297,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           simulator?.configureWorld(arena.worldConfig);
 
-          const robot = new StdWorldBuilder(
+          const { robot, robotSpec } = new StdWorldBuilder(
             simulator,
             challengeConfig.startPosition
           ).build();
@@ -319,6 +319,12 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           if (challengeListener.current) {
             challengeListener.current.onStop();
           }
+
+          dispatch(
+            robotSimulatorSlice.actions.setRobotSpec({
+              spec: robotSpec,
+            })
+          );
 
           // Before we start the challenge listener we mark the challenge as
           // pending.  The 'setChallengeStatus' reducer will make sure that if
@@ -380,10 +386,17 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           updateCanvasSize();
           // create the simulator
           sim.current = new Sim3D(canvasEl);
-          const robot = new StdWorldBuilder(sim.current, {
+          const { robot, robotSpec } = new StdWorldBuilder(sim.current, {
             x: 0,
             y: 0,
           }).build();
+
+          dispatch(
+            robotSimulatorSlice.actions.setRobotSpec({
+              spec: robotSpec,
+            })
+          );
+
           sim.current.beginRendering();
           robotRef.current = new Proxy(robot!, robot_handler);
           sim.current?.addListener(
