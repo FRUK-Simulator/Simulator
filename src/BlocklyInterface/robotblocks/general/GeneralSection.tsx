@@ -53,7 +53,7 @@ export default (() => {
         <block type="wait"></block>
     </category>
     <!-- Math is from blockly/demos/code/index.html, with some modifications -->
-    <category name="Math" colour="230">
+    <category name="Maths" colour="230">
         <block type="math_number"></block>
         <block type="math_arithmetic">
             <field name="OP">ADD</field>
