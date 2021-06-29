@@ -33,7 +33,7 @@ const VMControls = () => {
           onClick={vm.start}
           variant={ButtonVariant.success}
         >
-          Start
+          Load
         </Button>
       )}
       <Button
