@@ -268,7 +268,7 @@ export class BlocklyInterpreter {
   private _step(): boolean {
     let finished = false;
     this.blockHighlighted = false;
-    while (!this.blockHighlighted && !finished) {
+    while (!this.blockHighlighted && this.nextStepDelay === 0 && !finished) {
       finished = !this.interpreter.step();
     }
     this.blockHighlighted = false;
