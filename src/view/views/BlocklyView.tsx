@@ -11,8 +11,9 @@ import { getActiveEditor, editorSlice } from "../../Editor/editorSlice";
 import { SourceView } from "../../Editor/SourceView";
 import { SaveProgramButton } from "../components/SaveProgramButton/SaveProgramButton";
 import { ShowGamepadButton } from "../components/Gamepad/ShowGamepadButton";
+import { useLocation } from "react-router-dom";
 
-const VMControls = () => {
+export const VMControls = () => {
   const isVMStarted = useSelector(isExecuting);
   const executionState = useSelector(getExecutionState);
   const vm = useVM();
@@ -66,7 +67,7 @@ const VMControls = () => {
   );
 };
 
-const EditorControls = () => {
+export const EditorControls = () => {
   const dispatch = useDispatch();
   const currentView = useSelector(getActiveEditor);
 
@@ -78,6 +79,9 @@ const EditorControls = () => {
     );
   }, [currentView, dispatch]);
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
   return (
     <ButtonBar>
       <SaveProgramButton />
@@ -85,6 +89,7 @@ const EditorControls = () => {
         variant={ButtonVariant.info}
         iconName={IconName.view}
         onClick={changeViewCallback}
+        disabled={queryParams.get("view") === "robot"}
       >
         View {currentView === "Blockly" ? "Source" : "Blocks"}
       </Button>

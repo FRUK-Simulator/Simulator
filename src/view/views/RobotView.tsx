@@ -16,6 +16,7 @@ import { Container } from "../components/Common/Container";
 import { Divider } from "../components/Common/Divider";
 import { StatusTile, StatusTileVariant } from "../components/Common/StatusTile";
 import { Title } from "../components/Common/Title";
+import { EditorControls, VMControls } from "./BlocklyView";
 import "./RobotView.css";
 
 export const RobotView = () => {
@@ -101,6 +102,15 @@ export const RobotView = () => {
           ))}
         </div>
       </Container>
+
+      <div className="simulator-view">
+        <div className="simulator-view--panel">
+          <Container className="simulator-view--panel__utility">
+            <VMControls />
+            <EditorControls />
+          </Container>
+        </div>
+      </div>
     </>
   );
 };
