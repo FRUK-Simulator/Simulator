@@ -193,10 +193,13 @@ function challengeC(): ChallengeConfig {
 const FinishZoneId = "finish-zone";
 
 class Lesson1Challenge implements ChallengeListener {
+  private challengeOutcomePending: boolean;
   constructor(
     public finishPosition: CoreSimTypes.Vector2d,
     public badZones: CoreSpecs.IZoneSpec[]
-  ) {}
+  ) {
+    this.challengeOutcomePending = true;
+  }
   actions?: ChallengeActions;
 
   onStart(actions: ChallengeActions) {
@@ -216,6 +219,7 @@ class Lesson1Challenge implements ChallengeListener {
       z.zoneId = "bad-" + z.zoneId;
       actions.addObject(z);
     });
+    this.challengeOutcomePending = true;
   }
 
   onStop() {
@@ -224,10 +228,15 @@ class Lesson1Challenge implements ChallengeListener {
 
   onEvent(e: ChallengeEvent) {
     if (e.kind === "ZoneEvent") {
-      if (e.zoneId === FinishZoneId) {
+      if (e.zoneId === FinishZoneId && this.challengeOutcomePending === true) {
+        this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Wins!", MessageType.success);
         this.actions?.setChallengeStatus(ChallengeStatus.Success);
-      } else if (e.zoneId.startsWith("bad-")) {
+      } else if (
+        e.zoneId.startsWith("bad-") &&
+        this.challengeOutcomePending === true
+      ) {
+        this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
       }
