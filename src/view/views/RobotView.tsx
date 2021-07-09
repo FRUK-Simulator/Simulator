@@ -102,12 +102,11 @@ export const RobotView = () => {
           ))}
         </div>
         <div className="robot-view--stats">
-          <StatusTile label="Gyroscope Sensors" value={1} />
+          <StatusTile label="Gyroscope" value={1} />
           <StatusTile
             variant={StatusTileVariant.active}
             label={"Radians"}
-            // sublabel={`Channel: ${}`}
-            value={robotHandle.getAngle()}
+            value={robotHandle ? robotHandle.getAngle().toFixed(2) : 0}
           />
         </div>
       </Container>

@@ -11,7 +11,7 @@ export default (() => {
 <category name="Sensors">
     <block type="distance_sensor"></block>
     <block type="color_sensor"></block>
-    <block type="angle_sensor"></block>
+    <block type="gyroscope"></block>
 </category>
 `;
 })();

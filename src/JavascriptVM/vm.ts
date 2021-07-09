@@ -39,7 +39,7 @@ export type BlocklyInterpreterCallbacks = {
    * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
    */
   getSensorValue?: (port: number) => number;
-  getAngleValue?: () => number;
+  getGyroscopeValue?: () => number;
   getComplexSensorValue?: (port: number, type: string) => any;
 };
 
@@ -148,10 +148,10 @@ export class BlocklyInterpreter {
           return 0.0;
         }
       );
-      const getAngleValue = interpreter.createNativeFunction(
+      const getGyroscopeValue = interpreter.createNativeFunction(
         (port: number): number => {
-          if (callbacks.getAngleValue) {
-            return callbacks.getAngleValue();
+          if (callbacks.getGyroscopeValue) {
+            return callbacks.getGyroscopeValue();
           }
           return 0.0;
         }
@@ -219,7 +219,7 @@ export class BlocklyInterpreter {
         isSensorTouchPushed
       );
       interpreter.setProperty(globals, "getSensorValue", getSensorValue);
-      interpreter.setProperty(globals, "getAngleValue", getAngleValue);
+      interpreter.setProperty(globals, "getGyroscopeValue", getGyroscopeValue);
       interpreter.setProperty(
         globals,
         "getComplexSensorValue",

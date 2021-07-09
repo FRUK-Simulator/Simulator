@@ -2,20 +2,20 @@ import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 export function addAngleSensorBlock() {
   addCustomBlock(
-    "angle_sensor",
+    "gyroscope",
     [
       {
-        type: "angle_sensor",
+        type: "gyroscope",
         lastDummyAlign0: "RIGHT",
-        message0: "get the angle ",
+        message0: "read Gyroscope",
         output: "Number",
         colour: 300,
-        tooltip: "angle sensor",
+        tooltip: "Read the robot's Gyroscope value",
         helpUrl: "",
       },
     ],
     (block) => {
-      const code = `getAngleValue()`;
+      const code = `getGyroscopeValue()`;
 
       return [code, JavaScript.ORDER_ATOMIC];
     }
