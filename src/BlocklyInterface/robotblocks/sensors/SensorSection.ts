@@ -1,11 +1,11 @@
 import { addDistanceSensorBlock } from "./SensorDistance";
 import { addColorSensorBlock } from "./SensorColor";
-import { addAngleSensorBlock } from "./AngleSensor";
+import { addGyroBlock } from "./SensorGyroscope";
 
 export default (() => {
   addDistanceSensorBlock();
   addColorSensorBlock();
-  addAngleSensorBlock();
+  addGyroBlock();
 
   return `
 <category name="Sensors">

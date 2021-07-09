@@ -1,6 +1,6 @@
 import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
-export function addAngleSensorBlock() {
+export function addGyroBlock() {
   addCustomBlock(
     "gyroscope",
     [
