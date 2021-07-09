@@ -39,8 +39,13 @@ export type BlocklyInterpreterCallbacks = {
    * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
    */
   getSensorValue?: (port: number) => number;
-  getGyroscopeValue?: () => number;
   getComplexSensorValue?: (port: number, type: string) => any;
+
+  /**
+   * Gets the robot's world rotation angle in radians.  We refer to it as a "Gyroscope"
+   * because this function is intended to be used as a 'sensor' to obtain the robot's orientation.
+   */
+  getGyroscopeValue?: () => number;
 };
 
 export enum ExecutionState {
