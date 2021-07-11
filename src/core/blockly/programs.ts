@@ -31,6 +31,13 @@ export const newProgramXML = `<xml xmlns="https://developers.google.com/blockly/
  */
 
 export const predefinedDemos: BlocklyDemoProgram[] = [
+  //
+  {
+    title: "Hello, Robot",
+    description: "Minimal start program",
+    xml:
+      '<xml xmlns="https://developers.google.com/blockly/xml"><block type="comment" id="bl5ug]4^~_lhkL.#lq`{" x="51" y="120"><field name="COMMENT">Start here</field><next><block type="controls_repeat_ext" id=")s):e,P6E|5QND@3wvb^"><value name="TIMES"><shadow type="math_number" id="_X4dYJP0;U]twjP4u;e`"><field name="NUM">10</field></shadow><block type="math_number" id="^M:+c}~=msUQMia(;4K0"><field name="NUM">3</field></block></value><statement name="DO"><block type="motor" id="Qhp$So%PG:pr8OSk`DId"><field name="port">0</field><field name="direction">FORWARD</field><value name="power"><block type="math_number" id="+~R#3(L_Y,2Ne.u,;s+/"><field name="NUM">100</field></block></value></block></statement></block></next></block></xml>',
+  },
   {
     title: "Simple Demo",
     description: "Using 2 motors and a sensor",
