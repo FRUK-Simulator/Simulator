@@ -22,7 +22,17 @@
   color: var(--text-color-light);
 }
 
+.brand-image-container {
+  height: 100%;
+}
+
+.brand-image-link {
+  display: block;
+  height: 100%;
+}
+
 .brand {
+  padding: 0.7em 2.9em;
   /* Brand Icon must be at least 1.875 (30px) */
-  height: var(--header-height);
+  /* height: 90%; */
 }

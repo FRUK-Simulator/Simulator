@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
 
-  background-color: var(--primary-color);
-  box-shadow: -6px 6px 0px 2px var(--primary-color-dark);
+  background-color: var(--highlight-color);
+  box-shadow: -6px 6px 0px 2px var(--highlight-color-dark);
   color: var(--text-color-light);
 
   border-radius: var(--border-radius-rounder);
@@ -35,19 +35,23 @@
 }
 .card:hover {
   transform: translate(-2px, 2px);
-  box-shadow: -4px 4px 0px -2px var(--primary-color-darkest);
-  background-color: var(--primary-color-light);
+  box-shadow: -4px 4px 0px -2px var(--highlight-color-darkest);
+  background-color: var(--highlight-color-light);
 }
 
 .card--image {
+  /* width: 100%; */
+  height: 128px;
+  /*border: 2px solid var(--primary-color-light);*/
+}
+.card--image-container {
+  padding: 0.1em;
   display: flex;
   overflow: hidden;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 128px;
   border-radius: 10px;
-  border: 2px solid #0072aa;
+  background-color: var(--color-light-gray);
 }
 
 .card--title {
@@ -55,11 +59,11 @@
 }
 
 .card--body {
-  background-color: var(--primary-color-dark);
+  background-color: var(--highlight-color-dark);
   padding: 0.25em;
   padding-left: 0.5em;
   border-radius: 10px;
-  box-shadow: inset 0px 0px 0px 2px var(--primary-color-darker);
+  box-shadow: inset 0px 0px 0px 2px var(--highlight-color-darker);
   flex: 1;
   font-size: 24px;
 }

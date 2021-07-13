@@ -1,6 +1,6 @@
 :root {
   /* General Values */
-  --main-bg-color: #eceff1;
+  --main-bg-color: #ffffff;
   --text-color-dark: #333333;
   --text-color-light: #eeeeee;
   --text-color-disabled: #858585;
@@ -16,15 +16,21 @@
   --more-margin: 0.75em;
 
   /* Primary Color and Hues */
-  --primary-color-light: #0096e4cc;
-  --primary-color: #0096e4;
-  --primary-color-dark: #007dbf;
-  --primary-color-darker: #0072aa;
-  --primary-color-darkest: #00689e;
+  --primary-color-light: #1d506d;
+  --primary-color: #17435c;
+  --primary-color-dark: #12374d;
+  --primary-color-darker: #0d293a;
+  --primary-color-darkest: #081e2b;
+
+  --highlight-color: #157efb;
+  --highlight-color-dark: #0b60c9;
+  --highlight-color-darkest: #09448b;
+  --highlight-color-light: #2687fd;
+  --highlight-color-lightest: #3992fd;
 
   /* Accent Color and Hues */
-  --accent-color: #e53935;
-  --accent-color-dark: #b71c1c;
+  --accent-color: #007c9b;
+  --accent-color-dark: #006d88;
 
   /* Status Colors */
   --success-color: #c8e6c9;
@@ -38,6 +44,7 @@
   --trophy-color: goldenrod;
 
   /* General Colors */
+  --color-white: #ffffff;
   --color-light-gray: #eeeeee;
   --color-gray: #dddddd;
 
@@ -46,7 +53,7 @@
   --border-radius-rounder: 20px;
 
   /* Header */
-  --header-height: 4em;
+  --header-height: 87px;
 
   /* Toolbar */
   /* The total height of the toolbar */
