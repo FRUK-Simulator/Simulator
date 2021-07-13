@@ -1,6 +1,6 @@
 .divider-vertical {
-  margin-left: var(--normal-margin);
-  margin-right: var(--normal-margin);
+  margin-left: 2em;
+  margin-right: 2em;
   border-right: 2px solid white;
 
   height: auto;

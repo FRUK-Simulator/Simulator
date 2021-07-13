@@ -7,7 +7,7 @@ import {
   CardTitle,
   CardBody,
 } from "../components/Common/Card";
-import placeholder from "../components/Header/FIRST_Horz_RGB.png";
+import placeholder from "./educational_content.png";
 import { Link } from "react-router-dom";
 import { ChallengeConfig } from "../../RobotSimulator/Arenas/base";
 import { useSelector } from "react-redux";

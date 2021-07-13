@@ -11,5 +11,4 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: var(--normal-padding);
 }
