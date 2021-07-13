@@ -17,6 +17,12 @@
   padding: 0;
 }
 
+.header--program-title-icon {
+  padding-right: 0.5em;
+  /* allign the icon horizontally with the text */
+  margin-top: -0.2em;
+}
+
 .header--user-controls {
   margin-left: auto;
   color: var(--text-color-light);

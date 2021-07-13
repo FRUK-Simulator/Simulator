@@ -75,8 +75,9 @@
 } */
 
 .toolbar .btn {
-  font-family: "Indie Flower", cursive;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
+  font-size: 1.2em;
   text-align: center;
   /* Buttons should expand to take up the entire space equally */
   width: 100%;
@@ -87,12 +88,14 @@
 
   color: var(--text-color-light);
   border-bottom: 2px solid black;
-  background-color: var(--accent-color);
+  background-color: var(--highlight-color);
+  transition-duration: 60ms;
 }
 
 .toolbar .btn:hover {
-  border-bottom: 2px solid black;
-  border-right: 2px dashed black;
+  /* border-bottom: 2px solid black; */
+  /* border-right: 2px solid black; */
+  border-right: 2px solid var(--highlight-color-lightest);
   transform: scale(1.1, 1.1);
 }
 
@@ -115,5 +118,5 @@
 
 /* Dashed Border Between Each Button */
 .toolbar .btn + .btn {
-  border-left: 2px dashed black;
+  border-left: 2px solid var(--highlight-color-lightest);
 }

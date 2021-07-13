@@ -9,6 +9,7 @@
 .form-field--label__text {
   margin-bottom: var(--more-margin);
   color: var(--primary-color);
+  padding-left: 1em;
 }
 
 .form-field--input {
@@ -19,6 +20,7 @@
   width: 100%;
   border-bottom: 2px dashed var(--primary-color);
   margin-bottom: 1px;
+  padding-left: 1em;
 }
 
 .form-field--input:focus {

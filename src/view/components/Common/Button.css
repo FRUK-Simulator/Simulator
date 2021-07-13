@@ -1,5 +1,5 @@
 .btn {
-  font-family: "Roboto Mono", monospace;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 1.5em;
   border: 0;
   background-color: rgba(0, 0, 0, 0);
@@ -8,7 +8,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #efefef;
+  background-color: var(--highlight-color);
+  color: white;
 
   /* Reset margin / padding */
   padding: 0;
@@ -30,7 +31,7 @@
 }
 
 .btn + .btn {
-  border-left: 2px dashed black;
+  border-left: 2px dashed var(--highlight-color-lightest);
 }
 
 .btn > i {
@@ -47,7 +48,7 @@
 
   /* Remove the 2px margin and replace with 2px border - this prevents the content from jumping */
   margin-bottom: 0px;
-  border-bottom: 2px dashed black;
+  border-bottom: 2px dashed var(--highlight-color-lightest);
 }
 
 .btn--success:hover {
@@ -88,6 +89,7 @@
   justify-content: space-evenly;
   width: 100%;
   height: 100%;
+  background-color: var(--highlight-color-lightest);
 }
 
 .btn-bar .btn {
