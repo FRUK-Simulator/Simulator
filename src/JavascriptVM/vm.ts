@@ -1,5 +1,6 @@
 import Interpreter from "js-interpreter";
 import { ControllerKey } from "../state/gameControllerSlice";
+import { ArenaColourConstants } from "./colourSensorConstants";
 import { DISTANCE_SENSOR_RANGE } from "./distanceSensorConstants";
 
 export type BlocklyInterpreterCallbacks = {
@@ -189,11 +190,11 @@ export class BlocklyInterpreter {
       const colorSensorConversion = interpreter.createNativeFunction(
         (color: string) => {
           if (color === "red") {
-            return 0xff0000;
+            return ArenaColourConstants.RED;
           } else if (color === "blue") {
-            return 0x0000ff;
+            return ArenaColourConstants.BLUE;
           } else if (color === "green") {
-            return 0x00ff00;
+            return ArenaColourConstants.GREEN;
           }
           return 0;
         }

@@ -9,6 +9,7 @@ import { MessageType } from "../../state/messagesSlice";
 import { CoreSimTypes } from "@fruk/simulator-core";
 import { CoreSpecs } from "@fruk/simulator-core";
 import { ChallengeStatus } from "./challengeSlice";
+import { ArenaColourConstants } from "../../JavascriptVM/colourSensorConstants";
 
 export const arenas = [arena];
 export const challenges = [challengeA, challengeB, challengeC];
@@ -213,7 +214,7 @@ class Lesson1Challenge implements ChallengeListener {
         zLength: 1,
         xLength: 1,
       },
-      baseColor: 0x00ff00,
+      baseColor: ArenaColourConstants.GREEN,
     });
     this.badZones.forEach((z) => {
       z.zoneId = "bad-" + z.zoneId;
