@@ -35,7 +35,6 @@ export const RobotView = () => {
     } else if (basicSensor.type === "contact-sensor") {
       contactSensors.push(basicSensor as ContactSensorBuilder);
     } else if (basicSensor.type === "gyroscope-sensor") {
-      console.log(`DRA: GRYO!!`);
       gyroscopeSensors.push(basicSensor as GyroscopeSensorBuilder);
     }
   });
