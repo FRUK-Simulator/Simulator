@@ -252,9 +252,6 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               }
               return 0.0;
             },
-            getGyroscopeValue: (): any => {
-              return robotRef.current?.getAngle();
-            },
             getComplexSensorValue: (channel: number, type: string): any => {
               const value = robotRef.current?.getComplexSensorValue(
                 channel,

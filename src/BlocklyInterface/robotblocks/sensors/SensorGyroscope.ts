@@ -2,20 +2,34 @@ import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 export function addGyroBlock() {
   addCustomBlock(
-    "gyroscope",
+    "gyroscope_sensor",
     [
       {
-        type: "gyroscope",
+        type: "gyroscope_sensor",
         lastDummyAlign0: "RIGHT",
-        message0: "read Gyroscope",
+        message0: "get rotation from sensor %1 on channel %2",
+        args0: [
+          {
+            type: "input_dummy",
+            align: "RIGHT",
+          },
+          {
+            type: "field_number",
+            name: "channel",
+            value: 0,
+            min: 0,
+            max: 20,
+          },
+        ],
         output: "Number",
         colour: 300,
-        tooltip: "Read the robot's Gyroscope value",
+        tooltip: "gyroscope sensor",
         helpUrl: "",
       },
     ],
     (block) => {
-      const code = `getGyroscopeValue()`;
+      const numberChannel = block.getFieldValue("channel");
+      const code = `getSensorValue(${numberChannel})`;
 
       return [code, JavaScript.ORDER_ATOMIC];
     }

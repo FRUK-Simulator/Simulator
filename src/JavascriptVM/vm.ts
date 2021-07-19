@@ -40,12 +40,6 @@ export type BlocklyInterpreterCallbacks = {
    */
   getSensorValue?: (port: number) => number;
   getComplexSensorValue?: (port: number, type: string) => any;
-
-  /**
-   * Gets the robot's world rotation angle in radians.  We refer to it as a "Gyroscope"
-   * because this function is intended to be used as a 'sensor' to obtain the robot's orientation.
-   */
-  getGyroscopeValue?: () => number;
 };
 
 export enum ExecutionState {
@@ -153,15 +147,6 @@ export class BlocklyInterpreter {
           return 0.0;
         }
       );
-      const getGyroscopeValue = interpreter.createNativeFunction(
-        (port: number): number => {
-          if (callbacks.getGyroscopeValue) {
-            return callbacks.getGyroscopeValue();
-          }
-          return 0.0;
-        }
-      );
-      // getAngleValue
 
       const getComplexSensorValue = interpreter.createNativeFunction(
         (port: number, type: string): any => {
@@ -224,7 +209,6 @@ export class BlocklyInterpreter {
         isSensorTouchPushed
       );
       interpreter.setProperty(globals, "getSensorValue", getSensorValue);
-      interpreter.setProperty(globals, "getGyroscopeValue", getGyroscopeValue);
       interpreter.setProperty(
         globals,
         "getComplexSensorValue",

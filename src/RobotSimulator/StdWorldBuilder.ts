@@ -33,6 +33,11 @@ export class StdWorldBuilder {
       colorSensor.setMountFace(RobotSpecs.SensorMountingFace.BOTTOM);
 
       robotBuilder.addComplexSensor(colorSensor);
+
+      const gyroscopeSensor = new RobotBuilder.GyroscopeSensorBuilder(
+        2
+      ).setMountFace(RobotSpecs.SensorMountingFace.TOP);
+      robotBuilder.addBasicSensor(gyroscopeSensor);
     }
 
     {
