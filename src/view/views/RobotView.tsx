@@ -2,6 +2,7 @@ import {
   ColorSensorBuilder,
   ContactSensorBuilder,
   DistanceSensorBuilder,
+  GyroscopeSensorBuilder,
 } from "@fruk/simulator-core/dist/builder/RobotBuilder";
 import { SensorMountingFace } from "@fruk/simulator-core/dist/engine/specs/RobotSpecs";
 import React from "react";
@@ -26,12 +27,15 @@ export const RobotView = () => {
   let distSensors: Array<DistanceSensorBuilder> = [];
   let contactSensors: Array<ContactSensorBuilder> = [];
   let colorSensors: Array<ColorSensorBuilder> = [];
+  let gyroscopeSensors: Array<GyroscopeSensorBuilder> = [];
 
   robotSpec.basicSensors?.forEach((basicSensor) => {
     if (basicSensor.type === "distance-sensor") {
       distSensors.push(basicSensor as DistanceSensorBuilder);
     } else if (basicSensor.type === "contact-sensor") {
       contactSensors.push(basicSensor as ContactSensorBuilder);
+    } else if (basicSensor.type === "gyroscope-sensor") {
+      gyroscopeSensors.push(basicSensor as GyroscopeSensorBuilder);
     }
   });
   robotSpec.complexSensors?.forEach((complexSensor) => {
@@ -98,6 +102,17 @@ export const RobotView = () => {
               label={SensorMountingFace[sensor.mountFace]}
               sublabel={`Channel: ${sensor.channel}`}
               value={robotHandle.getDigitalInput(sensor.channel) ? 1 : 0}
+            />
+          ))}
+        </div>
+        <div className="robot-view--stats">
+          <StatusTile label="Gyroscope" value={1} />
+          {gyroscopeSensors.map((sensor) => (
+            <StatusTile
+              variant={StatusTileVariant.active}
+              label={`${SensorMountingFace[sensor.mountFace]}`}
+              sublabel={`Channel: ${sensor.channel}`}
+              value={robotHandle.getAnalogInput(sensor.channel).toFixed(1)}
             />
           ))}
         </div>

@@ -39,7 +39,6 @@ export type BlocklyInterpreterCallbacks = {
    * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
    */
   getSensorValue?: (port: number) => number;
-
   getComplexSensorValue?: (port: number, type: string) => any;
 };
 
