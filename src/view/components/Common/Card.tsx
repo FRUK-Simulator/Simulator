@@ -9,7 +9,9 @@ export const Card: FunctionComponent = ({ children }) => (
 export const CardImage: FunctionComponent<
   { src: string } & { imgProps?: React.HTMLAttributes<HTMLImageElement> }
 > = ({ src, imgProps = {} }) => (
-  <img alt="" {...imgProps} className="card--image" src={src} />
+  <div className="card--image-container">
+    <img alt="" {...imgProps} className="card--image" src={src} />
+  </div>
 );
 
 export const CardTitle: FunctionComponent<{
