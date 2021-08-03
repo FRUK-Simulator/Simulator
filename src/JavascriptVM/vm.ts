@@ -233,7 +233,12 @@ export class BlocklyInterpreter {
       );
     });
 
+    // this may cause an infinite loop, we should bail out if this is the case
+    this.interpreter.run();
+
     // Start running in a paused state - ie, spawn a "thread"
+    this.interpreter.appendCode("start();");
+
     this._run(0);
   }
 

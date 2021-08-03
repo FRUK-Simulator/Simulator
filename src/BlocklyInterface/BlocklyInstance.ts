@@ -1,6 +1,6 @@
-import { JavaScriptGenerator } from "../@types/blockly-javascript";
 import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
+import { JavaScript } from "./robotblocks/AddBlockUtil";
 
 export class BlocklyUiEvent extends Events.Ui {
   public element: string | undefined;
@@ -64,7 +64,7 @@ class BlocklyInstance {
   }
 
   get generator() {
-    return (Blockly as any).JavaScript as JavaScriptGenerator;
+    return JavaScript;
   }
 
   get selected() {

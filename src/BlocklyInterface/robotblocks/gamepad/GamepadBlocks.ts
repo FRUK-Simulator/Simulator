@@ -1,16 +1,5 @@
 import Blockly from "blockly";
-import { JavaScriptGenerator } from "../../../@types/blockly-javascript";
-
-interface GamepadPropertyProcessor {
-  (block: Blockly.Block): [String, String];
-}
-
-interface JavaScriptGamepadGenerator extends JavaScriptGenerator {
-  gamepad_getProperty?: GamepadPropertyProcessor;
-  gamepad_getProperty_Number?: GamepadPropertyProcessor;
-  gamepad_getProperty_Boolean?: GamepadPropertyProcessor;
-  ORDER_FUNCTION_CALL: string;
-}
+import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 interface GamepadBlock {
   init(): void;
@@ -27,9 +16,6 @@ export function addGamepadBlocks() {
   // The following are pulled from other locations in the ftc-blockly repo:
   // getPropertyColor
   const getPropertyColor = 151;
-
-  const blocklyJavascript = (Blockly as any)
-    .JavaScript as JavaScriptGamepadGenerator;
 
   function createGamepadDropdown() {
     var CHOICES = [["gamepad1", "gamepad1"]];
@@ -82,11 +68,13 @@ export function addGamepadBlocks() {
 
   Blockly.Blocks["gamepad_getProperty"] = propertyProcessor;
 
-  blocklyJavascript["gamepad_getProperty"] = function (block) {
+  const getProperty = function (block: Blockly.Block) {
     var property = block.getFieldValue("PROP");
     var code = "checkGamepadKeyPress('" + property + "')";
-    return [code, blocklyJavascript.ORDER_FUNCTION_CALL];
+    return [code, JavaScript.ORDER_FUNCTION_CALL];
   };
+
+  addCustomBlock("gamepad_getProperty", undefined, getProperty);
 
   const booleanProcessor: GamepadBlock = {
     init: function () {
@@ -135,8 +123,7 @@ export function addGamepadBlocks() {
 
   Blockly.Blocks["gamepad_getProperty_Boolean"] = booleanProcessor;
 
-  blocklyJavascript["gamepad_getProperty_Boolean"] =
-    blocklyJavascript["gamepad_getProperty"];
+  addCustomBlock("gamepad_getProperty_Boolean", undefined, getProperty);
 
   const numberProcessor: GamepadBlock = {
     init: function () {
@@ -197,6 +184,5 @@ export function addGamepadBlocks() {
 
   Blockly.Blocks["gamepad_getProperty_Number"] = numberProcessor;
 
-  blocklyJavascript["gamepad_getProperty_Number"] =
-    blocklyJavascript["gamepad_getProperty"];
+  addCustomBlock("gamepad_getProperty_Number", undefined, getProperty);
 }
