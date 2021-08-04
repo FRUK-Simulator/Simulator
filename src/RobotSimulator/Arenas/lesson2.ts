@@ -55,6 +55,17 @@ function challengeA(): ChallengeConfig {
     startPosition: { x: 0, y: 2 },
     arenaConfig: arena(),
     eventListener: new Lesson3Challenge(finishZone, badZones),
+    descriptions: {
+      short: "Place the robot in the red zone and stay there for 5 seconds",
+      markdown: `
+# Lesson 3 - Challenge A
+
+The robot must be driven into the red zone, and then stop in it.
+Stay in the zone for five seconds to complete the challenge.
+
+If the robot leaves the red zone before the five seconds is up then you will fail the challenge.
+      `,
+    },
   };
 
   return challengeConfig;
