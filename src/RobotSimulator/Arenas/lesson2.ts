@@ -13,7 +13,7 @@ export const challenges = [challengeA, challengeB];
 
 function arena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "Lesson 3",
+    name: "Lesson 2 - Distance Sensor",
     worldConfig: {
       zLength: 5,
       xLength: 5,
@@ -51,10 +51,21 @@ function challengeA(): ChallengeConfig {
     baseColor: 0xff0000,
   };
   const challengeConfig: ChallengeConfig = {
-    name: "Lesson 3 - Challenge A",
+    name: "Lesson 2 - Challenge A",
     startPosition: { x: 0, y: 2 },
     arenaConfig: arena(),
-    eventListener: new Lesson3Challenge(finishZone, badZones),
+    eventListener: new Lesson2Challenge(finishZone, badZones),
+    descriptions: {
+      short: "Reading the distance sensor",
+      markdown: `
+# Lesson 2 - Challenge A
+
+The robot must be driven into the red zone, and then stop in it.
+Stay in the zone for five seconds to complete the challenge.
+
+If the robot leaves the red zone before the five seconds is up then you will fail the challenge.
+      `,
+    },
   };
 
   return challengeConfig;
@@ -97,16 +108,30 @@ function challengeB(): ChallengeConfig {
     baseColor: 0xff0000,
   };
   const challengeConfig: ChallengeConfig = {
-    name: "Lesson 3 - Challenge B",
+    name: "Lesson 2 - Challenge B",
     startPosition: { x: -2, y: 2 },
     arenaConfig: arena(),
-    eventListener: new Lesson3Challenge(finishZone, badZones),
+    eventListener: new Lesson2Challenge(finishZone, badZones),
+    descriptions: {
+      short: "Combining distance and turning",
+      markdown: `
+# Lesson 2 - Challenge A
+
+Use the distance sensor to follow the path to the red zone.
+
+Stay in the zone for five seconds to complete the challenge.
+
+If the robot leaves the red zone before the five seconds is up then you will fail the challenge.
+
+If the robot enters the black zones then you must start again.
+`,
+    },
   };
 
   return challengeConfig;
 }
 
-class Lesson3Challenge implements ChallengeListener {
+class Lesson2Challenge implements ChallengeListener {
   constructor(
     public finishZone: CoreSpecs.IZoneSpec,
     public badZones: CoreSpecs.IZoneSpec[]

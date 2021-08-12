@@ -1,14 +1,10 @@
 import { ChallengeConfig } from "./Arenas/base";
 import * as Lesson1 from "./Arenas/lesson1";
-import * as Lesson3 from "./Arenas/lesson3";
-import * as ParkingLot from "./Arenas/parkinglot";
-import * as Bowling from "./Arenas/bowling";
+import * as Lesson2 from "./Arenas/lesson2";
 
 let challengeConfigs: Array<ChallengeConfig> = [
   ...Lesson1.challenges,
-  ...Lesson3.challenges,
-  ...ParkingLot.challenges,
-  ...Bowling.challenges,
+  ...Lesson2.challenges,
 ].map((getChallenge) => getChallenge());
 
 export function getChallengesPerArena(): Map<string, Array<ChallengeConfig>> {
