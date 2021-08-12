@@ -162,6 +162,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
     };
   });
 
+  useEffect(() => {
+    console.log("Creating VMContext.Provider");
+    return () => {
+      console.log("Destroying VMContext.Provider");
+    };
+  });
+
   return (
     <VMContext.Provider
       value={{
