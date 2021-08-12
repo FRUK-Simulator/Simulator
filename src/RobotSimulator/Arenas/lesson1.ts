@@ -16,7 +16,7 @@ export const challenges = [challengeA, challengeB, challengeC];
 
 function arena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "Lesson 1",
+    name: "Lesson 1 - Motors",
     worldConfig: {
       zLength: 5,
       xLength: 5,
@@ -69,16 +69,14 @@ function challengeA(): ChallengeConfig {
     arenaConfig: arena(),
     eventListener: new Lesson1Challenge({ x: 0, y: -2 }, badZones),
     descriptions: {
-      short:
-        "Drive motors at the same speed to create forward " +
-        "drive for a certain distance",
+      short: "Using the motors",
       markdown: `
 # Lesson 1 - Challenge A
 
 The robot needs to avoid the black areas of the playfield and end up in the green zone
 at the far side of the arena.
 
-If at any point the robot comes into conact with the black area then the robot must
+If at any point the robot comes into contact with the black area then the robot must
 start again.
       `,
     },
@@ -107,7 +105,7 @@ function challengeB(): ChallengeConfig {
     arenaConfig: arena(),
     eventListener: new Lesson1Challenge({ x: +2, y: 2 }, badZones),
     descriptions: {
-      short: "Driving the robot around the bend",
+      short: "Using the motors to turn a corner",
       markdown: `
 # Lesson 1 - Challenge B
 
@@ -167,7 +165,7 @@ function challengeC(): ChallengeConfig {
     arenaConfig: arena(),
     eventListener: new Lesson1Challenge({ x: 2, y: 2 }, badZones),
     descriptions: {
-      short: "Driving the robot around the bendy bend",
+      short: "Using the motors to turn precise angles",
       markdown: `
 # Lesson 1 - Challenge C
 
