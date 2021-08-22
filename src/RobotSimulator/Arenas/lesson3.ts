@@ -5,8 +5,6 @@ import {
   ChallengeActions,
   ChallengeEvent,
 } from "./base";
-import { CoreSpecs } from "@fruk/simulator-core";
-import { MessageType } from "../../state/messagesSlice";
 import { IBoxSpec } from "@fruk/simulator-core/dist/engine/specs/CoreSpecs";
 
 export const arenas = [arena];
