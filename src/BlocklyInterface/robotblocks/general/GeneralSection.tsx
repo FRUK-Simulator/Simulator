@@ -1,8 +1,10 @@
 import "./GeneralBlocks";
+import { addStartBlock } from "./Start";
 import { addWaitBlock } from "./Wait";
 
 export default (() => {
   addWaitBlock();
+  addStartBlock();
 
   return `
     <!-- Logic is from blockly/demos/code/index.html, with some modification. -->
@@ -348,7 +350,8 @@ export default (() => {
     <!-- Variables is from blockly/demos/code/index.html -->
     <category name="Variables" colour="330" custom="VARIABLE"></category>
     <!-- Functions is from blockly/demos/code/index.html -->
-    <category name="Functions" colour="290" custom="PROCEDURE"></category>
+    <category name="Functions" colour="290" custom="PROCEDURE">
+    </category>
     <category name="Miscellaneous" colour="200">
         <block type="comment">
             <field name="COMMENT">Enter your comment here!</field>
@@ -356,6 +359,9 @@ export default (() => {
         <block type="misc_null"></block>
         <block type="misc_isNull"></block>
         <block type="misc_isNotNull"></block>
+    </category>
+    <category name="Start">
+        <block type="start_block"></block>
     </category>
 `;
 })();

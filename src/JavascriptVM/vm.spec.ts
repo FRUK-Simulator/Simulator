@@ -11,7 +11,7 @@ describe("javascript vm", () => {
   });
 
   it("calls the highlightBlock callback", () => {
-    const code = "highlightBlock('abc');";
+    const code = "function start() {highlightBlock('abc');}";
     const onHighlightFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
@@ -24,11 +24,13 @@ describe("javascript vm", () => {
 
   test("step runs the code until it hits a highlightBlock statement", () => {
     const code = `
-    var a = 1;
-    var b = 2;
-    highlightBlock(a + b);
-    var c = 3;
-    highlightBlock(a + b + c);
+      function start() {
+        var a = 1;
+        var b = 2;
+        highlightBlock(a + b);
+        var c = 3;
+        highlightBlock(a + b + c);
+      }
     `;
     const onHighlightFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
@@ -47,9 +49,11 @@ describe("javascript vm", () => {
 
   test("it calls the onFinished callback when there is nothing left to execute", () => {
     const code = `
-    for(var i = 0; i < 10; i++);
-    highlightBlock("a");
-    for(var i = 0; i < 10; i++);
+    function start() {
+      for(var i = 0; i < 10; i++);
+      highlightBlock("a");
+      for(var i = 0; i < 10; i++);
+    }
     `;
     const onFinishedFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
@@ -66,7 +70,7 @@ describe("javascript vm", () => {
   });
 
   test("step does not run code when the vm has been stopped", () => {
-    const code = "highlightBlock('abc');";
+    const code = "function start() { highlightBlock('abc'); }";
     const onHighlightFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
@@ -81,9 +85,11 @@ describe("javascript vm", () => {
 
   test("run executes all code", () => {
     const code = `
+      function start() {
         highlightBlock("a");
         highlightBlock("b");
         highlightBlock("c");
+      }
     `;
 
     const onHighlightFn = jest.fn();
@@ -110,11 +116,13 @@ describe("javascript vm", () => {
 
   test("run executes all code until a highlightBlock per timer", () => {
     const code = `
+      function start() {
         highlightBlock("a");
         for(var i = 0; i < 10; i++);
         highlightBlock("b");
         for(var i = 0; i < 10; i++);
         highlightBlock("c");
+      }
     `;
 
     const onHighlightFn = jest.fn();
@@ -143,11 +151,13 @@ describe("javascript vm", () => {
 
   test("run does not execute any code when paused", () => {
     const code = `
+      function start() {
         highlightBlock("a");
         for(var i = 0; i < 10; i++);
         highlightBlock("b");
         for(var i = 0; i < 10; i++);
         highlightBlock("c");
+      }
     `;
 
     const onHighlightFn = jest.fn();
@@ -176,11 +186,13 @@ describe("javascript vm", () => {
 
   test("the vm can be unpaused", () => {
     const code = `
+      function start() {
         highlightBlock("a");
         for(var i = 0; i < 10; i++);
         highlightBlock("b");
         for(var i = 0; i < 10; i++);
         highlightBlock("c");
+      }
     `;
 
     const onHighlightFn = jest.fn();
@@ -208,10 +220,12 @@ describe("javascript vm", () => {
 
   test("stepping a running vm does not do anything", () => {
     const code = `
-    highlightBlock("a");
-    highlightBlock("b");
-    highlightBlock("c");
-`;
+      function start() {
+        highlightBlock("a");
+        highlightBlock("b");
+        highlightBlock("c");
+      }
+    `;
 
     const onHighlightFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
@@ -233,10 +247,12 @@ describe("javascript vm", () => {
 
   test("the vm can be stopped in the middle of a run", () => {
     const code = `
-    highlightBlock("a");
-    highlightBlock("b");
-    highlightBlock("c");
-`;
+      function start() {
+        highlightBlock("a");
+        highlightBlock("b");
+        highlightBlock("c");
+      }
+    `;
 
     const onHighlightFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
@@ -257,7 +273,7 @@ describe("javascript vm", () => {
   });
 
   test("run calls the onFinished callback when finished", () => {
-    const code = `for(var i = 0; i < 10; i++);`;
+    const code = `function start() { for(var i = 0; i < 10; i++); }`;
     const onFinishedFn = jest.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onFinish: onFinishedFn,
@@ -271,7 +287,9 @@ describe("javascript vm", () => {
 
   test("the executionState is returned correct", () => {
     const code = `
-      highlightBlock("a");
+      function start() {
+        highlightBlock("a");
+      }
     `;
     const vm = new BlocklyInterpreter(code, speed, {});
 

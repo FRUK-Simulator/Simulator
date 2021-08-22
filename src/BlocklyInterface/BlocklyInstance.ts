@@ -1,6 +1,6 @@
-import { JavaScriptGenerator } from "../@types/blockly-javascript";
 import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
+import { JavaScript } from "./robotblocks/AddBlockUtil";
 
 export class BlocklyUiEvent extends Events.Ui {
   public element: string | undefined;
@@ -34,9 +34,9 @@ class BlocklyInstance {
   }
 
   setupInterpretation() {
-    this.generator.INDENT = "  ";
-    this.generator.STATEMENT_PREFIX = `${BLOCKLY_HIGHLIGHT_PREFIX}(%1);\n`;
-    this.generator.addReservedWords(BLOCKLY_HIGHLIGHT_PREFIX);
+    JavaScript.INDENT = "  ";
+    JavaScript.STATEMENT_PREFIX = `${BLOCKLY_HIGHLIGHT_PREFIX}(%1);\n`;
+    JavaScript.addReservedWords(BLOCKLY_HIGHLIGHT_PREFIX);
   }
 
   resizeBlockly() {
@@ -45,7 +45,24 @@ class BlocklyInstance {
   }
 
   getCode() {
-    return this.generator.workspaceToCode(this.workspace);
+    let starts = this.workspace.getBlocksByType("start_block", false);
+
+    if (!starts || starts.length === 0) {
+      return "// No start block found, try putting blocks into a start block\n// ERROR: NO_START_BLOCK!";
+    }
+
+    if (starts.length > 1) {
+      return "// Multiple start blocks found, try putting blocks into a single start block\n// ERROR: MULTIPLE_START_BLOCKS!";
+    }
+
+    let start = starts[0];
+    JavaScript.init(this.workspace);
+    let code = JavaScript.blockToCode(start);
+    if (typeof code !== "string") {
+      throw Error("Bad return type");
+    }
+
+    return code;
   }
 
   highlightBlock(id: string) {
@@ -61,10 +78,6 @@ class BlocklyInstance {
         fn(event);
       }
     });
-  }
-
-  get generator() {
-    return (Blockly as any).JavaScript as JavaScriptGenerator;
   }
 
   get selected() {
