@@ -233,11 +233,16 @@ export class BlocklyInterpreter {
       );
     });
 
-    // this may cause an infinite loop, we should bail out if this is the case
-    this.interpreter.run();
+    if (/^\/\/ ERROR: /m.test(code)) {
+      // Error in generated code. see BlocklyInstance.ts.
+      // Don't add the call to start, since it may not exist!
+    } else {
+      // this may cause an infinite loop, we should bail out if this is the case
+      this.interpreter.run();
 
-    // Start running in a paused state - ie, spawn a "thread"
-    this.interpreter.appendCode("start();");
+      // Start running in a paused state - ie, spawn a "thread"
+      this.interpreter.appendCode("start();");
+    }
 
     this._run(0);
   }

@@ -48,11 +48,11 @@ class BlocklyInstance {
     let starts = this.workspace.getBlocksByType("start_block", false);
 
     if (!starts || starts.length === 0) {
-      return "// No start block found, try putting blocks into a start block\n// NO_START_BLOCK!";
+      return "// No start block found, try putting blocks into a start block\n// ERROR: NO_START_BLOCK!";
     }
 
     if (starts.length > 1) {
-      return "// Multiple start blocks found, try putting blocks into a single start block\n// MULTIPLE_START_BLOCKS!";
+      return "// Multiple start blocks found, try putting blocks into a single start block\n// ERROR: MULTIPLE_START_BLOCKS!";
     }
 
     let start = starts[0];
