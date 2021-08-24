@@ -19,7 +19,10 @@ import {
 } from "./vm";
 import { blocklySlice } from "../BlocklyInterface/blocklySlice";
 import "./JavascriptVM.css";
-import { robotSimulatorSlice } from "../RobotSimulator/robotSimulatorSlice";
+import {
+  robotSimulatorSlice,
+  specToSensors,
+} from "../RobotSimulator/robotSimulatorSlice";
 import { MessageType, messageSlice } from "../state/messagesSlice";
 import Blockly from "blockly";
 import { Sim3D, CameraSpecs } from "@fruk/simulator-core";
@@ -329,7 +332,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           dispatch(
             robotSimulatorSlice.actions.setRobotSpec({
-              spec: robotSpec,
+              spec: specToSensors(robotSpec),
             })
           );
 
@@ -400,7 +403,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           dispatch(
             robotSimulatorSlice.actions.setRobotSpec({
-              spec: robotSpec,
+              spec: specToSensors(robotSpec),
             })
           );
 

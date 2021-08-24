@@ -1,17 +1,10 @@
-import {
-  ColorSensorBuilder,
-  ContactSensorBuilder,
-  DistanceSensorBuilder,
-  GyroscopeSensorBuilder,
-} from "@fruk/simulator-core/dist/builder/RobotBuilder";
-import { SensorMountingFace } from "@fruk/simulator-core/dist/engine/specs/RobotSpecs";
 import React from "react";
 import { useSelector } from "react-redux";
 import { DISTANCE_SENSOR_RANGE } from "../../JavascriptVM/distanceSensorConstants";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
 import {
   getMotorStats,
-  getRoboSpec,
+  getSensors,
 } from "../../RobotSimulator/robotSimulatorSlice";
 import { Container } from "../components/Common/Container";
 import { Divider } from "../components/Common/Divider";
@@ -22,27 +15,7 @@ import "./RobotView.css";
 
 export const RobotView = () => {
   const motorStats = useSelector(getMotorStats);
-  const robotSpec = useSelector(getRoboSpec);
-
-  let distSensors: Array<DistanceSensorBuilder> = [];
-  let contactSensors: Array<ContactSensorBuilder> = [];
-  let colorSensors: Array<ColorSensorBuilder> = [];
-  let gyroscopeSensors: Array<GyroscopeSensorBuilder> = [];
-
-  robotSpec.basicSensors?.forEach((basicSensor) => {
-    if (basicSensor.type === "distance-sensor") {
-      distSensors.push(basicSensor as DistanceSensorBuilder);
-    } else if (basicSensor.type === "contact-sensor") {
-      contactSensors.push(basicSensor as ContactSensorBuilder);
-    } else if (basicSensor.type === "gyroscope-sensor") {
-      gyroscopeSensors.push(basicSensor as GyroscopeSensorBuilder);
-    }
-  });
-  robotSpec.complexSensors?.forEach((complexSensor) => {
-    if (complexSensor.type === "color-sensor") {
-      colorSensors.push(complexSensor as ColorSensorBuilder);
-    }
-  });
+  const sensors = useSelector(getSensors);
 
   const vm = useVM();
   let robotHandle = vm.robot;
@@ -66,11 +39,14 @@ export const RobotView = () => {
         </div>
 
         <div className="robot-view--stats">
-          <StatusTile label="Distance Sensors" value={distSensors.length} />
-          {distSensors.map((sensor) => (
+          <StatusTile
+            label="Distance Sensors"
+            value={sensors.distanceSensors.length}
+          />
+          {sensors.distanceSensors.map((sensor) => (
             <StatusTile
               variant={StatusTileVariant.active}
-              label={`${SensorMountingFace[sensor.mountFace]}`}
+              label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
               // Show it in centimeters: this is inspired by vm.ts: 'sensorConversionFactor'
               value={(
@@ -83,11 +59,14 @@ export const RobotView = () => {
         </div>
 
         <div className="robot-view--stats">
-          <StatusTile label="Color Sensors" value={colorSensors.length} />
-          {colorSensors.map((sensor) => (
+          <StatusTile
+            label="Color Sensors"
+            value={sensors.colorSensors.length}
+          />
+          {sensors.colorSensors.map((sensor) => (
             <StatusTile
               variant={StatusTileVariant.active}
-              label={SensorMountingFace[sensor.mountFace]}
+              label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
               value={`n/a`}
             />
@@ -95,22 +74,28 @@ export const RobotView = () => {
         </div>
 
         <div className="robot-view--stats">
-          <StatusTile label="Contact Sensors" value={contactSensors.length} />
-          {contactSensors.map((sensor) => (
+          <StatusTile
+            label="Contact Sensors"
+            value={sensors.contactSensors.length}
+          />
+          {sensors.contactSensors.map((sensor) => (
             <StatusTile
               variant={StatusTileVariant.active}
-              label={SensorMountingFace[sensor.mountFace]}
+              label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
               value={robotHandle.getDigitalInput(sensor.channel) ? 1 : 0}
             />
           ))}
         </div>
         <div className="robot-view--stats">
-          <StatusTile label="Gyroscope" value={1} />
-          {gyroscopeSensors.map((sensor) => (
+          <StatusTile
+            label="Gyroscope"
+            value={sensors.gyroscopeSensors.length}
+          />
+          {sensors.gyroscopeSensors.map((sensor) => (
             <StatusTile
               variant={StatusTileVariant.active}
-              label={`${SensorMountingFace[sensor.mountFace]}`}
+              label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
               value={robotHandle.getAnalogInput(sensor.channel).toFixed(1)}
             />
