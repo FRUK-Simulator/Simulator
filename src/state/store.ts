@@ -35,7 +35,7 @@ export const store = configureStore({
   },
 });
 
-store.subscribe(saveBlocklyState);
+store.subscribe(() => saveBlocklyState(store.getState()));
 
 // Dispatch Type - See https://redux-toolkit.js.org/usage/usage-with-typescript#getting-the-dispatch-type
 export type AppDispatch = typeof store.dispatch;

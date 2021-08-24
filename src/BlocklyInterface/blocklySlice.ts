@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, store } from "../state/store";
+import { RootState } from "../state/store";
 import { vmSlice } from "../JavascriptVM/vmSlice";
 import { ExecutionState } from "../JavascriptVM/vm";
 import { getDefaultToolbox } from "./toolbox";
@@ -121,9 +121,9 @@ export const loadBlocklyState = () => {
   }
 };
 
-export const saveBlocklyState = () => {
+export const saveBlocklyState = (state: RootState) => {
   try {
-    const serializedState = JSON.stringify(store.getState().blockly);
+    const serializedState = JSON.stringify(state.blockly);
     localStorage.setItem(localStorageKey, serializedState);
   } catch {}
 };
