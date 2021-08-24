@@ -8,6 +8,7 @@ export interface ArenaConfig {
   ballSpecs?: CoreSpecs.IBallSpec[];
   boxSpecs?: CoreSpecs.IBoxSpec[];
   coneSpecs?: CoreSpecs.IConeSpec[];
+  zoneSpecs?: CoreSpecs.IZoneSpec[];
 }
 
 interface ChallengeDescription {

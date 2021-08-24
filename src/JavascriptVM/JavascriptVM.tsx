@@ -326,6 +326,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             simulator.addCone(coneSpec);
           });
 
+          arena.zoneSpecs?.forEach(function (zoneSpec) {
+            simulator.addZone(zoneSpec);
+          });
+
           if (challengeListener.current) {
             challengeListener.current.onStop();
           }
