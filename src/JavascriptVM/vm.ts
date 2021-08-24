@@ -317,10 +317,13 @@ export class BlocklyInterpreter {
   private _run(steps: number) {
     let timeout = this.executionInterval;
 
+    // Incorperate any pending delay `nextStepDelay` into the timeout
     if (this.nextStepDelay > this.executionInterval) {
       timeout = this.nextStepDelay;
-      this.nextStepDelay = 0;
     }
+
+    // Clear the remaining delay for the next execution
+    this.nextStepDelay = 0;
 
     setTimeout(() => {
       // do not schedule any more work if stopped
