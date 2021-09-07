@@ -35,6 +35,7 @@ export interface ChallengeActions {
       | CoreSpecs.IZoneSpec
   ): void;
   displayMessage(message: string, type: MessageType): void;
+  /** @param timeout timeout in milliseconds */
   displayFadingMessage(
     message: string,
     type: MessageType,
@@ -47,6 +48,7 @@ export interface ZoneEvent {
   kind: "ZoneEvent";
   zoneId: string;
   entry: boolean;
+  id?: string;
 }
 
 export interface CollisionEvent {
