@@ -421,6 +421,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
                   kind: "ZoneEvent",
                   entry: event.type === "zone-entry",
                   zoneId: event.data.zoneId,
+                  id: event.data.objectRef.id,
                 });
               }
             }

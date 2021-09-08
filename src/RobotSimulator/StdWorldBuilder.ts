@@ -19,6 +19,8 @@ export class StdWorldBuilder {
     robotSpec: RobotSpecs.IRobotSpec;
   } => {
     const robotBuilder = new RobotBuilder.Builder();
+
+    robotBuilder.setId("robo");
     robotBuilder.setDimensions({ x: 0.225, y: 0.125, z: 0.255 });
 
     {
