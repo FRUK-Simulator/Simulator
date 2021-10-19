@@ -9,7 +9,7 @@ import { CoreSpecs } from "@fruk/simulator-core";
 import { MessageType } from "../../state/messagesSlice";
 
 export const arenas = [arena];
-export const challenges = [challengeA, challengeB];
+export const challenges = [challengeA, challengeB, challengeC];
 
 function arena(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
@@ -84,6 +84,55 @@ function challengeB(): ChallengeConfig {
       baseColor: 0x000000,
       zoneId: "0",
     },
+  ];
+  const finishZone: CoreSpecs.IZoneSpec = {
+    type: "zone",
+    initialPosition: { x: 2, y: 2 },
+    zoneId: FinishZoneId,
+    zoneShape: {
+      type: "rectangle",
+      xLength: 1,
+      zLength: 1,
+    },
+    baseColor: 0xff0000,
+  };
+  const challengeConfig: ChallengeConfig = {
+    name: "Lesson 2 - Challenge B",
+    startPosition: { x: -2, y: 2 },
+    arenaConfig: arena(),
+    eventListener: new Lesson2Challenge(finishZone, badZones),
+    descriptions: {
+      short: "Combining distance and turning",
+      markdown: `
+# Lesson 2 - Challenge B
+
+Use the distance sensor to follow the path to the red zone.
+
+Stay in the zone for five seconds to complete the challenge.
+
+If the robot leaves the red zone before the five seconds is up then you will fail the challenge.
+
+If the robot enters the black zones then you must start again.
+`,
+    },
+  };
+
+  return challengeConfig;
+}
+
+function challengeC(): ChallengeConfig {
+  const badZones: CoreSpecs.IZoneSpec[] = [
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 1 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 3,
+        zLength: 3,
+      },
+      baseColor: 0x000000,
+      zoneId: "0",
+    },
     {
       type: "zone",
       initialPosition: { x: 0, y: -2 },
@@ -108,14 +157,14 @@ function challengeB(): ChallengeConfig {
     baseColor: 0xff0000,
   };
   const challengeConfig: ChallengeConfig = {
-    name: "Lesson 2 - Challenge B",
+    name: "Lesson 2 - Challenge C",
     startPosition: { x: -2, y: 2 },
     arenaConfig: arena(),
     eventListener: new Lesson2Challenge(finishZone, badZones),
     descriptions: {
       short: "Combining distance and turning",
       markdown: `
-# Lesson 2 - Challenge A
+# Lesson 2 - Challenge C
 
 Use the distance sensor to follow the path to the red zone.
 
