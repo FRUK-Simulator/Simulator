@@ -7,6 +7,7 @@ import {
 } from "./base";
 import { CoreSpecs } from "@fruk/simulator-core";
 import { MessageType } from "../../state/messagesSlice";
+import { ChallengeStatus } from "./challengeSlice";
 
 export const arenas = [arena];
 export const challenges = [challengeA, challengeB, challengeC];
@@ -215,6 +216,7 @@ class Lesson2Challenge implements ChallengeListener {
         }
       } else if (e.zoneId.startsWith("bad-")) {
         this.actions?.displayMessage("Robot Looses!", MessageType.danger);
+        this.actions?.setChallengeStatus(ChallengeStatus.Failure);
       }
     }
   }
@@ -222,5 +224,6 @@ class Lesson2Challenge implements ChallengeListener {
   markComplete(): void {
     console.log("timeout now");
     this.actions?.displayMessage("Robot Wins!", MessageType.success);
+    this.actions?.setChallengeStatus(ChallengeStatus.Success);
   }
 }
