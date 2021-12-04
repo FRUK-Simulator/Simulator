@@ -36,3 +36,13 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## NPM Configuration
+
+For develoeprs who uses private NPM registry you can create a file in the root of this project name `.npmrc` with this content to make sure you aure using the public npm registry:
+
+```
+registry = https://registry.npmjs.org
+```
+
+Also make sure to disconnect from any proxy or vpn you are using.
