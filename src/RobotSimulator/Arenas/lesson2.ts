@@ -206,7 +206,7 @@ class Lesson2Challenge implements ChallengeListener {
     if (e.kind === "ZoneEvent") {
       if (e.zoneId === FinishZoneId) {
         if (e.entry) {
-          this.timeoutId = setTimeout(this.markComplete, 5000);
+          this.timeoutId = setTimeout(this.markComplete.bind(this), 5000);
           this.actions?.displayMessage(
             "Stay in the zone for 5 seconds",
             MessageType.info
