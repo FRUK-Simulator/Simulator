@@ -15,6 +15,7 @@ import {
   getToolboxXml,
   blocklySlice,
   getBlocklyXmlWorkspace,
+  getMaxBlocksConfig,
 } from "./blocklySlice";
 
 import "./Blockly.css";
@@ -32,14 +33,21 @@ export function getCurrentBlocklyInstanceCode(): string {
   return xml_text;
 }
 
+export interface BlocklyEditorProps {
+  blocklyInitializedCallback: Function;
+}
+
 /**
  * Component that wraps the blockly interface.
  */
-export const BlocklyEditor: FunctionComponent = () => {
+export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
+  blocklyInitializedCallback,
+}) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
 
   const highlightedBlock = useSelector(getHighlightedBlockId);
+  const maxBlocksConfig = useSelector(getMaxBlocksConfig);
   const currentBlockSelection = useSelector(getCurrentBlockSelection);
   const showToolbox = useSelector(isShowToolbox);
   const toolboxXml = useSelector(getToolboxXml);
@@ -115,11 +123,37 @@ export const BlocklyEditor: FunctionComponent = () => {
       );
 
       blocklyRef.current.addChangeListener(
+        BlocklyEventName.BlockCreate,
+        handleBlocklyChange
+      );
+
+      blocklyRef.current.addChangeListener(
+        BlocklyEventName.BlockDelete,
+        handleBlocklyChange
+      );
+
+      blocklyRef.current.addChangeListener(
         BlocklyEventName.Ui,
         handleBlocklyUiEvent
       );
+
+      // This callback notify the parent component that we initialized
+      // Blockly and it can now access it.
+      if (blocklyInitializedCallback) {
+        blocklyInitializedCallback();
+      }
     }
   });
+
+  useEffect(() => {
+    if (blocklyRef.current) {
+      if (maxBlocksConfig?.isHardLimit) {
+        blocklyRef.current.setMaxBlocks(maxBlocksConfig.maxBlocks);
+      } else {
+        blocklyRef.current.clearMaxBlocks();
+      }
+    }
+  }, [maxBlocksConfig]);
 
   // Listen on window resizes and redraw blockly
   useEffect(() => {

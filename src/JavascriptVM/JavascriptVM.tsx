@@ -351,6 +351,12 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             })
           );
 
+          dispatch(
+            blocklySlice.actions.setMaxBlocksConfig({
+              maxBlocksConfig: challengeConfig.maxBlocksConfig,
+            })
+          );
+
           challengeListener.current = challengeConfig.eventListener || null;
           challengeListener.current?.onStart(
             // We use the challenge name as the challenge ID

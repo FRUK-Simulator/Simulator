@@ -9,11 +9,15 @@ export class BlocklyUiEvent extends Events.Ui {
 export type BlocklyEvent =
   | Events.BlockChange
   | Events.BlockMove
+  | Events.Create
+  | Events.Delete
   | BlocklyUiEvent;
 
 export enum BlocklyEventName {
   BlockChange = "BlockChange",
   BlockMove = "BlockMove",
+  BlockCreate = "BlockCreate",
+  BlockDelete = "BlockDelete",
   Ui = "Ui",
 }
 
@@ -67,6 +71,14 @@ class BlocklyInstance {
 
   highlightBlock(id: string) {
     return this.workspace.highlightBlock(id);
+  }
+
+  setMaxBlocks(maxBlocks: number) {
+    this.workspace.options.maxBlocks = maxBlocks;
+  }
+
+  clearMaxBlocks() {
+    this.workspace.options.maxBlocks = Infinity;
   }
 
   addChangeListener(

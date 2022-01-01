@@ -12,6 +12,13 @@ import { SourceView } from "../../Editor/SourceView";
 import { SaveProgramButton } from "../components/SaveProgramButton/SaveProgramButton";
 import { ShowGamepadButton } from "../components/Gamepad/ShowGamepadButton";
 import { useLocation } from "react-router-dom";
+import {
+  getBlocklyXmlWorkspace,
+  getMaxBlocksConfig,
+} from "../../BlocklyInterface/blocklySlice";
+import Blockly from "blockly";
+import { useState } from "react";
+import { FunctionComponent } from "react";
 
 export const VMControls = () => {
   const isVMStarted = useSelector(isExecuting);
@@ -98,13 +105,73 @@ export const EditorControls = () => {
   );
 };
 
+interface BlocksCountComponentProps {
+  isBlocklyInitialized: boolean;
+}
+
+const BlocksCountComponent: FunctionComponent<BlocksCountComponentProps> = ({
+  isBlocklyInitialized,
+}) => {
+  const maxBlocksConfig = useSelector(getMaxBlocksConfig);
+
+  // We read the blockly xml workspace to get update when
+  // blockly xml is modified in the redux store.
+  const currentBlocklyCode = useSelector(getBlocklyXmlWorkspace);
+  const mainWorkspace = Blockly.getMainWorkspace();
+
+  if (
+    !isBlocklyInitialized ||
+    !maxBlocksConfig ||
+    !mainWorkspace ||
+    !currentBlocklyCode
+  ) {
+    return null;
+  }
+
+  const blocksCount = mainWorkspace.getAllBlocks(false).length;
+
+  let maxBlocksMessage = "";
+  if (maxBlocksConfig.isHardLimit) {
+    // hard limit
+    if (blocksCount >= maxBlocksConfig.maxBlocks) {
+      maxBlocksMessage = `You used all the ${maxBlocksConfig.maxBlocks} blocks in your program and cannot add anymore.`;
+    } else {
+      maxBlocksMessage = `You are using ${blocksCount} out of ${maxBlocksConfig.maxBlocks} allowed blocks to solve this challange`;
+    }
+  } else {
+    // soft limit
+    if (blocksCount === maxBlocksConfig.maxBlocks) {
+      maxBlocksMessage = `You used all the ${maxBlocksConfig.maxBlocks} blocks that should solve this challange.`;
+    } else if (blocksCount > maxBlocksConfig.maxBlocks) {
+      maxBlocksMessage = `You used more than the ${maxBlocksConfig.maxBlocks} blocks that should solve this challange. try to remove some of them.`;
+    } else {
+      maxBlocksMessage = `You are using ${blocksCount} out of ${maxBlocksConfig.maxBlocks} blocks to solve this challange`;
+    }
+  }
+
+  return <h4>{maxBlocksMessage}</h4>;
+};
+
 export const BlocklyView = () => {
   const currentView = useSelector(getActiveEditor);
+  const [isBlocklyInitialized, setIsBlocklyInitialized] = useState(false);
+
+  // BlocklyEditor is the component that is initializing the Blockly workspace.
+  // We have the initialized callback to make sure the BlocklyView (this component)
+  // is update after initialization.
+  // This is important for the first time Blockly is initialized.
 
   return (
     <>
+      <BlocksCountComponent isBlocklyInitialized={isBlocklyInitialized} />
       <Container className="simulator-view--panel__main">
-        {currentView === "Blockly" ? <BlocklyEditor /> : <SourceView />}
+        {currentView === "Blockly" ? (
+          <BlocklyEditor
+            blocklyInitializedCallback={() => setIsBlocklyInitialized(true)}
+          />
+        ) : (
+          <SourceView />
+        )}
       </Container>
       <Container className="simulator-view--panel__utility">
         <VMControls />

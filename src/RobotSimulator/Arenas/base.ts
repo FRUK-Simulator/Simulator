@@ -16,6 +16,21 @@ interface ChallengeDescription {
   markdown?: string;
 }
 
+export interface MaxBlockConfig {
+  /**
+   * The maximum number of blocks the student can/should use.
+   */
+  maxBlocks: number;
+
+  /**
+   * Whether the limit is hard or soft.
+   *
+   * Hard limit block the student from adding more than maxBlocks.
+   * Soft limit just let the user know they should use that many blocks.
+   */
+  isHardLimit: boolean;
+}
+
 export interface ChallengeConfig {
   name: string;
   startPosition: CoreSimTypes.Vector2d;
@@ -23,6 +38,7 @@ export interface ChallengeConfig {
   eventListener?: ChallengeListener;
   descriptions?: ChallengeDescription;
   image?: any;
+  maxBlocksConfig?: MaxBlockConfig;
 }
 
 // interface to trigger actions and events in the current challenge.

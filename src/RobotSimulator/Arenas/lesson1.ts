@@ -67,6 +67,10 @@ function challengeA(): ChallengeConfig {
     name: "Lesson 1 - Challenge A",
     startPosition: { x: 0, y: 2 },
     arenaConfig: arena(),
+    maxBlocksConfig: {
+      maxBlocks: 6,
+      isHardLimit: false,
+    },
     eventListener: new Lesson1Challenge({ x: 0, y: -2 }, badZones),
     descriptions: {
       short: "Using the motors",
@@ -103,6 +107,10 @@ function challengeB(): ChallengeConfig {
     name: "Lesson 1 - Challenge B",
     startPosition: { x: -2, y: 2 },
     arenaConfig: arena(),
+    maxBlocksConfig: {
+      maxBlocks: 6,
+      isHardLimit: false,
+    },
     eventListener: new Lesson1Challenge({ x: +2, y: 2 }, badZones),
     descriptions: {
       short: "Using the motors to turn a corner",
@@ -163,6 +171,10 @@ function challengeC(): ChallengeConfig {
     name: "Lesson 1 - Challenge C",
     startPosition: { x: -2, y: 2 },
     arenaConfig: arena(),
+    maxBlocksConfig: {
+      maxBlocks: 6,
+      isHardLimit: false,
+    },
     eventListener: new Lesson1Challenge({ x: 2, y: 2 }, badZones),
     descriptions: {
       short: "Using the motors to turn precise angles",

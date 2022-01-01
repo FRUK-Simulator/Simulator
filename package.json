@@ -9,7 +9,7 @@
     "@types/marked": "^1.1.0",
     "@types/react-syntax-highlighter": "^11.0.5",
     "@uifabric/icons": "^7.5.23",
-    "blockly": "^3.20200924.4",
+    "blockly": "^6.20210701.0",
     "js-interpreter": "^2.3.0",
     "marked": "^2.0.3",
     "normalize.css": "^8.0.1",

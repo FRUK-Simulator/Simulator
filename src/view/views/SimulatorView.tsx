@@ -59,7 +59,8 @@ export const SimulatorView = () => {
 
   useEffect(
     function loadChallengeFromURL() {
-      vm.setChallenge(getChallengeFromURL(lesson, challenge));
+      const challangeConfig = getChallengeFromURL(lesson, challenge);
+      vm.setChallenge(challangeConfig);
     },
     [lesson, challenge, vm]
   );

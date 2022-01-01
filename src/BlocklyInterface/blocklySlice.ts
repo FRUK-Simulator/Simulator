@@ -5,6 +5,7 @@ import { ExecutionState } from "../JavascriptVM/vm";
 import { getDefaultToolbox } from "./toolbox";
 import { getPredefinedBlocklyProgs } from "../core/blockly/programs";
 import { Program } from "./ProgramExportImport";
+import { MaxBlockConfig as MaxBlocksConfig } from "../RobotSimulator/Arenas/base";
 
 /**
  * Reducers for handling the state of the blockly interface such as which blocks are highlighted.
@@ -28,6 +29,11 @@ export const blocklySlice = createSlice({
     /** The current blockly code inside the 'BlocklyInstance'
      */
     blocklyXmlWorkspace: getPredefinedBlocklyProgs()[0].xml,
+
+    /**
+     * Config the maximum block the student can/should use.
+     */
+    maxBlocksConfig: undefined as MaxBlocksConfig | undefined,
   },
   name: "blockly",
   reducers: {
@@ -86,6 +92,13 @@ export const blocklySlice = createSlice({
     },
     setActiveBlocklyProgramId(state, action: PayloadAction<{ title: string }>) {
       state.activeBlocklyProgramId = action.payload.title;
+      return state;
+    },
+    setMaxBlocksConfig(
+      state,
+      action: PayloadAction<{ maxBlocksConfig?: MaxBlocksConfig }>
+    ) {
+      state.maxBlocksConfig = action.payload.maxBlocksConfig;
       return state;
     },
   },
@@ -208,3 +221,6 @@ export const getCurrentBlocklyProgram = (state: RootState) =>
  */
 export const getBlocklyProgram = (title: string) => (state: RootState) =>
   state.blockly.blocklyPrograms.find((p) => p.title === title);
+
+export const getMaxBlocksConfig = (state: RootState) =>
+  state.blockly.maxBlocksConfig;
