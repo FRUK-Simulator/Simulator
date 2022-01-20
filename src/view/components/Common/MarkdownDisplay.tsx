@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import marked from "marked";
+import * as marked from "marked";
 import "./MarkdownDisplay.css";
 
 function buildMarkdownClasses(classes: string[], divider: boolean) {
