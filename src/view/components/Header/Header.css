@@ -28,6 +28,16 @@
   color: var(--text-color-light);
 }
 
+.header--feedback {
+  margin-left: auto;
+  padding: 0.5em 1em;
+  margin-right: 1em;
+}
+
+.header--feedback:hover {
+  background-color: var(--primary-color-dark);
+}
+
 .brand-image-container {
   height: 100%;
 }
