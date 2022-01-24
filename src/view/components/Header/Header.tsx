@@ -47,6 +47,7 @@ export const Header = () => {
       <a
         className="header--feedback"
         target="_blank"
+        rel="noreferrer"
         href="https://www.tfaforms.com/4952089"
       >
         Feedback
