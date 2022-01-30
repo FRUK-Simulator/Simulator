@@ -162,6 +162,39 @@ function challengeB(): ChallengeConfig {
       baseColor: 0x57e062,
       zoneId: "green",
     },
+    {
+      type: "zone",
+      initialPosition: { x: -0.9, y: -2.1 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 2.2,
+        zLength: 0.2,
+      },
+      baseColor: 0x000000,
+      zoneId: "wall",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 2.1, y: -0.55 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 0.2,
+        zLength: 3.1,
+      },
+      baseColor: 0x000000,
+      zoneId: "wall",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 1.2 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 0.2,
+        zLength: 3.8,
+      },
+      baseColor: 0x000000,
+      zoneId: "wall",
+    },
   ];
 
   const challengeConfig: ChallengeConfig = {
