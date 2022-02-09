@@ -104,7 +104,6 @@ const CameraViewSelect = () => {
           return;
         }
 
-        vm.setCameraView(opt.value);
         dispatch(vmSlice.actions.setCameraView({ val: opt.value }));
         persistSettings({ cameraView: opt.value });
       }}
