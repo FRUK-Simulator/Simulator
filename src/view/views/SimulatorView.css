@@ -36,6 +36,7 @@
 /* Left Panel */
 .simulator-view--panel:nth-child(1) {
   flex: 2;
+  margin-top: var(--toolbar-height);
 }
 
 /* Right Panel */
