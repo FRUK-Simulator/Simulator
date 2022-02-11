@@ -31,10 +31,10 @@
   display: flex;
   width: var(--toolbar-width);
   z-index: var(--toolbar-z-index);
-  margin-left: calc((100% - var(--toolbar-width)) / 2);
+  margin-left: 0;
   margin-right: calc((100% - var(--toolbar-width)) / 2);
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   pointer-events: none;
 }
 
@@ -103,6 +103,10 @@
   border-bottom: 2px solid black;
   border-right: none;
   transform: scale(1.2, 1.2);
+}
+
+.toolbar .btn:focus {
+  background-color: var(--highlight-color-dark);
 }
 
 /* Left Border of Toolbar */
