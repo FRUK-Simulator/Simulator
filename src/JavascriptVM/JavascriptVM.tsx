@@ -39,7 +39,6 @@ import {
   challengeSlice,
   ChallengeStatus,
 } from "../RobotSimulator/Arenas/challengeSlice";
-import { SimBasicSensor } from "@fruk/simulator-core/dist/engine/objects/robot/sensors/SimBasicSensor";
 
 /**
  * Interface to control the VM
