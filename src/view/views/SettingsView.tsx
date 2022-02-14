@@ -90,7 +90,6 @@ const ExecutionSpeedSelect = () => {
 };
 
 const CameraViewSelect = () => {
-  const vm = useVM();
   const dispatch = useDispatch<AppDispatch>();
   const cameraMode = useSelector(getCameraMode);
 
