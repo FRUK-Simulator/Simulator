@@ -8,21 +8,6 @@
   );
 }
 
-/** Start open and then close to normal position **/
-@keyframes peek-a-boo {
-  0% {
-    transform: translate(0px, 0px);
-  }
-
-  50% {
-    transform: translate(0px, 0px);
-  }
-
-  100% {
-    transform: var(--toolbar-transform);
-  }
-}
-
 .toolbar-container {
   position: fixed;
   /* The top of the toolbar should align with the bottom of the header */
@@ -48,20 +33,6 @@
   width: 100%;
   height: var(--toolbar-height);
   z-index: var(--toolbar-z-index);
-
-  /* calculate the hover area and move the toolbar up */
-  padding-bottom: var(--toolbar-hover-height);
-  margin-bottom: calc(var(--toolbar-hover-height) * -1);
-
-  transform: var(--toolbar-transform);
-
-  transition: transform 0.25s ease-in-out;
-
-  animation: peek-a-boo ease-in 2s;
-}
-
-.toolbar:hover {
-  transform: translate(0px, 0px);
 }
 
 .toolbar:focus {
