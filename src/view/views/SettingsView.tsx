@@ -90,7 +90,6 @@ const ExecutionSpeedSelect = () => {
 };
 
 const CameraViewSelect = () => {
-  const vm = useVM();
   const dispatch = useDispatch<AppDispatch>();
   const cameraMode = useSelector(getCameraMode);
 
@@ -104,7 +103,6 @@ const CameraViewSelect = () => {
           return;
         }
 
-        vm.setCameraView(opt.value);
         dispatch(vmSlice.actions.setCameraView({ val: opt.value }));
         persistSettings({ cameraView: opt.value });
       }}

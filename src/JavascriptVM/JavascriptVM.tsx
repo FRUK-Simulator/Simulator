@@ -53,7 +53,6 @@ export interface IVirtualMachine {
   setChallenge: (config: ChallengeConfig) => void;
 
   updateSpeed: (speed: ExecutionSpeed) => void;
-  setCameraView(val: CameraView): void;
 
   // Called to start the simulator and setup the initial scene
   onCanvasCreated: (canvas: HTMLCanvasElement) => void;
@@ -170,7 +169,59 @@ export const VMProvider: FunctionComponent = ({ children }) => {
     return () => {
       console.log("Destroying VMContext.Provider");
     };
-  });
+  }, [canvasRef]);
+
+  function setSimulatorCameraMode(
+    simulator: Sim3D,
+    robotRef: Handles.RobotHandle,
+    cameraMode: CameraView
+  ) {
+    console.log("Changing camera mode", cameraMode);
+    switch (cameraMode) {
+      case CameraView.POSITION:
+        simulator.setCameraMode({
+          type: CameraSpecs.CameraMode.POSITION,
+          // TODO: allow these values to be configurable on a per level basis.
+          //       there are already properties in Areana however they are not used here!
+          position: {
+            x: 0,
+            y: 7,
+            z: 3,
+          },
+        });
+        break;
+      case CameraView.THIRD_PERSON:
+        simulator.setCameraMode({
+          type: CameraSpecs.CameraMode.THIRD_PERSON,
+          handle: robotRef,
+          // TODO: allow these values to be configurable on a per level basis
+          offset: {
+            x: 0.5,
+            y: 1,
+            z: 1,
+          },
+        });
+        break;
+      case CameraView.ORBIT:
+        simulator.setCameraMode({
+          type: CameraSpecs.CameraMode.ORBIT,
+          handle: robotRef,
+          // TODO: allow these values to be configurable on a per level basis
+          radius: 3,
+          height: 3,
+        });
+    }
+  }
+
+  useEffect(() => {
+    if (sim.current == null) {
+      return;
+    }
+    if (robotRef.current == null) {
+      return;
+    }
+    setSimulatorCameraMode(sim.current, robotRef.current, cameraMode);
+  }, [cameraMode, robotRef, sim]);
 
   return (
     <VMContext.Provider
@@ -362,43 +413,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             // We use the challenge name as the challenge ID
             new ChallengeActionsImpl(simulator, dispatch, challengeConfig.name)
           );
-          this.setCameraView(cameraMode);
-        },
 
-        setCameraView(val: CameraView): void {
-          if (!sim.current) return;
-          if (!robotRef.current) return;
-          const simulator = sim.current;
-          switch (val) {
-            case CameraView.POSITION:
-              simulator.setCameraMode({
-                type: CameraSpecs.CameraMode.POSITION,
-                position: {
-                  x: 0,
-                  y: 3,
-                  z: 3,
-                },
-              });
-              break;
-            case CameraView.THIRD_PERSON:
-              simulator.setCameraMode({
-                type: CameraSpecs.CameraMode.THIRD_PERSON,
-                handle: robotRef.current,
-                offset: {
-                  x: 0.5,
-                  y: 1,
-                  z: 1,
-                },
-              });
-              break;
-            case CameraView.ORBIT:
-              simulator.setCameraMode({
-                type: CameraSpecs.CameraMode.ORBIT,
-                handle: robotRef.current,
-                radius: 3,
-                height: 3,
-              });
-          }
+          setSimulatorCameraMode(sim.current, robotRef.current, cameraMode);
         },
 
         onCanvasCreated(canvasEl: HTMLCanvasElement) {

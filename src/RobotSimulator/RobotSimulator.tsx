@@ -16,7 +16,7 @@ export const RobotSimulator: FunctionComponent = () => {
     return () => {
       vm.onCanvasDestroyed(canvasEl);
     };
-  }, [vm]);
+  }, [canvasRef, vm]);
 
   return (
     <div className="robot-simulator" ref={canvasParentRef}>
