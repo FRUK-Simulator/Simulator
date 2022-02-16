@@ -29,8 +29,9 @@ export const RobotView = () => {
         <Divider />
         <div className="robot-view--stats">
           <StatusTile label="Robot Motors" value={motorStats.length} />
-          {motorStats.map(([label, value]) => (
+          {motorStats.map(([label, value], index) => (
             <StatusTile
+              key={index}
               variant={StatusTileVariant.active}
               label={`Port ${label}`}
               value={value}
@@ -43,8 +44,9 @@ export const RobotView = () => {
             label="Distance Sensors"
             value={sensors.distanceSensors.length}
           />
-          {sensors.distanceSensors.map((sensor) => (
+          {sensors.distanceSensors.map((sensor, index) => (
             <StatusTile
+              key={index}
               variant={StatusTileVariant.active}
               label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
@@ -63,8 +65,9 @@ export const RobotView = () => {
             label="Color Sensors"
             value={sensors.colorSensors.length}
           />
-          {sensors.colorSensors.map((sensor) => (
+          {sensors.colorSensors.map((sensor, index) => (
             <StatusTile
+              key={index}
               variant={StatusTileVariant.active}
               label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
@@ -78,8 +81,9 @@ export const RobotView = () => {
             label="Contact Sensors"
             value={sensors.contactSensors.length}
           />
-          {sensors.contactSensors.map((sensor) => (
+          {sensors.contactSensors.map((sensor, index) => (
             <StatusTile
+              key={index}
               variant={StatusTileVariant.active}
               label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
@@ -92,8 +96,9 @@ export const RobotView = () => {
             label="Gyroscope"
             value={sensors.gyroscopeSensors.length}
           />
-          {sensors.gyroscopeSensors.map((sensor) => (
+          {sensors.gyroscopeSensors.map((sensor, index) => (
             <StatusTile
+              key={index}
               variant={StatusTileVariant.active}
               label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}

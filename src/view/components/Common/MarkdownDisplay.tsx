@@ -18,7 +18,7 @@ export const MarkdownDisplay: FunctionComponent<{
   classes?: string[];
 }> = ({ markdown = "", divider = false, classes = [] }) => {
   function getMarkdownText() {
-    const rawMarkup = marked.parse(markdown, { sanitize: true });
+    const rawMarkup = marked.parse(markdown, {});
 
     return { __html: rawMarkup };
   }
