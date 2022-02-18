@@ -23,6 +23,12 @@
   pointer-events: none;
 }
 
+@media only screen and (max-width: 1500px) {
+  .toolbar-container {
+    width: calc(2 * var(--toolbar-width));
+  }
+}
+
 .toolbar {
   display: flex;
   flex-direction: row;

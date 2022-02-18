@@ -43,3 +43,9 @@
 .simulator-view--panel:nth-child(2) {
   flex: 2;
 }
+
+@media only screen and (max-width: 1500px) {
+  .simulator-view--panel:nth-child(2) {
+    margin-top: calc(var(--toolbar-height) + 6px);
+  }
+}
