@@ -57,12 +57,8 @@
 
   /* Toolbar */
   /* The total height of the toolbar */
-  --toolbar-height: 90px;
+  --toolbar-height: 50px;
   --toolbar-width: 50%;
-  /* How much of the toolbar is visible when 'hidden' */
-  --toolbar-visible-height: 10px;
-  /* How close the mouse needs to get to the bottom edge of the toolbar to open it */
-  --toolbar-hover-height: 30px;
 
   /* Z-Indexes */
   --message-z-index: 300;

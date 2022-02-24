@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { getChallengeFromURL } from "../../RobotSimulator/ChallengeConfigLoader";
 import { Container } from "../components/Common/Container";
-import { Divider } from "../components/Common/Divider";
 import { Title } from "../components/Common/Title";
 import { MarkdownDisplay } from "../components/Common/MarkdownDisplay";
 import { IconName } from "../components/Common/Icon";
@@ -38,10 +37,6 @@ export const ChallengeView = () => {
 
   return (
     <Container className="simulator-view--panel__main challenge-view">
-      <div className="challenge-view--header">
-        <Title as="h2">Challenge Description</Title>
-      </div>
-      <Divider />
       <MarkdownDisplay
         markdown={displayableDescription}
         classes={["challenge-view--content"]}

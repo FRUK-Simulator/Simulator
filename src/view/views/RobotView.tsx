@@ -7,9 +7,7 @@ import {
   getSensors,
 } from "../../RobotSimulator/robotSimulatorSlice";
 import { Container } from "../components/Common/Container";
-import { Divider } from "../components/Common/Divider";
 import { StatusTile, StatusTileVariant } from "../components/Common/StatusTile";
-import { Title } from "../components/Common/Title";
 import { EditorControls, VMControls } from "./BlocklyView";
 import "./RobotView.css";
 
@@ -23,10 +21,6 @@ export const RobotView = () => {
   return (
     <>
       <Container className="simulator-view--panel__main robot-view">
-        <Title as="h2" divider>
-          Robot Status
-        </Title>
-        <Divider />
         <div className="robot-view--stats">
           <StatusTile label="Robot Motors" value={motorStats.length} />
           {motorStats.map(([label, value], index) => (
