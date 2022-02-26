@@ -60,6 +60,7 @@ export function SelectField<T>({
       <span className="form-field--label__text">{label}</span>
       <select
         className="form-field--input form-field--select"
+        value={selectedOption?.key}
         onChange={(evt) => {
           const selectedOption = options.find(
             (o) => o.key === evt.target.value
@@ -71,7 +72,6 @@ export function SelectField<T>({
           return (
             <option
               {...optionProps}
-              selected={key === selectedOption?.key}
               key={key}
               value={key}
               className="form-field--select__option"

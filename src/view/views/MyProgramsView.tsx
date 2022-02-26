@@ -17,7 +17,6 @@ import {
 import { useProgramDialog } from "../hooks/useProgramDialog";
 import { useDeleteProgramDialog } from "../hooks/useDeleteProgramDialog";
 import "./MyProgramsView.css";
-import { Title } from "../components/Common/Title";
 import { messageSlice, MessageType } from "../../state/messagesSlice";
 import {
   exportToFile,
@@ -73,9 +72,6 @@ export const MyProgramsView = () => {
   return (
     <>
       <Container className="simulator-view--panel__main my-programs-view">
-        <Title as="h2" divider>
-          My Programs
-        </Title>
         <div className="my-programs-view--btn-container">
           <ButtonBar>
             <Button

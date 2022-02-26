@@ -12,7 +12,6 @@ import {
 import { AppDispatch } from "../../state/store";
 import { Container } from "../components/Common/Container";
 import { SelectField } from "../components/Common/Form";
-import { Title } from "../components/Common/Title";
 import { GamepadSettings } from "../components/Gamepad/GamepadSettings";
 
 const executionSpeedOptions = [
@@ -90,7 +89,6 @@ const ExecutionSpeedSelect = () => {
 };
 
 const CameraViewSelect = () => {
-  const vm = useVM();
   const dispatch = useDispatch<AppDispatch>();
   const cameraMode = useSelector(getCameraMode);
 
@@ -104,7 +102,6 @@ const CameraViewSelect = () => {
           return;
         }
 
-        vm.setCameraView(opt.value);
         dispatch(vmSlice.actions.setCameraView({ val: opt.value }));
         persistSettings({ cameraView: opt.value });
       }}
@@ -136,9 +133,6 @@ const PhysicsDebugSelect = () => {
 export const SettingsView = () => {
   return (
     <Container className="simulator-view--panel__main">
-      <Title as="h2" divider>
-        Settings
-      </Title>
       <ExecutionSpeedSelect />
       <GamepadSettings />
       <CameraViewSelect />
