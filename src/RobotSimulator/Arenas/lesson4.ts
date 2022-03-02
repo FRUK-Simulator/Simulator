@@ -164,6 +164,17 @@ function challengeB(): ChallengeConfig {
     },
     {
       type: "zone",
+      initialPosition: { x: 0, y: 1 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 2,
+        zLength: 4,
+      },
+      baseColor: 0x027bed,
+      zoneId: "blue",
+    },
+    {
+      type: "zone",
       initialPosition: { x: -0.9, y: -2.1 },
       zoneShape: {
         type: "rectangle",
