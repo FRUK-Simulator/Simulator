@@ -19,24 +19,7 @@ function arenaA(): ArenaConfig {
     worldConfig: {
       zLength: 6,
       xLength: 6,
-      walls: [
-        {
-          type: "wall",
-          start: { x: -1.2, y: -2.5 },
-          end: { x: -1.2, y: 2.5 },
-          baseColor: 0x000000,
-          height: 0.5,
-          thickness: 0.5,
-        },
-        {
-          type: "wall",
-          start: { x: 1.2, y: -2.5 },
-          end: { x: 1.2, y: 2.5 },
-          baseColor: 0x000000,
-          height: 0.5,
-          thickness: 0.5,
-        },
-      ],
+      walls: [],
       perimeter: {
         height: 0.5,
         thickness: 0.1,
@@ -103,17 +86,120 @@ function arenaB(): ArenaConfig {
   return arenaConfig;
 }
 
+
 function challengeA(): ChallengeConfig {
-  const badZones: CoreSpecs.IZoneSpec[] = [];
+  const badZones: CoreSpecs.IZoneSpec[] = [
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -3, y: 1 },
+          { x: -2, y: 1 },
+          { x: -2, y: -1 },
+          { x: -1, y: -1 },
+          { x: -1, y: -2 },
+          { x: 2, y: -2 },
+          { x: 2, y: 1 },
+          { x: 3, y: 1 },
+          { x: 3, y: 0.6 },
+          { x: 2.4, y: 0.6 },
+          { x: 2.4, y: -2.4 },
+          { x: -1.4, y: -2.4 },
+          { x: -1.4, y: -1.4 },
+          { x: -2.4, y: -1.4 },
+          { x: -2.4, y: 0.6 },
+          { x: -3, y: 0.6 },
+        ],
+      },
+      baseColor: ArenaColourConstants.RED,
+      zoneId: "green",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -2, y: 3 },
+          { x: -1.6, y: 3 },
+          { x: -1.6, y: 2.4 },
+          { x: -0.6, y: 2.4 },
+          { x: -0.6, y: 0.4 },
+          { x: 0.4, y: 0.4 },
+          { x: 0.4, y: -0.6 },
+          { x: 0.6, y: -0.6 },
+          { x: 0.6, y: 2.4 },
+          { x: 1.6, y: 2.4 },
+          { x: 1.6, y: 3 },
+          { x: 2, y: 3 },
+          { x: 2, y: 2 },
+          { x: 1, y: 2 },
+          { x: 1, y: -1 },
+          { x: 0, y: -1 },
+          { x: 0, y: 0 },
+          { x: -1, y: 0 },
+          { x: -1, y: 2 },
+          { x: -2, y: 2 },
+        ],
+      },
+      baseColor: ArenaColourConstants.BLUE,
+      zoneId: "blue",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -3, y: 0.6 },
+          { x: -2.4, y: 0.6 },
+          { x: -2.4, y: -1.4 },
+          { x: -1.4, y: -1.4 },
+          { x: -1.4, y: -2.4 },
+          { x: 2.4, y: -2.4 },
+          { x: 2.4, y: 0.6 },
+          { x: 3, y: 0.6 },
+          { x: 3, y: -3 },
+          { x: -3, y: -3 },
+        ],
+      },
+      baseColor: 0x000000,
+      zoneId: "wall",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -1.6, y: 3 },
+          { x: -1.6, y: 2.4 },
+          { x: -0.6, y: 2.4 },
+          { x: -0.6, y: 0.4 },
+          { x: 0.4, y: 0.4 },
+          { x: 0.4, y: -0.6 },
+          { x: 0.6, y: -0.6 },
+          { x: 0.6, y: 2.4 },
+          { x: 1.6, y: 2.4 },
+          { x: 1.6, y: 3 },
+        ],
+      },
+      baseColor: 0x000000,
+      zoneId: "wall",
+    },
+  ];
   const challengeConfig: ChallengeConfig = {
     name: "Lesson 4 - Challenge A",
-    startPosition: { x: 0, y: 2 },
+    startPosition: { x: -2.5, y: 2.5 },
     arenaConfig: arenaA(),
-    eventListener: new Lesson4Challenge({ x: 0, y: -2 }, badZones),
+    eventListener: new Lesson4Challenge({ x: 2.5, y: 2.5 }, badZones),
     descriptions: {
       short: "Using color sensor to navigate",
       markdown: `
-  # Lesson 4 - Challenge A
+        TODO TODO TODO TODO TODO TODO 
+  # Lesson 1 - Challenge A
   
   The robot needs to avoid the black areas of the playfield and end up in the green zone
   at the far side of the arena.
@@ -126,6 +212,7 @@ function challengeA(): ChallengeConfig {
 
   return challengeConfig;
 }
+
 
 function challengeB(): ChallengeConfig {
   const badZones: CoreSpecs.IZoneSpec[] = [
