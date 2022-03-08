@@ -224,7 +224,7 @@ function challengeB(): ChallengeConfig {
         xLength: 1,
         zLength: 6,
       },
-      baseColor: 0x57e062,
+      baseColor: ArenaColourConstants.RED,
       zoneId: "green",
     },
     {
@@ -235,7 +235,7 @@ function challengeB(): ChallengeConfig {
         xLength: 1,
         zLength: 5,
       },
-      baseColor: 0x57e062,
+      baseColor: ArenaColourConstants.RED,
       zoneId: "green",
     },
     {
@@ -246,7 +246,7 @@ function challengeB(): ChallengeConfig {
         xLength: 4,
         zLength: 1,
       },
-      baseColor: 0x57e062,
+      baseColor: ArenaColourConstants.RED,
       zoneId: "green",
     },
     {
@@ -257,7 +257,7 @@ function challengeB(): ChallengeConfig {
         xLength: 2,
         zLength: 4,
       },
-      baseColor: 0x027bed,
+      baseColor: ArenaColourConstants.BLUE,
       zoneId: "blue",
     },
     {

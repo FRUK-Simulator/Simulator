@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { ArenaColourToNameConstants } from "../../JavascriptVM/colourSensorConstants";
 import { DISTANCE_SENSOR_RANGE } from "../../JavascriptVM/distanceSensorConstants";
 import { useVM } from "../../JavascriptVM/JavascriptVM";
 import {
