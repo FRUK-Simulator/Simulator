@@ -13,13 +13,79 @@ import { ArenaColourConstants } from "../../JavascriptVM/colourSensorConstants";
 
 export const challenges = [challengeA, challengeB];
 
+function arenaA(): ArenaConfig {
+  const arenaConfig: ArenaConfig = {
+    name: "Lesson 4 - Color Sensor",
+    worldConfig: {
+      zLength: 6,
+      xLength: 6,
+      walls: [
+        {
+          type: "wall",
+          start: { x: -1.2, y: -2.5 },
+          end: { x: -1.2, y: 2.5 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.5,
+        },
+        {
+          type: "wall",
+          start: { x: 1.2, y: -2.5 },
+          end: { x: 1.2, y: 2.5 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.5,
+        },
+      ],
+      perimeter: {
+        height: 0.5,
+        thickness: 0.1,
+      },
+      camera: {
+        position: {
+          x: 0,
+          y: 3,
+          z: 3,
+        },
+      },
+    },
+  };
+
+  return arenaConfig;
+}
+
 function arenaB(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
     name: "Lesson 4 - Color Sensor",
     worldConfig: {
       zLength: 6,
       xLength: 6,
-      walls: [],
+      walls: [
+        {
+          type: "wall",
+          start: { x: 0, y: -0.7 },
+          end: { x: 0, y: 3 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.2,
+        },
+        {
+          type: "wall",
+          start: { x: -2, y: -2.1 },
+          end: { x: 0.2, y: -2.1 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.2,
+        },
+        {
+          type: "wall",
+          start: { x: 2.1, y: 1 },
+          end: { x: 2.1, y: -2.1 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.2,
+        },
+      ],
       perimeter: {
         height: 0.5,
         thickness: 0.1,
@@ -38,40 +104,16 @@ function arenaB(): ArenaConfig {
 }
 
 function challengeA(): ChallengeConfig {
-  const badZones: CoreSpecs.IZoneSpec[] = [
-    {
-      type: "zone",
-      initialPosition: { x: -1.2, y: 0 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 0.5,
-        zLength: 5,
-      },
-      baseColor: 0x000000,
-      zoneId: "0",
-    },
-    {
-      type: "zone",
-      initialPosition: { x: 1.2, y: 0 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 0.5,
-        zLength: 5,
-      },
-      baseColor: 0x000000,
-      zoneId: "1",
-    },
-  ];
+  const badZones: CoreSpecs.IZoneSpec[] = [];
   const challengeConfig: ChallengeConfig = {
     name: "Lesson 4 - Challenge A",
     startPosition: { x: 0, y: 2 },
-    arenaConfig: arenaB(),
-    eventListener: new Lesson1Challenge({ x: 0, y: -2 }, badZones),
+    arenaConfig: arenaA(),
+    eventListener: new Lesson4Challenge({ x: 0, y: -2 }, badZones),
     descriptions: {
       short: "Using color sensor to navigate",
       markdown: `
-        TODO TODO TODO TODO TODO TODO 
-  # Lesson 1 - Challenge A
+  # Lesson 4 - Challenge A
   
   The robot needs to avoid the black areas of the playfield and end up in the green zone
   at the far side of the arena.
@@ -87,39 +129,6 @@ function challengeA(): ChallengeConfig {
 
 function challengeB(): ChallengeConfig {
   const badZones: CoreSpecs.IZoneSpec[] = [
-    {
-      type: "zone",
-      initialPosition: { x: -0.9, y: -2.1 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 2.2,
-        zLength: 0.2,
-      },
-      baseColor: 0x000000,
-      zoneId: "wall",
-    },
-    {
-      type: "zone",
-      initialPosition: { x: 2.1, y: -0.55 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 0.2,
-        zLength: 3.1,
-      },
-      baseColor: 0x000000,
-      zoneId: "wall",
-    },
-    {
-      type: "zone",
-      initialPosition: { x: 0, y: 1.2 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 0.2,
-        zLength: 3.8,
-      },
-      baseColor: 0x000000,
-      zoneId: "wall",
-    },
     {
       type: "zone",
       initialPosition: { x: -2.5, y: 0 },
@@ -159,11 +168,10 @@ function challengeB(): ChallengeConfig {
     name: "Lesson 4 - Challenge B",
     startPosition: { x: -1.5, y: 2.5 },
     arenaConfig: arenaB(),
-    eventListener: new Lesson1Challenge({ x: 2.5, y: 2.5 }, badZones),
+    eventListener: new Lesson4Challenge({ x: 2.5, y: 2.5 }, badZones),
     descriptions: {
       short: "Using color sensor to navigate with walls",
       markdown: `
-        TODO TODO TODO TODO TODO TODO TODO TODO 
   # Lesson 1 - Challenge B
   
   The robot needs to avoid the black areas of the playfield and end up in the green zone
@@ -182,7 +190,7 @@ function challengeB(): ChallengeConfig {
 
 const FinishZoneId = "finish-zone";
 
-class Lesson1Challenge implements ChallengeListener {
+class Lesson4Challenge implements ChallengeListener {
   private challengeOutcomePending: boolean;
   constructor(
     public finishPosition: CoreSimTypes.Vector2d,
