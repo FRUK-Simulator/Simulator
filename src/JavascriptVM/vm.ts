@@ -37,6 +37,16 @@ export type BlocklyInterpreterCallbacks = {
   onControllerKeyCheck?: (key: ControllerKey) => boolean;
 
   /**
+   * Called when the simulation is supposed to be paused therefore stop all physics
+   */
+  onPause?: () => void;
+
+  /**
+   * Called when the simulation is supposed to resume from pause therefore start all physics
+   */
+  onUnPause?: () => void;
+
+  /**
    * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
    */
   getSensorValue?: (port: number) => number;
@@ -278,6 +288,7 @@ export class BlocklyInterpreter {
   private _step(): boolean {
     let finished = false;
     this.blockHighlighted = false;
+    this.callbacks.onUnPause && this.callbacks.onUnPause();
     while (!this.blockHighlighted && this.nextStepDelay === 0 && !finished) {
       finished = !this.interpreter.step();
     }
@@ -362,6 +373,7 @@ export class BlocklyInterpreter {
   pause() {
     if (this.executionState === ExecutionState.RUNNING) {
       this.executionState = ExecutionState.PAUSED;
+      this.callbacks.onPause && this.callbacks.onPause();
     }
   }
 
@@ -371,6 +383,7 @@ export class BlocklyInterpreter {
   unpause() {
     if (this.executionState === ExecutionState.PAUSED) {
       this.executionState = ExecutionState.RUNNING;
+      this.callbacks.onUnPause && this.callbacks.onUnPause();
     }
   }
 
