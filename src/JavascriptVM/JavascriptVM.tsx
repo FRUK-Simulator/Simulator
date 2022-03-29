@@ -232,6 +232,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
+          sim.current?.setPhysicsActive(true);
           interpreter.run();
           syncExecutionState(interpreter);
         },
@@ -241,6 +242,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
+          sim.current?.setPhysicsActive(false);
           interpreter.pause();
           syncExecutionState(interpreter);
         },
@@ -250,6 +252,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             return;
           }
 
+          sim.current?.setPhysicsActive(true);
           interpreter?.step();
           syncExecutionState(interpreter);
         },
