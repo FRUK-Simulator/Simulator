@@ -18,6 +18,16 @@ export const RobotView = () => {
   const vm = useVM();
   let robotHandle = vm.robot;
 
+  let getColorHex = () => {
+    const colorSensorValue = robotHandle.getComplexSensorValue(
+      1,
+      "ColorSensor"
+    );
+    return "color" in colorSensorValue
+      ? `#${colorSensorValue.color.toString(16).padStart(6, "0")}`
+      : "#ffffff";
+  };
+
   return (
     <>
       <Container className="simulator-view--panel__main robot-view">
@@ -65,7 +75,7 @@ export const RobotView = () => {
               variant={StatusTileVariant.active}
               label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
-              value={`n/a`}
+              value={getColorHex()}
             />
           ))}
         </div>
