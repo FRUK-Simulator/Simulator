@@ -86,9 +86,8 @@ function arenaB(): ArenaConfig {
   return arenaConfig;
 }
 
-
 function challengeA(): ChallengeConfig {
-  const badZones: CoreSpecs.IZoneSpec[] = [
+  const colorZones: CoreSpecs.IZoneSpec[] = [
     {
       type: "zone",
       initialPosition: { x: 0, y: 0 },
@@ -147,6 +146,9 @@ function challengeA(): ChallengeConfig {
       baseColor: ArenaColourConstants.BLUE,
       zoneId: "blue",
     },
+  ];
+
+  const badZones: CoreSpecs.IZoneSpec[] = [
     {
       type: "zone",
       initialPosition: { x: 0, y: 0 },
@@ -194,7 +196,11 @@ function challengeA(): ChallengeConfig {
     name: "Lesson 4 - Challenge A",
     startPosition: { x: -2.5, y: 2.5 },
     arenaConfig: arenaA(),
-    eventListener: new Lesson4Challenge({ x: 2.5, y: 2.5 }, badZones),
+    eventListener: new Lesson4Challenge(
+      { x: 2.5, y: 2.5 },
+      badZones,
+      colorZones
+    ),
     descriptions: {
       short: "Using color sensor to navigate",
       markdown: `
@@ -213,9 +219,10 @@ function challengeA(): ChallengeConfig {
   return challengeConfig;
 }
 
-
 function challengeB(): ChallengeConfig {
-  const badZones: CoreSpecs.IZoneSpec[] = [
+  const badZones: CoreSpecs.IZoneSpec[] = [];
+
+  const colorZones: CoreSpecs.IZoneSpec[] = [
     {
       type: "zone",
       initialPosition: { x: -2.5, y: 0 },
@@ -260,46 +267,17 @@ function challengeB(): ChallengeConfig {
       baseColor: ArenaColourConstants.BLUE,
       zoneId: "blue",
     },
-    {
-      type: "zone",
-      initialPosition: { x: -0.9, y: -2.1 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 2.2,
-        zLength: 0.2,
-      },
-      baseColor: 0x000000,
-      zoneId: "wall",
-    },
-    {
-      type: "zone",
-      initialPosition: { x: 2.1, y: -0.55 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 0.2,
-        zLength: 3.1,
-      },
-      baseColor: 0x000000,
-      zoneId: "wall",
-    },
-    {
-      type: "zone",
-      initialPosition: { x: 0, y: 1.2 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 0.2,
-        zLength: 3.8,
-      },
-      baseColor: 0x000000,
-      zoneId: "wall",
-    },
   ];
 
   const challengeConfig: ChallengeConfig = {
     name: "Lesson 4 - Challenge B",
     startPosition: { x: -1.5, y: 2.5 },
     arenaConfig: arenaB(),
-    eventListener: new Lesson4Challenge({ x: 2.5, y: 2.5 }, badZones),
+    eventListener: new Lesson4Challenge(
+      { x: 2.5, y: 2.5 },
+      badZones,
+      colorZones
+    ),
     descriptions: {
       short: "Using color sensor to navigate with walls",
       markdown: `
@@ -325,7 +303,8 @@ class Lesson4Challenge implements ChallengeListener {
   private challengeOutcomePending: boolean;
   constructor(
     public finishPosition: CoreSimTypes.Vector2d,
-    public badZones: CoreSpecs.IZoneSpec[]
+    public badZones: CoreSpecs.IZoneSpec[],
+    public colorZones: CoreSpecs.IZoneSpec[]
   ) {
     this.challengeOutcomePending = true;
   }
@@ -348,6 +327,11 @@ class Lesson4Challenge implements ChallengeListener {
       z.zoneId = "bad-" + z.zoneId;
       actions.addObject(z);
     });
+    this.colorZones.forEach((z) => {
+      z.zoneId = "color-" + z.zoneId;
+      actions.addObject(z);
+    });
+
     this.challengeOutcomePending = true;
   }
 
@@ -357,14 +341,11 @@ class Lesson4Challenge implements ChallengeListener {
 
   onEvent(e: ChallengeEvent) {
     if (e.kind === "ZoneEvent") {
-      if (e.zoneId === FinishZoneId && this.challengeOutcomePending === true) {
+      if (e.zoneId === FinishZoneId && this.challengeOutcomePending) {
         this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Wins!", MessageType.success);
         this.actions?.setChallengeStatus(ChallengeStatus.Success);
-      } else if (
-        e.zoneId.startsWith("bad-") &&
-        this.challengeOutcomePending === true
-      ) {
+      } else if (e.zoneId.startsWith("bad-") && this.challengeOutcomePending) {
         this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
