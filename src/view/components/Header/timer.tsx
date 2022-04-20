@@ -31,19 +31,25 @@ export function Timer() {
     setCurrentTime(calculateCurrentTime());
   };
 
+  let freezeStopWatch = () => {
+    clearInterval(timerHandle);
+    setTimerHandle(0);
+  };
+
   let pauseStopwatch = () => {
     if (currentState === "Running") {
-      clearInterval(timerHandle);
-      setTimerHandle(0);
+      freezeStopWatch();
       setCurrentState("Paused");
     }
   };
+
   let stopStopwatch = () => {
     if (currentState === "Running") {
-      pauseStopwatch();
+      freezeStopWatch();
       setCurrentState("Stopped");
     }
   };
+
   let updateCurrentTime = () => {
     setCurrentTime(calculateCurrentTime());
   };
@@ -59,10 +65,10 @@ export function Timer() {
     if (currentState === "Running") {
       // Timer already running
       return;
-    } else if (currentState === "Stopped") {
-      resetStopwatch();
     } else if (currentState === "Paused") {
       resumeStopWatch();
+    } else {
+      resetStopwatch();
     }
     setCurrentState("Running");
     // start the timer again
@@ -73,8 +79,6 @@ export function Timer() {
   };
 
   useEffect(() => {
-    console.log("use Effect");
-    console.log("execution state " + executionState);
     if (executionState === ExecutionState.RUNNING) {
       startStopwatch();
     } else if (
