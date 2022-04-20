@@ -31,7 +31,7 @@ export const StatusTile: FunctionComponent<{
           <div
             className="status-tile--colorBox"
             style={{ backgroundColor: value.toString() }}
-          ></div>
+          />
           <div className="status-tile--value status-tile--color">{value}</div>
         </div>
       ) : (
