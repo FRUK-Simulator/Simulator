@@ -35,3 +35,13 @@
   justify-content: flex-end;
   flex: 1;
 }
+
+.status-tile--value.status-tile--color {
+  font-size: 1.5em;
+  font-family: monospace;
+}
+
+.status-tile--colorBox {
+  width: 5.5em;
+  height: 2.5em;
+}

@@ -306,6 +306,15 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             onControllerKeyCheck: (key: ControllerKey): boolean => {
               return getControllerKeys(store.getState())[key];
             },
+
+            onPause: () => {
+              sim.current?.setPhysicsActive(false);
+            },
+
+            onUnPause: () => {
+              sim.current?.setPhysicsActive(true);
+            },
+
             getSensorValue: (channel: number): number => {
               const value = robotRef.current?.getAnalogInput(channel);
               if (value) {

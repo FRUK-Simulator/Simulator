@@ -12,11 +12,13 @@ export const StatusTile: FunctionComponent<{
   value: string | number;
   sublabel?: string;
   variant?: StatusTileVariant;
+  isColor?: boolean;
 }> = ({
   label,
   value,
   sublabel = null,
   variant = StatusTileVariant.static,
+  isColor = false,
 }) => {
   return (
     <div className={`status-tile ${variant}`}>
@@ -24,7 +26,17 @@ export const StatusTile: FunctionComponent<{
       {sublabel ? (
         <div className="status-tile--sub-label">{sublabel}</div>
       ) : null}
-      <div className="status-tile--value">{value}</div>
+      {isColor ? (
+        <div>
+          <div
+            className="status-tile--colorBox"
+            style={{ backgroundColor: value.toString() }}
+          ></div>
+          <div className="status-tile--value status-tile--color">{value}</div>
+        </div>
+      ) : (
+        <div className="status-tile--value">{value}</div>
+      )}
     </div>
   );
 };
