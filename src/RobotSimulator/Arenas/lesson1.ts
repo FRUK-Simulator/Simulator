@@ -211,6 +211,28 @@ class Lesson1Challenge implements ChallengeListener {
     this.actions = actions;
     actions.addObject({
       type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneId: "zone A",
+      zoneShape: {
+        type: "rectangle",
+        zLength: 1,
+        xLength: 1,
+      },
+      baseColor: ArenaColourConstants.BLUE,
+    });
+    actions.addObject({
+      type: "zone",
+      initialPosition: { x: 0, y: 2 },
+      zoneId: "zone B",
+      zoneShape: {
+        type: "rectangle",
+        zLength: 1,
+        xLength: 1,
+      },
+      baseColor: ArenaColourConstants.GREEN,
+    });
+    actions.addObject({
+      type: "zone",
       initialPosition: this.finishPosition,
       zoneId: FinishZoneId,
       zoneShape: {
