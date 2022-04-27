@@ -3,7 +3,13 @@ import { useSelector } from "react-redux";
 import { getExecutionState } from "../../../JavascriptVM/vmSlice";
 import { ExecutionState } from "../../../JavascriptVM/vm";
 import React from "react";
-import { PassThrough } from "stream";
+
+export enum TimerState {
+  RUNNING = "running",
+  STOPPED = "stopped",
+  PAUSED = "paused",
+  NON_STARTED = "Not Started",
+}
 
 function format(num: number, digs: number) {
   return num.toLocaleString("en-US", {
@@ -22,7 +28,7 @@ export function Timer() {
   const [currentTime, setCurrentTime] = useState(calculateCurrentTime());
   const [timerHandle, setTimerHandle] = useState(0);
   const executionState = useSelector(getExecutionState);
-  const [currentState, setCurrentState] = useState("Not Started");
+  const [currentState, setCurrentState] = useState(TimerState.NON_STARTED);
   const totalElapsed = currentTime - startTime;
   const seconds = Math.floor(totalElapsed / 1000) % 60;
   const milliseconds = totalElapsed % 1000;
@@ -37,16 +43,16 @@ export function Timer() {
   };
 
   let pauseStopwatch = () => {
-    if (currentState === "Running") {
+    if (currentState === TimerState.RUNNING) {
       freezeStopWatch();
-      setCurrentState("Paused");
+      setCurrentState(TimerState.PAUSED);
     }
   };
 
   let stopStopwatch = () => {
-    if (currentState === "Running") {
+    if (currentState === TimerState.RUNNING) {
       freezeStopWatch();
-      setCurrentState("Stopped");
+      setCurrentState(TimerState.STOPPED);
     }
   };
 
@@ -62,15 +68,15 @@ export function Timer() {
   };
 
   let startStopwatch = () => {
-    if (currentState === "Running") {
+    if (currentState === TimerState.RUNNING) {
       // Timer already running
       return;
-    } else if (currentState === "Paused") {
+    } else if (currentState === TimerState.PAUSED) {
       resumeStopWatch();
     } else {
       resetStopwatch();
     }
-    setCurrentState("Running");
+    setCurrentState(TimerState.RUNNING);
     // start the timer again
     let handle = window.setInterval(updateCurrentTime, 23);
 
@@ -96,7 +102,7 @@ export function Timer() {
 
   return (
     <div>
-      <p style={{ fontSize: "3em", fontFamily: "monospace" }}>
+      <p style={{ fontSize: "2em", fontFamily: "monospace" }}>
         {format(seconds, 3)}.{format(milliseconds, 3)}
       </p>
     </div>
