@@ -32,38 +32,8 @@ export function Timer() {
   const totalElapsed = currentTime - startTime;
   const seconds = Math.floor(totalElapsed / 1000) % 60;
   const milliseconds = totalElapsed % 1000;
-  let resetStopwatch = () => {
-    setStartTime(calculateCurrentTime());
-    setCurrentTime(calculateCurrentTime());
-  };
-
-  let freezeStopWatch = () => {
-    clearInterval(timerHandle);
-    setTimerHandle(0);
-  };
-
-  let pauseStopwatch = () => {
-    if (currentState === TimerState.RUNNING) {
-      freezeStopWatch();
-      setCurrentState(TimerState.PAUSED);
-    }
-  };
-
-  let stopStopwatch = () => {
-    if (currentState === TimerState.RUNNING) {
-      freezeStopWatch();
-      setCurrentState(TimerState.STOPPED);
-    }
-  };
 
   let updateCurrentTime = () => {
-    setCurrentTime(calculateCurrentTime());
-  };
-
-  let resumeStopWatch = () => {
-    // reset the clock so when we start counting, we start from the time
-    // on the display
-    setStartTime(calculateCurrentTime() - totalElapsed);
     setCurrentTime(calculateCurrentTime());
   };
 
@@ -84,6 +54,37 @@ export function Timer() {
     setTimerHandle(handle);
   };
 
+  let stopStopwatch = () => {
+    if (currentState === TimerState.RUNNING) {
+      freezeStopWatch();
+      setCurrentState(TimerState.STOPPED);
+    }
+  };
+
+  let pauseStopwatch = () => {
+    if (currentState === TimerState.RUNNING) {
+      freezeStopWatch();
+      setCurrentState(TimerState.PAUSED);
+    }
+  };
+
+  let resumeStopWatch = () => {
+    // reset the clock so when we start counting, we start from the time
+    // on the display
+    setStartTime(calculateCurrentTime() - totalElapsed);
+    setCurrentTime(calculateCurrentTime());
+  };
+
+  let resetStopwatch = () => {
+    setStartTime(calculateCurrentTime());
+    setCurrentTime(calculateCurrentTime());
+  };
+
+  let freezeStopWatch = () => {
+    clearInterval(timerHandle);
+    setTimerHandle(0);
+  };
+
   useEffect(() => {
     if (executionState === ExecutionState.RUNNING) {
       startStopwatch();
@@ -98,6 +99,7 @@ export function Timer() {
     return () => {
       clearInterval(timerHandle);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [executionState]);
 
   return (
