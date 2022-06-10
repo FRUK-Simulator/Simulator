@@ -75,6 +75,7 @@ export const RobotView = () => {
               variant={StatusTileVariant.active}
               label={sensor.mountFaceName}
               sublabel={`Channel: ${sensor.channel}`}
+              isColor={true}
               value={getColorHex()}
             />
           ))}
