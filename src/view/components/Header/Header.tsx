@@ -6,6 +6,7 @@ import brandImage from "./logo.gif";
 import { useSelector } from "react-redux";
 import { getCurrentBlocklyProgram } from "../../../BlocklyInterface/blocklySlice";
 import { Icon, IconName } from "../Common/Icon";
+import { Timer } from "./timer";
 
 export const Brand = () => {
   return (
@@ -42,6 +43,7 @@ export const Header = () => {
             iconName={IconName.file}
           />{" "}
           {currentProgram.title}
+          <Timer />
         </h1>
       ) : null}
       <a
