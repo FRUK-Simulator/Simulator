@@ -8,7 +8,13 @@ import {
 } from "react";
 import React from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { vmSlice, getCode, getExecutionSpeed, getCameraMode } from "./vmSlice";
+import {
+  vmSlice,
+  getCode,
+  getExecutionSpeed,
+  getCameraMode,
+  isExecuting,
+} from "./vmSlice";
 import { AppDispatch } from "../state/store";
 import {
   BlocklyInterpreter,
@@ -331,6 +337,9 @@ export const VMProvider: FunctionComponent = ({ children }) => {
                 return value;
               }
               return {};
+            },
+            isVmRunning: (): boolean => {
+              return isExecuting(store.getState());
             },
           };
 

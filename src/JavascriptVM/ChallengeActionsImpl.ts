@@ -6,6 +6,8 @@ import {
   challengeSlice,
   ChallengeStatus,
 } from "../RobotSimulator/Arenas/challengeSlice";
+import { vmSlice } from "../JavascriptVM/vmSlice";
+import { ExecutionState } from "./vm";
 
 export class ChallengeActionsImpl implements ChallengeActions {
   constructor(
@@ -77,6 +79,13 @@ export class ChallengeActionsImpl implements ChallengeActions {
       challengeSlice.actions.setChallengeStatus({
         status: status,
         id: this.challengeId,
+      })
+    );
+  }
+  terminateChallenge(): void {
+    this.dispatch(
+      vmSlice.actions.setExecutionState({
+        executionState: ExecutionState.STOPPED,
       })
     );
   }

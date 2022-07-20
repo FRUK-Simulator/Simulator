@@ -51,6 +51,7 @@ export type BlocklyInterpreterCallbacks = {
    */
   getSensorValue?: (port: number) => number;
   getComplexSensorValue?: (port: number, type: string) => any;
+  isVmRunning?: () => boolean;
 };
 
 export enum ExecutionState {
@@ -289,17 +290,24 @@ export class BlocklyInterpreter {
     let finished = false;
     this.blockHighlighted = false;
     this.callbacks.onUnPause && this.callbacks.onUnPause();
+    const isVmFinished = () => {
+      if (this.callbacks.isVmRunning) {
+        return !this.callbacks.isVmRunning();
+      }
+      return true;
+    };
+    debugger;
     while (!this.blockHighlighted && this.nextStepDelay === 0 && !finished) {
-      finished = !this.interpreter.step();
+      finished = isVmFinished() || !this.interpreter.step();
     }
     this.blockHighlighted = false;
 
     if (finished) {
-      // put the VM into a "stopped" state
-      this.stop();
-
       // alert the client of the VM that execution is finished if there is a cb registered
       this.callbacks.onFinish && this.callbacks.onFinish();
+
+      // put the VM into a "stopped" state
+      this.stop();
     }
 
     return finished;
@@ -388,7 +396,7 @@ export class BlocklyInterpreter {
   }
 
   /**
-   * Permanently stops the execution. Triggers the "onFinished" callback.
+   * Permanently stops the execution.
    */
   stop() {
     this.executionState = ExecutionState.STOPPED;

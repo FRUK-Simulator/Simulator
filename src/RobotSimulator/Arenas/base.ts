@@ -58,6 +58,7 @@ export interface ChallengeActions {
     timeout?: number
   ): void;
   setChallengeStatus(status: ChallengeStatus): void;
+  terminateChallenge(): void;
 }
 
 export interface ZoneEvent {
