@@ -60,32 +60,7 @@ function arenaB(): ArenaConfig {
     worldConfig: {
       zLength: 6,
       xLength: 6,
-      walls: [
-        {
-          type: "wall",
-          start: { x: 0, y: -0.7 },
-          end: { x: 0, y: 3 },
-          baseColor: 0x000000,
-          height: 0.5,
-          thickness: 0.2,
-        },
-        {
-          type: "wall",
-          start: { x: -2, y: -2.1 },
-          end: { x: 0.2, y: -2.1 },
-          baseColor: 0x000000,
-          height: 0.5,
-          thickness: 0.2,
-        },
-        {
-          type: "wall",
-          start: { x: 2.1, y: 1 },
-          end: { x: 2.1, y: -2.1 },
-          baseColor: 0x000000,
-          height: 0.5,
-          thickness: 0.2,
-        },
-      ],
+      walls: [],
       perimeter: {
         height: 0.5,
         thickness: 0.1,
@@ -103,13 +78,37 @@ function arenaB(): ArenaConfig {
   return arenaConfig;
 }
 
+// function arenaC(): ArenaConfig {
+//   const arenaConfig: ArenaConfig = {
+//     name: "Lesson 4 - Challenge C",
+//     worldConfig: {
+//       zLength: 6,
+//       xLength: 6,
+//       walls: [],
+//       perimeter: {
+//         height: 0.5,
+//         thickness: 0.1,
+//       },
+//       camera: {
+//         position: {
+//           x: 0,
+//           y: 3,
+//           z: 3,
+//         },
+//       },
+//     },
+//   };
+
+//   return arenaConfig;
+// }
+
 function challengeA(): ChallengeConfig {
   const badZones: CoreSpecs.IZoneSpec[] = [];
   const challengeConfig: ChallengeConfig = {
     name: "Lesson 4 - Challenge A",
     startPosition: { x: 0, y: 2 },
     arenaConfig: arenaA(),
-    eventListener: new Lesson4Challenge({ x: 0, y: -2 }, badZones),
+    eventListener: new Lesson4Challenge({ x: 0, y: -2 }, [], badZones),
     descriptions: {
       short: "Using color sensor to navigate",
       markdown: `
@@ -128,39 +127,72 @@ function challengeA(): ChallengeConfig {
 }
 
 function challengeB(): ChallengeConfig {
+  const warnZones: CoreSpecs.IZoneSpec[] = [
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -3, y: -3 },
+          { x: 3, y: -3 },
+          { x: 3, y: 2 },
+          { x: 2, y: 2 },
+          { x: 2, y: -2 },
+          { x: -2, y: -2 },
+          { x: -2, y: 3 },
+          { x: -3, y: 3 },
+        ],
+      },
+      baseColor: ArenaColourConstants.LIGHT_GREEN,
+      zoneId: "light_green",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 1 },
+      zoneShape: {
+        type: "rectangle",
+        xLength: 2,
+        zLength: 4,
+      },
+      baseColor: ArenaColourConstants.LIGHT_BLUE,
+      zoneId: "light_blue",
+    },
+  ];
   const badZones: CoreSpecs.IZoneSpec[] = [
     {
       type: "zone",
-      initialPosition: { x: -2.5, y: 0 },
+      initialPosition: { x: 0, y: 0 },
       zoneShape: {
-        type: "rectangle",
-        xLength: 1,
-        zLength: 6,
+        type: "polygon",
+        points: [
+          { x: -3, y: 3 },
+          { x: -2.75, y: 3 },
+          { x: -2.75, y: -2.75 },
+          { x: 2.75, y: -2.75 },
+          { x: 2.75, y: 2 },
+          { x: 3, y: 2 },
+          { x: 3, y: -3 },
+          { x: -3, y: -3 },
+        ],
       },
-      baseColor: 0x57e062,
-      zoneId: "green",
+      baseColor: ArenaColourConstants.RED,
+      zoneId: "red",
     },
     {
       type: "zone",
-      initialPosition: { x: 2.5, y: -0.5 },
+      initialPosition: { x: 0, y: 0 },
       zoneShape: {
-        type: "rectangle",
-        xLength: 1,
-        zLength: 5,
+        type: "polygon",
+        points: [
+          { x: -0.125, y: 3 },
+          { x: -0.125, y: -0.25 },
+          { x: 0.125, y: -0.25 },
+          { x: 0.125, y: 3 },
+        ],
       },
-      baseColor: 0x57e062,
-      zoneId: "green",
-    },
-    {
-      type: "zone",
-      initialPosition: { x: 0, y: -2.5 },
-      zoneShape: {
-        type: "rectangle",
-        xLength: 4,
-        zLength: 1,
-      },
-      baseColor: 0x57e062,
-      zoneId: "green",
+      baseColor: ArenaColourConstants.RED,
+      zoneId: "red",
     },
   ];
 
@@ -168,18 +200,22 @@ function challengeB(): ChallengeConfig {
     name: "Lesson 4 - Challenge B",
     startPosition: { x: -1.5, y: 2.5 },
     arenaConfig: arenaB(),
-    eventListener: new Lesson4Challenge({ x: 2.5, y: 2.5 }, badZones),
+    eventListener: new Lesson4Challenge(
+      { x: 2.5, y: 2.5 },
+      warnZones,
+      badZones
+    ),
     descriptions: {
       short: "Using color sensor to navigate with walls",
       markdown: `
-  # Lesson 1 - Challenge B
+  # Lesson 4 - Challenge B
   
-  The robot needs to avoid the black areas of the playfield and end up in the green zone
-  at the far side of the arena.
+  The robot needs to avoid the red areas of the playfield and end up in the darker green zone
+  at the far side of the arena and remain there for at least 5s. 
   
   This time the route isn't going to be a straight one.
   
-  If at any point the robot comes into conact with the black area then the robot must
+  If at any point the robot comes into conact with the red area then the robot must
   start again.
         `,
     },
@@ -194,11 +230,13 @@ class Lesson4Challenge implements ChallengeListener {
   private challengeOutcomePending: boolean;
   constructor(
     public finishPosition: CoreSimTypes.Vector2d,
+    public warnZones: CoreSpecs.IZoneSpec[],
     public badZones: CoreSpecs.IZoneSpec[]
   ) {
     this.challengeOutcomePending = true;
   }
   actions?: ChallengeActions;
+  timeoutId?: NodeJS.Timeout;
 
   onStart(actions: ChallengeActions) {
     this.actions = actions;
@@ -212,6 +250,10 @@ class Lesson4Challenge implements ChallengeListener {
         xLength: 1,
       },
       baseColor: ArenaColourConstants.GREEN,
+    });
+    this.warnZones.forEach((z) => {
+      z.zoneId = "warn-" + z.zoneId;
+      actions.addObject(z);
     });
     this.badZones.forEach((z) => {
       z.zoneId = "bad-" + z.zoneId;
@@ -227,9 +269,16 @@ class Lesson4Challenge implements ChallengeListener {
   onEvent(e: ChallengeEvent) {
     if (e.kind === "ZoneEvent") {
       if (e.zoneId === FinishZoneId && this.challengeOutcomePending === true) {
-        this.challengeOutcomePending = false;
-        this.actions?.displayFadingMessage("Robot Wins!", MessageType.success);
-        this.actions?.setChallengeStatus(ChallengeStatus.Success);
+        if (e.entry) {
+          this.timeoutId = setTimeout(this.markComplete.bind(this), 5000);
+          this.actions?.displayMessage(
+            "Stay in the zone for 5 seconds",
+            MessageType.info
+          );
+        } else if (this.timeoutId) {
+          clearTimeout(this.timeoutId);
+          this.challengeOutcomePending = true;
+        }
       } else if (
         e.zoneId.startsWith("bad-") &&
         this.challengeOutcomePending === true
@@ -237,7 +286,18 @@ class Lesson4Challenge implements ChallengeListener {
         this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
+      } else if (e.zoneId.endsWith("light_green") && e.entry) {
+        this.actions?.displayFadingMessage("Go right!", MessageType.info);
+      } else if (e.zoneId.endsWith("light_blue") && e.entry) {
+        this.actions?.displayFadingMessage("Go left!", MessageType.info);
       }
     }
+  }
+
+  markComplete(): void {
+    console.log("timeout now");
+    this.challengeOutcomePending = false;
+    this.actions?.displayMessage("Robot Wins!", MessageType.success);
+    this.actions?.setChallengeStatus(ChallengeStatus.Success);
   }
 }
