@@ -56,7 +56,6 @@ export type BlocklyInterpreterCallbacks = {
    */
   getSensorValue?: (port: number) => number;
   getComplexSensorValue?: (port: number, type: string) => any;
-  isVmRunning?: () => boolean;
 };
 
 export enum ExecutionState {

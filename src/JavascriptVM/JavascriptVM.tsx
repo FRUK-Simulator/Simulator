@@ -352,9 +352,6 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               }
               return {};
             },
-            isVmRunning: (): boolean => {
-              return isExecuting(store.getState());
-            },
           };
 
           try {
