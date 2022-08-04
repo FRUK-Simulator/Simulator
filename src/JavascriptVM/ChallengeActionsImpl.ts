@@ -6,8 +6,6 @@ import {
   challengeSlice,
   ChallengeStatus,
 } from "../RobotSimulator/Arenas/challengeSlice";
-import { vmSlice } from "../JavascriptVM/vmSlice";
-import { ExecutionState } from "./vm";
 
 export class ChallengeActionsImpl implements ChallengeActions {
   constructor(
