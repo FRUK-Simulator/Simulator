@@ -37,6 +37,11 @@ export type BlocklyInterpreterCallbacks = {
   onControllerKeyCheck?: (key: ControllerKey) => boolean;
 
   /**
+   * Called when the simulation is supposed to be terminated therefore stop all physics
+   */
+  onStop?: () => void;
+
+  /**
    * Called when the simulation is supposed to be paused therefore stop all physics
    */
   onPause?: () => void;
@@ -295,11 +300,11 @@ export class BlocklyInterpreter {
     this.blockHighlighted = false;
 
     if (finished) {
-      // put the VM into a "stopped" state
-      this.stop();
-
       // alert the client of the VM that execution is finished if there is a cb registered
       this.callbacks.onFinish && this.callbacks.onFinish();
+
+      // put the VM into a "stopped" state
+      this.stop();
     }
 
     return finished;
@@ -388,10 +393,11 @@ export class BlocklyInterpreter {
   }
 
   /**
-   * Permanently stops the execution. Triggers the "onFinished" callback.
+   * Permanently stops the execution.
    */
   stop() {
     this.executionState = ExecutionState.STOPPED;
+    this.callbacks.onStop && this.callbacks.onStop();
   }
 
   /**

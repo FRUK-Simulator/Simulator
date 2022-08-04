@@ -30,7 +30,7 @@ export const VMControls = () => {
       {isVMStarted ? (
         <Button
           iconName={IconName.exit}
-          onClick={vm.stop}
+          onClick={vm.reset}
           variant={ButtonVariant.danger}
         >
           Quit
