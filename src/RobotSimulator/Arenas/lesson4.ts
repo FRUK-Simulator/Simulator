@@ -230,6 +230,7 @@ class Lesson4Challenge implements ChallengeListener {
         this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Wins!", MessageType.success);
         this.actions?.setChallengeStatus(ChallengeStatus.Success);
+        this.actions?.terminateChallenge();
       } else if (
         e.zoneId.startsWith("bad-") &&
         this.challengeOutcomePending === true
@@ -237,6 +238,7 @@ class Lesson4Challenge implements ChallengeListener {
         this.challengeOutcomePending = false;
         this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
+        this.actions?.terminateChallenge();
       }
     }
   }
