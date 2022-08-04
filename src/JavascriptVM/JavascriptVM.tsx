@@ -55,6 +55,7 @@ export interface IVirtualMachine {
   stop: () => void;
   start: () => void;
   pause: () => void;
+  reset: () => void;
 
   setChallenge: (config: ChallengeConfig) => void;
 
@@ -267,6 +268,15 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           interpreter.stop();
           syncExecutionState(interpreter);
+        },
+        reset() {
+          if (!interpreter) {
+            console.warn("vm is not started");
+            return;
+          }
+
+          interpreter.stop();
+          syncExecutionState(interpreter);
           setInterpreter(null);
         },
         start() {
@@ -311,6 +321,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
             onControllerKeyCheck: (key: ControllerKey): boolean => {
               return getControllerKeys(store.getState())[key];
+            },
+
+            onStop: () => {
+              sim.current?.setPhysicsActive(false);
             },
 
             onPause: () => {
@@ -429,7 +443,12 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           challengeListener.current = challengeConfig.eventListener || null;
           challengeListener.current?.onStart(
             // We use the challenge name as the challenge ID
-            new ChallengeActionsImpl(simulator, dispatch, challengeConfig.name)
+            new ChallengeActionsImpl(
+              simulator,
+              dispatch,
+              challengeConfig.name,
+              this.stop
+            )
           );
 
           setSimulatorCameraMode(sim.current, robotRef.current, cameraMode);

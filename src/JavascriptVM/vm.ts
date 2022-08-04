@@ -37,6 +37,11 @@ export type BlocklyInterpreterCallbacks = {
   onControllerKeyCheck?: (key: ControllerKey) => boolean;
 
   /**
+   * Called when the simulation is supposed to be terminated therefore stop all physics
+   */
+  onStop?: () => void;
+
+  /**
    * Called when the simulation is supposed to be paused therefore stop all physics
    */
   onPause?: () => void;
@@ -290,15 +295,8 @@ export class BlocklyInterpreter {
     let finished = false;
     this.blockHighlighted = false;
     this.callbacks.onUnPause && this.callbacks.onUnPause();
-    const isVmFinished = () => {
-      if (this.callbacks.isVmRunning) {
-        return !this.callbacks.isVmRunning();
-      }
-      return true;
-    };
-    debugger;
     while (!this.blockHighlighted && this.nextStepDelay === 0 && !finished) {
-      finished = isVmFinished() || !this.interpreter.step();
+      finished = !this.interpreter.step();
     }
     this.blockHighlighted = false;
 
@@ -400,6 +398,7 @@ export class BlocklyInterpreter {
    */
   stop() {
     this.executionState = ExecutionState.STOPPED;
+    this.callbacks.onStop && this.callbacks.onStop();
   }
 
   /**
