@@ -43,6 +43,10 @@ export const messageSlice = createSlice({
 
       return state;
     },
+    clearAllMesages(state) {
+      state.messages = [];
+      return state;
+    },
   },
   name: "errors",
 });
