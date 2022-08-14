@@ -80,7 +80,7 @@ function arenaB(): ArenaConfig {
 
 function arenaC(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
-    name: "Lesson 4 - Challenge C",
+    name: "Lesson 4 - Color Sensor",
     worldConfig: {
       zLength: 6,
       xLength: 6,
