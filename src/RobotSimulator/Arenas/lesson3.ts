@@ -343,6 +343,7 @@ class Lesson3Challenge implements ChallengeListener {
             "Robot finished the challenge",
             MessageType.success
           );
+          this.actions?.terminateChallenge();
           return;
         }
 
@@ -374,6 +375,7 @@ class Lesson3Challenge implements ChallengeListener {
           "Robot finished the challenge",
           MessageType.success
         );
+        this.actions?.terminateChallenge();
         return;
       }
     }

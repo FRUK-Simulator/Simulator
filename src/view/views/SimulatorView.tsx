@@ -67,7 +67,7 @@ export const SimulatorView = () => {
 
   // Use layout effect ensures the vm is stopped before leaving
   useLayoutEffect(() => {
-    return () => vm.stop();
+    return () => vm.reset();
   }, [vm]);
 
   return (

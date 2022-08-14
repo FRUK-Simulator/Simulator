@@ -217,6 +217,7 @@ class Lesson2Challenge implements ChallengeListener {
       } else if (e.zoneId.startsWith("bad-")) {
         this.actions?.displayMessage("Robot Looses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
+        this.actions?.terminateChallenge();
       }
     }
   }
@@ -225,5 +226,6 @@ class Lesson2Challenge implements ChallengeListener {
     console.log("timeout now");
     this.actions?.displayMessage("Robot Wins!", MessageType.success);
     this.actions?.setChallengeStatus(ChallengeStatus.Success);
+    this.actions?.terminateChallenge();
   }
 }

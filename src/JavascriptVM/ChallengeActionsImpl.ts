@@ -11,7 +11,8 @@ export class ChallengeActionsImpl implements ChallengeActions {
   constructor(
     private sim: Sim3D,
     private dispatch: (a: any) => void,
-    private challengeId: string
+    private challengeId: string,
+    private terminateCallback: () => void
   ) {}
 
   addObject(
@@ -84,5 +85,8 @@ export class ChallengeActionsImpl implements ChallengeActions {
         id: this.challengeId,
       })
     );
+  }
+  terminateChallenge(): void {
+    this.terminateCallback();
   }
 }

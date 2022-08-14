@@ -59,6 +59,7 @@ export interface ChallengeActions {
   ): void;
   clearAllMessages(): void;
   setChallengeStatus(status: ChallengeStatus): void;
+  terminateChallenge(): void;
 }
 
 export interface ZoneEvent {
