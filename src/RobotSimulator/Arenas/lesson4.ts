@@ -11,7 +11,7 @@ import { CoreSpecs } from "@fruk/simulator-core";
 import { ChallengeStatus } from "./challengeSlice";
 import { ArenaColourConstants } from "../../JavascriptVM/colourSensorConstants";
 
-export const challenges = [challengeA, challengeB];
+export const challenges = [challengeA, challengeB, challengeC];
 
 function arenaA(): ArenaConfig {
   const arenaConfig: ArenaConfig = {
@@ -78,29 +78,29 @@ function arenaB(): ArenaConfig {
   return arenaConfig;
 }
 
-// function arenaC(): ArenaConfig {
-//   const arenaConfig: ArenaConfig = {
-//     name: "Lesson 4 - Challenge C",
-//     worldConfig: {
-//       zLength: 6,
-//       xLength: 6,
-//       walls: [],
-//       perimeter: {
-//         height: 0.5,
-//         thickness: 0.1,
-//       },
-//       camera: {
-//         position: {
-//           x: 0,
-//           y: 3,
-//           z: 3,
-//         },
-//       },
-//     },
-//   };
+function arenaC(): ArenaConfig {
+  const arenaConfig: ArenaConfig = {
+    name: "Lesson 4 - Challenge C",
+    worldConfig: {
+      zLength: 6,
+      xLength: 6,
+      walls: [],
+      perimeter: {
+        height: 0.5,
+        thickness: 0.1,
+      },
+      camera: {
+        position: {
+          x: 0,
+          y: 3,
+          z: 3,
+        },
+      },
+    },
+  };
 
-//   return arenaConfig;
-// }
+  return arenaConfig;
+}
 
 function challengeA(): ChallengeConfig {
   const badZones: CoreSpecs.IZoneSpec[] = [];
@@ -176,8 +176,8 @@ function challengeB(): ChallengeConfig {
           { x: -3, y: -3 },
         ],
       },
-      baseColor: ArenaColourConstants.RED,
-      zoneId: "red",
+      baseColor: ArenaColourConstants.BLACK,
+      zoneId: "black",
     },
     {
       type: "zone",
@@ -191,8 +191,8 @@ function challengeB(): ChallengeConfig {
           { x: 0.125, y: 3 },
         ],
       },
-      baseColor: ArenaColourConstants.RED,
-      zoneId: "red",
+      baseColor: ArenaColourConstants.BLACK,
+      zoneId: "black",
     },
   ];
 
@@ -210,12 +210,142 @@ function challengeB(): ChallengeConfig {
       markdown: `
   # Lesson 4 - Challenge B
   
-  The robot needs to avoid the red areas of the playfield and end up in the darker green zone
+  The robot needs to avoid the black areas of the playfield and end up in the darker green zone
   at the far side of the arena and remain there for at least 5s. 
   
   This time the route isn't going to be a straight one.
   
-  If at any point the robot comes into conact with the red area then the robot must
+  If at any point the robot comes into contact with the black area then the robot must
+  start again.
+        `,
+    },
+  };
+
+  return challengeConfig;
+}
+
+function challengeC(): ChallengeConfig {
+  const warnZones: CoreSpecs.IZoneSpec[] = [
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -3, y: 1 },
+          { x: -2, y: 1 },
+          { x: -2, y: -1 },
+          { x: -1, y: -1 },
+          { x: -1, y: -2 },
+          { x: 2, y: -2 },
+          { x: 2, y: 1 },
+          { x: 3, y: 1 },
+          { x: 3, y: 0.5 },
+          { x: 2.5, y: 0.5 },
+          { x: 2.5, y: -2.5 },
+          { x: -1.5, y: -2.5 },
+          { x: -2.5, y: -1.5 },
+          { x: -1.5, y: -1.5 },
+          { x: -2.5, y: -1.5 },
+          { x: -3, y: 0.5 },
+        ],
+      },
+      baseColor: ArenaColourConstants.LIGHT_GREEN,
+      zoneId: "light_green",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -2, y: 3 },
+          { x: -2, y: 2 },
+          { x: -1, y: 2 },
+          { x: -1, y: 0 },
+          { x: 0, y: 0 },
+          { x: 0, y: -1 },
+          { x: 1, y: -1 },
+          { x: 1, y: 2 },
+          { x: 2, y: 2 },
+          { x: 2, y: 3 },
+          { x: -1.5, y: 3 },
+          { x: -1.5, y: 2.5 },
+          { x: -0.5, y: 2.5 },
+          { x: -0.5, y: 0.5 },
+          { x: 0.5, y: 0.5 },
+          { x: 0.5, y: 2.5 },
+          { x: 1.5, y: 2.5 },
+          { x: 1.5, y: 3 },
+        ],
+      },
+      baseColor: ArenaColourConstants.LIGHT_BLUE,
+      zoneId: "light_blue",
+    },
+  ];
+  const badZones: CoreSpecs.IZoneSpec[] = [
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -3, y: 0.5 },
+          { x: -3, y: -3 },
+          { x: 3, y: -3 },
+          { x: 3, y: 0.5 },
+          { x: 2.5, y: 0.5 },
+          { x: 2.5, y: -2.5 },
+          { x: -1.5, y: -2.5 },
+          { x: -1.5, y: -1.5 },
+          { x: -2.5, y: -1.5 },
+          { x: -2.5, y: 0.5 },
+        ],
+      },
+      baseColor: ArenaColourConstants.BLACK,
+      zoneId: "black",
+    },
+    {
+      type: "zone",
+      initialPosition: { x: 0, y: 0 },
+      zoneShape: {
+        type: "polygon",
+        points: [
+          { x: -1.5, y: 3 },
+          { x: -1.5, y: 2.5 },
+          { x: -0.5, y: 2.5 },
+          { x: -0.5, y: 0.5 },
+          { x: 0.5, y: 0.5 },
+          { x: 0.5, y: 2.5 },
+          { x: 1.5, y: 2.5 },
+          { x: 1.5, y: 3 },
+        ],
+      },
+      baseColor: ArenaColourConstants.BLACK,
+      zoneId: "black",
+    },
+  ];
+
+  const challengeConfig: ChallengeConfig = {
+    name: "Lesson 4 - Challenge C",
+    startPosition: { x: -2.5, y: 2.5 },
+    arenaConfig: arenaC(),
+    eventListener: new Lesson4Challenge(
+      { x: 2.5, y: 2.5 },
+      warnZones,
+      badZones
+    ),
+    descriptions: {
+      short: "Using color sensor to navigate with walls",
+      markdown: `
+  # Lesson 4 - Challenge C
+  
+  The robot needs to avoid the black areas of the playfield and end up in the darker green zone
+  at the far side of the arena and remain there for at least 5s. 
+  
+  This time the route isn't going to be a straight one.
+  
+  If at any point the robot comes into contact with the black area then the robot must
   start again.
         `,
     },
