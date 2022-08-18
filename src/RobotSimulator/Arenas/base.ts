@@ -57,6 +57,7 @@ export interface ChallengeActions {
     type: MessageType,
     timeout?: number
   ): void;
+  clearAllMessages(): void;
   setChallengeStatus(status: ChallengeStatus): void;
   terminateChallenge(): void;
 }

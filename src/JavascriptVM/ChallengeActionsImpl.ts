@@ -73,6 +73,11 @@ export class ChallengeActionsImpl implements ChallengeActions {
       );
     }, timeout);
   }
+
+  clearAllMessages() {
+    this.dispatch(messageSlice.actions.clearAllMesages());
+  }
+
   setChallengeStatus(status: ChallengeStatus): void {
     this.dispatch(
       challengeSlice.actions.setChallengeStatus({
