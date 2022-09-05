@@ -37,14 +37,17 @@ export const Header = () => {
         </>
       ) : null}
       {currentProgram && match ? (
-        <h1 className="header--program-title">
-          <Icon
-            className="header--program-title-icon"
-            iconName={IconName.file}
-          />{" "}
-          {currentProgram.title}
+        <>
+          <h1 className="header--program-title">
+            <Icon
+              className="header--program-title-icon"
+              iconName={IconName.file}
+            />{" "}
+            {currentProgram.title}
+          </h1>
+          <Divider vertical />
           <Timer />
-        </h1>
+        </>
       ) : null}
       <a
         className="header--feedback"

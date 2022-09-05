@@ -52,3 +52,18 @@
   /* Brand Icon must be at least 1.875 (30px) */
   /* height: 90%; */
 }
+
+.timer {
+  text-align: center;
+  /* padding: 0em 1em; */
+}
+
+.timer span {
+  font-family: monospace;
+  font-size: 2em;
+}
+
+.timer hr {
+  border-color: var(--primary-color);
+  margin-block: 0.1em;
+}
