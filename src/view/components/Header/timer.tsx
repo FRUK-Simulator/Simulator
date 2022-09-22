@@ -103,10 +103,13 @@ export function Timer() {
   }, [executionState]);
 
   return (
-    <div>
-      <p style={{ fontSize: "2em", fontFamily: "monospace" }}>
-        {format(seconds, 3)}.{format(milliseconds, 3)}
-      </p>
+    <div className="timer" title="Challenge Timer">
+      <span>⏱</span>
+      <hr />
+      <span>
+        {format(seconds, 3)}.
+        <span style={{ fontSize: "0.8em" }}>{format(milliseconds, 1)}</span>
+      </span>
     </div>
   );
 }
