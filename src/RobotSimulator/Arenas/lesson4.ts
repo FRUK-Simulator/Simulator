@@ -414,7 +414,7 @@ class Lesson4Challenge implements ChallengeListener {
         this.challengeOutcomePending === true
       ) {
         this.challengeOutcomePending = false;
-        this.actions?.displayFadingMessage("Robot Looses!", MessageType.danger);
+        this.actions?.displayFadingMessage("Robot Loses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
         this.actions?.terminateChallenge();
       } else if (e.zoneId.endsWith("light_green") && e.entry) {
