@@ -108,7 +108,7 @@ export function Timer() {
       <hr />
       <span>
         {format(seconds, 3)}.
-        <span style={{ fontSize: "0.8em" }}>{format(milliseconds, 1)}</span>
+        <span style={{ fontSize: "0.8em" }}>{format(milliseconds, 3)[0]}</span>
       </span>
     </div>
   );
