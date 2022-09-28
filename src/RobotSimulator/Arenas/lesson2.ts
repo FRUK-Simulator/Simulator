@@ -215,7 +215,7 @@ class Lesson2Challenge implements ChallengeListener {
           clearTimeout(this.timeoutId);
         }
       } else if (e.zoneId.startsWith("bad-")) {
-        this.actions?.displayMessage("Robot Looses!", MessageType.danger);
+        this.actions?.displayMessage("Robot Loses!", MessageType.danger);
         this.actions?.setChallengeStatus(ChallengeStatus.Failure);
         this.actions?.terminateChallenge();
       }
