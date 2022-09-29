@@ -31,6 +31,10 @@ export interface MaxBlockConfig {
   isHardLimit: boolean;
 }
 
+export interface RobotConfig {
+  disableDistanceSensor: boolean;
+}
+
 export interface ChallengeConfig {
   name: string;
   startPosition: CoreSimTypes.Vector2d;
@@ -39,6 +43,7 @@ export interface ChallengeConfig {
   descriptions?: ChallengeDescription;
   image?: any;
   maxBlocksConfig?: MaxBlockConfig;
+  robotConfig?: RobotConfig;
 }
 
 // interface to trigger actions and events in the current challenge.
