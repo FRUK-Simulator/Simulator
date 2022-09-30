@@ -49,8 +49,14 @@ class BlocklyInstance {
   }
 
   getCode() {
-    let starts = this.workspace.getBlocksByType("start_block", false);
+    JavaScript.init(this.workspace);
+    // any functions or variables defined wil be stored up until finish is called.
 
+    let starts = this.workspace.getBlocksByType("start_block", false);
+    let functions = [
+      ...this.workspace.getBlocksByType("procedures_defreturn", false),
+      ...this.workspace.getBlocksByType("procedures_defnoreturn", false),
+    ];
     if (!starts || starts.length === 0) {
       return "// No start block found, try putting blocks into a start block\n// ERROR: NO_START_BLOCK!";
     }
@@ -59,12 +65,24 @@ class BlocklyInstance {
       return "// Multiple start blocks found, try putting blocks into a single start block\n// ERROR: MULTIPLE_START_BLOCKS!";
     }
 
-    let start = starts[0];
+    let blocks = [starts[0], ...functions];
+
     JavaScript.init(this.workspace);
-    let code = JavaScript.blockToCode(start);
+
+    let code = "";
+
+    for (let block of blocks) {
+      // If these blocks are function definitions then they wont generate code here, but instead add a definition which will be emitted in finish.
+      let block_code = JavaScript.blockToCode(block);
+      console.log(block_code);
+      code += block_code + "\n";
+    }
     if (typeof code !== "string") {
       throw Error("Bad return type");
     }
+
+    // Call finish to adapt the curent code with any definitions we have pending.
+    code = JavaScript.finish(code);
 
     return code;
   }
