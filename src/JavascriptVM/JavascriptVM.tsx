@@ -383,7 +383,10 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
           const { robot, robotSpec } = new StdWorldBuilder(
             simulator,
-            challengeConfig.startPosition
+            challengeConfig.startPosition,
+            challengeConfig.robotConfig
+              ? challengeConfig.robotConfig.disableDistanceSensor
+              : false
           ).build();
 
           robotRef.current = new Proxy(robot!, robot_handler);

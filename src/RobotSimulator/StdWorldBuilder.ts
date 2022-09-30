@@ -8,10 +8,16 @@ import { DISTANCE_SENSOR_RANGE } from "../JavascriptVM/distanceSensorConstants";
 export class StdWorldBuilder {
   private sim3D: Sim3D;
   private startPosition: CoreSimTypes.Vector2d;
+  private disableDistanceSensor: boolean;
 
-  constructor(sim3D: Sim3D, startPosition: CoreSimTypes.Vector2d) {
+  constructor(
+    sim3D: Sim3D,
+    startPosition: CoreSimTypes.Vector2d,
+    disableDistanceSensor?: boolean
+  ) {
     this.sim3D = sim3D;
     this.startPosition = startPosition;
+    this.disableDistanceSensor = disableDistanceSensor ?? false;
   }
 
   build = (): {
@@ -25,11 +31,13 @@ export class StdWorldBuilder {
 
     {
       // Sensors
-      const distanceSensor = new RobotBuilder.DistanceSensorBuilder(0);
-      distanceSensor.setMountFace(RobotSpecs.SensorMountingFace.FRONT);
-      distanceSensor.setMaxRange(DISTANCE_SENSOR_RANGE);
+      if (!this.disableDistanceSensor) {
+        const distanceSensor = new RobotBuilder.DistanceSensorBuilder(0);
+        distanceSensor.setMountFace(RobotSpecs.SensorMountingFace.FRONT);
+        distanceSensor.setMaxRange(DISTANCE_SENSOR_RANGE);
 
-      robotBuilder.addBasicSensor(distanceSensor);
+        robotBuilder.addBasicSensor(distanceSensor);
+      }
 
       const colorSensor = new RobotBuilder.ColorSensorBuilder(1);
       colorSensor.setMountFace(RobotSpecs.SensorMountingFace.BOTTOM);

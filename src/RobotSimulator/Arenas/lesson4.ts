@@ -121,6 +121,7 @@ function challengeA(): ChallengeConfig {
   start again.
         `,
     },
+    robotConfig: { disableDistanceSensor: true },
   };
 
   return challengeConfig;
@@ -219,6 +220,7 @@ function challengeB(): ChallengeConfig {
   start again.
         `,
     },
+    robotConfig: { disableDistanceSensor: true },
   };
 
   return challengeConfig;
@@ -349,6 +351,7 @@ function challengeC(): ChallengeConfig {
   start again.
         `,
     },
+    robotConfig: { disableDistanceSensor: true },
   };
 
   return challengeConfig;
