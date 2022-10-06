@@ -39,6 +39,7 @@ import {
   challengeSlice,
   ChallengeStatus,
 } from "../RobotSimulator/Arenas/challengeSlice";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Interface to control the VM
@@ -301,12 +302,24 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
               sim.current?.setPhysicsActive(false);
 
+              const msgId = uuidv4();
+              const timeoutMs = 5 * 1000; // 5 seconds
+
               dispatch(
                 messageSlice.actions.addMessage({
                   type: MessageType.success,
                   msg: "Program finished!",
+                  id: msgId,
                 })
               );
+
+              setTimeout(() => {
+                dispatch(
+                  messageSlice.actions.removeMessage({
+                    id: msgId,
+                  })
+                );
+              }, timeoutMs);
             },
 
             onIsSensorTouchPushed: (channel: number): boolean => {
