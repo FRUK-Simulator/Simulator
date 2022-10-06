@@ -172,7 +172,7 @@ function challengeC(): ChallengeConfig {
     startPosition: { x: -2, y: 2 },
     arenaConfig: arena(),
     maxBlocksConfig: {
-      maxBlocks: 6,
+      maxBlocks: 40,
       isHardLimit: false,
     },
     eventListener: new Lesson1Challenge({ x: 2, y: 2 }, badZones),
