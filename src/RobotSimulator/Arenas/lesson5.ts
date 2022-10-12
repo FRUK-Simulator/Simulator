@@ -15,7 +15,14 @@ import {
 import { Vector2d } from "@fruk/simulator-core/dist/engine/SimTypes";
 
 export const arenas = [arenaChallengeA];
-export const challenges = [challengeA, challengeB];
+export const challenges = [challengeA, challengeB, challengeC];
+
+enum BoxId {
+  NW = "box-nw",
+  NE = "box-ne",
+  SE = "box-se",
+  SW = "box-sw",
+}
 
 function defaultWorldConfig(): WorldConfig {
   const worldConfig = {
@@ -237,10 +244,10 @@ function arenaChallengeA(): ArenaConfig {
       },
     ],
     boxSpecs: [
-      getBox("box-nw", { x: -2.5, y: -2.5 }),
-      getBox("box-se", { x: 2.5, y: 2.5 }),
-      getBox("box-ne", { x: 2.5, y: -2.5 }),
-      getBox("box-sw", { x: -2.5, y: 2.5 }),
+      getBox(BoxId.NW, { x: -2.5, y: -2.5 }),
+      getBox(BoxId.SE, { x: 2.5, y: 2.5 }),
+      getBox(BoxId.NE, { x: 2.5, y: -2.5 }),
+      getBox(BoxId.SW, { x: -2.5, y: 2.5 }),
     ],
   };
 
@@ -251,7 +258,59 @@ function arenaChallengeA(): ArenaConfig {
 function arenaChallengeB(): ArenaConfig {
   const arenaConfigA: ArenaConfig = {
     name: "Lesson 5 - Against the Clock level is timed",
-    worldConfig: defaultWorldConfig(),
+    worldConfig: {
+      ...defaultWorldConfig(),
+      walls: [
+        {
+          type: "wall",
+          start: { x: -2, y: -1 },
+          end: { x: 2, y: -1 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.1,
+        },
+        {
+          type: "wall",
+          start: { x: -2, y: 1 },
+          end: { x: 2, y: 1 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.1,
+        },
+        {
+          type: "wall",
+          start: { x: -1, y: -1 },
+          end: { x: -1, y: -3 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.1,
+        },
+        {
+          type: "wall",
+          start: { x: 1, y: -1 },
+          end: { x: 1, y: -3 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.1,
+        },
+        {
+          type: "wall",
+          start: { x: -1, y: 1 },
+          end: { x: -1, y: 3 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.1,
+        },
+        {
+          type: "wall",
+          start: { x: 1, y: 1 },
+          end: { x: 1, y: 3 },
+          baseColor: 0x000000,
+          height: 0.5,
+          thickness: 0.1,
+        },
+      ],
+    },
     zoneSpecs: [
       ...defaultHomeZone(),
       {
@@ -368,10 +427,253 @@ function arenaChallengeB(): ArenaConfig {
       },
     ],
     boxSpecs: [
-      getBox("box-nw", { x: -1.5, y: -1.5 }),
-      getBox("box-se", { x: 1.5, y: 1.5 }),
-      getBox("box-ne", { x: 1.5, y: -1.5 }),
-      getBox("box-sw", { x: -1.5, y: 1.5 }),
+      getBox(BoxId.NW, { x: -1.5, y: -1.5 }),
+      getBox(BoxId.SE, { x: 1.5, y: 1.5 }),
+      getBox(BoxId.NE, { x: 1.5, y: -1.5 }),
+      getBox(BoxId.SW, { x: -1.5, y: 1.5 }),
+    ],
+  };
+
+  const arenaConfig: ArenaConfig = arenaConfigA;
+  return arenaConfig;
+}
+
+function arenaChallengeC(): ArenaConfig {
+  const arenaConfigA: ArenaConfig = {
+    name: "Lesson 5 - Against the Clock level is timed",
+    worldConfig: defaultWorldConfig(),
+    zoneSpecs: [
+      ...defaultHomeZone(),
+      {
+        type: "zone",
+        zoneId: "block-nw",
+        baseColor: 0xff0000,
+        initialPosition: {
+          x: -2.5,
+          y: -2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          zLength: 1,
+          xLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "block-se",
+        baseColor: 0xff0000,
+        initialPosition: {
+          x: 2.5,
+          y: 2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          zLength: 1,
+          xLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "block-sw",
+        baseColor: 0xff0000,
+        initialPosition: {
+          x: -2.5,
+          y: 2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          zLength: 1,
+          xLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "block-ne",
+        baseColor: 0xff0000,
+        initialPosition: {
+          x: 2.5,
+          y: -2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          zLength: 1,
+          xLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "slant-n",
+        baseColor: 0x0066cc,
+        initialPosition: {
+          x: 0,
+          y: -1.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 4,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "slant-s",
+        baseColor: 0x0066cc,
+        initialPosition: {
+          x: 0,
+          y: 1.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 4,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "slant-w",
+        baseColor: 0x0066cc,
+        initialPosition: {
+          x: -1.5,
+          y: 0,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 2,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "slant-e",
+        baseColor: 0x0066cc,
+        initialPosition: {
+          x: 1.5,
+          y: 0,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 2,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-nw1",
+        baseColor: 0xcccc00,
+        initialPosition: {
+          x: -1.5,
+          y: -2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-nw2",
+        baseColor: 0x6600cc,
+        initialPosition: {
+          x: -2.5,
+          y: -1.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-sw1",
+        baseColor: 0xcccc00,
+        initialPosition: {
+          x: -2.5,
+          y: 1.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-sw2",
+        baseColor: 0x6600cc,
+        initialPosition: {
+          x: -1.5,
+          y: 2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-ne1",
+        baseColor: 0xcccc00,
+        initialPosition: {
+          x: 2.5,
+          y: -1.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-ne2",
+        baseColor: 0x6600cc,
+        initialPosition: {
+          x: 1.5,
+          y: -2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-se1",
+        baseColor: 0xcccc00,
+        initialPosition: {
+          x: 1.5,
+          y: 2.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+      {
+        type: "zone",
+        zoneId: "path-se2",
+        baseColor: 0x6600cc,
+        initialPosition: {
+          x: 2.5,
+          y: 1.5,
+        },
+        zoneShape: {
+          type: "rectangle",
+          xLength: 1,
+          zLength: 1,
+        },
+      },
+    ],
+    boxSpecs: [
+      getBox(BoxId.NW, { x: -2.5, y: -2.5 }),
+      getBox(BoxId.SE, { x: 2.5, y: 2.5 }),
+      getBox(BoxId.NE, { x: 2.5, y: -2.5 }),
+      getBox(BoxId.SW, { x: -2.5, y: 2.5 }),
     ],
   };
 
@@ -385,10 +687,10 @@ function challengeA(): ChallengeConfig {
     startPosition: { x: 0, y: 0 },
     arenaConfig: arenaChallengeA(),
     eventListener: new Lesson5Challenge([
-      "box-nw",
-      "box-ne",
-      "box-sw",
-      "box-se",
+      BoxId.NW,
+      BoxId.NE,
+      BoxId.SW,
+      BoxId.SE,
     ]),
     descriptions: {
       short: "Block Race",
@@ -411,13 +713,41 @@ function challengeB(): ChallengeConfig {
     startPosition: { x: 0, y: 0 },
     arenaConfig: arenaChallengeB(),
     eventListener: new Lesson5Challenge([
-      "box-nw",
-      "box-ne",
-      "box-sw",
-      "box-se",
+      BoxId.NW,
+      BoxId.NE,
+      BoxId.SW,
+      BoxId.SE,
     ]),
     descriptions: {
       short: "Barrier Blocks",
+      markdown: `
+# Lesson 5 - Challenge B
+
+Use your skills to collect the blocks as fast as possible and place in green centre.
+
+This level has coloured squares so the colour sensor can be used and barriers (thick black lines)
+
+so distance sensor can be used.
+      `,
+    },
+  };
+
+  return challengeConfig;
+}
+
+function challengeC(): ChallengeConfig {
+  const challengeConfig: ChallengeConfig = {
+    name: "Lesson 5 - Challenge C",
+    startPosition: { x: 0, y: 0 },
+    arenaConfig: arenaChallengeC(),
+    eventListener: new Lesson5Challenge([
+      BoxId.NW,
+      BoxId.NE,
+      BoxId.SW,
+      BoxId.SE,
+    ]),
+    descriptions: {
+      short: "Slam Dunk",
       markdown: `
 # Lesson 5 - Challenge B
 
