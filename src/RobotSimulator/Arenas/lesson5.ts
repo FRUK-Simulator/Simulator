@@ -749,7 +749,7 @@ function challengeC(): ChallengeConfig {
     descriptions: {
       short: "Slam Dunk",
       markdown: `
-# Lesson 5 - Challenge B
+# Lesson 5 - Challenge C
 
 Use your skills to collect the blocks as fast as possible and place in green centre.
 
@@ -782,8 +782,13 @@ class Lesson5Challenge implements ChallengeListener {
   onEvent(e: ChallengeEvent) {
     if (e.kind === "ZoneEvent" && e.id?.startsWith("box")) {
       if (e.entry && e.zoneId.startsWith("home")) {
-        this.actions?.displayMessage("Moved one box", MessageType.danger);
-        this.targets.delete(e.id);
+        if (this.targets.has(e.id)) {
+          this.targets.delete(e.id);
+          this.actions?.displayMessage(
+            `Moved one box, ${this.targets.size} to go`,
+            MessageType.info
+          );
+        }
 
         if (this.targets.size === 0) {
           this.actions?.setChallengeStatus(ChallengeStatus.Success);
