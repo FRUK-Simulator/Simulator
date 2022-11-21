@@ -101,26 +101,6 @@ export const VMProvider: FunctionComponent = ({ children }) => {
 
   const store = useStore();
 
-  // handler for robot handlers, all calls to setMotorPower will update state in redux
-  const robot_handler: ProxyHandler<Handles.RobotHandle> = {
-    get: function (target, property, receiver) {
-      if (property === "setMotorPower") {
-        const originalImpl = target[property];
-        return function (channel: number, power: number) {
-          dispatch(
-            robotSimulatorSlice.actions.setPower({
-              channel: channel,
-              power: power,
-            })
-          );
-          return originalImpl.apply(target, [channel, power]);
-        };
-      }
-
-      return Reflect.get(target, property, receiver);
-    },
-  };
-
   /**
    * Syncs the redux state with the interpreter state.
    */
@@ -402,7 +382,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               : false
           ).build();
 
-          robotRef.current = new Proxy(robot!, robot_handler);
+          robotRef.current = robot!;
 
           arena.ballSpecs?.forEach(function (ballSpec) {
             simulator.addBall(ballSpec);
@@ -478,7 +458,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           );
 
           sim.current.beginRendering();
-          robotRef.current = new Proxy(robot!, robot_handler);
+          robotRef.current = robot!;
           sim.current?.addListener(
             "simulation-event",
             (event: CoreSpecs.ISimulatorEvent) => {

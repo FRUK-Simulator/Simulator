@@ -17,6 +17,7 @@ export interface Sensors {
   contactSensors: Sensor[];
   gyroscopeSensors: Sensor[];
   colorSensors: Sensor[];
+  motors: Sensor[];
 }
 
 interface IRobotSimulatorState {
@@ -37,6 +38,7 @@ export const robotSimulatorSlice = createSlice({
       contactSensors: [],
       gyroscopeSensors: [],
       colorSensors: [],
+      motors: [],
     },
   } as IRobotSimulatorState,
   name: "simulator",
@@ -73,11 +75,22 @@ export function specToSensors(spec: IRobotSpec): Sensors {
     };
   };
 
+  const motors: Sensor[] = [];
+  spec.drivetrain.motorGroups.forEach((motorGroup) => {
+    motorGroup.motors.forEach((motor) => {
+      motors.push({
+        channel: motor.channel,
+        mountFaceName: motorGroup.wheelGroup,
+      });
+    });
+  });
+
   return {
     distanceSensors: spec.basicSensors?.filter(isDist).map(convertToObj) || [],
     contactSensors:
       spec.basicSensors?.filter(isContact).map(convertToObj) || [],
     gyroscopeSensors: spec.basicSensors?.filter(isGyro).map(convertToObj) || [],
     colorSensors: spec.complexSensors?.filter(isColor).map(convertToObj) || [],
+    motors,
   };
 }
