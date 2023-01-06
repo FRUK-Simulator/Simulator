@@ -285,6 +285,11 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               dispatch(blocklySlice.actions.highlightBlock({ blockId: id }));
             },
 
+            onLoopTrap: (id) => {
+              console.log("stepping world");
+              sim?.current?.step(10);
+            },
+
             onSetMotorPower: (channel: number, power: number) => {
               robotRef.current?.setMotorPower(channel, power);
             },
@@ -339,7 +344,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             },
 
             onUnPause: () => {
-              sim.current?.setPhysicsActive(true);
+              // sim.current?.setPhysicsActive(true);
+              sim.current?.setPhysicsActive(false);
             },
 
             getSensorValue: (channel: number): number => {

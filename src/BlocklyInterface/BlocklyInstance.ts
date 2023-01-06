@@ -41,6 +41,8 @@ class BlocklyInstance {
     JavaScript.INDENT = "  ";
     JavaScript.STATEMENT_PREFIX = `${BLOCKLY_HIGHLIGHT_PREFIX}(%1);\n`;
     JavaScript.addReservedWords(BLOCKLY_HIGHLIGHT_PREFIX);
+    JavaScript.INFINITE_LOOP_TRAP = "loopTrap(%1);\n";
+    JavaScript.addReservedWords("loopTrap");
   }
 
   resizeBlockly() {
@@ -88,8 +90,12 @@ class BlocklyInstance {
   }
 
   highlightBlock(id: string) {
+    // const block = this.workspace.getBlockById(id);
+    // console.log(block);
     return this.workspace.highlightBlock(id);
   }
+
+  endOfLoop(id: string) {}
 
   setMaxBlocks(maxBlocks: number) {
     this.workspace.options.maxBlocks = maxBlocks;

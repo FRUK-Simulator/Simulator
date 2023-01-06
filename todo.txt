@@ -1,0 +1,5 @@
+Rename src\BlocklyInterface\robotblocks\general\Start.ts -> StartBlock.ts
+
+BlocklyInstance.getCode - duplicate call to JavaScript.init
+
+The code speed UI is not start in sync with the value behind

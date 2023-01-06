@@ -25,6 +25,11 @@ const executionSpeedOptions = [
     label: "Rabbit",
     value: ExecutionSpeed.FAST,
   },
+  {
+    key: "superfast",
+    label: "Chita",
+    value: ExecutionSpeed.SUPERFAST,
+  },
 ];
 
 const cameraViewOptions = [

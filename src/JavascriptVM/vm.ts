@@ -9,6 +9,8 @@ export type BlocklyInterpreterCallbacks = {
    */
   onHighlight?: (id: string) => void;
 
+  onLoopTrap?: (id: string) => void;
+
   /**
    * Sets the output power
    */
@@ -71,7 +73,8 @@ export enum ExecutionState {
 
 export enum ExecutionSpeed {
   SLOW = 2,
-  FAST = 100,
+  FAST = 10,
+  SUPERFAST = 60,
 }
 
 export enum CameraView {
@@ -114,6 +117,10 @@ export class BlocklyInterpreter {
         if (this.highlightBlocks) {
           callbacks.onHighlight && callbacks.onHighlight(id);
         }
+      });
+
+      const loopTrap = interpreter.createNativeFunction((id: string) => {
+        callbacks.onLoopTrap && callbacks.onLoopTrap(id);
       });
 
       const alert = interpreter.createNativeFunction((text: string) => {
@@ -216,6 +223,7 @@ export class BlocklyInterpreter {
 
       interpreter.setProperty(globals, "alert", alert);
       interpreter.setProperty(globals, "highlightBlock", highlightBlock);
+      interpreter.setProperty(globals, "loopTrap", loopTrap);
       interpreter.setProperty(globals, "setMotorPower", setMotorPower);
       interpreter.setProperty(globals, "setDigitalOutput", setDigitalOutput);
       interpreter.setProperty(globals, "getDigitalInput", getDigitalInput);
@@ -275,7 +283,7 @@ export class BlocklyInterpreter {
     this.stepsPerExecution = speed / executionFrequency;
     this.executionInterval = executionInterval;
 
-    this.highlightBlocks = speed === ExecutionSpeed.SLOW;
+    this.highlightBlocks = true; //speed === ExecutionSpeed.SLOW;
   }
 
   /**
@@ -352,6 +360,7 @@ export class BlocklyInterpreter {
         return this._run(steps);
       }
 
+      const startDt = +new Date();
       // Add however many (maybe fractional) steps we are instructed to complete
       steps += this.stepsPerExecution;
 
@@ -361,6 +370,9 @@ export class BlocklyInterpreter {
 
       // Figure out how many (fractional) steps we didn't complete
       let remainder = steps % 1;
+
+      const dtDif = +new Date() - startDt;
+      console.log(`vm._run took ${dtDif}`);
 
       // schedule the next run
       return this._run(remainder);
