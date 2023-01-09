@@ -78,13 +78,13 @@ export class StdWorldBuilder {
 
     {
       // Motors
-      const motor = new RobotBuilder.MotorBuilder();
-      motor.setMaxForce(0.25);
+      const motorBuilder = new RobotBuilder.MotorBuilder();
+      motorBuilder.setMaxForce(0.25);
 
-      const leftMotors = motor.copy();
+      const leftMotors = motorBuilder.copy();
       leftMotors.setChannel(0);
 
-      const rightMotors = motor.copy();
+      const rightMotors = motorBuilder.copy();
       rightMotors.setChannel(1);
 
       robotBuilder.addMotor("left-drive", leftMotors);
