@@ -339,7 +339,9 @@ export class BlocklyInterpreter {
    * Continually steps the program at a cadence until there is nothing left to run or until the user stops the VM.
    */
   private _run(steps: number) {
+    console.log(`vm._run(${steps})`);
     let timeout = this.executionInterval;
+    const startDt = +new Date();
 
     // Incorperate any pending delay `nextStepDelay` into the timeout
     if (this.nextStepDelay > this.executionInterval) {
@@ -349,7 +351,9 @@ export class BlocklyInterpreter {
     // Clear the remaining delay for the next execution
     this.nextStepDelay = 0;
 
+    // console.log(`setTimeout _run ${timeout}ms`)
     setTimeout(() => {
+      console.log(`_run inside setTimeout ${new Date().toISOString()}`);
       // do not schedule any more work if stopped
       if (this.executionState === ExecutionState.STOPPED) {
         return;
@@ -360,7 +364,6 @@ export class BlocklyInterpreter {
         return this._run(steps);
       }
 
-      const startDt = +new Date();
       // Add however many (maybe fractional) steps we are instructed to complete
       steps += this.stepsPerExecution;
 
