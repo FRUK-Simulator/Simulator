@@ -66,7 +66,7 @@ export function addMotorCombinedBlock() {
         const valuePower = JavaScript.valueToCode(
           block,
           prefix + "power",
-          JavaScript.ORDER_ATOMIC
+          JavaScript.ORDER_ATOMIC,
         );
 
         // convert direction to power sign +/-
@@ -76,6 +76,6 @@ export function addMotorCombinedBlock() {
       };
 
       return mot("a_") + "\n" + mot("b_") + "\n";
-    }
+    },
   );
 }

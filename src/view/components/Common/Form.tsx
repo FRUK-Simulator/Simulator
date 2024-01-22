@@ -63,7 +63,7 @@ export function SelectField<T>({
         value={selectedOption?.key}
         onChange={(evt) => {
           const selectedOption = options.find(
-            (o) => o.key === evt.target.value
+            (o) => o.key === evt.target.value,
           );
           onChange(selectedOption);
         }}

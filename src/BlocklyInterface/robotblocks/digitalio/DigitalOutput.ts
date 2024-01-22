@@ -31,6 +31,6 @@ export function addDigitalOutputBlocks() {
       const channelNumber = block.getFieldValue("channel");
 
       return [`getDigitalInput(${channelNumber})`, JavaScript.ORDER_ATOMIC];
-    }
+    },
   );
 }

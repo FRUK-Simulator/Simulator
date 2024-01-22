@@ -55,7 +55,7 @@ const Dialog: FunctionComponent<{
   /** Closes the dialog and sets it back to the default state */
   const closeDialog = useCallback(
     () => setDialogContext(defaultDialogContext),
-    [setDialogContext]
+    [setDialogContext],
   );
 
   /**
@@ -159,14 +159,13 @@ const Dialog: FunctionComponent<{
         </div>
       </div>
     </div>,
-    element
+    element,
   );
 };
 
 export const DialogProvider: FunctionComponent = ({ children }) => {
-  const [dialogContext, setDialogContext] = useState<IDialogContext>(
-    defaultDialogContext
-  );
+  const [dialogContext, setDialogContext] =
+    useState<IDialogContext>(defaultDialogContext);
 
   return (
     <DialogContext.Provider value={{ dialogContext, setDialogContext }}>

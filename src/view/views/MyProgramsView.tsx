@@ -32,7 +32,9 @@ export const MyProgramsView = () => {
   const setProgramCallback = useCallback(
     (program: Program) => {
       dispatch(
-        blocklySlice.actions.setActiveBlocklyProgramId({ title: program.title })
+        blocklySlice.actions.setActiveBlocklyProgramId({
+          title: program.title,
+        }),
       );
 
       // We need to load the blockly XML that is associated with the
@@ -42,7 +44,7 @@ export const MyProgramsView = () => {
           dispatch(
             blocklySlice.actions.setBlocklyXmlWorkspace({
               blocklyXmlWorkspace: entry.xml,
-            })
+            }),
           );
           break;
         }
@@ -50,7 +52,7 @@ export const MyProgramsView = () => {
 
       history.replace("?view=code");
     },
-    [dispatch, history, programs]
+    [dispatch, history, programs],
   );
 
   const newProgramCallback = useProgramDialog("create");
@@ -64,7 +66,7 @@ export const MyProgramsView = () => {
         messageSlice.actions.addMessage({
           type: MessageType.danger,
           msg: err.message,
-        })
+        }),
       );
     }
   }, [dispatch]);

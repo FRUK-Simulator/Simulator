@@ -30,6 +30,6 @@ export function addColorEnumBlock() {
       const code = `colorSensorConversion("${colorString}")`;
 
       return [code, JavaScript.ORDER_ATOMIC];
-    }
+    },
   );
 }

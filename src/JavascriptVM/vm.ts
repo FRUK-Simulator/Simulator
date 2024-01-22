@@ -95,7 +95,7 @@ export class BlocklyInterpreter {
   constructor(
     code: string,
     speed: ExecutionSpeed,
-    callbacks: BlocklyInterpreterCallbacks
+    callbacks: BlocklyInterpreterCallbacks,
   ) {
     this.executionState = ExecutionState.PAUSED;
     this.callbacks = callbacks;
@@ -126,7 +126,7 @@ export class BlocklyInterpreter {
             // normalize power from percentage to range -1 to 1
             callbacks.onSetMotorPower(port, power / 100);
           }
-        }
+        },
       );
 
       const setDigitalOutput = interpreter.createNativeFunction(
@@ -134,7 +134,7 @@ export class BlocklyInterpreter {
           if (callbacks.onSetDigitalOutput) {
             callbacks.onSetDigitalOutput(channel, value);
           }
-        }
+        },
       );
 
       const getDigitalInput = interpreter.createNativeFunction(
@@ -144,7 +144,7 @@ export class BlocklyInterpreter {
           }
 
           return false;
-        }
+        },
       );
 
       const isSensorTouchPushed = interpreter.createNativeFunction(
@@ -152,7 +152,7 @@ export class BlocklyInterpreter {
           if (callbacks.onIsSensorTouchPushed) {
             return callbacks.onIsSensorTouchPushed(port);
           }
-        }
+        },
       );
 
       const getSensorValue = interpreter.createNativeFunction(
@@ -161,24 +161,24 @@ export class BlocklyInterpreter {
             return callbacks.getSensorValue(port);
           }
           return 0.0;
-        }
+        },
       );
 
       const getComplexSensorValue = interpreter.createNativeFunction(
         (port: number, type: string): any => {
           if (callbacks.getComplexSensorValue) {
             return interpreter.nativeToPseudo(
-              callbacks.getComplexSensorValue(port, type)
+              callbacks.getComplexSensorValue(port, type),
             );
           }
           return {};
-        }
+        },
       );
 
       const waitWrapper = interpreter.createNativeFunction(
         (milliseconds: number) => {
           this.nextStepDelay = milliseconds;
-        }
+        },
       );
 
       const checkGamepadKeyPress = interpreter.createNativeFunction(
@@ -186,7 +186,7 @@ export class BlocklyInterpreter {
           if (callbacks.onControllerKeyCheck) {
             return callbacks.onControllerKeyCheck(key);
           }
-        }
+        },
       );
 
       const sensorConversionFactor = interpreter.createNativeFunction(
@@ -198,7 +198,7 @@ export class BlocklyInterpreter {
           }
 
           return DISTANCE_SENSOR_RANGE;
-        }
+        },
       );
 
       const colorSensorConversion = interpreter.createNativeFunction(
@@ -211,7 +211,7 @@ export class BlocklyInterpreter {
             return ArenaColourConstants.GREEN;
           }
           return 0;
-        }
+        },
       );
 
       interpreter.setProperty(globals, "alert", alert);
@@ -222,29 +222,29 @@ export class BlocklyInterpreter {
       interpreter.setProperty(
         globals,
         "isSensorTouchPushed",
-        isSensorTouchPushed
+        isSensorTouchPushed,
       );
       interpreter.setProperty(globals, "getSensorValue", getSensorValue);
       interpreter.setProperty(
         globals,
         "getComplexSensorValue",
-        getComplexSensorValue
+        getComplexSensorValue,
       );
       interpreter.setProperty(globals, "wait", waitWrapper);
       interpreter.setProperty(
         globals,
         "checkGamepadKeyPress",
-        checkGamepadKeyPress
+        checkGamepadKeyPress,
       );
       interpreter.setProperty(
         globals,
         "sensorConversionFactor",
-        sensorConversionFactor
+        sensorConversionFactor,
       );
       interpreter.setProperty(
         globals,
         "colorSensorConversion",
-        colorSensorConversion
+        colorSensorConversion,
       );
     });
 
@@ -266,7 +266,7 @@ export class BlocklyInterpreter {
     // Calling 'setTimeout' more than say '10' times per second is ill advisable, so we need to adjust the frequency
     const executionInterval = Math.max(
       MIN_EXECUTION_INTERVAL,
-      1000 * (1 / speed)
+      1000 * (1 / speed),
     ); // milliseconds between execution
     const executionFrequency = 1000 / executionInterval;
 

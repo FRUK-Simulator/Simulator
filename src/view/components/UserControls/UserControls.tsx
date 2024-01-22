@@ -30,7 +30,7 @@ export const UserControls: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const onGoogleSignInSuccess = (
-    loginResponse: GoogleLoginResponse | GoogleLoginResponseOffline
+    loginResponse: GoogleLoginResponse | GoogleLoginResponseOffline,
   ) => {
     if (loginResponse.hasOwnProperty("code")) {
       // TODO handle refreshing of auth tokens:
@@ -38,7 +38,7 @@ export const UserControls: FunctionComponent = () => {
       // an authorization code for fetching a refresh token"
       console.error(
         "User was logged in but an 'offine' response was received." +
-          "Not currently supported."
+          "Not currently supported.",
       );
       return;
     }
@@ -48,14 +48,14 @@ export const UserControls: FunctionComponent = () => {
     console.log("User logged in: ", onlineResponse.getBasicProfile().getName());
 
     dispatch(
-      userSlice.actions.setGoogleUser({ loginResponse: onlineResponse })
+      userSlice.actions.setGoogleUser({ loginResponse: onlineResponse }),
     );
   };
 
   const onGoogleSignInFailure = (response: any) => {
     console.error(
       "Failure occurred whilst user was signing in with Google: ",
-      response
+      response,
     );
   };
 

@@ -10,19 +10,17 @@ import { store } from "./state/store";
 import { createMemoryHistory, History } from "history";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
 
-const AppProviders = (history: History) => ({
-  children,
-}: {
-  children: any;
-}) => {
-  return (
-    <Provider store={store}>
-      <VMProvider>
-        <Router history={history}>{children}</Router>
-      </VMProvider>
-    </Provider>
-  );
-};
+const AppProviders =
+  (history: History) =>
+  ({ children }: { children: any }) => {
+    return (
+      <Provider store={store}>
+        <VMProvider>
+          <Router history={history}>{children}</Router>
+        </VMProvider>
+      </Provider>
+    );
+  };
 
 const customRender = (ui: any, options: any = {}) => {
   const history = createMemoryHistory();

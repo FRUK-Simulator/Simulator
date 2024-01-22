@@ -21,7 +21,7 @@ export const ToggleButtonBar: FunctionComponent<{
           <PrimaryButton text={label} key={label} />
         ) : (
           <ActionButton text={label} onClick={onClick} key={label} />
-        )
+        ),
       )}
     </div>
   );

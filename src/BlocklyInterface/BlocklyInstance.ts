@@ -101,7 +101,7 @@ class BlocklyInstance {
 
   addChangeListener(
     eventName: BlocklyEventName,
-    fn: (event: BlocklyEvent) => void
+    fn: (event: BlocklyEvent) => void,
   ) {
     this.workspace.addChangeListener((event: BlocklyEvent) => {
       if (event instanceof Events[eventName]) {

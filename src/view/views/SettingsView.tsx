@@ -74,7 +74,7 @@ const ExecutionSpeedSelect = () => {
       label="Code Speed"
       options={executionSpeedOptions}
       selectedOption={executionSpeedOptions.find(
-        (s) => s.value === executionSpeed
+        (s) => s.value === executionSpeed,
       )}
       onChange={(opt) => {
         if (!opt) {

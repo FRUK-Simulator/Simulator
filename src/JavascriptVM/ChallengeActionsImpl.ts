@@ -12,7 +12,7 @@ export class ChallengeActionsImpl implements ChallengeActions {
     private sim: Sim3D,
     private dispatch: (a: any) => void,
     private challengeId: string,
-    private terminateCallback: () => void
+    private terminateCallback: () => void,
   ) {}
 
   addObject(
@@ -20,7 +20,7 @@ export class ChallengeActionsImpl implements ChallengeActions {
       | CoreSpecs.IBallSpec
       | CoreSpecs.IBoxSpec
       | CoreSpecs.IConeSpec
-      | CoreSpecs.IZoneSpec
+      | CoreSpecs.IZoneSpec,
   ): void {
     switch (o.type) {
       case "ball":
@@ -43,14 +43,14 @@ export class ChallengeActionsImpl implements ChallengeActions {
       messageSlice.actions.addMessage({
         type,
         msg: message,
-      })
+      }),
     );
   }
 
   displayFadingMessage(
     message: string,
     type: MessageType,
-    timeout?: number
+    timeout?: number,
   ): void {
     const msgId = uuidv4();
     if (!timeout) {
@@ -62,14 +62,14 @@ export class ChallengeActionsImpl implements ChallengeActions {
         type,
         msg: message,
         id: msgId,
-      })
+      }),
     );
 
     setTimeout(() => {
       this.dispatch(
         messageSlice.actions.removeMessage({
           id: msgId,
-        })
+        }),
       );
     }, timeout);
   }
@@ -83,7 +83,7 @@ export class ChallengeActionsImpl implements ChallengeActions {
       challengeSlice.actions.setChallengeStatus({
         status: status,
         id: this.challengeId,
-      })
+      }),
     );
   }
   terminateChallenge(): void {

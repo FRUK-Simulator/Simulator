@@ -22,6 +22,6 @@ export function addStartBlock() {
       const code = JavaScript.statementToCode(block, "CODE");
 
       return `function start() { \n${code}\n}\n`;
-    }
+    },
   );
 }

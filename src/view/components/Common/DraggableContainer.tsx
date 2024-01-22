@@ -15,11 +15,11 @@ function withinWindow(coordinates: Coordinates, boundingRect: DOMRect) {
   return {
     x: Math.max(
       Math.min(coordinates.x, window.innerWidth - boundingRect.width),
-      0
+      0,
     ),
     y: Math.max(
       Math.min(coordinates.y, window.innerHeight - boundingRect.height),
-      80
+      80,
     ),
   };
 }
@@ -73,7 +73,7 @@ export const DraggableContainer: FunctionComponent<{
     const y = e.clientY - startPos.y;
     const newCoordinates = withinWindow(
       { x, y },
-      elementRef.current.getBoundingClientRect()
+      elementRef.current.getBoundingClientRect(),
     );
 
     elementRef.current.style.left = `${newCoordinates.x}px`;
@@ -91,7 +91,7 @@ export const DraggableContainer: FunctionComponent<{
           x: window.innerWidth / 2 - elementRect.width / 2,
           y: window.innerHeight / 2 - elementRect.height / 2,
         },
-        elementRect
+        elementRect,
       );
 
       e.style.left = `${startingCoordinates.x}px`;

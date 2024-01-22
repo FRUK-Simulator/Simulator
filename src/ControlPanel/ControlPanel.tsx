@@ -86,7 +86,7 @@ const LogView = () => {
  */
 export const ControlPanel: FunctionComponent = () => {
   const [controlPanelView, setControlPanelView] = useState<ControlPanelView>(
-    ControlPanelView.robot
+    ControlPanelView.robot,
   );
 
   const changeView = (view: ControlPanelView) => () =>
@@ -105,8 +105,8 @@ export const ControlPanel: FunctionComponent = () => {
           controlPanelView === ControlPanelView.robot
             ? 0
             : controlPanelView === ControlPanelView.controller
-            ? 1
-            : 2
+              ? 1
+              : 2
         }
         buttons={[
           { label: "Robot", onClick: changeView(ControlPanelView.robot) },

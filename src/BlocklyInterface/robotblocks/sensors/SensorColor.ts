@@ -32,6 +32,6 @@ export function addColorSensorBlock() {
       const code = `getComplexSensorValue(${numberChannel}, "ColorSensor").color`;
 
       return [code, JavaScript.ORDER_ATOMIC];
-    }
+    },
   );
 }

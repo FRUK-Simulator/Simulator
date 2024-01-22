@@ -62,7 +62,7 @@ export const SimulatorView = () => {
       const challangeConfig = getChallengeFromURL(lesson, challenge);
       vm.setChallenge(challangeConfig);
     },
-    [lesson, challenge, vm]
+    [lesson, challenge, vm],
   );
 
   // Use layout effect ensures the vm is stopped before leaving

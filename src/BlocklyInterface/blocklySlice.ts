@@ -59,7 +59,7 @@ export const blocklySlice = createSlice({
     },
     setBlocklyXmlWorkspace(
       state,
-      action: PayloadAction<{ blocklyXmlWorkspace: string }>
+      action: PayloadAction<{ blocklyXmlWorkspace: string }>,
     ) {
       state.blocklyXmlWorkspace = action.payload.blocklyXmlWorkspace;
     },
@@ -96,7 +96,7 @@ export const blocklySlice = createSlice({
     },
     setMaxBlocksConfig(
       state,
-      action: PayloadAction<{ maxBlocksConfig?: MaxBlocksConfig }>
+      action: PayloadAction<{ maxBlocksConfig?: MaxBlocksConfig }>,
     ) {
       state.maxBlocksConfig = action.payload.maxBlocksConfig;
       return state;

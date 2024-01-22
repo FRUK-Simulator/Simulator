@@ -82,7 +82,7 @@ export const EditorControls = () => {
     dispatch(
       editorSlice.actions.setActiveEditor({
         editor: currentView === "Blockly" ? "Source" : "Blockly",
-      })
+      }),
     );
   }, [currentView, dispatch]);
 

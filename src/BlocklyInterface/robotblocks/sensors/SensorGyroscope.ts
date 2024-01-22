@@ -32,6 +32,6 @@ export function addGyroBlock() {
       const code = `getSensorValue(${numberChannel})`;
 
       return [code, JavaScript.ORDER_ATOMIC];
-    }
+    },
   );
 }

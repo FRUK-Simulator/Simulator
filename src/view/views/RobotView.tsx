@@ -36,7 +36,7 @@ export const RobotView = () => {
   const getColorHex = () => {
     const colorSensorValue = robotHandle.getComplexSensorValue(
       1,
-      "ColorSensor"
+      "ColorSensor",
     );
     return "color" in colorSensorValue
       ? `#${colorSensorValue.color.toString(16).padStart(6, "0")}`

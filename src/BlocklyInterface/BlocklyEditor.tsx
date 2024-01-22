@@ -83,7 +83,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
       dispatch(
         blocklySlice.actions.setBlocklyXmlWorkspace({
           blocklyXmlWorkspace: getCurrentBlocklyInstanceCode(),
-        })
+        }),
       );
       dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
     }
@@ -98,7 +98,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
           dispatch(
             blocklySlice.actions.selectedBlock({
               blockId: blocklyRef.current.selected || "",
-            })
+            }),
           );
         }
       }
@@ -115,26 +115,26 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockMove,
-        handleBlocklyChange
+        handleBlocklyChange,
       );
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockChange,
-        handleBlocklyChange
+        handleBlocklyChange,
       );
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockCreate,
-        handleBlocklyChange
+        handleBlocklyChange,
       );
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.BlockDelete,
-        handleBlocklyChange
+        handleBlocklyChange,
       );
 
       blocklyRef.current.addChangeListener(
         BlocklyEventName.Ui,
-        handleBlocklyUiEvent
+        handleBlocklyUiEvent,
       );
 
       // This callback notify the parent component that we initialized
@@ -185,7 +185,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
       dispatch(
         blocklySlice.actions.setToolboxXml({
           toolboxXml: showToolbox ? toolboxXml : getEmptyToolbox(),
-        })
+        }),
       );
     }
   }, [showToolbox, dispatch, toolboxXml]);

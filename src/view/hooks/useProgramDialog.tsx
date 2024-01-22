@@ -73,9 +73,11 @@ export const useProgramDialog = (type: "create" | "save") => {
               ?.value ?? "";
 
           const programDescription =
-            (document.getElementById(
-              "blockly-program-description"
-            ) as HTMLInputElement)?.value ?? "";
+            (
+              document.getElementById(
+                "blockly-program-description",
+              ) as HTMLInputElement
+            )?.value ?? "";
 
           // TODO: Check if the title / description before saving
           if (!programName) {
@@ -83,7 +85,7 @@ export const useProgramDialog = (type: "create" | "save") => {
               messageSlice.actions.addMessage({
                 type: MessageType.danger,
                 msg: "Program Name cannot be blank",
-              })
+              }),
             );
 
             return false;
@@ -93,9 +95,8 @@ export const useProgramDialog = (type: "create" | "save") => {
             dispatch(
               messageSlice.actions.addMessage({
                 type: MessageType.danger,
-                msg:
-                  "You cannot save over a sample program. Please choose a new name.",
-              })
+                msg: "You cannot save over a sample program. Please choose a new name.",
+              }),
             );
 
             return false;
@@ -109,7 +110,7 @@ export const useProgramDialog = (type: "create" | "save") => {
               messageSlice.actions.addMessage({
                 type: MessageType.danger,
                 msg: `"${programName}" already exists. Please choose a new name.`,
-              })
+              }),
             );
 
             return false;
@@ -127,14 +128,14 @@ export const useProgramDialog = (type: "create" | "save") => {
                     ? getCurrentBlocklyInstanceCode()
                     : program.xml,
               },
-            })
+            }),
           );
 
           dispatch(
             messageSlice.actions.addMessage({
               type: MessageType.success,
               msg: `${programName} has been saved!`,
-            })
+            }),
           );
 
           return true;

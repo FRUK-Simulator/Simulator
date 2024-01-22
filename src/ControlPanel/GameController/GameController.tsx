@@ -68,7 +68,10 @@ export const GameController: FunctionComponent = () => {
   const onRelease = (key: ControllerKey | null) => {
     if (key) {
       dispatch(
-        gameControllerSlice.actions.setControllerKeyState({ key, value: false })
+        gameControllerSlice.actions.setControllerKeyState({
+          key,
+          value: false,
+        }),
       );
     }
   };
@@ -76,7 +79,7 @@ export const GameController: FunctionComponent = () => {
   const onButtonClicked = (key: ControllerKey | null) => {
     if (key) {
       dispatch(
-        gameControllerSlice.actions.setControllerKeyState({ key, value: true })
+        gameControllerSlice.actions.setControllerKeyState({ key, value: true }),
       );
     }
   };

@@ -35,7 +35,7 @@ export const ChallengeStatusBadge: FunctionComponent<{
 }> = ({ challengeName }) => {
   const challengeResults = useSelector(getChallengeInfo);
   const challengeResult = challengeResults.find(
-    (element) => element.id === challengeName
+    (element) => element.id === challengeName,
   );
   if (!challengeResult || challengeResult.status === ChallengeStatus.Pending) {
     return <></>;

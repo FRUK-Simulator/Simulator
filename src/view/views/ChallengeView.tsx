@@ -30,8 +30,10 @@ export const ChallengeView = () => {
   }>();
 
   const challengeResults = useSelector(getChallengeInfo);
-  const challengeDescriptions = getChallengeFromURL(lesson, challenge)
-    ?.descriptions;
+  const challengeDescriptions = getChallengeFromURL(
+    lesson,
+    challenge,
+  )?.descriptions;
   const displayableDescription =
     challengeDescriptions?.markdown || challengeDescriptions?.short || "";
 

@@ -20,7 +20,7 @@ export const JavaScript = (Blockly as any).JavaScript as JavaScriptGenerator;
 export function addCustomBlock(
   blockName: string,
   block: Array<Object> | undefined,
-  codeGenerator: BlockCallback
+  codeGenerator: BlockCallback,
 ) {
   if (block) {
     Blockly.defineBlocksWithJsonArray(block);

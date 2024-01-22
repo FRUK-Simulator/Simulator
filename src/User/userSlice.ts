@@ -53,7 +53,7 @@ export const userSlice = createSlice({
   reducers: {
     setGoogleUser(
       state,
-      action: PayloadAction<{ loginResponse: GoogleLoginResponse | null }>
+      action: PayloadAction<{ loginResponse: GoogleLoginResponse | null }>,
     ) {
       state.googleUser =
         action.payload.loginResponse === null
