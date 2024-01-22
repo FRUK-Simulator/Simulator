@@ -2,12 +2,19 @@
   "name": "simulator",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
+  },
   "dependencies": {
     "@fluentui/react": "^7.168.2",
     "@fruk/simulator-core": "1.8.11",
     "@reduxjs/toolkit": "^1.7.1",
-    "@types/marked": "^1.1.0",
-    "@types/react-syntax-highlighter": "^11.0.5",
     "@uifabric/icons": "^7.5.23",
     "blockly": "^6.20210701.0",
     "js-interpreter": "^2.3.0",
@@ -22,7 +29,6 @@
     "react-syntax-highlighter": "^15.4.3",
     "redux": "^4.1.0",
     "three": "^0.136.0",
-    "typescript": "^3.9.9",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -31,27 +37,24 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.52",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^12.20.11",
+    "@types/node": "^18.19.8",
     "@types/react": "^16.14.5",
     "@types/react-dom": "^16.9.12",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "jest-canvas-mock": "^2.3.1",
     "prettier": "2.0.5",
-    "react-scripts": "^5.0.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "format": "prettier --write src",
-    "checkFormat": "prettier --check src",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-node-polyfills": "^0.19.0",
+    "vitest": "^1.2.1"
   },
   "browserslist": {
     "production": [
