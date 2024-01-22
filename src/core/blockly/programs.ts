@@ -2,7 +2,7 @@ import Blockly, { Workspace } from "blockly";
 import { Program } from "../../BlocklyInterface/ProgramExportImport";
 
 export function getPredefinedBlocklyProgs(): Program[] {
-  let arr = [] as Program[];
+  const arr = [] as Program[];
   for (const entry of predefinedDemos) {
     arr.push({
       title: entry.title,

@@ -33,11 +33,11 @@ export function Timer() {
   const seconds = Math.floor(totalElapsed / 1000) % 60;
   const milliseconds = totalElapsed % 1000;
 
-  let updateCurrentTime = () => {
+  const updateCurrentTime = () => {
     setCurrentTime(calculateCurrentTime());
   };
 
-  let startStopwatch = () => {
+  const startStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       // Timer already running
       return;
@@ -48,39 +48,39 @@ export function Timer() {
     }
     setCurrentState(TimerState.RUNNING);
     // start the timer again
-    let handle = window.setInterval(updateCurrentTime, 23);
+    const handle = window.setInterval(updateCurrentTime, 23);
 
     // Save timer handle to pause can remove it
     setTimerHandle(handle);
   };
 
-  let stopStopwatch = () => {
+  const stopStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       freezeStopWatch();
       setCurrentState(TimerState.STOPPED);
     }
   };
 
-  let pauseStopwatch = () => {
+  const pauseStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       freezeStopWatch();
       setCurrentState(TimerState.PAUSED);
     }
   };
 
-  let resumeStopWatch = () => {
+  const resumeStopWatch = () => {
     // reset the clock so when we start counting, we start from the time
     // on the display
     setStartTime(calculateCurrentTime() - totalElapsed);
     setCurrentTime(calculateCurrentTime());
   };
 
-  let resetStopwatch = () => {
+  const resetStopwatch = () => {
     setStartTime(calculateCurrentTime());
     setCurrentTime(calculateCurrentTime());
   };
 
-  let freezeStopWatch = () => {
+  const freezeStopWatch = () => {
     clearInterval(timerHandle);
     setTimerHandle(0);
   };

@@ -360,7 +360,7 @@ export class BlocklyInterpreter {
       }
 
       // Figure out how many (fractional) steps we didn't complete
-      let remainder = steps % 1;
+      const remainder = steps % 1;
 
       // schedule the next run
       return this._run(remainder);

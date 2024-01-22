@@ -63,12 +63,12 @@ export const getMotorStats = (state: RootState) =>
 export const getSensors = (state: RootState) => state.simulator.sensors;
 
 export function specToSensors(spec: IRobotSpec): Sensors {
-  let isDist = (x: BasicSensorSpec) => x.type === "distance-sensor";
-  let isContact = (x: BasicSensorSpec) => x.type === "contact-sensor";
-  let isGyro = (x: BasicSensorSpec) => x.type === "gyroscope-sensor";
-  let isColor = (x: ComplexSensorSpec) => x.type === "color-sensor";
+  const isDist = (x: BasicSensorSpec) => x.type === "distance-sensor";
+  const isContact = (x: BasicSensorSpec) => x.type === "contact-sensor";
+  const isGyro = (x: BasicSensorSpec) => x.type === "gyroscope-sensor";
+  const isColor = (x: ComplexSensorSpec) => x.type === "color-sensor";
 
-  let convertToObj = (x: BasicSensorSpec | ComplexSensorSpec) => {
+  const convertToObj = (x: BasicSensorSpec | ComplexSensorSpec) => {
     return {
       channel: x.channel,
       mountFaceName: `${SensorMountingFace[x.mountFace]}`,

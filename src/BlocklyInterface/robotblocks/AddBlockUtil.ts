@@ -3,7 +3,7 @@ import Blockly from "blockly";
 type BlockCallback = (block: Blockly.Block) => (string | number)[] | string;
 
 interface GamepadPropertyProcessor {
-  (block: Blockly.Block): [String, number];
+  (block: Blockly.Block): [string, number];
 }
 
 interface JavaScriptGenerator extends Blockly.Generator__Class {

@@ -125,7 +125,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
       return;
     }
 
-    let canvasParentEl = canvasRef.current.parentElement!;
+    const canvasParentEl = canvasRef.current.parentElement!;
 
     canvasRef.current.width = canvasParentEl.clientWidth;
     canvasRef.current.height = canvasParentEl.clientHeight;

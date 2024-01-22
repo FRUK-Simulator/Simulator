@@ -245,7 +245,7 @@ If the robot enters the black zones then you must start again.
     },
   };
 
-  let box: IBoxSpec = {
+  const box: IBoxSpec = {
     type: "box",
     id: "box",
     dimensions: {
@@ -289,7 +289,7 @@ If the robot enters the black zones then you must start again.
     },
   };
 
-  let box: IBoxSpec = {
+  const box: IBoxSpec = {
     type: "box",
     id: "box",
     dimensions: {

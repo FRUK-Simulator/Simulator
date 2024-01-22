@@ -5,7 +5,7 @@ import * as Lesson3 from "./Arenas/lesson3";
 import * as Lesson4 from "./Arenas/lesson4";
 import * as Lesson5 from "./Arenas/lesson5";
 
-let challengeConfigs: Array<ChallengeConfig> = [
+const challengeConfigs: Array<ChallengeConfig> = [
   ...Lesson1.challenges,
   ...Lesson2.challenges,
   ...Lesson3.challenges,
@@ -14,9 +14,9 @@ let challengeConfigs: Array<ChallengeConfig> = [
 ].map((getChallenge) => getChallenge());
 
 export function getChallengesPerArena(): Map<string, Array<ChallengeConfig>> {
-  let challengesPerArena = new Map<string, Array<ChallengeConfig>>();
+  const challengesPerArena = new Map<string, Array<ChallengeConfig>>();
 
-  for (let challengeConfig of challengeConfigs) {
+  for (const challengeConfig of challengeConfigs) {
     const arenaName = challengeConfig.arenaConfig.name;
     if (!challengesPerArena.has(arenaName)) {
       challengesPerArena.set(arenaName, []);

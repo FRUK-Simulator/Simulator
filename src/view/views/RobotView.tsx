@@ -43,11 +43,11 @@ export const RobotView = () => {
       : "#ffffff";
   };
 
-  let updateCurrentTime = () => {
+  const updateCurrentTime = () => {
     setCurrentTime(+new Date());
   };
 
-  let startStopwatch = () => {
+  const startStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       // Timer already running
       return;
@@ -59,13 +59,13 @@ export const RobotView = () => {
     return handle;
   };
 
-  let stopStopwatch = () => {
+  const stopStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       setCurrentState(TimerState.STOPPED);
     }
   };
 
-  let pauseStopwatch = () => {
+  const pauseStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       setCurrentState(TimerState.PAUSED);
     }
