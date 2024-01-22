@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef } from "react";
+import { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../state/store";
@@ -73,7 +73,7 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
 
   // Initialize blockly and return destruction callback
   useEffect(() => {
-    function handleBlocklyChange(event: BlocklyEvent) {
+    function handleBlocklyChange() {
       if (!blocklyRef.current) {
         return;
       }

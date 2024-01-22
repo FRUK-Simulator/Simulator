@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import "./Gamepad.css";
 import { useDispatch, useSelector } from "react-redux";
 import {

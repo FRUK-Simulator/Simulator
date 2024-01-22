@@ -1,4 +1,3 @@
-import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { NotFoundView } from "./ErrorViews/NotFoundView";
 import { LandingView } from "./view/views/LandingView";

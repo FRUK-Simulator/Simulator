@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userSlice, getGoogleUser } from "../../../User/userSlice";
 import {

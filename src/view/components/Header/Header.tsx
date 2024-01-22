@@ -1,4 +1,3 @@
-import React from "react";
 import "./Header.css";
 import { Divider } from "../Common/Divider";
 import { Link, useRouteMatch } from "react-router-dom";

@@ -1,4 +1,3 @@
-import React from "react";
 import { LinkButton, ButtonVariant } from "../Common/Button";
 import "./Toolbar.css";
 

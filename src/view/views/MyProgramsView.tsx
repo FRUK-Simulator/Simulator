@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -61,7 +61,7 @@ export const MyProgramsView = () => {
     try {
       const program = await importFromFile();
       dispatch(blocklySlice.actions.addBlocklyProgram({ prog: program }));
-    } catch (err) {
+    } catch (err: any) {
       dispatch(
         messageSlice.actions.addMessage({
           type: MessageType.danger,

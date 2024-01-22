@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { getChallengeFromURL } from "../../RobotSimulator/ChallengeConfigLoader";
 import { Container } from "../components/Common/Container";

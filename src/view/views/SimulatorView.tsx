@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useLayoutEffect } from "react";
+import { FunctionComponent, useEffect, useLayoutEffect } from "react";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { Container } from "../components/Common/Container";
 import { RobotSimulator } from "../../RobotSimulator/RobotSimulator";

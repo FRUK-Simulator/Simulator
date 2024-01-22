@@ -6,7 +6,7 @@ import {
   useRef,
   useContext,
 } from "react";
-import React from "react";
+
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { vmSlice, getCode, getExecutionSpeed, getCameraMode } from "./vmSlice";
 import { AppDispatch } from "../state/store";
@@ -302,7 +302,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               }, timeoutMs);
             },
 
-            onIsSensorTouchPushed: (channel: number): boolean => {
+            onIsSensorTouchPushed: (): boolean => {
               return true;
             },
 
@@ -475,7 +475,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           this.setChallenge(getDefaultChallenge());
         },
 
-        onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
+        onCanvasDestroyed() {
           // remove the simulator
           sim.current?.stopRendering();
           sim.current = null;

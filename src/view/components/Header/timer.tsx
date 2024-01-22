@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getExecutionState } from "../../../JavascriptVM/vmSlice";
 import { ExecutionState } from "../../../JavascriptVM/vm";
-import React from "react";
 
 export enum TimerState {
   RUNNING = "running",

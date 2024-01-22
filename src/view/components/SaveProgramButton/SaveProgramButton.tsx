@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import { useProgramDialog } from "../../hooks/useProgramDialog";
 import { Button, ButtonVariant } from "../Common/Button";

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useEffect } from "react";
+import { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
 import { useVM } from "../JavascriptVM/JavascriptVM";
 

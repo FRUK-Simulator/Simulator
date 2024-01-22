@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from "react";
+import { FunctionComponent, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import { blocklySlice } from "../../BlocklyInterface/blocklySlice";

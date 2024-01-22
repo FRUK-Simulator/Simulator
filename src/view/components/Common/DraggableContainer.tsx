@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import { FunctionComponent, useCallback, useEffect, useRef } from "react";
 import "./DraggableContainer.css";
 
 type Coordinates = {
@@ -34,7 +29,7 @@ export const DraggableContainer: FunctionComponent<{
   const dragOffsetRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const onResize = (e: UIEvent) => {
+    const onResize = () => {
       if (!elementRef.current) {
         return;
       }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import "./LandingView.css";
 import { getChallengesPerArena } from "../../RobotSimulator/ChallengeConfigLoader";
 import {

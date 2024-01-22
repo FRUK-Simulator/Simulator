@@ -2,7 +2,7 @@
  * This file provides useful utilities and functions to ease testing. See https://testing-library.com/docs/react-testing-library/setup for
  * more info.
  */
-import React from "react";
+
 import { render } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
