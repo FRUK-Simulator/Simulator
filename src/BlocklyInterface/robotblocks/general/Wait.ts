@@ -28,6 +28,6 @@ export function addWaitBlock() {
     (block) => {
       const seconds = block.getFieldValue("wait");
       return `wait(${seconds * 1000});\n`;
-    }
+    },
   );
 }

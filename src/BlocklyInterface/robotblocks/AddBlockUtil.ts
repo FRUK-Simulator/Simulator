@@ -3,7 +3,7 @@ import Blockly from "blockly";
 type BlockCallback = (block: Blockly.Block) => (string | number)[] | string;
 
 interface GamepadPropertyProcessor {
-  (block: Blockly.Block): [String, number];
+  (block: Blockly.Block): [string, number];
 }
 
 interface JavaScriptGenerator extends Blockly.Generator__Class {
@@ -20,7 +20,7 @@ export const JavaScript = (Blockly as any).JavaScript as JavaScriptGenerator;
 export function addCustomBlock(
   blockName: string,
   block: Array<Object> | undefined,
-  codeGenerator: BlockCallback
+  codeGenerator: BlockCallback,
 ) {
   if (block) {
     Blockly.defineBlocksWithJsonArray(block);

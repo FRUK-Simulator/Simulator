@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getExecutionState } from "../../JavascriptVM/vmSlice";
@@ -36,18 +35,18 @@ export const RobotView = () => {
   const getColorHex = () => {
     const colorSensorValue = robotHandle.getComplexSensorValue(
       1,
-      "ColorSensor"
+      "ColorSensor",
     );
     return "color" in colorSensorValue
       ? `#${colorSensorValue.color.toString(16).padStart(6, "0")}`
       : "#ffffff";
   };
 
-  let updateCurrentTime = () => {
+  const updateCurrentTime = () => {
     setCurrentTime(+new Date());
   };
 
-  let startStopwatch = () => {
+  const startStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       // Timer already running
       return;
@@ -59,13 +58,13 @@ export const RobotView = () => {
     return handle;
   };
 
-  let stopStopwatch = () => {
+  const stopStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       setCurrentState(TimerState.STOPPED);
     }
   };
 
-  let pauseStopwatch = () => {
+  const pauseStopwatch = () => {
     if (currentState === TimerState.RUNNING) {
       setCurrentState(TimerState.PAUSED);
     }

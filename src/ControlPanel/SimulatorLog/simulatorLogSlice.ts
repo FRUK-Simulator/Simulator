@@ -40,7 +40,7 @@ export const simulatorLogSlice = createSlice({
         const logEntry = createLogEntry(
           state.logs.length.toString(),
           action.payload.channel,
-          action.payload.power
+          action.payload.power,
         );
         state.logs.unshift(logEntry);
         return state;

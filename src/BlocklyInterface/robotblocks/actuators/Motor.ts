@@ -48,13 +48,13 @@ export function addMotorBlock() {
       const valuePower = JavaScript.valueToCode(
         block,
         "power",
-        JavaScript.ORDER_ATOMIC
+        JavaScript.ORDER_ATOMIC,
       );
 
       // convert direction to power sign +/-
       const isForward = dropdownDirection === "FORWARD";
       const sign = isForward ? "1" : "-1";
       return `setMotorPower(${numberPort}, ${sign} * (${valuePower}));\n`;
-    }
+    },
   );
 }

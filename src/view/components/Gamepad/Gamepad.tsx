@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import "./Gamepad.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -75,7 +75,10 @@ export const Gamepad: FunctionComponent = () => {
   const onRelease = (key: ControllerKey | null) => {
     if (key) {
       dispatch(
-        gameControllerSlice.actions.setControllerKeyState({ key, value: false })
+        gameControllerSlice.actions.setControllerKeyState({
+          key,
+          value: false,
+        }),
       );
     }
   };
@@ -83,7 +86,7 @@ export const Gamepad: FunctionComponent = () => {
   const onButtonClicked = (key: ControllerKey | null) => {
     if (key) {
       dispatch(
-        gameControllerSlice.actions.setControllerKeyState({ key, value: true })
+        gameControllerSlice.actions.setControllerKeyState({ key, value: true }),
       );
     }
   };

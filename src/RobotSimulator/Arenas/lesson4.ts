@@ -204,7 +204,7 @@ function challengeB(): ChallengeConfig {
     eventListener: new Lesson4Challenge(
       { x: 2.5, y: 2.5 },
       warnZones,
-      badZones
+      badZones,
     ),
     descriptions: {
       short: "Using color sensor to navigate with walls",
@@ -335,7 +335,7 @@ function challengeC(): ChallengeConfig {
     eventListener: new Lesson4Challenge(
       { x: 2.5, y: 2.5 },
       warnZones,
-      badZones
+      badZones,
     ),
     descriptions: {
       short: "Using color sensor to navigate with walls",
@@ -364,7 +364,7 @@ class Lesson4Challenge implements ChallengeListener {
   constructor(
     public finishPosition: CoreSimTypes.Vector2d,
     public warnZones: CoreSpecs.IZoneSpec[],
-    public badZones: CoreSpecs.IZoneSpec[]
+    public badZones: CoreSpecs.IZoneSpec[],
   ) {
     this.challengeOutcomePending = true;
   }
@@ -406,7 +406,7 @@ class Lesson4Challenge implements ChallengeListener {
           this.timeoutId = setTimeout(this.markComplete.bind(this), 5000);
           this.actions?.displayMessage(
             "Stay in the zone for 5 seconds",
-            MessageType.info
+            MessageType.info,
           );
         } else if (this.timeoutId) {
           clearTimeout(this.timeoutId);

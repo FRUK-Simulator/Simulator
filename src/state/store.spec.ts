@@ -1,4 +1,5 @@
 import { store } from "./store";
+import { describe, test, expect } from "vitest";
 
 describe("store", () => {
   test("the shape of the state", () => {

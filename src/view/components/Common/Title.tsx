@@ -1,4 +1,3 @@
-import React from "react";
 import { FunctionComponent } from "react";
 import { As, Headings } from "./Utilities/As";
 import "./Title.css";

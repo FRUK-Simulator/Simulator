@@ -6,7 +6,7 @@ import {
   useRef,
   useContext,
 } from "react";
-import React from "react";
+
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { vmSlice, getCode, getExecutionSpeed, getCameraMode } from "./vmSlice";
 import { AppDispatch } from "../state/store";
@@ -88,7 +88,7 @@ export const VMContext = createContext<IVirtualMachine | null>(null);
  */
 export const VMProvider: FunctionComponent = ({ children }) => {
   const [interpreter, setInterpreter] = useState<BlocklyInterpreter | null>(
-    null
+    null,
   );
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -108,7 +108,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
     dispatch(
       vmSlice.actions.setExecutionState({
         executionState: interpreter?.getExecutionState() || ExecutionState.NONE,
-      })
+      }),
     );
   }
 
@@ -125,7 +125,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
       return;
     }
 
-    let canvasParentEl = canvasRef.current.parentElement!;
+    const canvasParentEl = canvasRef.current.parentElement!;
 
     canvasRef.current.width = canvasParentEl.clientWidth;
     canvasRef.current.height = canvasParentEl.clientHeight;
@@ -156,7 +156,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   function setSimulatorCameraMode(
     simulator: Sim3D,
     robotRef: Handles.RobotHandle,
-    cameraMode: CameraView
+    cameraMode: CameraView,
   ) {
     console.log("Changing camera mode", cameraMode);
     switch (cameraMode) {
@@ -290,19 +290,19 @@ export const VMProvider: FunctionComponent = ({ children }) => {
                   type: MessageType.success,
                   msg: "Program finished!",
                   id: msgId,
-                })
+                }),
               );
 
               setTimeout(() => {
                 dispatch(
                   messageSlice.actions.removeMessage({
                     id: msgId,
-                  })
+                  }),
                 );
               }, timeoutMs);
             },
 
-            onIsSensorTouchPushed: (channel: number): boolean => {
+            onIsSensorTouchPushed: (): boolean => {
               return true;
             },
 
@@ -332,7 +332,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             getComplexSensorValue: (channel: number, type: string): any => {
               const value = robotRef.current?.getComplexSensorValue(
                 channel,
-                type
+                type,
               );
               if (value) {
                 return value;
@@ -349,7 +349,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             const interpreter = new BlocklyInterpreter(
               code,
               getExecutionSpeed(store.getState()),
-              callbacks
+              callbacks,
             );
             setInterpreter(interpreter);
             syncExecutionState(interpreter);
@@ -358,7 +358,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               messageSlice.actions.addMessage({
                 type: MessageType.danger,
                 msg: "Code cannot be executed.",
-              })
+              }),
             );
           }
         },
@@ -379,7 +379,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             challengeConfig.startPosition,
             challengeConfig.robotConfig
               ? challengeConfig.robotConfig.disableDistanceSensor
-              : false
+              : false,
           ).build();
 
           robotRef.current = robot!;
@@ -407,7 +407,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           dispatch(
             robotSimulatorSlice.actions.setRobotSpec({
               spec: specToSensors(robotSpec),
-            })
+            }),
           );
 
           // Before we start the challenge listener we mark the challenge as
@@ -418,13 +418,13 @@ export const VMProvider: FunctionComponent = ({ children }) => {
             challengeSlice.actions.setChallengeStatus({
               status: ChallengeStatus.Pending,
               id: challengeConfig.name,
-            })
+            }),
           );
 
           dispatch(
             blocklySlice.actions.setMaxBlocksConfig({
               maxBlocksConfig: challengeConfig.maxBlocksConfig,
-            })
+            }),
           );
 
           challengeListener.current = challengeConfig.eventListener || null;
@@ -434,8 +434,8 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               simulator,
               dispatch,
               challengeConfig.name,
-              this.stop
-            )
+              this.stop,
+            ),
           );
 
           setSimulatorCameraMode(sim.current, robotRef.current, cameraMode);
@@ -454,7 +454,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
           dispatch(
             robotSimulatorSlice.actions.setRobotSpec({
               spec: specToSensors(robotSpec),
-            })
+            }),
           );
 
           sim.current.beginRendering();
@@ -470,12 +470,12 @@ export const VMProvider: FunctionComponent = ({ children }) => {
                   id: event.data.objectRef.id,
                 });
               }
-            }
+            },
           );
           this.setChallenge(getDefaultChallenge());
         },
 
-        onCanvasDestroyed(canvasEl: HTMLCanvasElement) {
+        onCanvasDestroyed() {
           // remove the simulator
           sim.current?.stopRendering();
           sim.current = null;

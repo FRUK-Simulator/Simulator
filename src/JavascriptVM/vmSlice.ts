@@ -17,7 +17,7 @@ export const vmSlice = createSlice({
   reducers: {
     setExecutionState(
       state,
-      action: PayloadAction<{ executionState: ExecutionState }>
+      action: PayloadAction<{ executionState: ExecutionState }>,
     ) {
       state.executionState = action.payload.executionState;
       return state;
