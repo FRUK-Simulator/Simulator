@@ -21,7 +21,7 @@ jobs:
         - run: npm run build
           env:
             CI: true
-        - run: zip -r artifact.zip build
+        - run: zip -r artifact.zip dist
 
         - name: Declare some variables
           id: vars
