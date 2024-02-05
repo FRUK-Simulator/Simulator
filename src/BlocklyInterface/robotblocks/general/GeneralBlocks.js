@@ -23,7 +23,7 @@ Blockly.Blocks["comment"] = {
   init: function () {
     this.appendDummyInput().appendField(
       new Blockly.FieldTextInput(""),
-      "COMMENT"
+      "COMMENT",
     );
     this.setPreviousStatement(true);
     this.setNextStatement(true);
@@ -59,7 +59,7 @@ Blockly.Blocks["misc_isNull"] = {
       .setAlign(Blockly.ALIGN_RIGHT);
     this.setColour(functionColor);
     this.setTooltip(
-      "Returns true if the given value is null, false otherwise."
+      "Returns true if the given value is null, false otherwise.",
     );
   },
 };
@@ -68,7 +68,7 @@ Blockly.JavaScript["misc_isNull"] = function (block) {
   var value = Blockly.JavaScript.valueToCode(
     block,
     "VALUE",
-    Blockly.JavaScript.ORDER_EQUALITY
+    Blockly.JavaScript.ORDER_EQUALITY,
   );
   var code = value + " === null";
   return [code, Blockly.JavaScript.ORDER_EQUALITY];
@@ -85,7 +85,7 @@ Blockly.Blocks["misc_isNotNull"] = {
       .setAlign(Blockly.ALIGN_RIGHT);
     this.setColour(functionColor);
     this.setTooltip(
-      "Returns true if the given value is not null, false otherwise."
+      "Returns true if the given value is not null, false otherwise.",
     );
   },
 };
@@ -94,7 +94,7 @@ Blockly.JavaScript["misc_isNotNull"] = function (block) {
   var value = Blockly.JavaScript.valueToCode(
     block,
     "VALUE",
-    Blockly.JavaScript.ORDER_EQUALITY
+    Blockly.JavaScript.ORDER_EQUALITY,
   );
   var code = value + " !== null";
   return [code, Blockly.JavaScript.ORDER_EQUALITY];
@@ -115,7 +115,7 @@ Blockly.Blocks["misc_atan2"] = {
     this.setColour(Blockly.Msg.MATH_HUE);
     this.setTooltip(
       "Returns a numerical value between -180 and +180 degrees, representing " +
-        "the counterclockwise angle between the positive X axis, and the point (x, y)."
+        "the counterclockwise angle between the positive X axis, and the point (x, y).",
     );
     this.getJavaScriptInputType = function (inputName) {
       switch (inputName) {
@@ -136,12 +136,12 @@ Blockly.JavaScript["misc_atan2"] = function (block) {
   var y = Blockly.JavaScript.valueToCode(
     block,
     "Y",
-    Blockly.JavaScript.ORDER_COMMA
+    Blockly.JavaScript.ORDER_COMMA,
   );
   var x = Blockly.JavaScript.valueToCode(
     block,
     "X",
-    Blockly.JavaScript.ORDER_COMMA
+    Blockly.JavaScript.ORDER_COMMA,
   );
   var code = "Math.atan2(" + y + ", " + x + ") / Math.PI * 180";
   return [code, Blockly.JavaScript.ORDER_DIVISION];
@@ -164,12 +164,12 @@ Blockly.JavaScript["misc_addItemToList"] = function (block) {
   var item = Blockly.JavaScript.valueToCode(
     block,
     "ITEM",
-    Blockly.JavaScript.ORDER_NONE
+    Blockly.JavaScript.ORDER_NONE,
   );
   var list = Blockly.JavaScript.valueToCode(
     block,
     "LIST",
-    Blockly.JavaScript.ORDER_MEMBER
+    Blockly.JavaScript.ORDER_MEMBER,
   );
   return list + ".push(" + item + ")";
 };

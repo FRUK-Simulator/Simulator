@@ -245,7 +245,7 @@ If the robot enters the black zones then you must start again.
     },
   };
 
-  let box: IBoxSpec = {
+  const box: IBoxSpec = {
     type: "box",
     id: "box",
     dimensions: {
@@ -289,7 +289,7 @@ If the robot enters the black zones then you must start again.
     },
   };
 
-  let box: IBoxSpec = {
+  const box: IBoxSpec = {
     type: "box",
     id: "box",
     dimensions: {
@@ -332,7 +332,7 @@ class Lesson3Challenge implements ChallengeListener {
         //this.actions?.setChallengeStatus(ChallengeStatus.Failure);
         this.actions?.displayMessage(
           "Robot left the track area",
-          MessageType.danger
+          MessageType.danger,
         );
         return;
       }
@@ -341,7 +341,7 @@ class Lesson3Challenge implements ChallengeListener {
           this.actions?.setChallengeStatus(ChallengeStatus.Success);
           this.actions?.displayMessage(
             "Robot finished the challenge",
-            MessageType.success
+            MessageType.success,
           );
           this.actions?.terminateChallenge();
           return;
@@ -351,7 +351,7 @@ class Lesson3Challenge implements ChallengeListener {
           this.actions?.displayFadingMessage(
             "Now grab the block",
             MessageType.info,
-            5000
+            5000,
           );
           return;
         }
@@ -364,7 +364,7 @@ class Lesson3Challenge implements ChallengeListener {
           this.actions?.displayFadingMessage(
             "Now move the block to the starting area",
             MessageType.info,
-            5000
+            5000,
           );
           return;
         }
@@ -373,7 +373,7 @@ class Lesson3Challenge implements ChallengeListener {
         this.actions?.setChallengeStatus(ChallengeStatus.Success);
         this.actions?.displayMessage(
           "Robot finished the challenge",
-          MessageType.success
+          MessageType.success,
         );
         this.actions?.terminateChallenge();
         return;

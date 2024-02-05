@@ -1,6 +1,7 @@
 import { BlocklyInterpreter, ExecutionState, ExecutionSpeed } from "./vm";
+import { vi, describe, it, beforeEach, test, expect } from "vitest";
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe("javascript vm", () => {
   let speed: ExecutionSpeed;
@@ -11,7 +12,7 @@ describe("javascript vm", () => {
 
   it("calls the highlightBlock callback", () => {
     const code = "function start() {highlightBlock('abc');}";
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -31,7 +32,7 @@ describe("javascript vm", () => {
         highlightBlock(a + b + c);
       }
     `;
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -54,7 +55,7 @@ describe("javascript vm", () => {
       for(var i = 0; i < 10; i++);
     }
     `;
-    const onFinishedFn = jest.fn();
+    const onFinishedFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onFinish: onFinishedFn,
     });
@@ -70,7 +71,7 @@ describe("javascript vm", () => {
 
   test("step does not run code when the vm has been stopped", () => {
     const code = "function start() { highlightBlock('abc'); }";
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -91,7 +92,7 @@ describe("javascript vm", () => {
       }
     `;
 
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -103,9 +104,9 @@ describe("javascript vm", () => {
     // Each run executes a block and then schedules the next timer
     // so each `runOnlyPendingTimers` results in running code up until the
     // next highlightBlock call
-    jest.runOnlyPendingTimers();
-    jest.runOnlyPendingTimers();
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
 
     expect(onHighlightFn).toBeCalledTimes(3);
     expect(onHighlightFn).toBeCalledWith("a");
@@ -124,7 +125,7 @@ describe("javascript vm", () => {
       }
     `;
 
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -137,13 +138,13 @@ describe("javascript vm", () => {
     // so each `runOnlyPendingTimers` results in running code up until the
     // next highlightBlock call
     expect(onHighlightFn).toBeCalledTimes(0);
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
     expect(onHighlightFn).toBeCalledWith("a");
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(2);
     expect(onHighlightFn).toBeCalledWith("b");
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(3);
     expect(onHighlightFn).toBeCalledWith("c");
   });
@@ -159,7 +160,7 @@ describe("javascript vm", () => {
       }
     `;
 
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -172,13 +173,13 @@ describe("javascript vm", () => {
     // so each `runOnlyPendingTimers` results in running code up until the
     // next highlightBlock call
     expect(onHighlightFn).toBeCalledTimes(0);
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
     expect(onHighlightFn).toBeCalledWith("a");
 
     vm.pause();
 
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
     expect(onHighlightFn).not.toBeCalledWith("b");
   });
@@ -194,7 +195,7 @@ describe("javascript vm", () => {
       }
     `;
 
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -207,12 +208,12 @@ describe("javascript vm", () => {
     // Each run executes a block and then schedules the next timer
     // so each `runOnlyPendingTimers` results in running code up until the
     // next highlightBlock call
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(0);
 
     vm.unpause();
 
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
     expect(onHighlightFn).toBeCalledWith("a");
   });
@@ -226,7 +227,7 @@ describe("javascript vm", () => {
       }
     `;
 
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -240,7 +241,7 @@ describe("javascript vm", () => {
     expect(onHighlightFn).toBeCalledTimes(0);
 
     // run still works
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
   });
 
@@ -253,7 +254,7 @@ describe("javascript vm", () => {
       }
     `;
 
-    const onHighlightFn = jest.fn();
+    const onHighlightFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onHighlight: onHighlightFn,
     });
@@ -262,24 +263,24 @@ describe("javascript vm", () => {
 
     vm.run();
 
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
 
     vm.stop();
 
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onHighlightFn).toBeCalledTimes(1);
   });
 
   test("run calls the onFinished callback when finished", () => {
     const code = `function start() { for(var i = 0; i < 10; i++); }`;
-    const onFinishedFn = jest.fn();
+    const onFinishedFn = vi.fn();
     const vm = new BlocklyInterpreter(code, speed, {
       onFinish: onFinishedFn,
     });
 
     vm.run();
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
 
     expect(onFinishedFn).toBeCalled();
   });
@@ -315,7 +316,7 @@ describe("javascript vm", () => {
     expect(vm.getExecutionState()).toBe(ExecutionState.RUNNING);
 
     // finish the program
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(vm.getExecutionState()).toBe(ExecutionState.STOPPED);
 
     vm.pause();

@@ -53,14 +53,14 @@ export interface ChallengeActions {
       | CoreSpecs.IBallSpec
       | CoreSpecs.IBoxSpec
       | CoreSpecs.IConeSpec
-      | CoreSpecs.IZoneSpec
+      | CoreSpecs.IZoneSpec,
   ): void;
   displayMessage(message: string, type: MessageType): void;
   /** @param timeout timeout in milliseconds */
   displayFadingMessage(
     message: string,
     type: MessageType,
-    timeout?: number
+    timeout?: number,
   ): void;
   clearAllMessages(): void;
   setChallengeStatus(status: ChallengeStatus): void;

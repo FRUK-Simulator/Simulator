@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import "./Card.css";
 import { As } from "./Utilities/As";
 

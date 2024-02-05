@@ -46,6 +46,6 @@ export function addDistanceSensorBlock() {
       const code = `getSensorValue(${numberChannel}) * sensorConversionFactor("${unitString}")`;
 
       return [code, JavaScript.ORDER_ATOMIC];
-    }
+    },
   );
 }

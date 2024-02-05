@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { getChallengeFromURL } from "../../RobotSimulator/ChallengeConfigLoader";
 import { Container } from "../components/Common/Container";
@@ -30,8 +29,10 @@ export const ChallengeView = () => {
   }>();
 
   const challengeResults = useSelector(getChallengeInfo);
-  const challengeDescriptions = getChallengeFromURL(lesson, challenge)
-    ?.descriptions;
+  const challengeDescriptions = getChallengeFromURL(
+    lesson,
+    challenge,
+  )?.descriptions;
   const displayableDescription =
     challengeDescriptions?.markdown || challengeDescriptions?.short || "";
 

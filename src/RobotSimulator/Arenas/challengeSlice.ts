@@ -21,10 +21,10 @@ export const challengeSlice = createSlice({
   reducers: {
     setChallengeStatus(
       state,
-      action: PayloadAction<{ status: ChallengeStatus; id: string }>
+      action: PayloadAction<{ status: ChallengeStatus; id: string }>,
     ) {
       const challengeIndex = state.challengeInfos.findIndex(
-        (i) => i.id === action.payload.id
+        (i) => i.id === action.payload.id,
       );
       // If it's a new challenge, just accept any state that is being set
       if (challengeIndex === -1) {

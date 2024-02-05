@@ -16,8 +16,8 @@ declare module "js-interpreter" {
       code: string,
       initFunction?: (
         interpreter: Interpreter,
-        globalObject: GlobalObject
-      ) => void
+        globalObject: GlobalObject,
+      ) => void,
     );
 
     /**

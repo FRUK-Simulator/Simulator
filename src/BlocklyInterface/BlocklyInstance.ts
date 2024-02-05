@@ -52,8 +52,8 @@ class BlocklyInstance {
     JavaScript.init(this.workspace);
     // any functions or variables defined wil be stored up until finish is called.
 
-    let starts = this.workspace.getBlocksByType("start_block", false);
-    let functions = [
+    const starts = this.workspace.getBlocksByType("start_block", false);
+    const functions = [
       ...this.workspace.getBlocksByType("procedures_defreturn", false),
       ...this.workspace.getBlocksByType("procedures_defnoreturn", false),
     ];
@@ -65,15 +65,15 @@ class BlocklyInstance {
       return "// Multiple start blocks found, try putting blocks into a single start block\n// ERROR: MULTIPLE_START_BLOCKS!";
     }
 
-    let blocks = [starts[0], ...functions];
+    const blocks = [starts[0], ...functions];
 
     JavaScript.init(this.workspace);
 
     let code = "";
 
-    for (let block of blocks) {
+    for (const block of blocks) {
       // If these blocks are function definitions then they wont generate code here, but instead add a definition which will be emitted in finish.
-      let block_code = JavaScript.blockToCode(block);
+      const block_code = JavaScript.blockToCode(block);
       console.log(block_code);
       code += block_code + "\n";
     }
@@ -101,7 +101,7 @@ class BlocklyInstance {
 
   addChangeListener(
     eventName: BlocklyEventName,
-    fn: (event: BlocklyEvent) => void
+    fn: (event: BlocklyEvent) => void,
   ) {
     this.workspace.addChangeListener((event: BlocklyEvent) => {
       if (event instanceof Events[eventName]) {

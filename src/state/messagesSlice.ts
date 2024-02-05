@@ -23,7 +23,7 @@ export const messageSlice = createSlice({
   reducers: {
     addMessage(
       state,
-      action: PayloadAction<{ type: MessageType; msg: string; id?: string }>
+      action: PayloadAction<{ type: MessageType; msg: string; id?: string }>,
     ) {
       if (!action.payload.id) {
         action.payload.id = uuidv4();
@@ -38,7 +38,7 @@ export const messageSlice = createSlice({
     },
     removeMessage(state, action: PayloadAction<{ id: string }>) {
       state.messages = state.messages.filter(
-        (msg) => msg.id !== action.payload.id
+        (msg) => msg.id !== action.payload.id,
       );
 
       return state;

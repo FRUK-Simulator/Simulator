@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from "react";
+import { FunctionComponent, HTMLAttributes } from "react";
 import "./Button.css";
 import { Link, LinkProps } from "react-router-dom";
 import { IconName, Icon } from "./Icon";

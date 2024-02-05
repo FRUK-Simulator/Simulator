@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from "react";
+import { FunctionComponent, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import { blocklySlice } from "../../BlocklyInterface/blocklySlice";
@@ -49,14 +49,14 @@ export const useDeleteProgramDialog = () => {
             dispatch(
               blocklySlice.actions.removeBlocklyProgram({
                 title: program.title,
-              })
+              }),
             );
 
             dispatch(
               messageSlice.actions.addMessage({
                 type: MessageType.success,
                 msg: `${program.title} has been deleted!`,
-              })
+              }),
             );
 
             return true;
@@ -64,7 +64,7 @@ export const useDeleteProgramDialog = () => {
         },
       });
     },
-    [dispatch, dialog]
+    [dispatch, dialog],
   );
 
   return deleteProgram;

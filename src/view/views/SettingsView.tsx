@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSettings, persistSettings } from "../../core/settings/settings";
@@ -74,7 +74,7 @@ const ExecutionSpeedSelect = () => {
       label="Code Speed"
       options={executionSpeedOptions}
       selectedOption={executionSpeedOptions.find(
-        (s) => s.value === executionSpeed
+        (s) => s.value === executionSpeed,
       )}
       onChange={(opt) => {
         if (!opt) {

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -32,7 +32,9 @@ export const MyProgramsView = () => {
   const setProgramCallback = useCallback(
     (program: Program) => {
       dispatch(
-        blocklySlice.actions.setActiveBlocklyProgramId({ title: program.title })
+        blocklySlice.actions.setActiveBlocklyProgramId({
+          title: program.title,
+        }),
       );
 
       // We need to load the blockly XML that is associated with the
@@ -42,7 +44,7 @@ export const MyProgramsView = () => {
           dispatch(
             blocklySlice.actions.setBlocklyXmlWorkspace({
               blocklyXmlWorkspace: entry.xml,
-            })
+            }),
           );
           break;
         }
@@ -50,7 +52,7 @@ export const MyProgramsView = () => {
 
       history.replace("?view=code");
     },
-    [dispatch, history, programs]
+    [dispatch, history, programs],
   );
 
   const newProgramCallback = useProgramDialog("create");
@@ -59,12 +61,12 @@ export const MyProgramsView = () => {
     try {
       const program = await importFromFile();
       dispatch(blocklySlice.actions.addBlocklyProgram({ prog: program }));
-    } catch (err) {
+    } catch (err: any) {
       dispatch(
         messageSlice.actions.addMessage({
           type: MessageType.danger,
           msg: err.message,
-        })
+        }),
       );
     }
   }, [dispatch]);

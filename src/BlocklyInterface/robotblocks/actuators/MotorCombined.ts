@@ -60,13 +60,13 @@ export function addMotorCombinedBlock() {
       },
     ],
     (block) => {
-      let mot = (prefix: string) => {
+      const mot = (prefix: string) => {
         const numberPort = block.getFieldValue(prefix + "port");
         const dropdownDirection = block.getFieldValue(prefix + "direction");
         const valuePower = JavaScript.valueToCode(
           block,
           prefix + "power",
-          JavaScript.ORDER_ATOMIC
+          JavaScript.ORDER_ATOMIC,
         );
 
         // convert direction to power sign +/-
@@ -76,6 +76,6 @@ export function addMotorCombinedBlock() {
       };
 
       return mot("a_") + "\n" + mot("b_") + "\n";
-    }
+    },
   );
 }

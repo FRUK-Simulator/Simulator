@@ -184,7 +184,7 @@ If the robot enters the black zones then you must start again.
 class Lesson2Challenge implements ChallengeListener {
   constructor(
     public finishZone: CoreSpecs.IZoneSpec,
-    public badZones: CoreSpecs.IZoneSpec[]
+    public badZones: CoreSpecs.IZoneSpec[],
   ) {}
   actions?: ChallengeActions;
   timeoutId?: NodeJS.Timeout;
@@ -209,7 +209,7 @@ class Lesson2Challenge implements ChallengeListener {
           this.timeoutId = setTimeout(this.markComplete.bind(this), 5000);
           this.actions?.displayMessage(
             "Stay in the zone for 5 seconds",
-            MessageType.info
+            MessageType.info,
           );
         } else if (this.timeoutId) {
           clearTimeout(this.timeoutId);

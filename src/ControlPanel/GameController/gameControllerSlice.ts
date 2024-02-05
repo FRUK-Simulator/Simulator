@@ -39,7 +39,7 @@ export const gameControllerSlice = createSlice({
   reducers: {
     setControllerKeyState(
       state,
-      keyPress: PayloadAction<{ key: ControllerKey; value: boolean }>
+      keyPress: PayloadAction<{ key: ControllerKey; value: boolean }>,
     ) {
       state.buttonStates[keyPress.payload.key] = keyPress.payload.value;
 

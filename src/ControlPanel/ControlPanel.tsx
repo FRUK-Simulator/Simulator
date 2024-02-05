@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import "./ControlPanel.css";
 import { useSelector } from "react-redux";
 import { getMotorPower } from "../RobotSimulator/robotSimulatorSlice";
@@ -43,7 +43,7 @@ const MotorGroup: FunctionComponent<{ channels: number[] }> = ({
 
   const onChangeHandler = (channel: number, power: number) => {
     if (locked) {
-      channels.forEach((c) => vm.robot.setMotorPower(channel, power));
+      channels.forEach(() => vm.robot.setMotorPower(channel, power));
     } else {
       vm.robot.setMotorPower(channel, power);
     }
@@ -86,7 +86,7 @@ const LogView = () => {
  */
 export const ControlPanel: FunctionComponent = () => {
   const [controlPanelView, setControlPanelView] = useState<ControlPanelView>(
-    ControlPanelView.robot
+    ControlPanelView.robot,
   );
 
   const changeView = (view: ControlPanelView) => () =>
@@ -105,8 +105,8 @@ export const ControlPanel: FunctionComponent = () => {
           controlPanelView === ControlPanelView.robot
             ? 0
             : controlPanelView === ControlPanelView.controller
-            ? 1
-            : 2
+              ? 1
+              : 2
         }
         buttons={[
           { label: "Robot", onClick: changeView(ControlPanelView.robot) },

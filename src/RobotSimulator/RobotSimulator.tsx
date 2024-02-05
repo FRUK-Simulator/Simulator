@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useEffect } from "react";
+import { FunctionComponent, useRef, useEffect } from "react";
 import "./RobotSimulator.css";
 import { useVM } from "../JavascriptVM/JavascriptVM";
 
@@ -11,7 +11,7 @@ export const RobotSimulator: FunctionComponent = () => {
 
   // effect to initialize the simulator on first mount
   useEffect(() => {
-    let canvasEl = canvasRef.current!;
+    const canvasEl = canvasRef.current!;
     vm.onCanvasCreated(canvasEl);
     return () => {
       vm.onCanvasDestroyed(canvasEl);

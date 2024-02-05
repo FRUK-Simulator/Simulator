@@ -18,7 +18,7 @@ export function addGamepadBlocks() {
   const getPropertyColor = 151;
 
   function createGamepadDropdown() {
-    var CHOICES = [["gamepad1", "gamepad1"]];
+    const CHOICES = [["gamepad1", "gamepad1"]];
     return new Blockly.FieldDropdown(CHOICES);
   }
 
@@ -26,7 +26,7 @@ export function addGamepadBlocks() {
     init: function () {
       const block = this as Blockly.Block;
 
-      var PROPERTY_CHOICES = [
+      const PROPERTY_CHOICES = [
         ["A", "A"],
         ["B", "B"],
         ["X", "X"],
@@ -44,7 +44,7 @@ export function addGamepadBlocks() {
         .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
       block.setColour(getPropertyColor);
 
-      var TOOLTIPS = [
+      const TOOLTIPS = [
         ["A", "Returns true if the A button is pressed."],
         ["B", "Returns true if the B button is pressed."],
         ["X", "Returns true if the X button is pressed."],
@@ -55,8 +55,8 @@ export function addGamepadBlocks() {
         ["DpadRight", "Returns true if the dpad right button is pressed."],
       ];
       block.setTooltip(function () {
-        var key = block.getFieldValue("PROP");
-        for (var i = 0; i < TOOLTIPS.length; i++) {
+        const key = block.getFieldValue("PROP");
+        for (let i = 0; i < TOOLTIPS.length; i++) {
           if (TOOLTIPS[i][0] === key) {
             return TOOLTIPS[i][1];
           }
@@ -69,8 +69,8 @@ export function addGamepadBlocks() {
   Blockly.Blocks["gamepad_getProperty"] = propertyProcessor;
 
   const getProperty = function (block: Blockly.Block) {
-    var property = block.getFieldValue("PROP");
-    var code = "checkGamepadKeyPress('" + property + "')";
+    const property = block.getFieldValue("PROP");
+    const code = "checkGamepadKeyPress('" + property + "')";
     return [code, JavaScript.ORDER_FUNCTION_CALL];
   };
 
@@ -80,7 +80,7 @@ export function addGamepadBlocks() {
     init: function () {
       const block = this as Blockly.Block;
 
-      var PROPERTY_CHOICES = [
+      const PROPERTY_CHOICES = [
         ["A", "A"],
         ["B", "B"],
         ["X", "X"],
@@ -99,7 +99,7 @@ export function addGamepadBlocks() {
         .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
       block.setColour(getPropertyColor);
 
-      var TOOLTIPS = [
+      const TOOLTIPS = [
         ["A", "Returns true if the A button is pressed."],
         ["B", "Returns true if the B button is pressed."],
         ["X", "Returns true if the X button is pressed."],
@@ -110,8 +110,8 @@ export function addGamepadBlocks() {
         ["DpadRight", "Returns true if the dpad right button is pressed."],
       ];
       block.setTooltip(function () {
-        var key = block.getFieldValue("PROP");
-        for (var i = 0; i < TOOLTIPS.length; i++) {
+        const key = block.getFieldValue("PROP");
+        for (let i = 0; i < TOOLTIPS.length; i++) {
           if (TOOLTIPS[i][0] === key) {
             return TOOLTIPS[i][1];
           }
@@ -129,7 +129,7 @@ export function addGamepadBlocks() {
     init: function () {
       const block = this as Blockly.Block;
 
-      var PROPERTY_CHOICES = [
+      const PROPERTY_CHOICES = [
         ["LeftStickX", "LeftStickX"],
         ["LeftStickY", "LeftStickY"],
         ["LeftTrigger", "LeftTrigger"],
@@ -144,7 +144,7 @@ export function addGamepadBlocks() {
         .appendField(".")
         .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
       block.setColour(getPropertyColor);
-      var TOOLTIPS = [
+      const TOOLTIPS = [
         [
           "LeftStickX",
           "Returns a numeric value between -1.0 and +1.0 representing the left analog stick horizontal axis value.",
@@ -171,8 +171,8 @@ export function addGamepadBlocks() {
         ],
       ];
       block.setTooltip(function () {
-        var key = block.getFieldValue("PROP");
-        for (var i = 0; i < TOOLTIPS.length; i++) {
+        const key = block.getFieldValue("PROP");
+        for (let i = 0; i < TOOLTIPS.length; i++) {
           if (TOOLTIPS[i][0] === key) {
             return TOOLTIPS[i][1];
           }

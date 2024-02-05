@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import React from "react";
+
 import { PrimaryButton, ActionButton } from "@fluentui/react";
 
 /**
@@ -21,7 +21,7 @@ export const ToggleButtonBar: FunctionComponent<{
           <PrimaryButton text={label} key={label} />
         ) : (
           <ActionButton text={label} onClick={onClick} key={label} />
-        )
+        ),
       )}
     </div>
   );

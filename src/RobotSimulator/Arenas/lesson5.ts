@@ -786,7 +786,7 @@ class Lesson5Challenge implements ChallengeListener {
           this.targets.delete(e.id);
           this.actions?.displayMessage(
             `Moved one box, ${this.targets.size} to go`,
-            MessageType.info
+            MessageType.info,
           );
         }
 
@@ -794,7 +794,7 @@ class Lesson5Challenge implements ChallengeListener {
           this.actions?.setChallengeStatus(ChallengeStatus.Success);
           this.actions?.displayMessage(
             "Robot finished the challenge",
-            MessageType.success
+            MessageType.success,
           );
           this.actions?.terminateChallenge();
         }

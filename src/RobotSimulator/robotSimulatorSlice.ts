@@ -17,6 +17,7 @@ export interface Sensors {
   contactSensors: Sensor[];
   gyroscopeSensors: Sensor[];
   colorSensors: Sensor[];
+  motors: Sensor[];
 }
 
 interface IRobotSimulatorState {
@@ -37,6 +38,7 @@ export const robotSimulatorSlice = createSlice({
       contactSensors: [],
       gyroscopeSensors: [],
       colorSensors: [],
+      motors: [],
     },
   } as IRobotSimulatorState,
   name: "simulator",
@@ -61,17 +63,27 @@ export const getMotorStats = (state: RootState) =>
 export const getSensors = (state: RootState) => state.simulator.sensors;
 
 export function specToSensors(spec: IRobotSpec): Sensors {
-  let isDist = (x: BasicSensorSpec) => x.type === "distance-sensor";
-  let isContact = (x: BasicSensorSpec) => x.type === "contact-sensor";
-  let isGyro = (x: BasicSensorSpec) => x.type === "gyroscope-sensor";
-  let isColor = (x: ComplexSensorSpec) => x.type === "color-sensor";
+  const isDist = (x: BasicSensorSpec) => x.type === "distance-sensor";
+  const isContact = (x: BasicSensorSpec) => x.type === "contact-sensor";
+  const isGyro = (x: BasicSensorSpec) => x.type === "gyroscope-sensor";
+  const isColor = (x: ComplexSensorSpec) => x.type === "color-sensor";
 
-  let convertToObj = (x: BasicSensorSpec | ComplexSensorSpec) => {
+  const convertToObj = (x: BasicSensorSpec | ComplexSensorSpec) => {
     return {
       channel: x.channel,
       mountFaceName: `${SensorMountingFace[x.mountFace]}`,
     };
   };
+
+  const motors: Sensor[] = [];
+  spec.drivetrain.motorGroups.forEach((motorGroup) => {
+    motorGroup.motors.forEach((motor) => {
+      motors.push({
+        channel: motor.channel,
+        mountFaceName: motorGroup.wheelGroup,
+      });
+    });
+  });
 
   return {
     distanceSensors: spec.basicSensors?.filter(isDist).map(convertToObj) || [],
@@ -79,5 +91,6 @@ export function specToSensors(spec: IRobotSpec): Sensors {
       spec.basicSensors?.filter(isContact).map(convertToObj) || [],
     gyroscopeSensors: spec.basicSensors?.filter(isGyro).map(convertToObj) || [],
     colorSensors: spec.complexSensors?.filter(isColor).map(convertToObj) || [],
+    motors,
   };
 }

@@ -19,9 +19,9 @@ export function addStartBlock() {
       },
     ],
     (block) => {
-      var code = JavaScript.statementToCode(block, "CODE");
+      const code = JavaScript.statementToCode(block, "CODE");
 
       return `function start() { \n${code}\n}\n`;
-    }
+    },
   );
 }

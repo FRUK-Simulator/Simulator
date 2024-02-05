@@ -201,7 +201,7 @@ class Lesson1Challenge implements ChallengeListener {
   private challengeOutcomePending: boolean;
   constructor(
     public finishPosition: CoreSimTypes.Vector2d,
-    public badZones: CoreSpecs.IZoneSpec[]
+    public badZones: CoreSpecs.IZoneSpec[],
   ) {
     this.challengeOutcomePending = true;
   }

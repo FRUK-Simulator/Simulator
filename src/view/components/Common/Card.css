@@ -18,7 +18,9 @@
   margin-right: calc(var(--more-margin) * 2);
   padding: var(--normal-padding);
 
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .card--title-and-status {

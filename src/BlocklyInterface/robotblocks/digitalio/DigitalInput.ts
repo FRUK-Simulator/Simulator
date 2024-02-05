@@ -38,6 +38,6 @@ export function addDigitalInputBlocks() {
       const channelNumber = block.getFieldValue("channel");
 
       return `setDigitalOutput(${channelNumber}, ${grabberValue});\n`;
-    }
+    },
   );
 }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef } from "react";
+import { FunctionComponent, useRef } from "react";
 import { useSelector } from "react-redux";
 import { getCode } from "../JavascriptVM/vmSlice";
 import SyntaxHighlighter from "react-syntax-highlighter";
