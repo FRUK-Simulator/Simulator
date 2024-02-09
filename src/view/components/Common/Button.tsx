@@ -1,8 +1,9 @@
-import { FunctionComponent, HTMLAttributes } from "react";
+import { FunctionComponent, HTMLAttributes, ReactNode } from "react";
 import "./Button.css";
 import { Link, LinkProps } from "react-router-dom";
 import { IconName, Icon } from "./Icon";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export enum ButtonVariant {
   standard = "",
   success = "btn--success",
@@ -89,6 +90,6 @@ export const LinkButton: FunctionComponent<
   </Link>
 );
 
-export const ButtonBar: FunctionComponent = ({ children }) => (
-  <div className="btn-bar">{children}</div>
-);
+export const ButtonBar: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => <div className="btn-bar">{children}</div>;

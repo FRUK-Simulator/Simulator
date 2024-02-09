@@ -1,4 +1,10 @@
-import { FunctionComponent, useCallback, useEffect, useRef } from "react";
+import {
+  FunctionComponent,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import "./DraggableContainer.css";
 
 type Coordinates = {
@@ -24,6 +30,7 @@ function withinWindow(coordinates: Coordinates, boundingRect: DOMRect) {
  */
 export const DraggableContainer: FunctionComponent<{
   className?: string;
+  children: ReactNode;
 }> = ({ children, className = "" }) => {
   const elementRef = useRef<HTMLElement | null>();
   const dragOffsetRef = useRef<{ x: number; y: number } | null>(null);
@@ -58,7 +65,7 @@ export const DraggableContainer: FunctionComponent<{
     };
   }, []);
 
-  const onDragEnd = useCallback((e) => {
+  const onDragEnd = useCallback((e: React.DragEvent) => {
     if (!elementRef.current || !dragOffsetRef.current) {
       return;
     }

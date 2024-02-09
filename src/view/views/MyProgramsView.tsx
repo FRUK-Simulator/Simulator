@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   blocklySlice,
   getBlocklyPrograms,
@@ -27,7 +27,8 @@ import {
 export const MyProgramsView = () => {
   const programs = useSelector(getBlocklyPrograms);
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
+  const navigate = useNavigate();
 
   const setProgramCallback = useCallback(
     (program: Program) => {
@@ -50,9 +51,9 @@ export const MyProgramsView = () => {
         }
       }
 
-      history.replace("?view=code");
+      navigate("?view=code");
     },
-    [dispatch, history, programs],
+    [dispatch, navigate, programs],
   );
 
   const newProgramCallback = useProgramDialog("create");
@@ -61,6 +62,7 @@ export const MyProgramsView = () => {
     try {
       const program = await importFromFile();
       dispatch(blocklySlice.actions.addBlocklyProgram({ prog: program }));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       dispatch(
         messageSlice.actions.addMessage({

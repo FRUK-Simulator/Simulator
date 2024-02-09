@@ -1,10 +1,10 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import "./Card.css";
 import { As } from "./Utilities/As";
 
-export const Card: FunctionComponent = ({ children }) => (
-  <div className="card">{children}</div>
-);
+export const Card: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => <div className="card">{children}</div>;
 
 export const CardImage: FunctionComponent<
   { src: string } & { imgProps?: React.HTMLAttributes<HTMLImageElement> }
@@ -26,6 +26,8 @@ export const CardTitle: FunctionComponent<{
   );
 };
 
-export const CardBody: FunctionComponent = ({ children }) => {
+export const CardBody: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   return <div className="card--body">{children}</div>;
 };

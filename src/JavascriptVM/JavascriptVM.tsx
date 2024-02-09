@@ -1,15 +1,16 @@
 import {
-  FunctionComponent,
   useState,
   createContext,
   useEffect,
   useRef,
   useContext,
+  FC,
+  ReactNode,
 } from "react";
 
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { vmSlice, getCode, getExecutionSpeed, getCameraMode } from "./vmSlice";
-import { AppDispatch } from "../state/store";
+import { AppDispatch, RootState } from "../state/store";
 import {
   BlocklyInterpreter,
   ExecutionState,
@@ -86,7 +87,7 @@ export const VMContext = createContext<IVirtualMachine | null>(null);
  * const vmControls = useContext(VMContext);
  * vmControls.start();
  */
-export const VMProvider: FunctionComponent = ({ children }) => {
+export const VMProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [interpreter, setInterpreter] = useState<BlocklyInterpreter | null>(
     null,
   );
@@ -99,7 +100,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(getCode);
 
-  const store = useStore();
+  const store = useStore<RootState>();
 
   /**
    * Syncs the redux state with the interpreter state.
@@ -329,6 +330,7 @@ export const VMProvider: FunctionComponent = ({ children }) => {
               }
               return 0.0;
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getComplexSensorValue: (channel: number, type: string): any => {
               const value = robotRef.current?.getComplexSensorValue(
                 channel,

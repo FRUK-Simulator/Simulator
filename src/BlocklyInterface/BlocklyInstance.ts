@@ -1,25 +1,22 @@
-import Blockly, { Events, BlockSvg } from "blockly";
 import "blockly/javascript";
+import Blockly, { Events } from "blockly";
 import { JavaScript } from "./robotblocks/AddBlockUtil";
 
-export class BlocklyUiEvent extends Events.Ui {
-  public element: string | undefined;
-}
+export const BlocklyUiEvent = Events.UiBase;
 
 export type BlocklyEvent =
   | Events.BlockChange
   | Events.BlockMove
-  | Events.Create
-  | Events.Delete
-  | BlocklyUiEvent;
+  | Events.BlockCreate
+  | Events.BlockDelete
+  | Events.Selected;
 
-export enum BlocklyEventName {
-  BlockChange = "BlockChange",
-  BlockMove = "BlockMove",
-  BlockCreate = "BlockCreate",
-  BlockDelete = "BlockDelete",
-  Ui = "Ui",
-}
+export type BlocklyEventName =
+  | "BlockChange"
+  | "BlockMove"
+  | "BlockCreate"
+  | "BlockDelete"
+  | "Selected";
 
 export const BLOCKLY_HIGHLIGHT_PREFIX = "highlightBlock";
 
@@ -103,7 +100,7 @@ class BlocklyInstance {
     eventName: BlocklyEventName,
     fn: (event: BlocklyEvent) => void,
   ) {
-    this.workspace.addChangeListener((event: BlocklyEvent) => {
+    this.workspace.addChangeListener((event) => {
       if (event instanceof Events[eventName]) {
         fn(event);
       }
@@ -111,18 +108,18 @@ class BlocklyInstance {
   }
 
   get selected() {
-    return Blockly.selected?.id || "";
+    return Blockly.getSelected()?.id || "";
   }
 
   set selected(id) {
     if (id) {
-      const block = this.workspace.getBlockById(id) as BlockSvg;
+      const block = this.workspace.getBlockById(id);
 
       if (block) {
         block.select();
       }
     } else {
-      const block = Blockly.selected as BlockSvg;
+      const block = Blockly.getSelected();
 
       if (block) {
         block.unselect();
@@ -132,3 +129,13 @@ class BlocklyInstance {
 }
 
 export { BlocklyInstance };
+
+/**
+ * Return the BlocklyInstance's current block tree as a
+ * XML-formatted string.
+ */
+export function getCurrentBlocklyInstanceCode(): string {
+  const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
+  const xml_text = Blockly.Xml.domToText(xml);
+  return xml_text;
+}

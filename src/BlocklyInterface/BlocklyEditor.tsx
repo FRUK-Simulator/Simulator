@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { vmSlice, isExecuting } from "../JavascriptVM/vmSlice";
 import { AppDispatch } from "../state/store";
 import {
-  BlocklyEvent,
-  BlocklyUiEvent,
-  BlocklyEventName,
   BlocklyInstance,
+  getCurrentBlocklyInstanceCode,
 } from "./BlocklyInstance";
 import {
   getHighlightedBlockId,
@@ -23,18 +21,8 @@ import Blockly, { WorkspaceSvg } from "blockly";
 import { getDefaultToolbox, getEmptyToolbox } from "./toolbox";
 import { loadBlocklyXml } from "../core/blockly/programs";
 
-/**
- * Return the BlocklyInstance's current block tree as a
- * XML-formatted string.
- */
-export function getCurrentBlocklyInstanceCode(): string {
-  const xml = Blockly.Xml.workspaceToDom(Blockly.getMainWorkspace());
-  const xml_text = Blockly.Xml.domToText(xml);
-  return xml_text;
-}
-
 export interface BlocklyEditorProps {
-  blocklyInitializedCallback: Function;
+  blocklyInitializedCallback: () => void;
 }
 
 /**
@@ -88,20 +76,10 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
       dispatch(vmSlice.actions.setCode({ code: blocklyRef.current.getCode() }));
     }
 
-    function handleBlocklyUiEvent(event: BlocklyEvent) {
-      if (event instanceof BlocklyUiEvent) {
-        if (!blocklyRef.current) {
-          return;
-        }
-
-        if (event.element === "selected") {
-          dispatch(
-            blocklySlice.actions.selectedBlock({
-              blockId: blocklyRef.current.selected || "",
-            }),
-          );
-        }
-      }
+    function handleBlocklyUiEvent() {
+      // handle block selection event
+      // used to dispatch selectedBlock() redux event
+      // seems no longer useful, consider remove (TODO: remove)
     }
 
     resizeBlocklyRegion();
@@ -113,29 +91,14 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
       Blockly.getMainWorkspace().clear();
       loadBlocklyXml(currentBlocklyCode, Blockly.getMainWorkspace());
 
-      blocklyRef.current.addChangeListener(
-        BlocklyEventName.BlockMove,
-        handleBlocklyChange,
-      );
-      blocklyRef.current.addChangeListener(
-        BlocklyEventName.BlockChange,
-        handleBlocklyChange,
-      );
+      blocklyRef.current.addChangeListener("BlockMove", handleBlocklyChange);
+      blocklyRef.current.addChangeListener("BlockChange", handleBlocklyChange);
 
-      blocklyRef.current.addChangeListener(
-        BlocklyEventName.BlockCreate,
-        handleBlocklyChange,
-      );
+      blocklyRef.current.addChangeListener("BlockCreate", handleBlocklyChange);
 
-      blocklyRef.current.addChangeListener(
-        BlocklyEventName.BlockDelete,
-        handleBlocklyChange,
-      );
+      blocklyRef.current.addChangeListener("BlockDelete", handleBlocklyChange);
 
-      blocklyRef.current.addChangeListener(
-        BlocklyEventName.Ui,
-        handleBlocklyUiEvent,
-      );
+      blocklyRef.current.addChangeListener("Selected", handleBlocklyUiEvent);
 
       // This callback notify the parent component that we initialized
       // Blockly and it can now access it.
@@ -168,6 +131,8 @@ export const BlocklyEditor: FunctionComponent<BlocklyEditorProps> = ({
     return window.removeEventListener.bind(window, "resize", onResizeHandler);
   });
 
+  // there is lack of clarity on what this effect is supposed to do
+  // potentially no longer useful, along with register handleBlocklyUiEvent()
   useEffect(() => {
     if (blocklyRef.current) {
       if (highlightedBlock) {

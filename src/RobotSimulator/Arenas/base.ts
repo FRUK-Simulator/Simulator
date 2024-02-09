@@ -41,6 +41,7 @@ export interface ChallengeConfig {
   arenaConfig: ArenaConfig;
   eventListener?: ChallengeListener;
   descriptions?: ChallengeDescription;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   image?: any;
   maxBlocksConfig?: MaxBlockConfig;
   robotConfig?: RobotConfig;

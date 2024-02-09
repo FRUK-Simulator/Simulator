@@ -7,13 +7,15 @@
 // The below lines are the additions to the FTC original general block
 // definition to cover transpiled code parts
 import Blockly from "blockly";
+import { javascriptGenerator } from "blockly/javascript";
+
 const functionColor = 289;
 const commentColor = 200;
 
 function createNonEditableField(label) {
   var field = new Blockly.FieldTextInput(label);
   field.CURSOR = "";
-  field.showEditor_ = function (opt_quietInput) {};
+  field.showEditor_ = function () {};
   return field;
 }
 
@@ -31,7 +33,7 @@ Blockly.Blocks["comment"] = {
   },
 };
 
-Blockly.JavaScript["comment"] = function (block) {
+javascriptGenerator.forBlock["comment"] = function (block) {
   return "// " + block.getFieldValue("COMMENT") + "\n";
 };
 
@@ -44,7 +46,7 @@ Blockly.Blocks["misc_null"] = {
   },
 };
 
-Blockly.JavaScript["misc_null"] = function (block) {
+javascriptGenerator.forBlock["misc_null"] = function () {
   return ["null", Blockly.JavaScript.ORDER_ATOMIC];
 };
 
@@ -64,7 +66,7 @@ Blockly.Blocks["misc_isNull"] = {
   },
 };
 
-Blockly.JavaScript["misc_isNull"] = function (block) {
+javascriptGenerator.forBlock["misc_isNull"] = function (block) {
   var value = Blockly.JavaScript.valueToCode(
     block,
     "VALUE",
@@ -90,7 +92,7 @@ Blockly.Blocks["misc_isNotNull"] = {
   },
 };
 
-Blockly.JavaScript["misc_isNotNull"] = function (block) {
+javascriptGenerator.forBlock["misc_isNotNull"] = function (block) {
   var value = Blockly.JavaScript.valueToCode(
     block,
     "VALUE",
@@ -132,7 +134,7 @@ Blockly.Blocks["misc_atan2"] = {
   },
 };
 
-Blockly.JavaScript["misc_atan2"] = function (block) {
+javascriptGenerator.forBlock["misc_atan2"] = function (block) {
   var y = Blockly.JavaScript.valueToCode(
     block,
     "Y",
@@ -160,7 +162,7 @@ Blockly.Blocks["misc_addItemToList"] = {
   },
 };
 
-Blockly.JavaScript["misc_addItemToList"] = function (block) {
+javascriptGenerator.forBlock["misc_addItemToList"] = function (block) {
   var item = Blockly.JavaScript.valueToCode(
     block,
     "ITEM",

@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { NotFoundView } from "./ErrorViews/NotFoundView";
 import { LandingView } from "./view/views/LandingView";
 import { SimulatorView } from "./view/views/SimulatorView";
@@ -8,16 +8,13 @@ import { SimulatorView } from "./view/views/SimulatorView";
  */
 export const AppRouter = () => {
   return (
-    <Switch>
-      <Route path="/" exact>
-        <LandingView />
-      </Route>
-      <Route path="/lessons/:lesson/challenges/:challenge/" exact>
-        <SimulatorView />
-      </Route>
-      <Route>
-        <NotFoundView />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route path="/" element={<LandingView />} />
+      <Route
+        path="lessons/:lesson/challenges/:challenge/"
+        element={<SimulatorView />}
+      />
+      <Route path="*" element={<NotFoundView />} />
+    </Routes>
   );
 };

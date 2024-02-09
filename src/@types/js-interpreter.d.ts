@@ -46,6 +46,7 @@ declare module "js-interpreter" {
      * var myInterpreter = new Interpreter(myCode, initFunc);
      * ```
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setProperty(globalObject: GlobalObject, key: string, value: any): void;
 
     /**
@@ -64,6 +65,7 @@ declare module "js-interpreter" {
      *
      * @returns the pseudo version of the object
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     nativeToPseudo(object: any): any;
 
     /**

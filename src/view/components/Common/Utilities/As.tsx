@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 
 export type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
@@ -12,6 +12,7 @@ export type Headings = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 export const As: FunctionComponent<{
   className?: string;
   as: Headings;
+  children: ReactNode;
 }> = ({ children, as, className = "" }) => {
   const renderMap: Record<typeof as, FunctionComponent> = {
     h1: () => <h1 className={className}>{children}</h1>,

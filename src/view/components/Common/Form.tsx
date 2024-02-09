@@ -42,7 +42,7 @@ interface IOption<T> {
   optionProps?: HTMLAttributes<HTMLOptionElement>;
 }
 
-type SelectFieldProps<T extends unknown> = {
+type SelectFieldProps<T> = {
   label: string;
   options: IOption<T>[];
   onChange: (selectedOption: IOption<T> | undefined) => void;

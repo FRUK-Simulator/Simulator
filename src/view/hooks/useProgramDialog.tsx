@@ -1,6 +1,5 @@
 import { FunctionComponent, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentBlocklyInstanceCode } from "../../BlocklyInterface/BlocklyEditor";
 import { Program } from "../../BlocklyInterface/ProgramExportImport";
 import {
   getCurrentBlocklyProgram,
@@ -13,7 +12,9 @@ import { ButtonVariant } from "../components/Common/Button";
 import { TextFormField, TextAreaFormField } from "../components/Common/Form";
 import { IconName } from "../components/Common/Icon";
 import { useDialog } from "../components/Dialog/Dialog";
+import { getCurrentBlocklyInstanceCode } from "../../BlocklyInterface/BlocklyInstance";
 
+// eslint-disable-next-line react-refresh/only-export-components
 const DialogContent: FunctionComponent<{
   title: string;
   description: string;
