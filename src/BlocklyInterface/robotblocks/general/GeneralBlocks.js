@@ -47,7 +47,7 @@ Blockly.Blocks["misc_null"] = {
 };
 
 javascriptGenerator.forBlock["misc_null"] = function () {
-  return ["null", Blockly.JavaScript.ORDER_ATOMIC];
+  return ["null", javascriptGenerator.ORDER_ATOMIC];
 };
 
 Blockly.Blocks["misc_isNull"] = {
@@ -67,13 +67,13 @@ Blockly.Blocks["misc_isNull"] = {
 };
 
 javascriptGenerator.forBlock["misc_isNull"] = function (block) {
-  var value = Blockly.JavaScript.valueToCode(
+  var value = javascriptGenerator.valueToCode(
     block,
     "VALUE",
-    Blockly.JavaScript.ORDER_EQUALITY,
+    javascriptGenerator.ORDER_EQUALITY,
   );
   var code = value + " === null";
-  return [code, Blockly.JavaScript.ORDER_EQUALITY];
+  return [code, javascriptGenerator.ORDER_EQUALITY];
 };
 
 Blockly.Blocks["misc_isNotNull"] = {
@@ -93,13 +93,13 @@ Blockly.Blocks["misc_isNotNull"] = {
 };
 
 javascriptGenerator.forBlock["misc_isNotNull"] = function (block) {
-  var value = Blockly.JavaScript.valueToCode(
+  var value = javascriptGenerator.valueToCode(
     block,
     "VALUE",
-    Blockly.JavaScript.ORDER_EQUALITY,
+    javascriptGenerator.ORDER_EQUALITY,
   );
   var code = value + " !== null";
-  return [code, Blockly.JavaScript.ORDER_EQUALITY];
+  return [code, javascriptGenerator.ORDER_EQUALITY];
 };
 
 Blockly.Blocks["misc_atan2"] = {
@@ -135,18 +135,18 @@ Blockly.Blocks["misc_atan2"] = {
 };
 
 javascriptGenerator.forBlock["misc_atan2"] = function (block) {
-  var y = Blockly.JavaScript.valueToCode(
+  var y = javascriptGenerator.valueToCode(
     block,
     "Y",
-    Blockly.JavaScript.ORDER_COMMA,
+    javascriptGenerator.ORDER_COMMA,
   );
-  var x = Blockly.JavaScript.valueToCode(
+  var x = javascriptGenerator.valueToCode(
     block,
     "X",
-    Blockly.JavaScript.ORDER_COMMA,
+    javascriptGenerator.ORDER_COMMA,
   );
   var code = "Math.atan2(" + y + ", " + x + ") / Math.PI * 180";
-  return [code, Blockly.JavaScript.ORDER_DIVISION];
+  return [code, javascriptGenerator.ORDER_DIVISION];
 };
 
 Blockly.Blocks["misc_addItemToList"] = {
@@ -163,15 +163,15 @@ Blockly.Blocks["misc_addItemToList"] = {
 };
 
 javascriptGenerator.forBlock["misc_addItemToList"] = function (block) {
-  var item = Blockly.JavaScript.valueToCode(
+  var item = javascriptGenerator.valueToCode(
     block,
     "ITEM",
-    Blockly.JavaScript.ORDER_NONE,
+    javascriptGenerator.ORDER_NONE,
   );
-  var list = Blockly.JavaScript.valueToCode(
+  var list = javascriptGenerator.valueToCode(
     block,
     "LIST",
-    Blockly.JavaScript.ORDER_MEMBER,
+    javascriptGenerator.ORDER_MEMBER,
   );
   return list + ".push(" + item + ")";
 };
