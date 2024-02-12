@@ -1,12 +1,16 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { As } from "./Utilities/As";
 import "./List.css";
 
-export const List: FunctionComponent = ({ children }) => {
+export const List: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   return <ul className="list">{children}</ul>;
 };
 
-export const ListItem: FunctionComponent = ({ children }) => {
+export const ListItem: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   return <li className="list--item">{children}</li>;
 };
 
@@ -22,6 +26,8 @@ export const ListItemHeader: FunctionComponent<{
   );
 };
 
-export const ListItemContent: FunctionComponent = ({ children }) => {
+export const ListItemContent: FunctionComponent<{ children: ReactNode }> = ({
+  children,
+}) => {
   return <p className="list--item__content">{children}</p>;
 };

@@ -55,6 +55,7 @@ export type BlocklyInterpreterCallbacks = {
    * Gets the value of the given sensor on the curent robot. value is between 0.0 and 1.0.
    */
   getSensorValue?: (port: number) => number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getComplexSensorValue?: (port: number, type: string) => any;
 };
 
@@ -165,6 +166,7 @@ export class BlocklyInterpreter {
       );
 
       const getComplexSensorValue = interpreter.createNativeFunction(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (port: number, type: string): any => {
           if (callbacks.getComplexSensorValue) {
             return interpreter.nativeToPseudo(

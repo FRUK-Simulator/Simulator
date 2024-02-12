@@ -1,4 +1,4 @@
-import Blockly from "blockly";
+import Blockly, { Field } from "blockly";
 import { addCustomBlock, JavaScript } from "../AddBlockUtil";
 
 interface GamepadBlock {
@@ -17,16 +17,19 @@ export function addGamepadBlocks() {
   // getPropertyColor
   const getPropertyColor = 151;
 
-  function createGamepadDropdown() {
-    const CHOICES = [["gamepad1", "gamepad1"]];
-    return new Blockly.FieldDropdown(CHOICES);
+  function createGamepadDropdown(): Field<string> {
+    return new Blockly.FieldDropdown([["gamepad1", "gamepad1"]]);
+  }
+
+  function createChoicesDropdown(choices: [string, string][]): Field<string> {
+    return new Blockly.FieldDropdown(choices);
   }
 
   const propertyProcessor: GamepadBlock = {
     init: function () {
       const block = this as Blockly.Block;
 
-      const PROPERTY_CHOICES = [
+      const PROPERTY_CHOICES: [string, string][] = [
         ["A", "A"],
         ["B", "B"],
         ["X", "X"],
@@ -36,12 +39,13 @@ export function addGamepadBlocks() {
         ["DpadLeft", "DpadLeft"],
         ["DpadRight", "DpadRight"],
       ];
+
       block.setOutput(true); // no type, for compatibility
       block
         .appendDummyInput()
         .appendField(createGamepadDropdown(), "IDENTIFIER")
         .appendField(".")
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
+        .appendField(createChoicesDropdown(PROPERTY_CHOICES), "PROP");
       block.setColour(getPropertyColor);
 
       const TOOLTIPS = [
@@ -80,7 +84,7 @@ export function addGamepadBlocks() {
     init: function () {
       const block = this as Blockly.Block;
 
-      const PROPERTY_CHOICES = [
+      const PROPERTY_CHOICES: [string, string][] = [
         ["A", "A"],
         ["B", "B"],
         ["X", "X"],
@@ -96,7 +100,7 @@ export function addGamepadBlocks() {
         .appendDummyInput()
         .appendField(createGamepadDropdown(), "IDENTIFIER")
         .appendField(".")
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
+        .appendField(createChoicesDropdown(PROPERTY_CHOICES), "PROP");
       block.setColour(getPropertyColor);
 
       const TOOLTIPS = [
@@ -129,7 +133,7 @@ export function addGamepadBlocks() {
     init: function () {
       const block = this as Blockly.Block;
 
-      const PROPERTY_CHOICES = [
+      const PROPERTY_CHOICES: [string, string][] = [
         ["LeftStickX", "LeftStickX"],
         ["LeftStickY", "LeftStickY"],
         ["LeftTrigger", "LeftTrigger"],
@@ -142,7 +146,7 @@ export function addGamepadBlocks() {
         .appendDummyInput()
         .appendField(createGamepadDropdown(), "IDENTIFIER")
         .appendField(".")
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), "PROP");
+        .appendField(createChoicesDropdown(PROPERTY_CHOICES), "PROP");
       block.setColour(getPropertyColor);
       const TOOLTIPS = [
         [

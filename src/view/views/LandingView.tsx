@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import "./LandingView.css";
 import { getChallengesPerArena } from "../../RobotSimulator/ChallengeConfigLoader";
 import {
@@ -18,10 +18,10 @@ import {
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 const DEFAULT_LANDING_DESCRIPTION = "Solve this challenge!";
 
-const LessonSection: FunctionComponent<{ title: string }> = ({
-  title,
-  children,
-}) => {
+const LessonSection: FunctionComponent<{
+  title: string;
+  children: ReactNode;
+}> = ({ title, children }) => {
   return (
     <div className="lesson-section">
       <h1 className="lesson-title">{title}</h1>

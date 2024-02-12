@@ -62,7 +62,7 @@ export function loadBlocklyXml(xml: string, workspace: Workspace) {
   build(xml, workspace);
 }
 function build(xml: string, workspace: Workspace): void {
-  const element = Blockly.Xml.textToDom(xml);
+  const element = Blockly.utils.xml.textToDom(xml);
   Blockly.Xml.domToWorkspace(element, workspace);
 }
 

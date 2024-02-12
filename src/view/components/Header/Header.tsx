@@ -1,6 +1,6 @@
 import "./Header.css";
 import { Divider } from "../Common/Divider";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import brandImage from "./logo.gif";
 import { useSelector } from "react-redux";
 import { getCurrentBlocklyProgram } from "../../../BlocklyInterface/blocklySlice";
@@ -18,10 +18,10 @@ export const Brand = () => {
 };
 
 export const Header = () => {
-  const match = useRouteMatch<{ lesson: string; challenge: string }>({
+  const match = useMatch({
     path: "/lessons/:lesson/challenges/:challenge/",
-    strict: true,
-    sensitive: true,
+    end: true,
+    caseSensitive: true,
   });
 
   const currentProgram = useSelector(getCurrentBlocklyProgram);

@@ -24,6 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 workspace.code-workspace
 /.vs/
-
-# ignore .npmrc to allow devs to set thier own settings
-.npmrc

@@ -2,11 +2,13 @@ import { FunctionComponent } from "react";
 
 import "./Icon.css";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export enum IconName {
   start = "fas fa-play",
   pause = "fas fa-pause",
   step = "fas fa-forward",
   stop = "fas fa-stop",
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   run = "fas fa-play",
   view = "fas fa-eye",
   save = "fas fa-save",

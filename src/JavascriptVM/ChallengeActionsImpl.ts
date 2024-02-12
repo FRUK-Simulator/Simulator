@@ -10,6 +10,7 @@ import {
 export class ChallengeActionsImpl implements ChallengeActions {
   constructor(
     private sim: Sim3D,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private dispatch: (a: any) => void,
     private challengeId: string,
     private terminateCallback: () => void,

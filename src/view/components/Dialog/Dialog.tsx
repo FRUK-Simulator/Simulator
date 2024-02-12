@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   FunctionComponent,
   ReactNode,
@@ -12,6 +12,7 @@ import { Button, ButtonBar, ButtonVariant } from "../Common/Button";
 import { IconName } from "../Common/Icon";
 import "./Dialog.css";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export enum DialogVariant {
   info = "dialog--info",
   danger = "dialog--danger",
@@ -164,7 +165,7 @@ const Dialog: FunctionComponent<{
   );
 };
 
-export const DialogProvider: FunctionComponent = ({ children }) => {
+export const DialogProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [dialogContext, setDialogContext] =
     useState<IDialogContext>(defaultDialogContext);
 
@@ -179,6 +180,7 @@ export const DialogProvider: FunctionComponent = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useDialog = () => {
   const dialogContext = useContext(DialogContext);
 
