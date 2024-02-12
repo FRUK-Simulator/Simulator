@@ -138,8 +138,8 @@ export const saveBlocklyState = (state: RootState) => {
   try {
     const serializedState = JSON.stringify(state.blockly);
     localStorage.setItem(localStorageKey, serializedState);
-  } catch {
-    /* empty */
+  } catch (err) {
+    console.error(err)
   }
 };
 
