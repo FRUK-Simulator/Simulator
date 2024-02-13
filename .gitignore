@@ -24,3 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 workspace.code-workspace
 /.vs/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
