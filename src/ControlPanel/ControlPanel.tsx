@@ -5,7 +5,7 @@ import { getMotorPower } from "../RobotSimulator/robotSimulatorSlice";
 import { Slider, IconButton } from "@fluentui/react";
 import { GameController } from "./GameController/GameController";
 import { SimulatorLog } from "./SimulatorLog/SimulatorLog";
-import { ToggleButtonBar } from "../Components/ToggleButtonBar";
+import { ToggleButtonBar } from "./ToggleButtonBar";
 import { useVM } from "../JavascriptVM/JavascriptVM";
 
 enum ControlPanelView {

@@ -69,7 +69,7 @@ export const LandingView = () => {
           {lesson.challenges.map((challenge) => (
             <Link
               className="lesson-link"
-              to={`/lessons/${lesson.title}/challenges/${challenge.name}/`}
+              to={`lessons/${lesson.title}/challenges/${challenge.name}/`}
               key={challenge.name}
             >
               <Card>

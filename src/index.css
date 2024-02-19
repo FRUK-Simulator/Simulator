@@ -1,28 +1,10 @@
-body {
-  margin: 0;
-  font-family: Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--main-bg-color);
-}
+@import url(normalize.css);
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-a {
-  /* No underlines for links */
-  text-decoration-line: none;
-  color: unset;
-}
-
-a:visited {
-  /* Remove text color when clicking on already visited links */
-  color: unset;
-}
-
-* {
-  /* The height is content height + margin + border */
-  box-sizing: border-box;
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-family);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
+  line-height: var(--lineheight-text);
+  color: var(--color-text-default);
 }

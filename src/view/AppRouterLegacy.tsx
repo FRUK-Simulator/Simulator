@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import { NotFoundView } from "./ErrorViews/NotFoundView";
-import { LandingView } from "./view/views/LandingView";
-import { SimulatorView } from "./view/views/SimulatorView";
+import { NotFoundView } from "../ErrorViews/NotFoundView";
+import { LandingView } from "./views/LandingView";
+import { SimulatorView } from "./views/SimulatorView";
 
 /**
  * This component provides clientside routing. Top level routes should be defined here.
  */
-export const AppRouter = () => {
+export const AppRouterLegacy = () => {
   return (
     <Routes>
-      <Route path="/" element={<LandingView />} />
+      <Route index element={<LandingView />} />
       <Route
         path="lessons/:lesson/challenges/:challenge/"
         element={<SimulatorView />}

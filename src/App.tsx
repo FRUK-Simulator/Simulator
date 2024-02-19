@@ -1,14 +1,17 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, Suspense, lazy } from "react";
 import { Provider } from "react-redux";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { store } from "./state/store";
-import { AppRouter } from "./AppRouter";
-import { BrowserRouter as Router } from "react-router-dom";
-
-import "./App.css";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
-import { Header } from "./view/components/Header/Header";
 import { DialogProvider } from "./view/components/Dialog/Dialog";
-import { MessageCenter } from "./view/components/MessageCenter/MessageCenter";
+import { KobotThemeProvider } from "./ui/KobotThemeProvider";
+
+// During the transition to 2024 new design, we are lazy loading
+// legacy and new apps side by side here so each module can load
+// and unload it's own styles in isolation, which helps keep the
+// legacy app functional as a reference
+const LazyAppLegacy = lazy(() => import("./view/AppLegacy"));
+const LazyAppRoutes = lazy(() => import("./AppRoutes"));
 
 /**
  * This is exported seperately so that tests can provide their own providers. This
@@ -16,26 +19,39 @@ import { MessageCenter } from "./view/components/MessageCenter/MessageCenter";
  */
 export const App: FunctionComponent = () => {
   return (
-    <div className="app-container">
-      <Header />
-      <MessageCenter />
-      <AppRouter />
-    </div>
+    <Routes>
+      <Route
+        path="legacy/*"
+        element={
+          <Suspense fallback={<>Loading...</>}>
+            <LazyAppLegacy />
+          </Suspense>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <Suspense fallback={<>Loading...</>}>
+            <LazyAppRoutes />
+          </Suspense>
+        }
+      />
+    </Routes>
   );
 };
 
-const AppWithProviders: FunctionComponent = () => {
+export const AppWithProviders: FunctionComponent = () => {
   return (
     <Router>
       <Provider store={store}>
         <VMProvider>
-          <DialogProvider>
-            <App />
-          </DialogProvider>
+          <KobotThemeProvider>
+            <DialogProvider>
+              <App />
+            </DialogProvider>
+          </KobotThemeProvider>
         </VMProvider>
       </Provider>
     </Router>
   );
 };
-
-export default AppWithProviders;

@@ -1,0 +1,70 @@
+/* Legacy variables stylesheet */
+:root {
+  /* General Values */
+  --main-bg-color: #ffffff;
+  --text-color-dark: #333333;
+  --text-color-light: #eeeeee;
+  --text-color-disabled: #a8abb8;
+
+  /* Padding */
+  --less-padding: 0.5em;
+  --normal-padding: 1.5em;
+  --more-padding: 2em;
+
+  /* Margins */
+  --less-margin: 0.25em;
+  --normal-margin: 0.5em;
+  --more-margin: 0.75em;
+
+  /* Primary Color and Hues */
+  --primary-color-light: #1d506d;
+  --primary-color: #17435c;
+  --primary-color-dark: #12374d;
+  --primary-color-darker: #0d293a;
+  --primary-color-darkest: #081e2b;
+
+  --highlight-color: #157efb;
+  --highlight-color-dark: #0b60c9;
+  --highlight-color-darkest: #09448b;
+  --highlight-color-light: #2687fd;
+  --highlight-color-lightest: #3992fd;
+
+  /* Accent Color and Hues */
+  --accent-color: #007c9b;
+  --accent-color-dark: #006d88;
+
+  /* Status Colors */
+  --success-color: #c8e6c9;
+  --success-color-dark: #81b984;
+
+  --danger-color: #ffcdd2;
+  --danger-color-dark: #f08c96;
+
+  --warning-color: #fccf8d;
+  --info-color: #b3e5fc;
+  --trophy-color: goldenrod;
+
+  /* General Colors */
+  --color-white: #ffffff;
+  --color-light-gray: #eeeeee;
+  --color-gray: #dddddd;
+
+  /* Border Radiuses */
+  --border-radius: 10px;
+  --border-radius-rounder: 20px;
+
+  /* Header */
+  --header-height: 87px;
+
+  /* Toolbar */
+  /* The total height of the toolbar */
+  --toolbar-height: 50px;
+  --toolbar-width: 50%;
+
+  /* Z-Indexes */
+  --message-z-index: 300;
+  --dialog-z-index: 250;
+  --gamepad-z-index: 200;
+  --header-z-index: 150;
+  --toolbar-z-index: 100;
+}
