@@ -50,3 +50,43 @@ registry = https://registry.npmjs.org
 ```
 
 Also make sure to disconnect from any proxy or vpn you are using.
+
+## End-to-End Testing
+
+This project is using Playwright to run end-to-end tests. This is how you can use it:
+
+Runs the end-to-end tests:
+
+```
+npx playwright test
+```
+
+Starts the interactive UI mode:
+
+```
+npx playwright test --ui
+```
+
+Runs the tests only on Desktop Chrome:
+
+```
+npx playwright test --project=chromium
+```
+
+Runs the tests in a specific file:
+
+```
+npx playwright test example
+```
+
+Runs the tests in debug mode:
+
+```
+npx playwright test --debug
+```
+
+Auto generate tests with Codegen:
+
+```
+npx playwright codegen
+```
