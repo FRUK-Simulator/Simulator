@@ -90,3 +90,12 @@ Auto generate tests with Codegen:
 ```
 npx playwright codegen
 ```
+
+## Semantic Release
+
+This project uses [semantic-release](https://semantic-release.gitbook.io/semantic-release/) to manage github releases and changelogs.
+When changes merged to `main` branch, GitHub Actions will trigger a release workflow that will create a new release. It would be useful to follow the commit message convention to make sure the release is done correctly. Although this is not a strict requirement.
+
+The current commit message convention is based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+Those rules are customizable in the `.releaserc.json` file. [Guidelines](https://github.com/semantic-release/commit-analyzer?tab=readme-ov-file#release-rules)
