@@ -1,69 +1,63 @@
 :root {
-  /* General Values */
-  --main-bg-color: #ffffff;
-  --text-color-dark: #333333;
-  --text-color-light: #eeeeee;
-  --text-color-disabled: #a8abb8;
-
-  /* Padding */
-  --less-padding: 0.5em;
-  --normal-padding: 1.5em;
-  --more-padding: 2em;
-
-  /* Margins */
-  --less-margin: 0.25em;
-  --normal-margin: 0.5em;
-  --more-margin: 0.75em;
-
-  /* Primary Color and Hues */
-  --primary-color-light: #1d506d;
-  --primary-color: #17435c;
-  --primary-color-dark: #12374d;
-  --primary-color-darker: #0d293a;
-  --primary-color-darkest: #081e2b;
-
-  --highlight-color: #157efb;
-  --highlight-color-dark: #0b60c9;
-  --highlight-color-darkest: #09448b;
-  --highlight-color-light: #2687fd;
-  --highlight-color-lightest: #3992fd;
-
-  /* Accent Color and Hues */
-  --accent-color: #007c9b;
-  --accent-color-dark: #006d88;
-
-  /* Status Colors */
-  --success-color: #c8e6c9;
-  --success-color-dark: #81b984;
-
-  --danger-color: #ffcdd2;
-  --danger-color-dark: #f08c96;
-
-  --warning-color: #fccf8d;
-  --info-color: #b3e5fc;
-  --trophy-color: goldenrod;
-
-  /* General Colors */
+  --font-family: gesta, sans-serif;
+  --font-heading-family: ibm-plex-mono, sans-serif;
+  --font-weight-light: 300;
+  --font-weight-default: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-heading-bold: 800;
+  --font-size-x-display: 3.75rem;
+  --font-size-display: 3.063rem;
+  --font-size-xx-large: 2.5rem;
+  --font-size-x-large: 2rem;
+  --font-size-large: 1.44rem;
+  --font-size-medium: 1.25rem;
+  --font-size-default: 1rem;
+  --font-size-small: 0.833rem;
+  --font-size-x-small: 0.694rem;
+  --font-size-xx-small: 8px;
+  --lineheight-text: 1.4;
+  --lineheight-heading: 1.2;
+  --color-blue: #146efc;
+  --color-red: #e90563;
+  --color-red-light: #f269a1;
+  --color-blue-dark: #17425c;
+  --color-blue-mid: #215d83;
+  --color-green: #33c400;
+  --color-green-dark: #289002;
+  --color-blue-light: #deeef7;
   --color-white: #ffffff;
-  --color-light-gray: #eeeeee;
-  --color-gray: #dddddd;
-
-  /* Border Radiuses */
-  --border-radius: 10px;
-  --border-radius-rounder: 20px;
-
-  /* Header */
-  --header-height: 87px;
-
-  /* Toolbar */
-  /* The total height of the toolbar */
-  --toolbar-height: 50px;
-  --toolbar-width: 50%;
-
-  /* Z-Indexes */
-  --message-z-index: 300;
-  --dialog-z-index: 250;
-  --gamepad-z-index: 200;
-  --header-z-index: 150;
-  --toolbar-z-index: 100;
+  --color-black: #000000;
+  --color-grey: #deeef7;
+  --color-grey-mid: #d1d9de;
+  --color-button: var(--color-red);
+  --color-text-default: var(--color-blue-dark);
+  --color-text-alt: #fff;
+  --border-radius-x-small: 0.15rem;
+  --border-radius-small: 0.25rem;
+  --border-radius-medium: 0.5rem;
+  --border-radius-large: 1rem;
+  --border-radius-circle: 50%;
+  --border-width-hairline: 0.5px;
+  --border-width-thin: 1px;
+  --border-width-thick: 2px;
+  --box-shadow: 0 0 1em rgba(0, 0, 0, 0.25);
+  --grid-column-gap: 2vw;
+  --grid-row-gap: 2vh;
+  --max-width: 92rem;
+  --spacing-xx-small: 0.1rem;
+  --spacing-x-small: 0.125rem;
+  --spacing-small: 0.25rem;
+  --spacing: 0.5rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 1.5rem;
+  --spacing-x-large: 2rem;
+  --spacing-xx-large: 3rem;
+  --spacing-xxx-large: 4rem;
+  --spacing-xxxx-large: 5rem;
+  --duration-instantly: 0;
+  --duration-immediately: 0.1s;
+  --duration-quickly: 0.2s;
+  --duration-promptly: 0.5s;
+  --duration-slowly: 1s;
 }
