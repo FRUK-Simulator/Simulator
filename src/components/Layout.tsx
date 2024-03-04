@@ -11,9 +11,7 @@ const StyledLayout = styled.div`
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   flex: 1 0 auto;
-  background-color: var(--color-blue-light);
 `;
 
 export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
