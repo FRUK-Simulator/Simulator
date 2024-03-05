@@ -4,7 +4,7 @@ import "./index.css";
 
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { Home } from "./views/Home";
+import { Home } from "./views/Home/Home";
 import { NotFound } from "./views/NotFound";
 import { Sandbox } from "./views/Sandbox";
 import { Lessons } from "./views/Lessons/Lessons";

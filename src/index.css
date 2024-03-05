@@ -7,4 +7,5 @@ html {
   font-weight: var(--font-weight-default);
   line-height: var(--lineheight-text);
   color: var(--color-text-default);
+  background-color: var(--color-blue-light);
 }

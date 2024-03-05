@@ -21,3 +21,12 @@ export const H3 = styled.h3`
 export const H4 = styled.h4`
   font-size: var(--font-size-x-large);
 `;
+
+export const Subheading1 = styled.h5`
+  font-size: var(--font-size-medium);
+`;
+
+export const Subheading2 = styled.h6`
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-bold);
+`;
