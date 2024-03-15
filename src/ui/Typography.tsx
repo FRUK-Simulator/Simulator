@@ -24,9 +24,14 @@ export const H4 = styled.h4`
 
 export const Subheading1 = styled.h5`
   font-size: var(--font-size-medium);
+  font-family: var(--font-heading-family);
 `;
 
 export const Subheading2 = styled.h6`
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-bold);
+`;
+
+export const P = styled.p`
+  font-size: var(--font-size-default);
 `;

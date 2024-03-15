@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { H1, Subheading2 } from "../../ui/Typography";
+import { H1, Subheading2, P } from "../../ui/Typography";
 import { Button } from "../../ui/Button";
 import shapesBlueUrl from "./shapes-blue.svg";
 import shapesPinkUrl from "./shapes-pink.svg";
@@ -37,7 +37,7 @@ const BlockH1 = styled(H1)`
 
 // not in Design System spec but used in Figma page design
 // just do an adhoc implementation
-const Paragraph = styled.p`
+const Paragraph = styled(P)`
   font-size: 20px;
   line-height: 24px;
   margin-top: 16px;
@@ -67,7 +67,7 @@ export const Home = () => {
           robots!
         </Paragraph>
         <Spacer size={1} />
-        <Button type="blue" to="lessons">
+        <Button type="primary-blue" to="lessons">
           START LEARNING!
         </Button>
       </Block>
@@ -81,7 +81,7 @@ export const Home = () => {
           technical knowledge knowhow and soft skills to succeed in engineering.
         </Paragraph>
         <Spacer size={1} />
-        <Button type="blue" to="resources">
+        <Button type="primary-blue" to="resources">
           START TEACHING!
         </Button>
       </Block>

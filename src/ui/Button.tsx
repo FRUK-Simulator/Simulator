@@ -2,7 +2,7 @@ import { forwardRef, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-type ButtonType = "primary" | "blue" | "secondary" | "tertiary";
+type ButtonType = "primary" | "primary-blue" | "secondary" | "tertiary";
 
 const StyledButton = styled.button<{
   $type: ButtonType;
@@ -39,7 +39,7 @@ const StyledButton = styled.button<{
   `}
 
   ${(props) =>
-    props.$type === "blue" &&
+    props.$type === "primary-blue" &&
     `
     background-color: var(--color-blue-dark);
     color: var(--color-white);
