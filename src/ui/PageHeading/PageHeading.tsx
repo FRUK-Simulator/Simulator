@@ -10,7 +10,7 @@ type BackgroundType = "pink-1" | "pink-2" | "blue-1";
 const Wrap = styled.div<{
   $backgroundType: BackgroundType;
 }>`
-  padding: 80px 40% 80px 160px;
+  padding: 80px 40% 80px 11%;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
