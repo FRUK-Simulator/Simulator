@@ -13,11 +13,12 @@ const Wrap = styled.div`
 export const Resources: FC = () => {
   return (
     <Wrap>
-      <PageHeading 
+      <PageHeading
         backgroundType="blue-1"
         markerText="For teachers"
         heading="Guidance & Resources"
-        description="Hello and welcome to the Kobot simulator lesson pack, our simulator has been put together to engage young people in." />
+        description="Hello and welcome to the Kobot simulator lesson pack, our simulator has been put together to engage young people in."
+      />
       <UnderConstruction title="Resources page under construction" />
     </Wrap>
   );

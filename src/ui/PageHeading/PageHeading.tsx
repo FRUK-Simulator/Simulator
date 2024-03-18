@@ -22,21 +22,21 @@ const Wrap = styled.div<{
   ${(props) =>
     props.$backgroundType === "pink-1" &&
     `
-    background-image: url(${(shapesPink1Url)});
+    background-image: url(${shapesPink1Url});
     background-color: var(--color-red);
   `}
-  
+
   ${(props) =>
     props.$backgroundType === "pink-2" &&
     `
-    background-image: url(${(shapesPink2Url)});
+    background-image: url(${shapesPink2Url});
     background-color: var(--color-red);
   `}
 
   ${(props) =>
     props.$backgroundType === "blue-1" &&
     `
-    background-image: url(${(shapesBlue1Url)});
+    background-image: url(${shapesBlue1Url});
     background-color: var(--color-blue);
   `}
 `;
@@ -67,10 +67,7 @@ type Props = {
 export const PageHeading = forwardRef<HTMLDivElement, Props>(
   ({ markerText, heading, description, backgroundType = "pink-1" }, ref) => {
     return (
-      <Wrap
-        $backgroundType={backgroundType}
-        ref={ref}
-      >
+      <Wrap $backgroundType={backgroundType} ref={ref}>
         <Subheading>&lt;{markerText}&gt;</Subheading>
         <Heading>{heading}</Heading>
         <Paragraph>{description}</Paragraph>

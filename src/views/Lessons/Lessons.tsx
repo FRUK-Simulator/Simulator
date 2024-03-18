@@ -13,12 +13,12 @@ const Wrap = styled.div`
 export const Lessons: FC = () => {
   return (
     <Wrap>
-      <PageHeading 
+      <PageHeading
         backgroundType="pink-1"
         markerText="Lessons 1-5"
         heading="Simulator lessons"
-        description="The simulator has been produced by a group of software engineers at Bloomberg in association with FIRST UK. It's simple solve every." />
-      <UnderConstruction title="Lessons page under construction" />
+        description="The simulator has been produced by a group of software engineers at Bloomberg in association with FIRST UK. It's simple solve every."
+      />
     </Wrap>
   );
 };
