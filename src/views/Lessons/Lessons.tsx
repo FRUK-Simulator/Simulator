@@ -19,6 +19,7 @@ export const Lessons: FC = () => {
         heading="Simulator lessons"
         description="The simulator has been produced by a group of software engineers at Bloomberg in association with FIRST UK. It's simple solve every."
       />
+      <UnderConstruction title="Lessons page under construction" />
     </Wrap>
   );
 };
