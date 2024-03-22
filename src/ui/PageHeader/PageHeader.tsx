@@ -3,17 +3,18 @@ import styled from "styled-components";
 import shapesPink1Url from "./shapes-pink-1.svg";
 import shapesPink2Url from "./shapes-pink-2.svg";
 import shapesBlue1Url from "./shapes-blue-1.svg";
-import { H1, Subheading1, P } from "../../ui/Typography";
+import { H1, Subheading1, P } from "../Typography";
 
 type BackgroundType = "pink-1" | "pink-2" | "blue-1";
 
 const Wrap = styled.div<{
   $backgroundType: BackgroundType;
 }>`
-  padding: 80px 40% 80px 11%;
+  padding: 80px 0 80px 0;
   display: flex;
   flex-wrap: nowrap;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-evenly;
   color: var(--color-white);
   background-repeat: no-repeat;
   background-position: center;
@@ -41,6 +42,26 @@ const Wrap = styled.div<{
   `}
 `;
 
+const BlockHeader = styled.div`
+  flex-grow: 60;
+  flex-basis: 0;
+`;
+
+const BlockSpacer = styled.div`
+  flex-grow: 40;
+  flex-basis: 0;
+`;
+
+const Header = styled.div`
+  padding-left: 18%;
+  padding-right: 2%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 0;
+`;
+
 const Subheading = styled(Subheading1)`
   opacity: 0.75;
   margin: 0;
@@ -51,10 +72,9 @@ const Heading = styled(H1)`
 `;
 
 const Paragraph = styled(P)`
-  padding: 0px 12% 0px 0px;
+  padding: 0 12% 0px 0px;
   line-height: 19.2px;
-  margin: 0px;
-  margin-top: 12px;
+  margin: 12px 0 0 0;
 `;
 
 type Props = {
@@ -64,13 +84,18 @@ type Props = {
   backgroundType?: BackgroundType;
 };
 
-export const PageHeading = forwardRef<HTMLDivElement, Props>(
+export const PageHeader = forwardRef<HTMLDivElement, Props>(
   ({ markerText, heading, description, backgroundType = "pink-1" }, ref) => {
     return (
       <Wrap $backgroundType={backgroundType} ref={ref}>
-        <Subheading>&lt;{markerText}&gt;</Subheading>
-        <Heading>{heading}</Heading>
-        <Paragraph>{description}</Paragraph>
+        <BlockHeader>
+          <Header>
+            <Subheading>&lt;{markerText}&gt;</Subheading>
+            <Heading>{heading}</Heading>
+            <Paragraph>{description}</Paragraph>
+          </Header>
+        </BlockHeader>
+        <BlockSpacer />
       </Wrap>
     );
   },

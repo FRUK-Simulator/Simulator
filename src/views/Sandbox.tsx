@@ -1,30 +1,30 @@
 import { H1, H2, H3, H4, Subheading1, Subheading2, P } from "../ui/Typography";
 import { Button } from "../ui/Button";
-import { PageHeading } from "../ui/PageHeading/PageHeading";
+import { PageHeader } from "../ui/PageHeader/PageHeader";
 
 export const Sandbox = () => {
   return (
     <div style={{ padding: 40 }}>
-      <PageHeading
+      <PageHeader
         backgroundType="pink-1"
         markerText="pink-1"
-        heading="Page Heading"
+        heading="Page Header"
         description="Description paragraphs. This is the first sentence. And this is the second sentence."
       />
       <br />
       <br />
-      <PageHeading
+      <PageHeader
         backgroundType="pink-2"
         markerText="pink-2"
-        heading="Page Heading"
+        heading="Page Header"
         description="Description paragraphs. This is the first sentence. And this is the second sentence."
       />
       <br />
       <br />
-      <PageHeading
+      <PageHeader
         backgroundType="blue-1"
         markerText="blue-1"
-        heading="Page Heading"
+        heading="Page Header"
         description="Description paragraphs. This is the first sentence. And this is the second sentence."
       />
       <H1>Heading 1</H1>

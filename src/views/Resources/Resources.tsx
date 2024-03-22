@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FC } from "react";
-import { PageHeading } from "../../ui/PageHeading/PageHeading";
+import { PageHeader } from "../../ui/PageHeader/PageHeader";
 import { UnderConstruction } from "../../components/UnderConstruction/UnderConstruction";
 
 const Wrap = styled.div`
@@ -13,7 +13,7 @@ const Wrap = styled.div`
 export const Resources: FC = () => {
   return (
     <Wrap>
-      <PageHeading
+      <PageHeader
         backgroundType="blue-1"
         markerText="For teachers"
         heading="Guidance & Resources"

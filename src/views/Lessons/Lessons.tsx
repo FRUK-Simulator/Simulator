@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FC } from "react";
-import { PageHeading } from "../../ui/PageHeading/PageHeading";
 import { UnderConstruction } from "../../components/UnderConstruction/UnderConstruction";
+import { PageHeader } from "../../ui/PageHeader/PageHeader";
 
 const Wrap = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Wrap = styled.div`
 export const Lessons: FC = () => {
   return (
     <Wrap>
-      <PageHeading
+      <PageHeader
         backgroundType="pink-1"
         markerText="Lessons 1-5"
         heading="Simulator lessons"
