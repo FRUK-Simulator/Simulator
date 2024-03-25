@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   background-color: var(--color-blue);
   flex: 0 0 56px;
   box-shadow: 0 2px 10px 0 rgba(7, 77, 118, 0.2);
-  z-index: 999;
+  z-index: 90;
 `;
 
 const Nav = styled.nav`

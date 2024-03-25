@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import shapesPink1Url from "./shapes-pink-1.svg";
 import shapesPink2Url from "./shapes-pink-2.svg";
@@ -43,12 +43,12 @@ const Wrap = styled.div<{
 `;
 
 const BlockHeader = styled.div`
-  flex-grow: 60;
+  flex-grow: 3;
   flex-basis: 0;
 `;
 
 const BlockSpacer = styled.div`
-  flex-grow: 40;
+  flex-grow: 2;
   flex-basis: 0;
 `;
 
@@ -84,10 +84,10 @@ type Props = {
   backgroundType?: BackgroundType;
 };
 
-export const PageHeader = forwardRef<HTMLDivElement, Props>(
-  ({ markerText, heading, description, backgroundType = "pink-1" }, ref) => {
+export const PageHeader: FC<Props> =
+  ({ markerText, heading, description, backgroundType = "pink-1" }) => {
     return (
-      <Wrap $backgroundType={backgroundType} ref={ref}>
+      <Wrap $backgroundType={backgroundType}>
         <BlockHeader>
           <Header>
             <Subheading>&lt;{markerText}&gt;</Subheading>
@@ -98,5 +98,4 @@ export const PageHeader = forwardRef<HTMLDivElement, Props>(
         <BlockSpacer />
       </Wrap>
     );
-  },
-);
+  };

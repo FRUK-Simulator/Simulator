@@ -33,5 +33,4 @@ export const Subheading2 = styled.h6`
 `;
 
 export const P = styled.p`
-  font-size: var(--font-size-default);
 `;
