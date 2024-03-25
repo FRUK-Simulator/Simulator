@@ -1,15 +1,45 @@
-import { H1, H2, H3, H4, Subheading1, Subheading2 } from "../ui/Typography";
+import { H1, H2, H3, H4, Subheading1, Subheading2, P } from "../ui/Typography";
+import { Button } from "../ui/Button";
+import { PageHeader } from "../ui/PageHeader/PageHeader";
 
 export const Sandbox = () => {
   return (
     <div style={{ padding: 40 }}>
+      <PageHeader
+        backgroundType="pink-1"
+        markerText="pink-1"
+        heading="Page Header"
+        description="Description paragraphs. This is the first sentence. And this is the second sentence."
+      />
+      <br />
+      <br />
+      <PageHeader
+        backgroundType="pink-2"
+        markerText="pink-2"
+        heading="Page Header"
+        description="Description paragraphs. This is the first sentence. And this is the second sentence."
+      />
+      <br />
+      <br />
+      <PageHeader
+        backgroundType="blue-1"
+        markerText="blue-1"
+        heading="Page Header"
+        description="Description paragraphs. This is the first sentence. And this is the second sentence."
+      />
       <H1>Heading 1</H1>
       <H2>Heading 2</H2>
       <H3>Heading 3</H3>
       <H4>Heading 4</H4>
       <Subheading1>Subheading 1</Subheading1>
       <Subheading2>Subheading 2</Subheading2>
-      <p>Paragraph</p>
+      <P>Body Text</P>
+      <Button type="primary">Primary button</Button>
+      <br />
+      <br />
+      <Button type="primary-blue">Primary Blue button</Button>
+      <br />
+      <br />
     </div>
   );
 };
