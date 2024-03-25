@@ -73,7 +73,7 @@ const Heading = styled(H1)`
 
 const Paragraph = styled(P)`
   padding: 0 12% 0px 0px;
-  line-height: 19.2px;
+  line-height: 19px;
   margin: 12px 0 0 0;
 `;
 

@@ -23,12 +23,13 @@ export const H4 = styled.h4`
 `;
 
 export const Subheading1 = styled.h5`
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-default);
   font-family: var(--font-heading-family);
 `;
 
-export const Subheading2 = styled.h6`
-  font-size: var(--font-size-default);
+export const Subheading2 = styled.h5`
+  font-size: var(--font-size-medium);
+  font-family: var(--font-heading-family);
   font-weight: var(--font-weight-bold);
 `;
 

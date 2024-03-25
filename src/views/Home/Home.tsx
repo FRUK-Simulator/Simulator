@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { H1, Subheading2, P } from "../../ui/Typography";
+import { H1, Subheading1, P } from "../../ui/Typography";
 import { Button } from "../../ui/Button";
 import shapesBlueUrl from "./shapes-blue.svg";
 import shapesPinkUrl from "./shapes-pink.svg";
@@ -45,7 +45,7 @@ const Paragraph = styled(P)`
   flex-basis: 100px;
 `;
 
-const Subheading = styled(Subheading2)`
+const Subheading = styled(Subheading1)`
   opacity: 0.75;
 `;
 
