@@ -32,5 +32,4 @@ export const Subheading2 = styled.h6`
   font-weight: var(--font-weight-bold);
 `;
 
-export const P = styled.p`
-`;
+export const P = styled.p``;

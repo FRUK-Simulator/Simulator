@@ -84,18 +84,22 @@ type Props = {
   backgroundType?: BackgroundType;
 };
 
-export const PageHeader: FC<Props> =
-  ({ markerText, heading, description, backgroundType = "pink-1" }) => {
-    return (
-      <Wrap $backgroundType={backgroundType}>
-        <BlockHeader>
-          <Header>
-            <Subheading>&lt;{markerText}&gt;</Subheading>
-            <Heading>{heading}</Heading>
-            <Paragraph>{description}</Paragraph>
-          </Header>
-        </BlockHeader>
-        <BlockSpacer />
-      </Wrap>
-    );
-  };
+export const PageHeader: FC<Props> = ({
+  markerText,
+  heading,
+  description,
+  backgroundType = "pink-1",
+}) => {
+  return (
+    <Wrap $backgroundType={backgroundType}>
+      <BlockHeader>
+        <Header>
+          <Subheading>&lt;{markerText}&gt;</Subheading>
+          <Heading>{heading}</Heading>
+          <Paragraph>{description}</Paragraph>
+        </Header>
+      </BlockHeader>
+      <BlockSpacer />
+    </Wrap>
+  );
+};
