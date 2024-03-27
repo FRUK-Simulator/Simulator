@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FC } from "react";
-import { PageHeader } from "../../ui/PageHeader/PageHeader";
-import { LessonCard } from "../../ui/LessonCard/LessonCard";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
+import { LessonCard } from "../../components/LessonCard/LessonCard";
 
 const Wrap = styled.div`
   display: flex;
@@ -28,44 +28,44 @@ export const Lessons: FC = () => {
       />
       <Grid>
         <LessonCard
+          lessonId="1"
           mascotType="lesson-1"
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           call2actionText="View Challenges"
-          call2actionDest="../resources"
         />
         <LessonCard
+          lessonId="2"
           mascotType="lesson-2"
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           call2actionText="View Challenges"
-          call2actionDest="../resources"
         />
         <LessonCard
+          lessonId="3"
           mascotType="lesson-3"
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           call2actionText="View Challenges"
-          call2actionDest="../resources"
         />
         <LessonCard
+          lessonId="4"
           mascotType="lesson-4"
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           call2actionText="View Challenges"
-          call2actionDest="../resources"
         />
         <LessonCard
+          lessonId="5"
           mascotType="lesson-5"
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           call2actionText="View Challenges"
-          call2actionDest="../resources"
         />
       </Grid>
     </Wrap>
