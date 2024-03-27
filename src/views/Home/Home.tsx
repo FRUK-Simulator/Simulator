@@ -12,9 +12,9 @@ const Wrap = styled.div`
   flex-wrap: wrap;
 `;
 
-const Block = styled.div<{ color: string; bgUrl: string }>`
-  background-color: ${(props) => props.color};
-  background-image: url(${(props) => props.bgUrl});
+const Block = styled.div<{ $color: string; $bgUrl: string }>`
+  background-color: ${(props) => props.$color};
+  background-image: url(${(props) => props.$bgUrl});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -56,7 +56,7 @@ const Spacer = styled.div<{ size?: number }>`
 export const Home = () => {
   return (
     <Wrap>
-      <Block color="var(--color-red)" bgUrl={shapesPinkUrl}>
+      <Block $color="var(--color-red)" $bgUrl={shapesPinkUrl}>
         <Subheading>&lt;Students&gt;</Subheading>
         <Spacer size={2} />
         <BlockH1>Play</BlockH1>
@@ -71,7 +71,7 @@ export const Home = () => {
           START LEARNING!
         </Button>
       </Block>
-      <Block color="var(--color-blue)" bgUrl={shapesBlueUrl}>
+      <Block $color="var(--color-blue)" $bgUrl={shapesBlueUrl}>
         <Subheading>&lt;Teachers&gt;</Subheading>
         <Spacer size={2} />
         <BlockH1>Teach</BlockH1>
