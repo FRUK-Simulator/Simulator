@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FC } from "react";
-import { PageHeader } from "../../ui/PageHeader/PageHeader";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { UnderConstruction } from "../../components/UnderConstruction/UnderConstruction";
 
 const Wrap = styled.div`

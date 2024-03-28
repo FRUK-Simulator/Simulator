@@ -1,6 +1,6 @@
 import { H1, H2, H3, H4, Subheading1, Subheading2, P } from "../ui/Typography";
 import { Button } from "../ui/Button";
-import { PageHeader } from "../ui/PageHeader/PageHeader";
+import { PageHeader } from "../components/PageHeader/PageHeader";
 
 export const Sandbox = () => {
   return (

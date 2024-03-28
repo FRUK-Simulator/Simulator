@@ -3,7 +3,7 @@ import styled from "styled-components";
 import shapesPink1Url from "./shapes-pink-1.svg";
 import shapesPink2Url from "./shapes-pink-2.svg";
 import shapesBlue1Url from "./shapes-blue-1.svg";
-import { H1, Subheading1, P } from "../Typography";
+import { H1, Subheading1, P } from "../../ui/Typography";
 
 type BackgroundType = "pink-1" | "pink-2" | "blue-1";
 

@@ -3,6 +3,7 @@ import { H1, Subheading1, P } from "../../ui/Typography";
 import { Button } from "../../ui/Button";
 import shapesBlueUrl from "./shapes-blue.svg";
 import shapesPinkUrl from "./shapes-pink.svg";
+import { Spacer } from "../../ui/Spacer";
 
 const Wrap = styled.div`
   padding: 48px 40px;
@@ -47,10 +48,6 @@ const Paragraph = styled(P)`
 
 const Subheading = styled(Subheading1)`
   opacity: 0.75;
-`;
-
-const Spacer = styled.div<{ size?: number }>`
-  flex-grow: ${(props) => props.size ?? 1};
 `;
 
 export const Home = () => {

@@ -1,3 +1,7 @@
+/**
+ * Legacy hook to remove.
+ * Use kebab-case for new hook file names.
+ */
 import { FunctionComponent, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Program } from "../../BlocklyInterface/ProgramExportImport";

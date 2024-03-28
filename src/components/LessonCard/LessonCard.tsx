@@ -10,8 +10,8 @@ import shapesMascotLesson2Url from "./shapes-mascot-lesson2.svg";
 import shapesMascotLesson3Url from "./shapes-mascot-lesson3.svg";
 import shapesMascotLesson4Url from "./shapes-mascot-lesson4.svg";
 import shapesMascotLesson5Url from "./shapes-mascot-lesson5.svg";
-import { H3, Subheading2, P } from "../Typography";
-import { Button } from "../Button";
+import { H3, Subheading2, P } from "../../ui/Typography";
+import { Button } from "../../ui/Button";
 
 type MascotType =
   | "lesson-1"
@@ -111,20 +111,20 @@ const Paragraph = styled(P)`
 const StyledButton = styled(Button)``;
 
 type Props = {
+  lessonId: string;
   subtitle?: string;
   title: string;
   description: string;
   call2actionText?: string;
-  call2actionDest?: string;
   mascotType: MascotType;
 };
 
 export const LessonCard: FC<Props> = ({
+  lessonId,
   subtitle,
   title,
   description,
   call2actionText,
-  call2actionDest,
   mascotType,
 }) => {
   let mascotUrl;
@@ -158,8 +158,8 @@ export const LessonCard: FC<Props> = ({
           <Subheading>{subtitle}</Subheading>
           <Heading>{title}</Heading>
           <Paragraph>{description}</Paragraph>
-          {call2actionText !== undefined && call2actionDest !== undefined && (
-            <StyledButton type="primary" to={call2actionDest}>
+          {call2actionText && (
+            <StyledButton type="primary" to={lessonId}>
               {call2actionText.toLocaleUpperCase()}
             </StyledButton>
           )}
