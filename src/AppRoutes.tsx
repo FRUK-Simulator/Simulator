@@ -9,6 +9,8 @@ import { NotFound } from "./views/NotFound";
 import { Sandbox } from "./views/Sandbox";
 import { Lessons } from "./views/Lessons/Lessons";
 import { Resources } from "./views/Resources/Resources";
+import { Challenges } from "./views/Challenges/Challenges";
+import { Challenge } from "./views/Challenge/Challenge";
 
 /**
  * Kobot 2024 new design routes
@@ -19,6 +21,8 @@ const AppRoutes = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="lessons" element={<Lessons />} />
+        <Route path="lessons/:lessonId" element={<Challenges />} />
+        <Route path="lessons/:lessonId/:challengeId" element={<Challenge />} />
         <Route path="resources" element={<Resources />} />
         <Route path="sandbox" element={<Sandbox />} />
         {/* debugging playground */}
