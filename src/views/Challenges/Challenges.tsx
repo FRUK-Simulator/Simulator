@@ -1,7 +1,8 @@
 import { Content } from "../../ui/Content";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
-import { useAppParams, useLoadChallengesData } from "../../hooks/util-hooks";
+import { useAppParams } from "../../hooks/util-hooks";
 import { ChallengeList } from "./ChallengeList";
+import { useChallengesQuery } from "../../hooks/query-hooks";
 
 export const Challenges = () => {
   const { lessonId } = useAppParams();
@@ -15,7 +16,7 @@ export const Challenges = () => {
   // really make a sustainable JSON based data structure so that we can easily
   // add new lessons in the future as well as migrate the existing data to a
   // persistent storage like a database or CMS
-  const { data, loading, error } = useLoadChallengesData(lessonId);
+  const { data, isLoading, error } = useChallengesQuery(lessonId);
 
   return (
     <>
@@ -27,7 +28,7 @@ export const Challenges = () => {
       />
       <Content>
         {/* TODO: improve loading and error handling screens */}
-        {loading && <>Loading...</>}
+        {isLoading && <>Loading...</>}
         {!!error && <>Error: {error}</>}
         {data && <ChallengeList challenges={data} />}
       </Content>

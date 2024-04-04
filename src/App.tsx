@@ -1,10 +1,12 @@
 import { FunctionComponent, Suspense, lazy } from "react";
 import { Provider } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { store } from "./state/store";
 import { VMProvider } from "./JavascriptVM/JavascriptVM";
 import { DialogProvider } from "./view/components/Dialog/Dialog";
 import { KobotThemeProvider } from "./ui/KobotThemeProvider";
+import { queryClient } from "./hooks/query-hooks";
 
 // During the transition to 2024 new design, we are lazy loading
 // legacy and new apps side by side here so each module can load
@@ -43,15 +45,17 @@ export const App: FunctionComponent = () => {
 export const AppWithProviders: FunctionComponent = () => {
   return (
     <Router>
-      <Provider store={store}>
-        <VMProvider>
-          <KobotThemeProvider>
-            <DialogProvider>
-              <App />
-            </DialogProvider>
-          </KobotThemeProvider>
-        </VMProvider>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <VMProvider>
+            <KobotThemeProvider>
+              <DialogProvider>
+                <App />
+              </DialogProvider>
+            </KobotThemeProvider>
+          </VMProvider>
+        </Provider>
+      </QueryClientProvider>
     </Router>
   );
 };
