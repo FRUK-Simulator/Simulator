@@ -1,15 +1,12 @@
 import { FC } from "react";
 import styled from "styled-components";
-import shapesBgLesson1Url from "./shapes-bg-lesson1.svg";
-import shapesBgLesson2Url from "./shapes-bg-lesson2.svg";
-import shapesBgLesson3Url from "./shapes-bg-lesson3.svg";
-import shapesBgLesson4Url from "./shapes-bg-lesson4.svg";
-import shapesBgLesson5Url from "./shapes-bg-lesson5.svg";
+import shapesBgLessonUrl from "./shapes-bg-lesson.svg";
 import shapesMascotLesson1Url from "./shapes-mascot-lesson1.svg";
 import shapesMascotLesson2Url from "./shapes-mascot-lesson2.svg";
 import shapesMascotLesson3Url from "./shapes-mascot-lesson3.svg";
 import shapesMascotLesson4Url from "./shapes-mascot-lesson4.svg";
 import shapesMascotLesson5Url from "./shapes-mascot-lesson5.svg";
+import shapeGear from "./shape-gear.svg";
 import { H3, Subheading2, P } from "../../ui/Typography";
 import { Button } from "../../ui/Button";
 
@@ -29,6 +26,7 @@ const Wrap = styled.div`
 const BlockMascot = styled.div<{
   $mascotType: MascotType;
 }>`
+  min-height: 450px;
   flex-grow: 2;
   flex-basis: 0;
   display: flex;
@@ -40,41 +38,23 @@ const BlockMascot = styled.div<{
   background-position: center;
   background-size: cover;
   background-color: var(--color-blue-dark);
-
-  ${(props) =>
-    props.$mascotType === "lesson-1" &&
-    `
-    background-image: url(${shapesBgLesson1Url});
-  `}
-
-  ${(props) =>
-    props.$mascotType === "lesson-2" &&
-    `
-    background-image: url(${shapesBgLesson2Url});
-  `}
-
-  ${(props) =>
-    props.$mascotType === "lesson-3" &&
-    `
-    background-image: url(${shapesBgLesson3Url});
-  `}
-
-  ${(props) =>
-    props.$mascotType === "lesson-4" &&
-    `
-    background-image: url(${shapesBgLesson4Url});
-  `}
-
-  ${(props) =>
-    props.$mascotType === "lesson-5" &&
-    `
-    background-image: url(${shapesBgLesson5Url});
-  `}
+  background-image: url(${shapesBgLessonUrl});
 `;
 
 const ImageMascot = styled.img`
   width: 60%;
   flex-shrink: 1;
+`;
+
+const DivProgress = styled.div`
+  background-color: var(--color-blue-dark);
+  margin-top: var(--spacing-medium);
+  padding: var(--spacing) var(--spacing-medium);
+  border-radius: var(--border-radius-small);
+  color: var(--color-white);
+  display: flex;
+  gap: var(--spacing-medium);
+  align-items: center;
 `;
 
 const BlockLesson = styled.div`
@@ -108,6 +88,10 @@ const Paragraph = styled(P)`
   line-height: 19px;
 `;
 
+const Hr = styled.hr`
+  margin: var(--spacing-x-large) 0 var(--spacing-x-large) 0;
+`;
+
 const StyledButton = styled(Button)``;
 
 type Props = {
@@ -115,7 +99,7 @@ type Props = {
   subtitle?: string;
   title: string;
   description: string;
-  call2actionText?: string;
+  isResourcesCard?: boolean;
   mascotType: MascotType;
 };
 
@@ -124,9 +108,10 @@ export const LessonCard: FC<Props> = ({
   subtitle,
   title,
   description,
-  call2actionText,
+  isResourcesCard,
   mascotType,
 }) => {
+  const progress = 0;  // TODO: pass `progress`, change mascot according to `progress`
   let mascotUrl;
   switch (mascotType) {
     case "lesson-1":
@@ -148,10 +133,15 @@ export const LessonCard: FC<Props> = ({
       mascotUrl = shapesMascotLesson1Url;
       break;
   }
+  const call2actionText = isResourcesCard ? "View Guidance" : "View Challenges";
   return (
     <Wrap>
       <BlockMascot $mascotType={mascotType}>
         <ImageMascot src={mascotUrl} />
+        <DivProgress>
+          <img src={shapeGear} />
+          <span>{progress}/3</span>
+        </DivProgress>
       </BlockMascot>
       <BlockLesson>
         <LessonDetails>
@@ -160,9 +150,18 @@ export const LessonCard: FC<Props> = ({
           <Paragraph>{description}</Paragraph>
           {call2actionText && (
             <StyledButton type="primary" to={lessonId}>
-              {call2actionText.toLocaleUpperCase()}
+              {call2actionText}
             </StyledButton>
           )}
+          {isResourcesCard && (<>
+            <StyledButton type="secondary" to={lessonId}>
+              Download Resources
+            </StyledButton>
+            <Hr />
+            <StyledButton type="tertiary" to={lessonId}>
+              Go to Lesson
+            </StyledButton>
+          </>)}
         </LessonDetails>
       </BlockLesson>
     </Wrap>

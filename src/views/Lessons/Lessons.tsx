@@ -33,7 +33,6 @@ export const Lessons: FC = () => {
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          call2actionText="View Challenges"
         />
         <LessonCard
           lessonId="2"
@@ -41,7 +40,6 @@ export const Lessons: FC = () => {
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          call2actionText="View Challenges"
         />
         <LessonCard
           lessonId="3"
@@ -49,7 +47,6 @@ export const Lessons: FC = () => {
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          call2actionText="View Challenges"
         />
         <LessonCard
           lessonId="4"
@@ -57,7 +54,6 @@ export const Lessons: FC = () => {
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          call2actionText="View Challenges"
         />
         <LessonCard
           lessonId="5"
@@ -65,7 +61,6 @@ export const Lessons: FC = () => {
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          call2actionText="View Challenges"
         />
       </Grid>
     </Wrap>
