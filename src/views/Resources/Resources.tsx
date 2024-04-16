@@ -28,7 +28,7 @@ export const Resources: FC = () => {
       />
       <Grid>
         <LessonCard
-          isResourcesCard="true"
+          isResourcesCard={true}
           lessonId=""
           mascotType="lesson-1"
           subtitle="Lesson 1"
@@ -36,7 +36,7 @@ export const Resources: FC = () => {
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
-          isResourcesCard="true"
+          isResourcesCard={true}
           lessonId=""
           mascotType="lesson-2"
           subtitle="Lesson 2"
@@ -44,7 +44,7 @@ export const Resources: FC = () => {
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
-          isResourcesCard="true"
+          isResourcesCard={true}
           lessonId=""
           mascotType="lesson-3"
           subtitle="Lesson 3"
@@ -52,7 +52,7 @@ export const Resources: FC = () => {
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
-          isResourcesCard="true"
+          isResourcesCard={true}
           lessonId=""
           mascotType="lesson-4"
           subtitle="Lesson 4"
@@ -60,7 +60,7 @@ export const Resources: FC = () => {
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
-          isResourcesCard="true"
+          isResourcesCard={true}
           lessonId=""
           mascotType="lesson-5"
           subtitle="Lesson 5"
