@@ -29,35 +29,40 @@ export const Lessons: FC = () => {
       <Grid>
         <LessonCard
           lessonId="1"
-          mascotType="lesson-1"
+          mascotType={1}
+          progress={0}
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
           lessonId="2"
-          mascotType="lesson-2"
+          mascotType={2}
+          progress={1}
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
           lessonId="3"
-          mascotType="lesson-3"
+          mascotType={3}
+          progress={2}
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
           lessonId="4"
-          mascotType="lesson-4"
+          mascotType={4}
+          progress={3}
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
         <LessonCard
           lessonId="5"
-          mascotType="lesson-5"
+          mascotType={5}
+          progress={3}
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."

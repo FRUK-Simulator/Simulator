@@ -30,7 +30,8 @@ export const Resources: FC = () => {
         <LessonCard
           isResourcesCard={true}
           lessonId=""
-          mascotType="lesson-1"
+          mascotType={1}
+          progress={3}
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -38,7 +39,8 @@ export const Resources: FC = () => {
         <LessonCard
           isResourcesCard={true}
           lessonId=""
-          mascotType="lesson-2"
+          mascotType={2}
+          progress={2}
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -46,7 +48,8 @@ export const Resources: FC = () => {
         <LessonCard
           isResourcesCard={true}
           lessonId=""
-          mascotType="lesson-3"
+          mascotType={3}
+          progress={1}
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -54,7 +57,8 @@ export const Resources: FC = () => {
         <LessonCard
           isResourcesCard={true}
           lessonId=""
-          mascotType="lesson-4"
+          mascotType={4}
+          progress={0}
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -62,7 +66,8 @@ export const Resources: FC = () => {
         <LessonCard
           isResourcesCard={true}
           lessonId=""
-          mascotType="lesson-5"
+          mascotType={5}
+          progress={0}
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
