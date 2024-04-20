@@ -82,23 +82,10 @@ const Hr = styled.hr`
 
 const StyledButton = styled(Button)``;
 
-type MascotType = 1|2|3|4|5;
-type Progress = 0|1|2|3
-
-type Props = {
-  lessonId: string;
-  subtitle?: string;
-  title: string;
-  description: string;
-  isResourcesCard?: boolean;
-  mascotType: MascotType;
-  progress: Progress;
-};
-
-const selectMascot = (mascotType: MascotType, progress: Progress) => {
-  const hideHead = (progress <= 2);
-  const hideBody = (progress <= 1);
-  const hideLegs = (progress <= 0);
+const selectMascot = (mascotType: MascotType, isResourcesCard: boolean, progress: Progress) => {
+  const hideHead = isResourcesCard ? false : (progress <= 2);
+  const hideBody = isResourcesCard ? false : (progress <= 1);
+  const hideLegs = isResourcesCard ? false : (progress <= 0);
 
   switch (mascotType) {
     case 1:
@@ -164,26 +151,60 @@ const selectMascot = (mascotType: MascotType, progress: Progress) => {
   }
 }
 
-export const LessonCard: FC<Props> = ({
+type MascotType = 1|2|3|4|5;
+type Progress = 0|1|2|3;
+
+type UnderlyingCardProps = {
+  isResourcesCard: boolean;
+  lessonId: string;
+  mascotType: MascotType;
+  progress: Progress;
+  subtitle?: string;
+  title: string;
+  description: string;
+};
+
+type LessonCardProps = {
+  lessonId: string;
+  mascotType: MascotType;
+  progress: Progress;
+  subtitle?: string;
+  title: string;
+  description: string;
+};
+
+type ResourcesCardProps = {
+  lessonId: string;
+  mascotType: MascotType;
+  subtitle?: string;
+  title: string;
+  description: string;
+};
+
+const UnderlyingCard: FC<UnderlyingCardProps> = ({
+  isResourcesCard,
   lessonId,
+  mascotType,
+  progress,
   subtitle,
   title,
   description,
-  isResourcesCard,
-  mascotType,
-  progress,
 }) => {
   return (
     <Wrap>
+
       <BlockMascot $mascotType={mascotType}>
         <DivMascot>
-          {selectMascot(mascotType, progress)}
+          {selectMascot(mascotType, isResourcesCard, progress)}
         </DivMascot>
-        <DivProgress>
-          <img src={urlGearSvg} />
-          <span>{progress}/3</span>
-        </DivProgress>
+        {!isResourcesCard && (
+          <DivProgress>
+            <img src={urlGearSvg} />
+            <span>{progress}/3</span>
+          </DivProgress>
+        )}
       </BlockMascot>
+
       <BlockLesson>
         <LessonDetails>
           <Subheading>{subtitle}</Subheading>
@@ -203,6 +224,44 @@ export const LessonCard: FC<Props> = ({
           </>)}
         </LessonDetails>
       </BlockLesson>
+
     </Wrap>
   );
 };
+
+export const LessonCard: FC<LessonCardProps> = ({
+  lessonId,
+  mascotType,
+  progress,
+  subtitle,
+  title,
+  description,
+}) => (
+  <UnderlyingCard
+    isResourcesCard={false}
+    mascotType={mascotType}
+    progress={progress}
+    lessonId={lessonId}
+    subtitle={subtitle}
+    title={title}
+    description={description}
+  />
+);
+
+export const ResourcesCard: FC<ResourcesCardProps> = ({
+  lessonId,
+  mascotType,
+  subtitle,
+  title,
+  description,
+}) => (
+  <UnderlyingCard
+    isResourcesCard={true}
+    mascotType={mascotType}
+    progress={3}
+    lessonId={lessonId}
+    subtitle={subtitle}
+    title={title}
+    description={description}
+  />
+);

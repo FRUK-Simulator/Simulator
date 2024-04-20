@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FC } from "react";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
-import { LessonCard } from "../../components/LessonCard/LessonCard";
+import { ResourcesCard } from "../../components/LessonCard/LessonCard";
 
 const Wrap = styled.div`
   display: flex;
@@ -27,47 +27,37 @@ export const Resources: FC = () => {
         description="Hello and welcome to the Kobot simulator lesson pack, our simulator has been put together to engage young people in."
       />
       <Grid>
-        <LessonCard
-          isResourcesCard={true}
+        <ResourcesCard
           lessonId=""
           mascotType={1}
-          progress={3}
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
-        <LessonCard
-          isResourcesCard={true}
+        <ResourcesCard
           lessonId=""
           mascotType={2}
-          progress={2}
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
-        <LessonCard
-          isResourcesCard={true}
+        <ResourcesCard
           lessonId=""
           mascotType={3}
-          progress={1}
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
-        <LessonCard
-          isResourcesCard={true}
+        <ResourcesCard
           lessonId=""
           mascotType={4}
-          progress={0}
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
         />
-        <LessonCard
-          isResourcesCard={true}
+        <ResourcesCard
           lessonId=""
           mascotType={5}
-          progress={0}
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
