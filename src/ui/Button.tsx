@@ -4,7 +4,7 @@ import styled from "styled-components";
 import iconDownload from "./icon-download.svg";
 import iconGo from "./icon-go.svg";
 
-type ButtonType = "primary" | "primary-blue" | "secondary" | "tertiary";
+type ButtonType = "primary" | "primary-blue" | "secondary" | "secondary-download" | "tertiary";
 
 const StyledButton = styled.button<{
   $type: ButtonType;
@@ -54,7 +54,7 @@ const StyledButton = styled.button<{
   `}
 
   ${(props) =>
-    props.$type === "secondary" &&
+    (props.$type === "secondary" || props.$type === "secondary-download") &&
     `
     text-transform: uppercase;
     border: 3px solid var(--color-blue-dark);
@@ -109,7 +109,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
         onClick={to ? () => navigate(to) : onClick}
       >
         {children}
-        {type === "secondary" && <IconDownload src={iconDownload} />}
+        {type === "secondary-download" && <IconDownload src={iconDownload} />}
         {type === "tertiary" && <IconGo src={iconGo} />}
       </StyledButton>
     );
