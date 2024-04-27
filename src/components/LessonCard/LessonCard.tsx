@@ -174,7 +174,7 @@ type Progress = {
   total: number;
 };
 
-type props = {
+type Props = {
   lessonId: string;
   mascotType: MascotType;
   progress?: Progress;
@@ -186,7 +186,7 @@ type props = {
   buttonTextTertiary?: string;
 };
 
-export const LessonCard: FC<props> = ({
+export const LessonCard: FC<Props> = ({
   lessonId,
   mascotType,
   progress,
