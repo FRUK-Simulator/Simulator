@@ -30,7 +30,7 @@ export const Lessons: FC = () => {
         <LessonCard
           lessonId="1"
           mascotType={1}
-          progress={0}
+          progress={{ completed: 0, total: 3 }}
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -39,7 +39,7 @@ export const Lessons: FC = () => {
         <LessonCard
           lessonId="2"
           mascotType={2}
-          progress={1}
+          progress={{ completed: 1, total: 3 }}
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -48,7 +48,7 @@ export const Lessons: FC = () => {
         <LessonCard
           lessonId="3"
           mascotType={3}
-          progress={2}
+          progress={{ completed: 2, total: 3 }}
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -57,7 +57,7 @@ export const Lessons: FC = () => {
         <LessonCard
           lessonId="4"
           mascotType={4}
-          progress={3}
+          progress={{ completed: 3, total: 3 }}
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -66,7 +66,7 @@ export const Lessons: FC = () => {
         <LessonCard
           lessonId="5"
           mascotType={5}
-          progress={3}
+          progress={{ completed: 3, total: 3 }}
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
