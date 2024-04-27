@@ -14,7 +14,6 @@ const StyledButton = styled.button<{
   justify-content: center;
   align-items: center;
   display: inline-flex;
-  margin: 0 0 var(--spacing-medium) 0;
   padding: var(--spacing) var(--spacing-large);
   color: var(--color-text-alt);
   border-width: 0;
@@ -32,7 +31,7 @@ const StyledButton = styled.button<{
   ${(props) =>
     props.$type === "primary" &&
     `
-    box-shadow: 5px 5px 0 0 #000;
+    box-shadow: 5px 5px 0 0 #000000;
     text-transform: uppercase;
     background-color: var(--color-red);
     color: var(--color-white);
@@ -44,7 +43,7 @@ const StyledButton = styled.button<{
   ${(props) =>
     props.$type === "primary-blue" &&
     `
-    box-shadow: 5px 5px 0 0 #000;
+    box-shadow: 5px 5px 0 0 #000000;
     text-transform: uppercase;
     background-color: var(--color-blue-dark);
     color: var(--color-white);
