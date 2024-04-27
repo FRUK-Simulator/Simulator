@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FC } from "react";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
-import { ResourcesCard } from "../../components/LessonCard/LessonCard";
+import { LessonCard } from "../../components/LessonCard/LessonCard";
 
 const Wrap = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ export const Resources: FC = () => {
         description="Hello and welcome to the Kobot simulator lesson pack, our simulator has been put together to engage young people in."
       />
       <Grid>
-        <ResourcesCard
+        <LessonCard
           lessonId=""
           mascotType={1}
           subtitle="Lesson 1"
@@ -37,7 +37,7 @@ export const Resources: FC = () => {
           buttonTextSecondaryDownload="Download Resources"
           buttonTextTertiary="Go to Lesson"
         />
-        <ResourcesCard
+        <LessonCard
           lessonId=""
           mascotType={2}
           subtitle="Lesson 2"
@@ -47,7 +47,7 @@ export const Resources: FC = () => {
           buttonTextSecondaryDownload="Download Resources"
           buttonTextTertiary="Go to Lesson"
         />
-        <ResourcesCard
+        <LessonCard
           lessonId=""
           mascotType={3}
           subtitle="Lesson 3"
@@ -57,7 +57,7 @@ export const Resources: FC = () => {
           buttonTextSecondaryDownload="Download Resources"
           buttonTextTertiary="Go to Lesson"
         />
-        <ResourcesCard
+        <LessonCard
           lessonId=""
           mascotType={4}
           subtitle="Lesson 4"
@@ -67,7 +67,7 @@ export const Resources: FC = () => {
           buttonTextSecondaryDownload="Download Resources"
           buttonTextTertiary="Go to Lesson"
         />
-        <ResourcesCard
+        <LessonCard
           lessonId=""
           mascotType={5}
           subtitle="Lesson 5"
