@@ -28,7 +28,6 @@ export const Lessons: FC = () => {
       />
       <Grid>
         <LessonCard
-          lessonId="1"
           mascotType={1}
           progress={{ completed: 0, total: 3 }}
           subtitle="Lesson 1"
@@ -38,7 +37,6 @@ export const Lessons: FC = () => {
           buttonDestPrimary="#"
         />
         <LessonCard
-          lessonId="2"
           mascotType={2}
           progress={{ completed: 1, total: 3 }}
           subtitle="Lesson 2"
@@ -48,7 +46,6 @@ export const Lessons: FC = () => {
           buttonDestPrimary="#"
         />
         <LessonCard
-          lessonId="3"
           mascotType={3}
           progress={{ completed: 2, total: 3 }}
           subtitle="Lesson 3"
@@ -58,7 +55,6 @@ export const Lessons: FC = () => {
           buttonDestPrimary="#"
         />
         <LessonCard
-          lessonId="4"
           mascotType={4}
           progress={{ completed: 3, total: 3 }}
           subtitle="Lesson 4"
@@ -68,7 +64,6 @@ export const Lessons: FC = () => {
           buttonDestPrimary="#"
         />
         <LessonCard
-          lessonId="5"
           mascotType={5}
           progress={{ completed: 3, total: 3 }}
           subtitle="Lesson 5"
