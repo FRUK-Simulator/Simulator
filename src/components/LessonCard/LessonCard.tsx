@@ -87,14 +87,25 @@ const Hr = styled.hr`
 const StyledButton = styled(Button)``;
 
 const selectMascot = (mascotType: MascotType, progress?: Progress) => {
-  const showHead = progress ? Boolean(3 / 3 <= progress.completed / progress.total) : true;
-  const showBody = progress ? Boolean(2 / 3 <= progress.completed / progress.total) : true;
-  const showLegs = progress ? Boolean(1 / 3 <= progress.completed / progress.total) : true;
+  const showHead = progress
+    ? Boolean(3 / 3 <= progress.completed / progress.total)
+    : true;
+  const showBody = progress
+    ? Boolean(2 / 3 <= progress.completed / progress.total)
+    : true;
+  const showLegs = progress
+    ? Boolean(1 / 3 <= progress.completed / progress.total)
+    : true;
 
-  const i = LessonCardMascot[mascotType - 1] ? mascotType - 1 : LessonCardMascot.length - 1;
+  const i = LessonCardMascot[mascotType - 1]
+    ? mascotType - 1
+    : LessonCardMascot.length - 1;
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox={LessonCardMascot[i].viewBox}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={LessonCardMascot[i].viewBox}
+    >
       {showHead ? LessonCardMascot[i].head : LessonCardMascot[i].headMask}
       {showBody ? LessonCardMascot[i].body : LessonCardMascot[i].bodyMask}
       {showLegs ? LessonCardMascot[i].legs : LessonCardMascot[i].legsMask}
@@ -162,7 +173,10 @@ export const LessonCard: FC<Props> = ({
           )}
 
           {buttonTextSecondaryDownload && (
-            <StyledButton type="secondary-download" to={buttonDestSecondaryDownload}>
+            <StyledButton
+              type="secondary-download"
+              to={buttonDestSecondaryDownload}
+            >
               {buttonTextSecondaryDownload}
             </StyledButton>
           )}
