@@ -165,10 +165,10 @@ const selectMascot = (mascotType: MascotType, progress?: Progress) => {
 
   return (
     <>
-      <img src={urlMascotSvg}/>
-      {maskHead && <img src={urlMaskHeadSvg}/>}
-      {maskBody && <img src={urlMaskBodySvg}/>}
-      {maskLegs && <img src={urlMaskLegsSvg}/>}
+      <img src={urlMascotSvg} />
+      {maskHead && <img src={urlMaskHeadSvg} />}
+      {maskBody && <img src={urlMaskBodySvg} />}
+      {maskLegs && <img src={urlMaskLegsSvg} />}
     </>
   );
 };
