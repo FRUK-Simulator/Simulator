@@ -909,27 +909,31 @@ type Progress = {
 };
 
 type Props = {
-  lessonId: string;
   mascotType: MascotType;
   progress?: Progress;
   subtitle?: string;
   title: string;
   description: string;
   buttonTextPrimary?: string;
+  buttonDestPrimary?: string;
   buttonTextSecondaryDownload?: string;
+  buttonDestSecondaryDownload?: string;
   buttonTextTertiary?: string;
+  buttonDestTertiary?: string;
 };
 
 export const LessonCard: FC<Props> = ({
-  lessonId,
   mascotType,
   progress,
   subtitle,
   title,
   description,
   buttonTextPrimary,
+  buttonDestPrimary,
   buttonTextSecondaryDownload,
+  buttonDestSecondaryDownload,
   buttonTextTertiary,
+  buttonDestTertiary,
 }) => {
   return (
     <Wrap>
@@ -952,13 +956,13 @@ export const LessonCard: FC<Props> = ({
           <Paragraph>{description}</Paragraph>
 
           {buttonTextPrimary && (
-            <StyledButton type="primary" to={lessonId}>
+            <StyledButton type="primary" to={buttonDestPrimary}>
               {buttonTextPrimary}
             </StyledButton>
           )}
 
           {buttonTextSecondaryDownload && (
-            <StyledButton type="secondary-download" to={lessonId}>
+            <StyledButton type="secondary-download" to={buttonDestSecondaryDownload}>
               {buttonTextSecondaryDownload}
             </StyledButton>
           )}
@@ -966,7 +970,7 @@ export const LessonCard: FC<Props> = ({
           {buttonTextTertiary && (
             <>
               <Hr />
-              <StyledButton type="tertiary" to={lessonId}>
+              <StyledButton type="tertiary" to={buttonDestTertiary}>
                 {buttonTextTertiary}
               </StyledButton>
             </>

@@ -28,54 +28,64 @@ export const Resources: FC = () => {
       />
       <Grid>
         <LessonCard
-          lessonId=""
           mascotType={1}
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
+          buttonDestPrimary="#"
           buttonTextSecondaryDownload="Download Resources"
+          buttonDestSecondaryDownload="#"
           buttonTextTertiary="Go to Lesson"
+          buttonDestTertiary="#"
         />
         <LessonCard
-          lessonId=""
           mascotType={2}
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
+          buttonDestPrimary="#"
           buttonTextSecondaryDownload="Download Resources"
+          buttonDestSecondaryDownload="#"
           buttonTextTertiary="Go to Lesson"
+          buttonDestTertiary="#"
         />
         <LessonCard
-          lessonId=""
           mascotType={3}
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
+          buttonDestPrimary="#"
           buttonTextSecondaryDownload="Download Resources"
+          buttonDestSecondaryDownload="#"
           buttonTextTertiary="Go to Lesson"
+          buttonDestTertiary="#"
         />
         <LessonCard
-          lessonId=""
           mascotType={4}
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
+          buttonDestPrimary="#"
           buttonTextSecondaryDownload="Download Resources"
+          buttonDestSecondaryDownload="#"
           buttonTextTertiary="Go to Lesson"
+          buttonDestTertiary="#"
         />
         <LessonCard
-          lessonId=""
           mascotType={5}
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
+          buttonDestPrimary="#"
           buttonTextSecondaryDownload="Download Resources"
+          buttonDestSecondaryDownload="#"
           buttonTextTertiary="Go to Lesson"
+          buttonDestTertiary="#"
         />
       </Grid>
     </Wrap>
