@@ -4,6 +4,7 @@ import challengeIconCUrl from "../assets/challenge-icon-c.svg";
 
 type Lesson = {
   lessonId: string;
+  title: string;
 };
 
 export type Challenge = {
@@ -13,6 +14,21 @@ export type Challenge = {
   description: string;
   iconUrl: string;
 };
+
+const dummyLessons: Lesson[] = [
+  {
+    lessonId: "1",
+    title: "Lesson 1",
+  },
+  {
+    lessonId: "2",
+    title: "Lesson 2",
+  },
+  {
+    lessonId: "3",
+    title: "Lesson 3",
+  },
+];
 
 const dummyChallenges: Challenge[] = [
   {
@@ -49,15 +65,32 @@ const dummyChallenges: Challenge[] = [
  * this is why we made it async so the switch will be seamless.
  */
 export const loadLessonsData = async (): Promise<Lesson[]> => {
-  // TODO: fill the data
-  return [];
+  return dummyLessons;
 };
 
 /**
- * Load the data for the challenges.
+ * Load the data for specific lesson.
+ */
+export const loadLessonData = async (
+  lessonId: string,
+): Promise<Lesson | undefined> => {
+  return dummyLessons.find((l) => l.lessonId === lessonId);
+};
+
+/**
+ * Load the data for challenges.
  */
 export const loadChallengesData = async (
   lessonId: string,
 ): Promise<Challenge[]> => {
   return dummyChallenges.filter((c) => c.lessonId === lessonId);
+};
+
+/**
+ * Load the data for specific challenge.
+ */
+export const loadChallengeData = async (
+  challengeId: string,
+): Promise<Challenge> => {
+  return dummyChallenges.find((c) => c.challengeId === challengeId)!;
 };
