@@ -1,10 +1,9 @@
 import { forwardRef, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import iconDownload from "./icon-download.svg";
 import iconGo from "./icon-go.svg";
 
-type ButtonType = "primary" | "primary-blue" | "secondary" | "secondary-download" | "tertiary";
+type ButtonType = "primary" | "primary-blue" | "secondary" | "tertiary";
 
 const StyledButton = styled.button<{
   $type: ButtonType;
@@ -53,7 +52,7 @@ const StyledButton = styled.button<{
   `}
 
   ${(props) =>
-    (props.$type === "secondary" || props.$type === "secondary-download") &&
+    props.$type === "secondary" &&
     `
     text-transform: uppercase;
     border: 3px solid var(--color-blue-dark);
@@ -73,12 +72,6 @@ const StyledButton = styled.button<{
       text-decoration: underline 2px;
     }
   `}
-`;
-
-const IconDownload = styled.img`
-  margin-left: 10px;
-  width: 18;
-  height: 18;
 `;
 
 const IconGo = styled.img`
@@ -108,7 +101,6 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
         onClick={to ? () => navigate(to) : onClick}
       >
         {children}
-        {type === "secondary-download" && <IconDownload src={iconDownload} />}
         {type === "tertiary" && <IconGo src={iconGo} />}
       </StyledButton>
     );

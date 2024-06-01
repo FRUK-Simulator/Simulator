@@ -22,6 +22,7 @@ import urlLesson5MaskHeadSvg from "./lesson-5-mask-head.svg";
 import urlLesson5MaskLegsSvg from "./lesson-5-mask-legs.svg";
 import urlLessonBackgroundSvg from "./lesson-background.svg";
 import urlGearSvg from "./gear.svg";
+import iconDownload from "../../ui/icon-download.svg";
 import { H3, Subheading2, P } from "../../ui/Typography";
 import { Button } from "../../ui/Button";
 
@@ -114,6 +115,12 @@ const Hr = styled.hr`
 
 const StyledButton = styled(Button)``;
 
+const IconDownload = styled.img`
+  margin-left: 10px;
+  width: 18;
+  height: 18;
+`;
+
 const selectMascot = (mascotType: MascotType, progress?: Progress) => {
   let maskHead = false;
   let maskBody = false;
@@ -187,8 +194,8 @@ type Props = {
   description: string;
   buttonTextPrimary?: string;
   buttonDestPrimary?: string;
-  buttonTextSecondaryDownload?: string;
-  buttonDestSecondaryDownload?: string;
+  buttonTextSecondary?: string;
+  buttonDestSecondary?: string;
   buttonTextTertiary?: string;
   buttonDestTertiary?: string;
 };
@@ -201,8 +208,8 @@ export const LessonCard: FC<Props> = ({
   description,
   buttonTextPrimary,
   buttonDestPrimary,
-  buttonTextSecondaryDownload,
-  buttonDestSecondaryDownload,
+  buttonTextSecondary,
+  buttonDestSecondary,
   buttonTextTertiary,
   buttonDestTertiary,
 }) => {
@@ -232,12 +239,13 @@ export const LessonCard: FC<Props> = ({
             </StyledButton>
           )}
 
-          {buttonTextSecondaryDownload && (
+          {buttonTextSecondary && (
             <StyledButton
-              type="secondary-download"
-              to={buttonDestSecondaryDownload}
+              type="secondary"
+              to={buttonDestSecondary}
             >
-              {buttonTextSecondaryDownload}
+              {buttonTextSecondary}
+              <IconDownload src={iconDownload} />
             </StyledButton>
           )}
 
