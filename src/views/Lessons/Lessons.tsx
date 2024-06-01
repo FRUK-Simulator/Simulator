@@ -34,7 +34,7 @@ export const Lessons: FC = () => {
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Challenges"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
         />
         <LessonCard
           mascotType={2}
@@ -43,7 +43,7 @@ export const Lessons: FC = () => {
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Challenges"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
         />
         <LessonCard
           mascotType={3}
@@ -52,7 +52,7 @@ export const Lessons: FC = () => {
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Challenges"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
         />
         <LessonCard
           mascotType={4}
@@ -61,7 +61,7 @@ export const Lessons: FC = () => {
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Challenges"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
         />
         <LessonCard
           mascotType={5}
@@ -70,7 +70,7 @@ export const Lessons: FC = () => {
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Challenges"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
         />
       </Grid>
     </Wrap>

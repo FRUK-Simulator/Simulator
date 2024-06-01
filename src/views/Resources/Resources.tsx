@@ -33,11 +33,11 @@ export const Resources: FC = () => {
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
           buttonTextSecondaryDownload="Download Resources"
-          buttonDestSecondaryDownload="#"
+          buttonDestSecondaryDownload="1"
           buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="#"
+          buttonDestTertiary="1"
         />
         <LessonCard
           mascotType={2}
@@ -45,11 +45,11 @@ export const Resources: FC = () => {
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
           buttonTextSecondaryDownload="Download Resources"
-          buttonDestSecondaryDownload="#"
+          buttonDestSecondaryDownload="1"
           buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="#"
+          buttonDestTertiary="1"
         />
         <LessonCard
           mascotType={3}
@@ -57,11 +57,11 @@ export const Resources: FC = () => {
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
           buttonTextSecondaryDownload="Download Resources"
-          buttonDestSecondaryDownload="#"
+          buttonDestSecondaryDownload="1"
           buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="#"
+          buttonDestTertiary="1"
         />
         <LessonCard
           mascotType={4}
@@ -69,11 +69,11 @@ export const Resources: FC = () => {
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
           buttonTextSecondaryDownload="Download Resources"
-          buttonDestSecondaryDownload="#"
+          buttonDestSecondaryDownload="1"
           buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="#"
+          buttonDestTertiary="1"
         />
         <LessonCard
           mascotType={5}
@@ -81,11 +81,11 @@ export const Resources: FC = () => {
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
           buttonTextPrimary="View Guidance"
-          buttonDestPrimary="#"
+          buttonDestPrimary="1"
           buttonTextSecondaryDownload="Download Resources"
-          buttonDestSecondaryDownload="#"
+          buttonDestSecondaryDownload="1"
           buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="#"
+          buttonDestTertiary="1"
         />
       </Grid>
     </Wrap>
