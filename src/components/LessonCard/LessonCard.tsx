@@ -240,10 +240,7 @@ export const LessonCard: FC<Props> = ({
           )}
 
           {buttonTextSecondary && (
-            <StyledButton
-              type="secondary"
-              to={buttonDestSecondary}
-            >
+            <StyledButton type="secondary" to={buttonDestSecondary}>
               {buttonTextSecondary}
               <IconDownload src={iconDownload} />
             </StyledButton>
