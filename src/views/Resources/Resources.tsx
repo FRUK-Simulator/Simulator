@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { FC } from "react";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
-import { LessonCard } from "../../components/LessonCard/LessonCard";
+import { LessonCard, MascotType } from "../../components/LessonCard/LessonCard";
+import { useResourcesQuery } from "../../hooks/query-hooks";
 
 const Wrap = styled.div`
   display: flex;
@@ -18,6 +19,8 @@ const Grid = styled.div`
 `;
 
 export const Resources: FC = () => {
+  const { data: resources } = useResourcesQuery();
+
   return (
     <Wrap>
       <PageHeader
@@ -27,66 +30,24 @@ export const Resources: FC = () => {
         description="Hello and welcome to the Kobot simulator lesson pack, our simulator has been put together to engage young people in."
       />
       <Grid>
-        <LessonCard
-          mascotType={1}
-          subtitle="Lesson 1"
-          title="Motors"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Guidance"
-          buttonDestPrimary="1"
-          buttonTextSecondary="Download Resources"
-          buttonDestSecondary="1"
-          buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="1"
-        />
-        <LessonCard
-          mascotType={2}
-          subtitle="Lesson 2"
-          title="Distance sensors"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Guidance"
-          buttonDestPrimary="1"
-          buttonTextSecondary="Download Resources"
-          buttonDestSecondary="1"
-          buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="1"
-        />
-        <LessonCard
-          mascotType={3}
-          subtitle="Lesson 3"
-          title="Advanced driving"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Guidance"
-          buttonDestPrimary="1"
-          buttonTextSecondary="Download Resources"
-          buttonDestSecondary="1"
-          buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="1"
-        />
-        <LessonCard
-          mascotType={4}
-          subtitle="Lesson 4"
-          title="Colour sensor"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Guidance"
-          buttonDestPrimary="1"
-          buttonTextSecondary="Download Resources"
-          buttonDestSecondary="1"
-          buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="1"
-        />
-        <LessonCard
-          mascotType={5}
-          subtitle="Lesson 5"
-          title="Against the clock"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Guidance"
-          buttonDestPrimary="1"
-          buttonTextSecondary="Download Resources"
-          buttonDestSecondary="1"
-          buttonTextTertiary="Go to Lesson"
-          buttonDestTertiary="1"
-        />
+        {resources?.map(
+          (resource, index) =>
+            resource.lesson && (
+              <LessonCard
+                key={resource.resourceId}
+                mascotType={(index + 1) as MascotType}
+                subtitle={resource.lesson.subtitle}
+                title={resource.lesson.title}
+                description={resource.description}
+                buttonTextPrimary="View Guidance"
+                buttonDestPrimary={resource.resourceId}
+                buttonTextSecondary="Download Resources"
+                buttonDestSecondary={resource.downloadUrl}
+                buttonTextTertiary="Go to Lesson"
+                buttonDestTertiary={`/lessons/${resource.lessonId}`}
+              />
+            ),
+        )}
       </Grid>
     </Wrap>
   );

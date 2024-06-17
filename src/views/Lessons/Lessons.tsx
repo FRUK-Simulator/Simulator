@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { FC } from "react";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
-import { LessonCard } from "../../components/LessonCard/LessonCard";
+import { LessonCard, MascotType } from "../../components/LessonCard/LessonCard";
+import { useLessonsQuery } from "../../hooks/query-hooks";
 
 const Wrap = styled.div`
   display: flex;
@@ -18,6 +19,8 @@ const Grid = styled.div`
 `;
 
 export const Lessons: FC = () => {
+  const { data: lessons } = useLessonsQuery();
+
   return (
     <Wrap>
       <PageHeader
@@ -27,51 +30,18 @@ export const Lessons: FC = () => {
         description="The simulator has been produced by a group of software engineers at Bloomberg in association with FIRST UK. It's simple solve every."
       />
       <Grid>
-        <LessonCard
-          mascotType={1}
-          progress={{ complete: 0, total: 3 }}
-          subtitle="Lesson 1"
-          title="Motors"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Challenges"
-          buttonDestPrimary="1"
-        />
-        <LessonCard
-          mascotType={2}
-          progress={{ complete: 1, total: 3 }}
-          subtitle="Lesson 2"
-          title="Distance sensors"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Challenges"
-          buttonDestPrimary="1"
-        />
-        <LessonCard
-          mascotType={3}
-          progress={{ complete: 2, total: 3 }}
-          subtitle="Lesson 3"
-          title="Advanced driving"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Challenges"
-          buttonDestPrimary="1"
-        />
-        <LessonCard
-          mascotType={4}
-          progress={{ complete: 3, total: 3 }}
-          subtitle="Lesson 4"
-          title="Colour sensor"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Challenges"
-          buttonDestPrimary="1"
-        />
-        <LessonCard
-          mascotType={5}
-          progress={{ complete: 3, total: 3 }}
-          subtitle="Lesson 5"
-          title="Against the clock"
-          description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
-          buttonTextPrimary="View Challenges"
-          buttonDestPrimary="1"
-        />
+        {lessons?.map((lesson, index) => (
+          <LessonCard
+            key={lesson.lessonId}
+            mascotType={(index + 1) as MascotType}
+            progress={{ complete: 0, total: 3 }}
+            subtitle={lesson.subtitle}
+            title={lesson.title}
+            description={lesson.description}
+            buttonTextPrimary="View Challenges"
+            buttonDestPrimary={lesson.lessonId}
+          />
+        ))}
       </Grid>
     </Wrap>
   );

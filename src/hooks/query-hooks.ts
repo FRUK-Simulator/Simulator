@@ -4,6 +4,8 @@ import {
   loadChallengesData,
   loadLessonData,
   loadLessonsData,
+  loadResourceData,
+  loadResourcesData,
 } from "../core/data-loader";
 
 export const queryClient = new QueryClient();
@@ -33,5 +35,19 @@ export const useChallengeQuery = (challengeId: string) => {
   return useQuery({
     queryKey: ["challenge", challengeId],
     queryFn: () => loadChallengeData(challengeId),
+  });
+};
+
+export const useResourcesQuery = () => {
+  return useQuery({
+    queryKey: ["resources"],
+    queryFn: () => loadResourcesData(),
+  });
+};
+
+export const useResourceQuery = (resourceId: string) => {
+  return useQuery({
+    queryKey: ["resource", resourceId],
+    queryFn: () => loadResourceData(resourceId),
   });
 };

@@ -126,7 +126,7 @@ const selectMascot = (mascotType: MascotType, progress?: Progress) => {
   let maskBody = false;
   let maskLegs = false;
   if (progress) {
-    const progressRatio = progress.completed / progress.total;
+    const progressRatio = progress.complete / progress.total;
     maskHead = Boolean(progressRatio <= 2 / 3);
     maskBody = Boolean(progressRatio <= 1 / 3);
     maskLegs = Boolean(progressRatio <= 0 / 3);
@@ -180,7 +180,8 @@ const selectMascot = (mascotType: MascotType, progress?: Progress) => {
   );
 };
 
-type MascotType = 1 | 2 | 3 | 4 | 5;
+export type MascotType = 1 | 2 | 3 | 4 | 5;
+
 type Progress = {
   complete: number;
   total: number;
@@ -221,7 +222,7 @@ export const LessonCard: FC<Props> = ({
           <DivProgress>
             <img src={urlGearSvg} />
             <span>
-              {progress.completed}/{progress.total}
+              {progress.complete}/{progress.total}
             </span>
           </DivProgress>
         )}
