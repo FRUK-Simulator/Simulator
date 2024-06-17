@@ -29,7 +29,7 @@ export const Lessons: FC = () => {
       <Grid>
         <LessonCard
           mascotType={1}
-          progress={{ completed: 0, total: 3 }}
+          progress={{ complete: 0, total: 3 }}
           subtitle="Lesson 1"
           title="Motors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -38,7 +38,7 @@ export const Lessons: FC = () => {
         />
         <LessonCard
           mascotType={2}
-          progress={{ completed: 1, total: 3 }}
+          progress={{ complete: 1, total: 3 }}
           subtitle="Lesson 2"
           title="Distance sensors"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -47,7 +47,7 @@ export const Lessons: FC = () => {
         />
         <LessonCard
           mascotType={3}
-          progress={{ completed: 2, total: 3 }}
+          progress={{ complete: 2, total: 3 }}
           subtitle="Lesson 3"
           title="Advanced driving"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -56,7 +56,7 @@ export const Lessons: FC = () => {
         />
         <LessonCard
           mascotType={4}
-          progress={{ completed: 3, total: 3 }}
+          progress={{ complete: 3, total: 3 }}
           subtitle="Lesson 4"
           title="Colour sensor"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
@@ -65,7 +65,7 @@ export const Lessons: FC = () => {
         />
         <LessonCard
           mascotType={5}
-          progress={{ completed: 3, total: 3 }}
+          progress={{ complete: 3, total: 3 }}
           subtitle="Lesson 5"
           title="Against the clock"
           description="Dolores et rerum hic quos sed at. Eos magnam laboriosam est repellat non. Dolores nihil suscipit quod voluptate."
