@@ -102,7 +102,7 @@ export const ChallengeCard: FC<Props> = ({
         <Title>{title}</Title>
         <Paragraph>{description}</Paragraph>
         <Spacer size={1} />
-        <Button type="primary" to={challengeId}>
+        <Button type="primary" to={`challenges/${challengeId}`}>
           LET'S GO!
         </Button>
       </ContentWrap>

@@ -5,5 +5,6 @@ export default {
   build: {
     outDir: './build'
   },
+  base: './',
   plugins: [svgr()],
 };
